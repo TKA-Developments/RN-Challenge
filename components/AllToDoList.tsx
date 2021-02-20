@@ -1,14 +1,20 @@
-import * as React from "react";
-import { StyleSheet, FlatList } from "react-native";
+import React from "react";
+import { View, Text } from "./Themed";
+import { StyleSheet } from "react-native";
+import ToDos from "./ToDos";
 
-import { Text, View } from "../components/Themed";
-import AllToDoList from "../components/AllToDoList";
+const toDo = [
+  {
+    done: true,
+    description: "as",
+    date: new Date(),
+  },
+];
 
-export default function AllScreen() {
-  const a = [1, 2, 3];
+export default function AllToDoList() {
   return (
     <View style={styles.container}>
-      <AllToDoList />
+      <ToDos toDoList={toDo} />
     </View>
   );
 }
