@@ -2,19 +2,25 @@ import React from "react";
 import { View, Text } from "./Themed";
 import { StyleSheet } from "react-native";
 import ToDos from "./ToDos";
-
-const toDo = [
-  {
-    done: true,
-    description: "as",
-    date: new Date(),
-  },
-];
-
-export default function AllToDoList() {
+import { ITodo } from "../types";
+export default function AllToDoList({
+  todos,
+  setTodos,
+}: {
+  todos: ITodo[],
+  setTodos: React.Dispatch<
+    React.SetStateAction<
+      {
+        done: boolean,
+        description: string,
+        date: Date,
+      }[]
+    >
+  >,
+}) {
   return (
     <View style={styles.container}>
-      <ToDos toDoList={toDo} />
+      <ToDos todos={todos} setTodos={setTodos} />
     </View>
   );
 }
@@ -22,9 +28,12 @@ export default function AllToDoList() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    alignItems: "stretch",
     justifyContent: "center",
-    paddingTop: 20,
+    paddingTop: 15,
+    width: "100%",
+    // borderWidth: 2,
+    // borderColor: "cyan",
   },
   title: {
     fontSize: 20,

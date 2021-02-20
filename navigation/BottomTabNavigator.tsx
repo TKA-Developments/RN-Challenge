@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, Foundation } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
@@ -22,11 +22,18 @@ export default function BottomTabNavigator() {
         name="All"
         component={AllNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <AllBarIcon name="list" color={color} />,
         }}
       />
       <BottomTab.Screen
         name="TabTwo"
+        component={TabTwoNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <CompletedBarIcon name="playlist-add-check" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="TabThree"
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
@@ -43,6 +50,14 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
   return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
+function CompletedBarIcon(props: {name: React.ComponentProps<typeof MaterialIcons>['name']; color: string}) {
+  return <MaterialIcons size={30} style={{marginBottom:-3}} {...props} />
+}
+
+function AllBarIcon(props: {name: React.ComponentProps<typeof Foundation>['name']; color: string}) {
+  return <Foundation size={22} style={{marginBottom:-3}} {...props} />
+}
+
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const AllStack = createStackNavigator<AllParamList>();
@@ -54,6 +69,7 @@ function AllNavigator() {
         name="AllScreen"
         component={AllScreen}
         options={{ headerTitle: 'Todo App' }}
+
       />
     </AllStack.Navigator>
   );
@@ -68,6 +84,7 @@ function TabTwoNavigator() {
         name="TabTwoScreen"
         component={TabTwoScreen}
         options={{ headerTitle: 'Tab Two Title' }}
+        
       />
     </TabTwoStack.Navigator>
   );

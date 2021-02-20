@@ -3,14 +3,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const TodoContext = React.createContext(null);
 
-const TodoProvider = (props) => {
-  const [ToDos, setToDos] = useState([]);
+// const TodoProvider = (props) => {
+//   const [ToDos, setToDos] = useState([]);
 
-  const setToDosFromAsync = async () => {
-    try {
-      const result = await AsyncStorage.getItem();
-    }
-  };
+//   const setToDosFromAsync = async () => {
+//     try {
+//       const result = await AsyncStorage.getItem();
+//     }
+//   };
 
-  useEffect(() => {});
-};
+//   useEffect(() => {});
+// };

@@ -1,38 +1,171 @@
-import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import { RowMap, SwipeListView } from "react-native-swipe-list-view";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { View, Text } from "./Themed";
+import useColorScheme from "../hooks/useColorScheme";
+import { ITodo } from "../types";
 
-interface IToDo {
-  done: boolean;
-  description: string;
-}
-[];
+export default function ToDos({
+  todos,
+  setTodos,
+}: {
+  todos: ITodo[],
+  setTodos: React.Dispatch<
+    React.SetStateAction<
+      {
+        done: boolean,
+        description: string,
+        date: Date,
+      }[]
+    >
+  >,
+}) {
+  const colorScheme: string = useColorScheme() === "dark" ? "white" : "black";
 
-export default function ToDos({ toDoList }: { toDoList: IToDo[] }) {
+  const closeRow = (rowMap: RowMap<ITodo>, rowKey: number) => {
+    if (rowMap[rowKey]) {
+      rowMap[rowKey].closeRow();
+    }
+  };
+
   return (
-    <FlatList
+    <SwipeListView
       keyExtractor={(e, i) => i.toString()}
-      data={toDoList}
-      renderItem={({ item }) => {
-        return <Text>{item.description}</Text>;
+      data={todos}
+      renderItem={({ item, index }) => {
+        return (
+          <View
+            style={{
+              alignSelf: "center",
+            }}
+          >
+            <View style={styles.todoContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  todos[index].done = !todos[index].done;
+                  setTodos([...todos]);
+                }}
+                style={styles.checkbox}
+              >
+                <MaterialCommunityIcons
+                  name={
+                    item.done
+                      ? "checkbox-marked-circle"
+                      : "checkbox-blank-circle-outline"
+                  }
+                  size={26}
+                  color={colorScheme}
+                />
+              </TouchableOpacity>
+              <Text style={styles.description}>{item.description}</Text>
+            </View>
+            <View
+              style={styles.separator}
+              lightColor="#eee"
+              darkColor="rgba(255,255,255,0.1)"
+            />
+          </View>
+        );
       }}
+      renderHiddenItem={({ item, index }, rowMap) => {
+        let [month, date, year] = item.date
+          .toLocaleDateString("en-US")
+          .split("/");
+        let [hour, minute, second] = item.date
+          .toLocaleTimeString("en-US")
+          .split(/:| /);
+        return (
+          <View style={styles.hiddenContainer}>
+            <View style={[styles.backRightBtn, styles.backRightBtnLeft]}>
+              {/* <MaterialCommunityIcons
+                name="pencil"
+                size={24}
+                color={colorScheme}
+              /> */}
+              <Text style={styles.date}>
+                Created at: {hour}.{minute} {date}-{month}-
+                {year.toString().slice(-2)}
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={[styles.backRightBtn, styles.backRightBtnRight]}
+            >
+              <MaterialCommunityIcons
+                name="trash-can"
+                size={24}
+                color={colorScheme}
+                onPress={() => {
+                  todos.splice(index, 1);
+                  setTodos([...todos]);
+                  closeRow(rowMap, index);
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+        );
+      }}
+      rightOpenValue={-165}
+      stopLeftSwipe={10}
     />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  todoContainer: {
+    flexDirection: "row",
+    // borderWidth: 2,
+    // borderColor: "red",
+    alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 20,
+    width: "85%",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
+  checkbox: {
+    paddingRight: 5,
+    alignSelf: "stretch",
+    // borderWidth: 1,
+    // borderColor: "blue",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  description: {
+    flex: 1,
+    fontSize: 14,
+    marginTop: 2,
+    paddingVertical: 7,
+  },
+  hiddenContainer: {
+    alignItems: "center",
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  backRightBtn: {
+    alignItems: "center",
+    bottom: 0,
+    justifyContent: "center",
+    position: "absolute",
+    top: 0,
+    width: 105,
+  },
+  backRightBtnLeft: {
+    right: 55,
+    // borderWidth: 1,
+    // borderColor: "blue",
+    width: 150,
+  },
+  date: {
+    fontSize: 10,
+    fontWeight: "300",
+  },
+  backRightBtnRight: {
+    right: 0,
+    // borderWidth: 1,
+    // borderColor: "pink",
   },
   separator: {
-    marginVertical: 15,
+    marginVertical: 1,
     height: 1,
     width: "80%",
   },
