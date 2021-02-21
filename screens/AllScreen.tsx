@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { StyleSheet, Button, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import Modal from "react-native-modal";
 
 import { Text, View } from "../components/Themed";
 import AllToDoList from "../components/AllToDoList";
 import useColorScheme from "../hooks/useColorScheme";
+import AddModal from "../utils/AddModal"
 import {ITodo} from  "../types"
 
 const toDo: ITodo[] = [
@@ -28,19 +30,22 @@ const toDo: ITodo[] = [
 
 export default function AllScreen() {
   const [todos, setTodos] = useState<ITodo[]>(toDo);
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
+  const [inpDescription, setInpDescription] = useState<string>("")
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+  const addTodo = (inp:string) => {
+    setTodos([...todos, {done:false,description:inp,date:new Date()}])
+  }
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
+      style={styles.addButton}
         onPress={() => {
-          setTodos([
-            ...todos,
-            {
-              done: false,
-              description: "Gigit kuku",
-              date: new Date(),
-            },
-          ]);
+          toggleModal();
         }}
       >
         <MaterialIcons
@@ -50,6 +55,9 @@ export default function AllScreen() {
         />
       </TouchableOpacity>
       <AllToDoList todos={todos} setTodos={setTodos} />
+      <Modal testID={'modal'} isVisible={isModalVisible}>
+        <AddModal inpDescription={inpDescription} setInpDescription={setInpDescription} onPress={() => {toggleModal()}} addTodo={addTodo} />
+      </Modal>
     </View>
   );
 }
@@ -59,7 +67,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 20,
     // borderWidth: 2,
     // borderColor: "green",
   },
@@ -72,4 +79,9 @@ const styles = StyleSheet.create({
     height: 1,
     width: "80%",
   },
+  addButton: {
+    padding: 15,
+    // borderWidth:2,
+    // borderColor:'blue'
+  }
 });

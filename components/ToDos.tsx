@@ -54,7 +54,7 @@ export default function ToDos({
                       ? "checkbox-marked-circle"
                       : "checkbox-blank-circle-outline"
                   }
-                  size={26}
+                  size={28}
                   color={colorScheme}
                 />
               </TouchableOpacity>
