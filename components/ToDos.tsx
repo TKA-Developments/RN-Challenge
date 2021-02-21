@@ -36,13 +36,15 @@ export default function ToDos({
       keyExtractor={(e, i) => i.toString()}
       data={todos}
       renderItem={({ item, index }) => {
+        const padding = index === todos.length - 1 ? 40 : 0;
+
         return (
           <View
             style={{
               alignSelf: "center",
             }}
           >
-            <View style={styles.todoContainer}>
+            <View style={{ ...styles.todoContainer, paddingBottom: padding }}>
               <TouchableOpacity
                 onPress={() => {
                   todos[index].done = !todos[index].done;
@@ -146,8 +148,6 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 14,
-    marginTop: 2,
-    paddingVertical: 7,
   },
   hiddenContainer: {
     alignItems: "center",

@@ -27,6 +27,23 @@ const toDo: ITodo[] = [
     description: "Mandi di sumur",
     date: new Date(),
   },
+  {
+    done: false,
+    description: "Berak di kosan",
+    date: new Date(),
+  },
+  {
+    done: false,
+    description:
+      "Berak di kosan, abis itu mandi terus makan abis itu sikat gigi",
+    date: new Date(),
+  },
+  {
+    done: false,
+    description: "Mandi di sumur",
+    date: new Date(),
+  },
+  
 ];
 
 export default function AllScreen() {
