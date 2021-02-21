@@ -7,6 +7,7 @@ import { Text, View } from "../components/Themed";
 import AllToDoList from "../components/AllToDoList";
 import useColorScheme from "../hooks/useColorScheme";
 import AddModal from "../utils/AddModal"
+import EditModal from "../utils/EditModal"
 import {ITodo} from  "../types"
 
 const toDo: ITodo[] = [
@@ -30,14 +31,28 @@ const toDo: ITodo[] = [
 
 export default function AllScreen() {
   const [todos, setTodos] = useState<ITodo[]>(toDo);
-  const [isModalVisible, setModalVisible] = useState<boolean>(false);
+  const [isAddModalVisible, setAddModalVisible] = useState<boolean>(false);
+  const [isEditModalVisible, setEditModalVisible] = useState<boolean>(false);
   const [inpDescription, setInpDescription] = useState<string>("")
+  const [editIndex, setEditIndex] = useState<number>(0)
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+  const toggleAddModal = () => {
+    setAddModalVisible(!isAddModalVisible);
   };
+
+  const toggleEditModal = (index:number) => {
+    console.log(index)
+    setEditIndex(index)
+    setEditModalVisible(!isEditModalVisible)
+  }
+  
   const addTodo = (inp:string) => {
     setTodos([...todos, {done:false,description:inp,date:new Date()}])
+  }
+
+  const editTodo = (inp:string, index:number) => {
+    todos[index].description = inp
+    setTodos([...todos])
   }
 
   return (
@@ -45,7 +60,7 @@ export default function AllScreen() {
       <TouchableOpacity
       style={styles.addButton}
         onPress={() => {
-          toggleModal();
+          toggleAddModal();
         }}
       >
         <MaterialIcons
@@ -54,9 +69,12 @@ export default function AllScreen() {
           color={useColorScheme() === "dark" ? "white" : "black"}
         />
       </TouchableOpacity>
-      <AllToDoList todos={todos} setTodos={setTodos} />
-      <Modal testID={'modal'} isVisible={isModalVisible}>
-        <AddModal inpDescription={inpDescription} setInpDescription={setInpDescription} onPress={() => {toggleModal()}} addTodo={addTodo} />
+      <AllToDoList todos={todos} setTodos={setTodos} toggleEditModal={toggleEditModal}/>
+      <Modal testID={'modal'} isVisible={isAddModalVisible}>
+        <AddModal inpDescription={inpDescription} setInpDescription={setInpDescription} onPress={() => {toggleAddModal()}} addTodo={addTodo} />
+      </Modal>
+      <Modal testID={'modal'} isVisible={isEditModalVisible}>
+        <EditModal inpDescription={inpDescription} setInpDescription={setInpDescription} onPress={() => {toggleEditModal(editIndex)}} editTodo={editTodo} editIndex={editIndex}/>
       </Modal>
     </View>
   );

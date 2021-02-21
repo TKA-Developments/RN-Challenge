@@ -9,6 +9,7 @@ import { ITodo } from "../types";
 export default function ToDos({
   todos,
   setTodos,
+  toggleEditModal,
 }: {
   todos: ITodo[],
   setTodos: React.Dispatch<
@@ -20,6 +21,7 @@ export default function ToDos({
       }[]
     >
   >,
+  toggleEditModal: (index: number) => void,
 }) {
   const colorScheme: string = useColorScheme() === "dark" ? "white" : "black";
 
@@ -58,7 +60,14 @@ export default function ToDos({
                   color={colorScheme}
                 />
               </TouchableOpacity>
-              <Text style={styles.description}>{item.description}</Text>
+              <TouchableOpacity
+                style={styles.descriptionContainer}
+                onPress={() => {
+                  toggleEditModal(index);
+                }}
+              >
+                <Text style={styles.description}>{item.description}</Text>
+              </TouchableOpacity>
             </View>
             <View
               style={styles.separator}
@@ -129,8 +138,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  description: {
+  descriptionContainer: {
     flex: 1,
+    marginTop: 2,
+    paddingVertical: 7,
+    justifyContent: "center",
+  },
+  description: {
     fontSize: 14,
     marginTop: 2,
     paddingVertical: 7,

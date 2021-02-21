@@ -6,6 +6,7 @@ import { ITodo } from "../types";
 export default function AllToDoList({
   todos,
   setTodos,
+  toggleEditModal,
 }: {
   todos: ITodo[],
   setTodos: React.Dispatch<
@@ -17,10 +18,15 @@ export default function AllToDoList({
       }[]
     >
   >,
+  toggleEditModal: (index: number) => void,
 }) {
   return (
     <View style={styles.container}>
-      <ToDos todos={todos} setTodos={setTodos} />
+      <ToDos
+        todos={todos}
+        setTodos={setTodos}
+        toggleEditModal={toggleEditModal}
+      />
     </View>
   );
 }
@@ -30,7 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "stretch",
     justifyContent: "center",
-    paddingTop: 15,
+    paddingTop: 6,
     width: "100%",
     // borderWidth: 2,
     // borderColor: "cyan",
