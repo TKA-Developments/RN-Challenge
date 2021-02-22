@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { RowMap, SwipeListView } from "react-native-swipe-list-view";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import { View, Text } from "./Themed";
 import useColorScheme from "../hooks/useColorScheme";
 import { ITodo } from "../types";
@@ -10,18 +11,20 @@ export default function ToDos({
   todos,
   setTodos,
   toggleEditModal,
+  screen,
 }: {
-  todos: ITodo[],
+  todos: ITodo[];
   setTodos: React.Dispatch<
     React.SetStateAction<
       {
-        done: boolean,
-        description: string,
-        date: Date,
+        done: boolean;
+        description: string;
+        date: Date;
       }[]
     >
-  >,
-  toggleEditModal: (index: number) => void,
+  >;
+  toggleEditModal: (index: number) => void;
+  screen: "all" | "completed" | "incompleted";
 }) {
   const colorScheme: string = useColorScheme() === "dark" ? "white" : "black";
 
@@ -38,13 +41,16 @@ export default function ToDos({
       renderItem={({ item, index }) => {
         const padding = index === todos.length - 1 ? 40 : 0;
 
-        return (
+        return (screen === "completed" && item.done) ||
+          (screen === "incompleted" && !item.done) ||
+          screen === "all" ? (
           <View
             style={{
               alignSelf: "center",
+              paddingBottom: 0,
             }}
           >
-            <View style={{ ...styles.todoContainer, paddingBottom: padding }}>
+            <View style={{ ...styles.todoContainer }}>
               <TouchableOpacity
                 onPress={() => {
                   todos[index].done = !todos[index].done;
@@ -77,17 +83,23 @@ export default function ToDos({
               darkColor="rgba(255,255,255,0.1)"
             />
           </View>
+        ) : (
+          <View></View>
         );
       }}
       renderHiddenItem={({ item, index }, rowMap) => {
-        let [month, date, year] = item.date
+        let [month, date, year] = item?.date
           .toLocaleDateString("en-US")
           .split("/");
-        let [hour, minute, second] = item.date
+        let [hour, minute, second] = item?.date
           .toLocaleTimeString("en-US")
           .split(/:| /);
-        return (
-          <View style={styles.hiddenContainer}>
+        const padding = index === todos.length - 1 ? 40 : 0;
+
+        return (screen === "completed" && item.done) ||
+          (screen === "incompleted" && !item.done) ||
+          screen === "all" ? (
+          <View style={{ ...styles.hiddenContainer, paddingBottom: 0 }}>
             <View style={[styles.backRightBtn, styles.backRightBtnLeft]}>
               {/* <MaterialCommunityIcons
                 name="pencil"
@@ -114,6 +126,8 @@ export default function ToDos({
               />
             </TouchableOpacity>
           </View>
+        ) : (
+          <View></View>
         );
       }}
       rightOpenValue={-165}
@@ -171,7 +185,7 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 10,
-    fontWeight: "300",
+    fontWeight: "400",
   },
   backRightBtnRight: {
     right: 0,

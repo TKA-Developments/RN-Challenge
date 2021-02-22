@@ -11,16 +11,16 @@ import EditModal from "../utils/EditModal";
 import { ITodo } from "../types";
 import { TodoContext } from "../provider/TodoProvider";
 
-export default function AllScreen() {
-  const [isAddModalVisible, setAddModalVisible] = useState<boolean>(false);
+export default function CompletedScreen() {
+  // const [isAddModalVisible, setAddModalVisible] = useState<boolean>(false);
   const [isEditModalVisible, setEditModalVisible] = useState<boolean>(false);
   const [inpDescription, setInpDescription] = useState<string>("");
   const [editIndex, setEditIndex] = useState<number>(0);
   const colorScheme = useColorScheme();
 
-  const toggleAddModal = () => {
-    setAddModalVisible(!isAddModalVisible);
-  };
+  // const toggleAddModal = () => {
+  //   setAddModalVisible(!isAddModalVisible);
+  // };
 
   const toggleEditModal = (index: number) => {
     setEditIndex(index);
@@ -38,9 +38,9 @@ export default function AllScreen() {
 
   return (
     <TodoContext.Consumer>
-      {({ todos, setTodos, addTodo, editTodo, clearTodos }) => (
+      {({ todos, setTodos, addTodo, editTodo }) => (
         <View style={styles.container}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.addButton}
             onPress={() => {
               toggleAddModal();
@@ -51,14 +51,14 @@ export default function AllScreen() {
               size={35}
               color={colorScheme === "dark" ? "white" : "black"}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <ToDoList
             todos={todos}
             setTodos={setTodos}
             toggleEditModal={toggleEditModal}
-            screen="all"
+            screen="completed"
           />
-          <Modal testID={"modal"} isVisible={isAddModalVisible}>
+          {/* <Modal testID={"modal"} isVisible={isAddModalVisible}>
             <AddModal
               inpDescription={inpDescription}
               setInpDescription={setInpDescription}
@@ -67,7 +67,7 @@ export default function AllScreen() {
               }}
               addTodo={addTodo}
             />
-          </Modal>
+          </Modal> */}
           <Modal testID={"modal"} isVisible={isEditModalVisible}>
             <EditModal
               inpDescription={inpDescription}
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    paddingTop: 30,
     // borderWidth: 2,
     // borderColor: "green",
   },

@@ -11,7 +11,7 @@ import EditModal from "../utils/EditModal";
 import { ITodo } from "../types";
 import { TodoContext } from "../provider/TodoProvider";
 
-export default function AllScreen() {
+export default function IncompletedScreen() {
   const [isAddModalVisible, setAddModalVisible] = useState<boolean>(false);
   const [isEditModalVisible, setEditModalVisible] = useState<boolean>(false);
   const [inpDescription, setInpDescription] = useState<string>("");
@@ -38,7 +38,7 @@ export default function AllScreen() {
 
   return (
     <TodoContext.Consumer>
-      {({ todos, setTodos, addTodo, editTodo, clearTodos }) => (
+      {({ todos, setTodos, addTodo, editTodo }) => (
         <View style={styles.container}>
           <TouchableOpacity
             style={styles.addButton}
@@ -56,7 +56,7 @@ export default function AllScreen() {
             todos={todos}
             setTodos={setTodos}
             toggleEditModal={toggleEditModal}
-            screen="all"
+            screen="incompleted"
           />
           <Modal testID={"modal"} isVisible={isAddModalVisible}>
             <AddModal

@@ -8,23 +8,21 @@ import {
 } from "react-native";
 
 type Props = {
-  onPress: () => any,
-  inpDescription: string,
-  setInpDescription: React.Dispatch<React.SetStateAction<string>>,
-  editTodo: (inp: string, index: number) => void,
-  editIndex: number,
+  onPress: () => any;
+  inpDescription: string;
+  setInpDescription: React.Dispatch<React.SetStateAction<string>>;
+  addTodo: (inp: string) => void;
 };
 
-export default function EditModal({
+export default function AddModal({
   onPress,
   inpDescription,
   setInpDescription,
-  editTodo,
-  editIndex,
+  addTodo,
 }: Props) {
   return (
     <View style={styles.content}>
-      <Text style={styles.contentTitle}>Edit description:</Text>
+      <Text style={styles.contentTitle}>Enter a description:</Text>
       <TextInput
         style={styles.inpDescription}
         value={inpDescription}
@@ -33,10 +31,10 @@ export default function EditModal({
       />
       <TouchableOpacity
         style={styles.button}
-        testID={"edit-button"}
+        testID={"save-button"}
         onPress={() => {
           if (inpDescription.length > 0) {
-            editTodo(inpDescription, editIndex);
+            addTodo(inpDescription);
             onPress();
             setInpDescription("");
           }
@@ -57,13 +55,6 @@ export default function EditModal({
     </View>
   );
 }
-
-// const DefaultModalContent: React.FC<Props> = (props) => (
-//   <View style={styles.content}>
-//     <Text style={styles.contentTitle}>Hi 👋!</Text>
-//     <Button testID={"close-button"} onPress={props.onPress} title="Close" />
-//   </View>
-// );
 
 const styles = StyleSheet.create({
   content: {

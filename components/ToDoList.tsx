@@ -1,24 +1,28 @@
 import React from "react";
-import { View, Text } from "./Themed";
 import { StyleSheet } from "react-native";
+
+import { View, Text } from "./Themed";
 import ToDos from "./ToDos";
 import { ITodo } from "../types";
-export default function AllToDoList({
+
+export default function ToDoList({
   todos,
   setTodos,
   toggleEditModal,
+  screen,
 }: {
-  todos: ITodo[],
+  todos: ITodo[];
   setTodos: React.Dispatch<
     React.SetStateAction<
       {
-        done: boolean,
-        description: string,
-        date: Date,
+        done: boolean;
+        description: string;
+        date: Date;
       }[]
     >
-  >,
-  toggleEditModal: (index: number) => void,
+  >;
+  toggleEditModal: (index: number) => void;
+  screen: "all" | "completed" | "incompleted";
 }) {
   return (
     <View style={styles.container}>
@@ -26,6 +30,7 @@ export default function AllToDoList({
         todos={todos}
         setTodos={setTodos}
         toggleEditModal={toggleEditModal}
+        screen={screen}
       />
     </View>
   );

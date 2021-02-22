@@ -1,20 +1,24 @@
 export type RootStackParamList = {
-  Root: undefined,
-  NotFound: undefined,
+  Root: undefined;
+  NotFound: undefined;
 };
 
 export type BottomTabParamList = {
-  All: undefined,
-  TabTwo: undefined,
-  TabThree: undefined,
+  All: undefined;
+  Completed: undefined;
+  Active: undefined;
 };
 
 export type AllParamList = {
-  AllScreen: undefined,
+  AllScreen: undefined;
 };
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined,
+export type CompletedParamList = {
+  CompletedScreen: undefined;
+};
+
+export type IncompletedParamList = {
+  IncompletedScreen: undefined;
 };
 
 export interface ITodo {
