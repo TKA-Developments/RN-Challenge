@@ -4,27 +4,22 @@ import { StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { Text, View } from "../components/Themed";
 
 import SearchBar from "../components/SearchBar.js";
-import categoriesData from "../tmpData/Categories.js";
-import tasksData from "../tmpData/Tasks.js";
 import CategoryCard from "../components/CategoryCard.js";
 import TaskList from "../components/TaskList.js";
 
-export default function TabOneScreen({ navigation }) {
+export default function TabOneScreen({
+    navigation,
+    tasks,
+    categories,
+    checkHandler,
+}) {
+    console.log(tasks);
     const [search, setSearch] = useState("");
-    const [tasks, setTasks] = useState(tasksData);
-    const [categories, setCategories] = useState(categoriesData);
 
     const currDate = new Date().toDateString();
     const tasksToday = tasks.filter(
         (task) => task.date.toDateString() == currDate
     );
-
-    const checkHandler = (id) => {
-        let modifiedTask = tasks.filter((task) => task.id == id)[0];
-        modifiedTask.completed = !modifiedTask.completed;
-
-        setTasks([...tasks.filter((task) => task.id != id), modifiedTask]);
-    };
 
     return (
         <View style={styles.container}>
