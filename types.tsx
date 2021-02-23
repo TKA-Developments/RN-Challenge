@@ -24,5 +24,5 @@ export type IncompletedParamList = {
 export interface ITodo {
   done: boolean;
   description: string;
-  date: Date;
+  date: string;
 }

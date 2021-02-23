@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Modal from "react-native-modal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Text, View } from "../components/Themed";
 import ToDoList from "../components/ToDoList";
@@ -38,49 +39,51 @@ export default function AllScreen() {
 
   return (
     <TodoContext.Consumer>
-      {({ todos, setTodos, addTodo, editTodo, clearTodos }) => (
-        <View style={styles.container}>
-          <TouchableOpacity
-            style={styles.addButton}
-            onPress={() => {
-              toggleAddModal();
-            }}
-          >
-            <MaterialIcons
-              name="add-box"
-              size={35}
-              color={colorScheme === "dark" ? "white" : "black"}
-            />
-          </TouchableOpacity>
-          <ToDoList
-            todos={todos}
-            setTodos={setTodos}
-            toggleEditModal={toggleEditModal}
-            screen="all"
-          />
-          <Modal testID={"modal"} isVisible={isAddModalVisible}>
-            <AddModal
-              inpDescription={inpDescription}
-              setInpDescription={setInpDescription}
+      {({ todos, setTodos, addTodo, editTodo, clearTodos }) => {
+        return (
+          <View style={styles.container}>
+            <TouchableOpacity
+              style={styles.addButton}
               onPress={() => {
                 toggleAddModal();
               }}
-              addTodo={addTodo}
+            >
+              <MaterialIcons
+                name="add-box"
+                size={35}
+                color={colorScheme === "dark" ? "white" : "black"}
+              />
+            </TouchableOpacity>
+            <ToDoList
+              todos={todos}
+              setTodos={setTodos}
+              toggleEditModal={toggleEditModal}
+              screen="all"
             />
-          </Modal>
-          <Modal testID={"modal"} isVisible={isEditModalVisible}>
-            <EditModal
-              inpDescription={inpDescription}
-              setInpDescription={setInpDescription}
-              onPress={() => {
-                toggleEditModal(editIndex);
-              }}
-              editTodo={editTodo}
-              editIndex={editIndex}
-            />
-          </Modal>
-        </View>
-      )}
+            <Modal testID={"modal"} isVisible={isAddModalVisible}>
+              <AddModal
+                inpDescription={inpDescription}
+                setInpDescription={setInpDescription}
+                onPress={() => {
+                  toggleAddModal();
+                }}
+                addTodo={addTodo}
+              />
+            </Modal>
+            <Modal testID={"modal"} isVisible={isEditModalVisible}>
+              <EditModal
+                inpDescription={inpDescription}
+                setInpDescription={setInpDescription}
+                onPress={() => {
+                  toggleEditModal(editIndex);
+                }}
+                editTodo={editTodo}
+                editIndex={editIndex}
+              />
+            </Modal>
+          </View>
+        );
+      }}
     </TodoContext.Consumer>
   );
 }

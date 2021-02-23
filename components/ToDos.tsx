@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import React from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { RowMap, SwipeListView } from "react-native-swipe-list-view";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -19,7 +19,7 @@ export default function ToDos({
       {
         done: boolean;
         description: string;
-        date: Date;
+        date: string;
       }[]
     >
   >;
@@ -88,12 +88,6 @@ export default function ToDos({
         );
       }}
       renderHiddenItem={({ item, index }, rowMap) => {
-        let [month, date, year] = item?.date
-          .toLocaleDateString("en-US")
-          .split("/");
-        let [hour, minute, second] = item?.date
-          .toLocaleTimeString("en-US")
-          .split(/:| /);
         const padding = index === todos.length - 1 ? 40 : 0;
 
         return (screen === "completed" && item.done) ||
@@ -101,15 +95,7 @@ export default function ToDos({
           screen === "all" ? (
           <View style={{ ...styles.hiddenContainer, paddingBottom: 0 }}>
             <View style={[styles.backRightBtn, styles.backRightBtnLeft]}>
-              {/* <MaterialCommunityIcons
-                name="pencil"
-                size={24}
-                color={colorScheme}
-              /> */}
-              <Text style={styles.date}>
-                Created at: {hour}.{minute} {date}-{month}-
-                {year.toString().slice(-2)}
-              </Text>
+              <Text style={styles.date}>Created: {item.date}</Text>
             </View>
             <TouchableOpacity
               style={[styles.backRightBtn, styles.backRightBtnRight]}
