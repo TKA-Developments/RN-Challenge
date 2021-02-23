@@ -31,8 +31,8 @@ export default function TaskItem({
                 <View style={styles.leftCont}>
                     <RoundedCheckbox
                         onPress={() => checkHandler(task.id)}
-                        uncheckedColor="#b3b3b3"
-                        checkedColor="#1db954"
+                        uncheckedColor={task.completed ? "#1db954" : "#b3b3b3"}
+                        checkedColor={task.completed ? "#1db954" : "#b3b3b3"}
                         text=""
                         component={
                             task.completed ? (
@@ -43,7 +43,20 @@ export default function TaskItem({
                         outerSize={35}
                     />
                     <TouchableOpacity onPress={handleOpen}>
-                        <Text style={styles.text}>{task.task}</Text>
+                        <Text
+                            style={
+                                task.completed
+                                    ? styles.strikethrough
+                                    : task.date.toDateString() ==
+                                      new Date().toDateString()
+                                    ? styles.text
+                                    : task.date < new Date()
+                                    ? styles.overdue
+                                    : styles.text
+                            }
+                        >
+                            {task.task}
+                        </Text>
                     </TouchableOpacity>
                 </View>
                 <Feather
@@ -96,6 +109,21 @@ const styles = StyleSheet.create({
     },
     text: {
         color: "#02111E",
+        fontWeight: "bold",
+        marginLeft: 15,
+        fontSize: 18,
+    },
+    strikethrough: {
+        textDecorationLine: "line-through",
+        textDecorationStyle: "solid",
+        textDecorationColor: "#B6B6B6",
+        color: "#DBDBDB",
+        fontWeight: "bold",
+        marginLeft: 15,
+        fontSize: 18,
+    },
+    overdue: {
+        color: "#ff5154",
         fontWeight: "bold",
         marginLeft: 15,
         fontSize: 18,

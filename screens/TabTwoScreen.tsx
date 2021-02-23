@@ -19,12 +19,16 @@ export default function TabTwoScreen({
     editTaskHandler,
 }) {
     const modalizeRef = useRef<Modalize>(null);
-
     const [date, setDate] = useState(new Date().toDateString());
+    const [showCompleted, setShowCompleted] = useState(true);
 
-    const tasksToday = tasks.filter(
+    let tasksToday = tasks.filter(
         (task) => task != undefined && task.date.toDateString() == date
     );
+
+    if (!showCompleted) {
+        tasksToday = tasksToday.filter((item) => !item.completed);
+    }
 
     const handleOpen = () => {
         modalizeRef.current?.open();
@@ -70,15 +74,26 @@ export default function TabTwoScreen({
                 />
             </View>
             <View style={styles.bottomContainer}>
-                <Text style={styles.altTitle}>Today's Tasks</Text>
+                <View style={styles.textContainer}>
+                    <Text style={styles.altTitle}>Today's Tasks</Text>
+                    <TouchableOpacity
+                        onPress={() => setShowCompleted(!showCompleted)}
+                    >
+                        {showCompleted ? (
+                            <Text style={styles.link}>
+                                Hide Completed Tasks
+                            </Text>
+                        ) : (
+                            <Text style={styles.link}>
+                                Show Completed Tasks
+                            </Text>
+                        )}
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.tasks}>
                     <TaskList
                         taskList={tasksToday.sort((a, b) => {
-                            if (a.date - b.date > 0) return 1;
-                            else if (a.date - b.date < 0) return -1;
-                            else {
-                                return a.id - b.id;
-                            }
+                            a.id - b.id;
                         })}
                         checkHandler={checkHandler}
                         deleteTaskHandler={deleteTaskHandler}
@@ -142,7 +157,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     tasks: {
-        backgroundColor: "black",
+        backgroundColor: "#F4F5F9",
         width: "95%",
     },
     icon: {
@@ -150,5 +165,16 @@ const styles = StyleSheet.create({
         right: 30,
         bottom: 175,
         backgroundColor: "#F4F5F9",
+    },
+    textContainer: {
+        backgroundColor: "#F4F5F9",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "94.5s%",
+        marginTop: 20,
+    },
+    link: {
+        color: "#6C7AAE",
+        marginTop: 7,
     },
 });

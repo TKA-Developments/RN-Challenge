@@ -9,11 +9,9 @@ export default function TaskList({
     editTaskHandler,
     categories,
 }) {
-    const [tasks, setTasks] = useState(taskList);
-
-    useEffect(() => {
-        setTasks([...taskList]);
-    }, [taskList]);
+    const completed = taskList.filter((item) => item.completed);
+    const tasks = taskList.filter((item) => !item.completed);
+    tasks.push(...completed);
 
     return (
         <View style={styles.container}>
@@ -29,7 +27,7 @@ export default function TaskList({
                         categories={categories}
                     />
                 )}
-                scrollEnabled={false}
+                showsVerticalScrollIndicator={false}
             />
         </View>
     );

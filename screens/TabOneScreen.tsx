@@ -15,13 +15,32 @@ export default function TabOneScreen({
     deleteTaskHandler,
     editTaskHandler,
 }) {
-    console.log(tasks);
     const [search, setSearch] = useState("");
 
     const currDate = new Date().toDateString();
     const tasksToday = tasks.filter(
         (task) => task != undefined && task.date.toDateString() == currDate
     );
+
+    const dynamicSearch = () => {
+        return tasks
+            .filter(
+                (task) =>
+                    task.task.toLowerCase().includes(search.toLowerCase()) ||
+                    task.date
+                        .toDateString()
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                    task.categories.includes(search)
+            )
+            .sort((a, b) => {
+                if (a.date - b.date > 0) return 1;
+                else if (a.date - b.date < 0) return -1;
+                else {
+                    return a.id - b.id;
+                }
+            });
+    };
 
     return (
         <View style={styles.container}>
@@ -62,11 +81,7 @@ export default function TabOneScreen({
                         <View style={styles.tasks}>
                             <TaskList
                                 taskList={tasksToday.sort((a, b) => {
-                                    if (a.date - b.date > 0) return 1;
-                                    else if (a.date - b.date < 0) return -1;
-                                    else {
-                                        return a.id - b.id;
-                                    }
+                                    a.id - b.id;
                                 })}
                                 checkHandler={checkHandler}
                                 deleteTaskHandler={deleteTaskHandler}
@@ -75,7 +90,17 @@ export default function TabOneScreen({
                             />
                         </View>
                     </View>
-                ) : null}
+                ) : (
+                    <View style={styles.bottomContainer}>
+                        <TaskList
+                            taskList={dynamicSearch()}
+                            checkHandler={checkHandler}
+                            deleteTaskHandler={deleteTaskHandler}
+                            editTaskHandler={editTaskHandler}
+                            categories={categories}
+                        />
+                    </View>
+                )}
             </View>
         </View>
     );
@@ -124,9 +149,11 @@ const styles = StyleSheet.create({
     },
     link: {
         color: "#6C7AAE",
+        marginTop: 3,
     },
     tasks: {
         backgroundColor: "#F4F5F9",
         width: "97%",
+        height: "35%",
     },
 });

@@ -8,7 +8,6 @@ export default function CategoryPicker({
     status,
 }) {
     const [isPicked, setIsPicked] = useState(status);
-    console.log(isPicked);
 
     return (
         <TouchableOpacity
