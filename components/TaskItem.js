@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import RoundedCheckbox from "react-native-rounded-checkbox";
 import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -25,6 +25,17 @@ export default function TaskItem({
             modalizeRef.current.close();
         }
     };
+
+    const deleteTaskAlert = () =>
+        Alert.alert("Delete Task?", "This task will be permanently deleted.", [
+            {
+                text: "Cancel",
+                onPress: () => {},
+                style: "cancel",
+            },
+            { text: "Delete", onPress: () => deleteTaskHandler(task.id) },
+        ]);
+
     return (
         <View style={styles.background}>
             <View style={styles.container}>
@@ -64,7 +75,7 @@ export default function TaskItem({
                     size={24}
                     color="#1688F3"
                     onPress={() => {
-                        deleteTaskHandler(task.id);
+                        deleteTaskAlert();
                     }}
                 />
             </View>

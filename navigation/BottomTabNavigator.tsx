@@ -30,10 +30,8 @@ export default function BottomTabNavigator() {
     };
 
     const addTaskHandler = (task, date, categories) => {
-        var num = tasks.length + 1;
-
         const newObj = {
-            id: num.toString(),
+            id: Date.now().toString(),
             task: task,
             date: date,
             categories: categories,
