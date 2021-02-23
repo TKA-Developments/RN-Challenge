@@ -63,8 +63,10 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
+
+To start the demo, type in npm start inside the RN-Challenge directory
+
 1. Homescreen
-- To start the demo, type in npm start inside the RN-Challenge directory
 - In the homepage, you will see three distinct components
 - First is the search bar, where you can search by name of task, date, and categories
 - Second is the categories cards where you can see the number of tasks you have per category
@@ -76,7 +78,7 @@ Your app should be able to complete these tasks:
 - You also have an option to show or hide the tasks you have completed by clicking on the button at the top right corner
 - Note: Tasks that are overdue will be highlighted red
 - -----------------------------------------
-- 3. Adding, Editing, Deleting, and Completing Tasks Functionality
+3. Adding, Editing, Deleting, and Completing Tasks Functionality
 - There's a blue plus button at the bottom right corner which will pop up a modal that is used to add new tasks
 - In the modal, you can specify the task name, date, and choose between the available categories,
 - After you're done, you can click on "Create Task" and then the task will be created
@@ -86,6 +88,5 @@ Your app should be able to complete these tasks:
 - To indicate that you have completed a task, you can click on the gray circle on each task and it will turn green to indicate that you have completed that task. The text will also change to a lighter color and there will be a line striking through it.
 
 ## Demo GIF
-![Demo](https://gifs.com/gif/demo-JyJwm9)
-
+[![Demo](https://j.gifs.com/JyJwm9.gif)]
 
