@@ -13,18 +13,43 @@ export default function TabTwoScreen({
     tasks,
     categories,
     checkHandler,
+    addTaskHandler,
+    deleteTaskHandler,
 }) {
     const modalizeRef = useRef<Modalize>(null);
 
-    const onOpen = () => {
+    const handleOpen = () => {
         modalizeRef.current?.open();
     };
 
+    const handleClose = () => {
+        if (modalizeRef.current) {
+            modalizeRef.current.close();
+        }
+    };
+
+    console.log(tasks);
+
     const [tasksList, setTasksList] = useState(
         tasks.filter(
-            (task) => task.date.toDateString() == new Date().toDateString()
+            (task) =>
+                task != undefined &&
+                task.date.toDateString() == new Date().toDateString()
         )
     );
+
+    // s
+
+    // const mainAddHandler = (task, date, categories) => {
+    //     addTaskHandler(task, date, categories);
+    //     setTasksList(
+    //         tasks.filter(
+    //             (task) =>
+    //                 task != undefined &&
+    //                 task.date.toDateString() == new Date().toDateString()
+    //         )
+    //     );
+    // };
 
     return (
         <View style={styles.container}>
@@ -58,8 +83,9 @@ export default function TabTwoScreen({
                         setTasksList(
                             tasks.filter(
                                 (task) =>
+                                    task != undefined &&
                                     task.date.toDateString() ==
-                                    new Date(date).toDateString()
+                                        new Date(date).toDateString()
                             )
                         )
                     }
@@ -77,14 +103,20 @@ export default function TabTwoScreen({
                             }
                         })}
                         checkHandler={checkHandler}
+                        deleteTaskHandler={deleteTaskHandler}
+                        key={tasks}
                     />
-                    <TouchableOpacity onPress={onOpen}>
+                    <TouchableOpacity onPress={handleOpen}>
                         <Text>Open the modal</Text>
                     </TouchableOpacity>
 
                     <Portal>
                         <Modalize ref={modalizeRef} modalHeight={500}>
-                            <Modal categories={categories} />
+                            <Modal
+                                categories={categories}
+                                handleClose={handleClose}
+                                addTaskHandler={addTaskHandler}
+                            />
                         </Modalize>
                     </Portal>
                 </View>

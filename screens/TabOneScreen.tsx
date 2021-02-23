@@ -12,13 +12,14 @@ export default function TabOneScreen({
     tasks,
     categories,
     checkHandler,
+    deleteTaskHandler,
 }) {
     console.log(tasks);
     const [search, setSearch] = useState("");
 
     const currDate = new Date().toDateString();
     const tasksToday = tasks.filter(
-        (task) => task.date.toDateString() == currDate
+        (task) => task != undefined && task.date.toDateString() == currDate
     );
 
     return (
@@ -64,6 +65,7 @@ export default function TabOneScreen({
                                     }
                                 })}
                                 checkHandler={checkHandler}
+                                deleteTaskHandler={deleteTaskHandler}
                             />
                         </View>
                     </View>

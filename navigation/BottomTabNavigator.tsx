@@ -29,6 +29,24 @@ export default function BottomTabNavigator() {
         setTasks([...tasks.filter((task) => task.id != id), modifiedTask]);
     };
 
+    function addTaskHandler(task, date, categories) {
+        var num = tasks.length + 1;
+
+        const newObj = {
+            id: num.toString(),
+            task: task,
+            date: date,
+            categories: categories,
+            completed: false,
+        };
+
+        setTasks([...tasks, newObj]);
+    }
+
+    const deleteTaskHandler = (id) => {
+        setTasks(tasks.filter((task) => task.id != id));
+    };
+
     return (
         <Host>
             <BottomTab.Navigator
@@ -43,6 +61,7 @@ export default function BottomTabNavigator() {
                             checkHandler={checkHandler}
                             categories={categories}
                             navigation={navigation}
+                            deleteTaskHandler={deleteTaskHandler}
                         />
                     )}
                     options={{
@@ -59,6 +78,8 @@ export default function BottomTabNavigator() {
                             checkHandler={checkHandler}
                             categories={categories}
                             navigation={navigation}
+                            addTaskHandler={addTaskHandler}
+                            deleteTaskHandler={deleteTaskHandler}
                         />
                     )}
                     options={{
@@ -104,6 +125,7 @@ function TabOneNavigator(props) {
                         tasks={props.tasks}
                         categories={props.categories}
                         checkHandler={props.checkHandler}
+                        deleteTaskHandler={props.deleteTaskHandler}
                     />
                 )}
                 options={{ headerTitle: "Tab One Title" }}
@@ -128,6 +150,8 @@ function TabTwoNavigator(props) {
                         tasks={props.tasks}
                         categories={props.categories}
                         checkHandler={props.checkHandler}
+                        addTaskHandler={props.addTaskHandler}
+                        deleteTaskHandler={props.deleteTaskHandler}
                     />
                 )}
                 options={{ headerTitle: "Tab Two Title" }}
