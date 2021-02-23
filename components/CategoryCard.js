@@ -10,16 +10,16 @@ const icons = {
         <MaterialCommunityIcons
             name="star-box-multiple-outline"
             size={30}
-            color="#1db954"
+            color="#1688F3"
         />
     ),
-    Personal: <Ionicons name="ios-person-outline" size={30} color="#1db954" />,
-    School: <Ionicons name="ios-school-outline" size={30} color="#1db954" />,
+    Personal: <Ionicons name="ios-person-outline" size={30} color="#1688F3" />,
+    School: <Ionicons name="ios-school-outline" size={30} color="#1688F3" />,
     Family: (
         <MaterialCommunityIcons
             name="account-group-outline"
             size={30}
-            color="#1db954"
+            color="#1688F3"
         />
     ),
 };
@@ -42,12 +42,12 @@ export default function CategoryCard({ category, tasks }) {
                         style={{
                             fontWeight: "bold",
                             fontSize: 18,
-                            color: "white",
+                            color: "#02111E",
                         }}
                     >
                         {amountOfTasks}
                     </Text>
-                    <Text style={{ color: "white" }}>Tasks</Text>
+                    <Text style={{ color: "#02111E" }}>Tasks</Text>
                 </View>
             </View>
             <Text style={styles.text}>{category}</Text>
@@ -57,7 +57,7 @@ export default function CategoryCard({ category, tasks }) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#121212",
+        backgroundColor: "white",
         margin: 15,
         marginTop: 0,
         marginLeft: 0,
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 12.5,
         shadowOffset: { width: 1, height: 4 },
-        shadowOpacity: 1,
-        shadowColor: "#24262F",
+        shadowOpacity: 1.5,
+        shadowColor: "#DEE1ED",
         elevation: 2,
     },
     text: {
-        color: "white",
+        color: "#02111E",
         fontWeight: "bold",
         fontSize: 16,
     },

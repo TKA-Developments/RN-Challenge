@@ -60,7 +60,22 @@ export default function BottomTabNavigator() {
         <Host>
             <BottomTab.Navigator
                 initialRouteName="TabOne"
-                tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+                tabBarOptions={{
+                    activeTintColor: "#0B73D5",
+                    style: {
+                        borderTopColor: "#fff",
+                        borderTopWidth: 1,
+                        width: "100%",
+                        backgroundColor: "#FFFFFF",
+                        shadowColor: "#C8C8C8",
+                        shadowOffset: {
+                            width: 0,
+                            height: 1,
+                        },
+                        shadowOpacity: 10,
+                        elevation: 5,
+                    },
+                }}
             >
                 <BottomTab.Screen
                     name="Home"

@@ -55,7 +55,7 @@ export default function Modal({
                 placeholder="Your Task Name"
                 value={task}
                 onChangeText={setTask}
-                placeholderTextColor="black"
+                placeholderTextColor="#C8CDE0"
             />
             <Text style={styles.subtitle}>Date</Text>
             <DateTimePicker
@@ -125,26 +125,25 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     title: {
-        color: "#FF2225",
+        color: "#0C7EE9",
         fontWeight: "bold",
-        fontSize: 20,
+        fontSize: 24,
         marginBottom: 25,
     },
     inputStyle: {
         flex: 1,
-        fontSize: 18,
-        borderLeftColor: "black",
+        fontSize: 20,
+        borderLeftColor: "#1688F3",
         borderLeftWidth: 2,
         paddingLeft: 10,
         marginBottom: 10,
     },
     add: {
-        marginTop: 30,
+        marginTop: 50,
         width: "80%",
-        backgroundColor: "black",
+        backgroundColor: "#0B73D5",
         borderRadius: 5,
         elevation: 8,
-        backgroundColor: "#009688",
         borderRadius: 10,
         paddingVertical: 10,
         alignSelf: "center",
@@ -157,8 +156,9 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontWeight: "bold",
-        fontSize: 16,
-        marginTop: 15,
+        fontSize: 17,
+        marginTop: 20,
         marginBottom: 10,
+        color: "#3F4972",
     },
 });

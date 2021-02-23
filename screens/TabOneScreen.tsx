@@ -98,35 +98,35 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     bottomContainer: {
-        backgroundColor: "#292c36",
+        backgroundColor: "#F4F5F9",
         width: "100%",
         height: "100%",
         borderRadius: 30,
         padding: 20,
     },
     altTitle: {
-        color: "#1db954",
+        color: "#3F4972",
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 20,
     },
     categories: {
-        backgroundColor: "#292c36",
+        backgroundColor: "#F4F5F9",
         alignItems: "flex-start",
         width: "96%",
     },
     textContainer: {
-        backgroundColor: "#292c36",
+        backgroundColor: "#F4F5F9",
         flexDirection: "row",
         justifyContent: "space-between",
-        width: "95%",
+        width: "94.5s%",
         marginTop: 20,
     },
     link: {
-        color: "#1db954",
+        color: "#6C7AAE",
     },
     tasks: {
-        backgroundColor: "#292c36",
-        width: "95%",
+        backgroundColor: "#F4F5F9",
+        width: "97%",
     },
 });

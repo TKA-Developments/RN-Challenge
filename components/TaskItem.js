@@ -49,7 +49,7 @@ export default function TaskItem({
                 <Feather
                     name="x"
                     size={24}
-                    color="#1db954"
+                    color="#1688F3"
                     onPress={() => {
                         deleteTaskHandler(task.id);
                     }}
@@ -57,7 +57,7 @@ export default function TaskItem({
             </View>
 
             <Portal>
-                <Modalize ref={modalizeRef} modalHeight={500}>
+                <Modalize ref={modalizeRef} modalHeight={450}>
                     <Modal
                         categories={categories}
                         handleClose={handleClose}
@@ -76,7 +76,7 @@ export default function TaskItem({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#121212",
+        backgroundColor: "white",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
@@ -84,10 +84,10 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: "#121212",
+        borderColor: "white",
         shadowOffset: { width: 1, height: 4 },
         shadowOpacity: 1,
-        shadowColor: "#24262F",
+        shadowColor: "#DEE1ED",
         elevation: 2,
     },
     leftCont: {
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     text: {
-        color: "white",
+        color: "#02111E",
         fontWeight: "bold",
         marginLeft: 15,
         fontSize: 18,

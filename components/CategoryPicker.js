@@ -25,7 +25,9 @@ export default function CategoryPicker({
                       }
             }
         >
-            <Text style={styles.text}>{category}</Text>
+            <Text style={isPicked ? styles.textOn : styles.textOff}>
+                {category}
+            </Text>
         </TouchableOpacity>
     );
 }
@@ -36,7 +38,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
         paddingTop: 10,
         paddingBottom: 10,
-        backgroundColor: "black",
+        backgroundColor: "#DEE1ED",
         borderRadius: 10,
         borderWidth: 1,
         borderColor: "#fff",
@@ -46,13 +48,19 @@ const styles = StyleSheet.create({
         marginRight: 10,
         paddingTop: 10,
         paddingBottom: 10,
-        backgroundColor: "red",
+        backgroundColor: "#1688F3",
         borderRadius: 10,
         borderWidth: 1,
         borderColor: "#fff",
     },
-    text: {
-        color: "#fff",
+    textOff: {
+        color: "#0C7EE9",
+        textAlign: "center",
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    textOn: {
+        color: "#DEE1ED",
         textAlign: "center",
         paddingLeft: 10,
         paddingRight: 10,

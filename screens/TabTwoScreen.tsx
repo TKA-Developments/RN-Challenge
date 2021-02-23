@@ -48,7 +48,7 @@ export default function TabTwoScreen({
                         duration: 200,
                         highlightColor: "white",
                     }}
-                    calendarColor={"#ff5154"}
+                    calendarColor={"#1688F3"}
                     calendarHeaderStyle={{ color: "white" }}
                     dateNumberStyle={{ color: "white", fontSize: 18 }}
                     highlightDateNumberStyle={{ fontSize: 18 }}
@@ -88,7 +88,7 @@ export default function TabTwoScreen({
                     />
 
                     <Portal>
-                        <Modalize ref={modalizeRef} modalHeight={500}>
+                        <Modalize ref={modalizeRef} modalHeight={450}>
                             <Modal
                                 categories={categories}
                                 handleClose={handleClose}
@@ -106,8 +106,8 @@ export default function TabTwoScreen({
                 <TouchableOpacity onPress={handleOpen}>
                     <Ionicons
                         name="ios-add-circle-outline"
-                        size={60}
-                        color="black"
+                        size={70}
+                        color="#1688F3"
                     />
                 </TouchableOpacity>
             </View>
@@ -136,8 +136,8 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     altTitle: {
-        color: "#333333",
-        fontSize: 20,
+        color: "#3F4972",
+        fontSize: 24,
         fontWeight: "bold",
         marginBottom: 20,
     },
@@ -149,6 +149,6 @@ const styles = StyleSheet.create({
         position: "absolute",
         right: 30,
         bottom: 175,
-        backgroundColor: "white",
+        backgroundColor: "#F4F5F9",
     },
 });

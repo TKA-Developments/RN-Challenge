@@ -37,7 +37,7 @@ export default function TaskList({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#292c36",
+        backgroundColor: "#F4F5F9",
     },
     text: {
         color: "#FF2225",
