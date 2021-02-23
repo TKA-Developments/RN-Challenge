@@ -64,7 +64,9 @@ Your app should be able to complete these tasks:
 
 ## How to run the demo
 
-To start the demo, type in npm start inside the RN-Challenge directory
+To start the demo, type in npm start inside the RN-Challenge directory. 
+
+Note: For best viewing experience, please use the Expo Go app to test the app (I used Expo Go and the IOS emulator for the development of this app)
 
 1. Homescreen
 - In the homepage, you will see three distinct components
@@ -88,5 +90,5 @@ To start the demo, type in npm start inside the RN-Challenge directory
 - To indicate that you have completed a task, you can click on the gray circle on each task and it will turn green to indicate that you have completed that task. The text will also change to a lighter color and there will be a line striking through it.
 
 ## Demo GIF
-[![Demo](https://j.gifs.com/JyJwm9.gif)]
+<img src="https://j.gifs.com/JyJwm9.gif" height="500"/>
 
