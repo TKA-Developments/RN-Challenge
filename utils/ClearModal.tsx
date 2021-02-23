@@ -9,48 +9,38 @@ import {
 
 type Props = {
   onPress: () => any;
-  inpDescription: string;
-  setInpDescription: React.Dispatch<React.SetStateAction<string>>;
-  addTodo: (inp: string) => void;
+  clearTodos: () => void;
 };
 
-export default function AddModal({
-  onPress,
-  inpDescription,
-  setInpDescription,
-  addTodo,
-}: Props) {
+export default function ClearModal({ onPress, clearTodos }: Props) {
   return (
     <View style={styles.content}>
-      <Text style={styles.contentTitle}>Enter a description:</Text>
-      <TextInput
-        style={styles.inpDescription}
-        value={inpDescription}
-        autoCorrect={false}
-        onChangeText={(n: string) => setInpDescription(n)}
-      />
+      <Text style={styles.contentTitle}>
+        This will clear all Todos{"\n"}
+        Are you sure?
+      </Text>
+      <Text style={styles.tipText}>
+        Tip: Delete individual todos by swiping left on them.
+      </Text>
+
       <TouchableOpacity
         style={styles.button}
-        testID={"save-button"}
+        testID={"clear-button"}
         onPress={() => {
-          if (inpDescription.length > 0) {
-            addTodo(inpDescription);
-            onPress();
-            setInpDescription("");
-          }
+          clearTodos();
+          onPress();
         }}
       >
-        <Text style={styles.buttonText}>Save</Text>
+        <Text style={styles.clearButtonText}>Clear Todos</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         testID={"close-button"}
         onPress={() => {
           onPress();
-          setInpDescription("");
         }}
       >
-        <Text style={styles.buttonText}>Close</Text>
+        <Text style={styles.buttonText}>Cancel</Text>
       </TouchableOpacity>
     </View>
   );
@@ -68,6 +58,12 @@ const styles = StyleSheet.create({
   contentTitle: {
     fontSize: 20,
     marginBottom: 12,
+    textAlign: "center",
+  },
+  tipText: {
+    fontSize: 10,
+    textAlign: "center",
+    color: "grey",
   },
   button: {
     // borderWidth: 2,
@@ -80,6 +76,10 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     color: "#147EFB",
+  },
+  clearButtonText: {
+    fontSize: 18,
+    color: "#FC3158",
   },
   inpDescription: {
     backgroundColor: "#eee",

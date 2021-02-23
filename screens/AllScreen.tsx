@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import Modal from "react-native-modal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Text, View } from "../components/Themed";
 import ToDoList from "../components/ToDoList";
 import useColorScheme from "../hooks/useColorScheme";
 import AddModal from "../utils/AddModal";
 import EditModal from "../utils/EditModal";
-import { ITodo } from "../types";
+import ClearModal from "../utils/ClearModal";
 import { TodoContext } from "../provider/TodoProvider";
 
 export default function AllScreen() {
   const [isAddModalVisible, setAddModalVisible] = useState<boolean>(false);
   const [isEditModalVisible, setEditModalVisible] = useState<boolean>(false);
+  const [isClearModalVisible, setClearModalVisible] = useState<boolean>(false);
   const [inpDescription, setInpDescription] = useState<string>("");
   const [editIndex, setEditIndex] = useState<number>(0);
   const colorScheme = useColorScheme();
@@ -26,6 +27,10 @@ export default function AllScreen() {
   const toggleEditModal = (index: number) => {
     setEditIndex(index);
     setEditModalVisible(!isEditModalVisible);
+  };
+
+  const toggleClearModal = () => {
+    setClearModalVisible(!isClearModalVisible);
   };
 
   // const addTodo = (inp:string) => {
@@ -42,25 +47,44 @@ export default function AllScreen() {
       {({ todos, setTodos, addTodo, editTodo, clearTodos }) => {
         return (
           <View style={styles.container}>
-            <TouchableOpacity
-              style={styles.addButton}
-              onPress={() => {
-                toggleAddModal();
-              }}
-            >
-              <MaterialIcons
-                name="add-box"
-                size={35}
-                color={colorScheme === "dark" ? "white" : "black"}
-              />
-            </TouchableOpacity>
+            <View style={styles.topBarContainer}>
+              <View style={{ flex: 1 }}>
+                <TouchableOpacity
+                  style={styles.addButton}
+                  onPress={() => {
+                    toggleAddModal();
+                  }}
+                >
+                  <MaterialIcons
+                    name="add-box"
+                    size={35}
+                    color={colorScheme === "dark" ? "white" : "black"}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={{ position: "absolute", right: 20 }}>
+                <TouchableOpacity
+                  style={styles.clearButton}
+                  onPress={() => {
+                    toggleClearModal();
+                  }}
+                >
+                  {/* <MaterialIcons
+                    name="add-box"
+                    size={35}
+                    color={colorScheme === "dark" ? "white" : "black"}
+                  /> */}
+                  <FontAwesome5 name="times-circle" size={24} color="#FC3158" />
+                </TouchableOpacity>
+              </View>
+            </View>
             <ToDoList
               todos={todos}
               setTodos={setTodos}
               toggleEditModal={toggleEditModal}
               screen="all"
             />
-            <Modal testID={"modal"} isVisible={isAddModalVisible}>
+            <Modal testID={"add-modal"} isVisible={isAddModalVisible}>
               <AddModal
                 inpDescription={inpDescription}
                 setInpDescription={setInpDescription}
@@ -70,7 +94,7 @@ export default function AllScreen() {
                 addTodo={addTodo}
               />
             </Modal>
-            <Modal testID={"modal"} isVisible={isEditModalVisible}>
+            <Modal testID={"edit-modal"} isVisible={isEditModalVisible}>
               <EditModal
                 inpDescription={inpDescription}
                 setInpDescription={setInpDescription}
@@ -79,6 +103,14 @@ export default function AllScreen() {
                 }}
                 editTodo={editTodo}
                 editIndex={editIndex}
+              />
+            </Modal>
+            <Modal testID={"clear-modal"} isVisible={isClearModalVisible}>
+              <ClearModal
+                onPress={() => {
+                  toggleClearModal();
+                }}
+                clearTodos={clearTodos}
               />
             </Modal>
           </View>
@@ -105,9 +137,25 @@ const styles = StyleSheet.create({
     height: 1,
     width: "80%",
   },
+  topBarContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "stretch",
+    // borderWidth: 2,
+    // borderColor: "blue",
+  },
   addButton: {
     padding: 15,
-    // borderWidth:2,
-    // borderColor:'blue'
+    alignSelf: "center",
+    // borderWidth: 2,
+    // borderColor: "green",
+  },
+  clearButton: {
+    alignSelf: "flex-end",
+    // right: 0,
+    padding: 15,
+    // borderWidth: 2,
+    // borderColor: "red",
   },
 });
