@@ -5,8 +5,10 @@ export default function CategoryPicker({
     category,
     handlePickCategories,
     handleUnpickCategories,
+    status,
 }) {
-    const [isPicked, setIsPicked] = useState(false);
+    const [isPicked, setIsPicked] = useState(status);
+    console.log(isPicked);
 
     return (
         <TouchableOpacity
@@ -32,7 +34,6 @@ const styles = StyleSheet.create({
     buttonOff: {
         minWidth: 90,
         marginRight: 10,
-        marginTop: 10,
         paddingTop: 10,
         paddingBottom: 10,
         backgroundColor: "black",
@@ -43,7 +44,6 @@ const styles = StyleSheet.create({
     buttonOn: {
         minWidth: 90,
         marginRight: 10,
-        marginTop: 10,
         paddingTop: 10,
         paddingBottom: 10,
         backgroundColor: "red",

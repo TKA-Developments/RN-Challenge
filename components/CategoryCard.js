@@ -1,17 +1,63 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { TextInput } from "react-native-gesture-handler";
 
-export default function CategoryCard(props) {
+const icons = {
+    Important: (
+        <MaterialCommunityIcons
+            name="star-box-multiple-outline"
+            size={30}
+            color="#1db954"
+        />
+    ),
+    Personal: <Ionicons name="ios-person-outline" size={30} color="#1db954" />,
+    School: <Ionicons name="ios-school-outline" size={30} color="#1db954" />,
+    Family: (
+        <MaterialCommunityIcons
+            name="account-group-outline"
+            size={30}
+            color="#1db954"
+        />
+    ),
+};
+
+export default function CategoryCard({ category, tasks }) {
+    var amountOfTasks = 0;
+    for (var i = 0; i < tasks.length; i++) {
+        const currCategories = tasks[i].categories;
+        if (currCategories.includes(category)) {
+            amountOfTasks++;
+        }
+    }
+
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>{props.category}</Text>
+            <View style={styles.top}>
+                {icons[category]}
+                <View style={styles.textContainer}>
+                    <Text
+                        style={{
+                            fontWeight: "bold",
+                            fontSize: 18,
+                            color: "white",
+                        }}
+                    >
+                        {amountOfTasks}
+                    </Text>
+                    <Text style={{ color: "white" }}>Tasks</Text>
+                </View>
+            </View>
+            <Text style={styles.text}>{category}</Text>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "white",
+        backgroundColor: "#121212",
         margin: 15,
         marginTop: 0,
         marginLeft: 0,
@@ -19,13 +65,22 @@ const styles = StyleSheet.create({
         width: "46.9%",
         padding: 10,
         borderRadius: 12.5,
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.1,
-        shadowColor: "#9AAACF",
-        elevation: 1,
+        shadowOffset: { width: 1, height: 4 },
+        shadowOpacity: 1,
+        shadowColor: "#24262F",
+        elevation: 2,
     },
     text: {
-        color: "#FF2225",
+        color: "white",
         fontWeight: "bold",
+        fontSize: 16,
+    },
+    top: {
+        flexDirection: "row",
+        marginBottom: 10,
+        alignItems: "center",
+    },
+    textContainer: {
+        marginLeft: 10,
     },
 });

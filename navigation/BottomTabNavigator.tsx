@@ -29,7 +29,7 @@ export default function BottomTabNavigator() {
         setTasks([...tasks.filter((task) => task.id != id), modifiedTask]);
     };
 
-    function addTaskHandler(task, date, categories) {
+    const addTaskHandler = (task, date, categories) => {
         var num = tasks.length + 1;
 
         const newObj = {
@@ -41,7 +41,16 @@ export default function BottomTabNavigator() {
         };
 
         setTasks([...tasks, newObj]);
-    }
+    };
+
+    const editTaskHandler = (id, newTask, newDate, newCategories) => {
+        let modifiedTask = tasks.filter((task) => task.id == id)[0];
+        modifiedTask.task = newTask;
+        modifiedTask.date = newDate;
+        modifiedTask.categories = newCategories;
+
+        setTasks([...tasks.filter((task) => task.id != id), modifiedTask]);
+    };
 
     const deleteTaskHandler = (id) => {
         setTasks(tasks.filter((task) => task.id != id));
@@ -62,6 +71,7 @@ export default function BottomTabNavigator() {
                             categories={categories}
                             navigation={navigation}
                             deleteTaskHandler={deleteTaskHandler}
+                            editTaskHandler={editTaskHandler}
                         />
                     )}
                     options={{
@@ -80,6 +90,7 @@ export default function BottomTabNavigator() {
                             navigation={navigation}
                             addTaskHandler={addTaskHandler}
                             deleteTaskHandler={deleteTaskHandler}
+                            editTaskHandler={editTaskHandler}
                         />
                     )}
                     options={{
@@ -126,6 +137,7 @@ function TabOneNavigator(props) {
                         categories={props.categories}
                         checkHandler={props.checkHandler}
                         deleteTaskHandler={props.deleteTaskHandler}
+                        editTaskHandler={props.editTaskHandler}
                     />
                 )}
                 options={{ headerTitle: "Tab One Title" }}
@@ -152,6 +164,7 @@ function TabTwoNavigator(props) {
                         checkHandler={props.checkHandler}
                         addTaskHandler={props.addTaskHandler}
                         deleteTaskHandler={props.deleteTaskHandler}
+                        editTaskHandler={props.editTaskHandler}
                     />
                 )}
                 options={{ headerTitle: "Tab Two Title" }}

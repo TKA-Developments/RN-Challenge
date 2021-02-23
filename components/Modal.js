@@ -10,10 +10,20 @@ import {
 import CategoryPicker from "../components/CategoryPicker.js";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-export default function Modal({ categories, handleClose, addTaskHandler }) {
-    const [task, setTask] = useState("");
-    const [date, setDate] = useState(new Date());
-    const [pickedCategories, setPickedCategories] = useState([]);
+export default function Modal({
+    categories,
+    handleClose,
+    addTaskHandler,
+    editTaskHandler,
+    type,
+    initTask,
+    initDate,
+    initCategory,
+    id,
+}) {
+    const [task, setTask] = useState(initTask);
+    const [date, setDate] = useState(initDate);
+    const [pickedCategories, setPickedCategories] = useState(initCategory);
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -32,7 +42,12 @@ export default function Modal({ categories, handleClose, addTaskHandler }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Add Task</Text>
+            {type == "add" ? (
+                <Text style={styles.title}>Add Task</Text>
+            ) : (
+                <Text style={styles.title}>Edit Task</Text>
+            )}
+
             <TextInput
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -40,8 +55,9 @@ export default function Modal({ categories, handleClose, addTaskHandler }) {
                 placeholder="Your Task Name"
                 value={task}
                 onChangeText={setTask}
+                placeholderTextColor="black"
             />
-            <Text>Date</Text>
+            <Text style={styles.subtitle}>Date</Text>
             <DateTimePicker
                 testID="dateTimePicker"
                 value={date}
@@ -49,7 +65,7 @@ export default function Modal({ categories, handleClose, addTaskHandler }) {
                 display="default"
                 onChange={onChange}
             />
-            <Text>Categories</Text>
+            <Text style={styles.subtitle}>Categories</Text>
             <FlatList
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -60,23 +76,42 @@ export default function Modal({ categories, handleClose, addTaskHandler }) {
                         category={item.category}
                         handlePickCategories={handlePickCategories}
                         handleUnpickCategories={handleUnpickCategories}
+                        status={
+                            pickedCategories.includes(item.category)
+                                ? true
+                                : false
+                        }
                     />
                 )}
             />
             <TouchableOpacity
                 style={styles.add}
-                onPress={() => {
-                    setTimeout(() => {
-                        addTaskHandler(
-                            task,
-                            new Date(date.toDateString()),
-                            pickedCategories
-                        );
-                        handleClose();
-                    }, 100);
-                }}
+                onPress={
+                    type == "add"
+                        ? () => {
+                              addTaskHandler(
+                                  task,
+                                  new Date(date.toDateString()),
+                                  pickedCategories
+                              );
+                              handleClose();
+                          }
+                        : () => {
+                              editTaskHandler(
+                                  id,
+                                  task,
+                                  new Date(date.toDateString()),
+                                  pickedCategories
+                              );
+                              handleClose();
+                          }
+                }
             >
-                <Text style={styles.text}>Create Task</Text>
+                {type == "add" ? (
+                    <Text style={styles.text}>Create Task</Text>
+                ) : (
+                    <Text style={styles.text}>Edit Task</Text>
+                )}
             </TouchableOpacity>
         </View>
     );
@@ -93,17 +128,37 @@ const styles = StyleSheet.create({
         color: "#FF2225",
         fontWeight: "bold",
         fontSize: 20,
+        marginBottom: 25,
     },
     inputStyle: {
         flex: 1,
         fontSize: 18,
-        borderWidth: 1,
+        borderLeftColor: "black",
+        borderLeftWidth: 2,
+        paddingLeft: 10,
+        marginBottom: 10,
     },
     add: {
-        width: "90%",
+        marginTop: 30,
+        width: "80%",
         backgroundColor: "black",
+        borderRadius: 5,
+        elevation: 8,
+        backgroundColor: "#009688",
+        borderRadius: 10,
+        paddingVertical: 10,
+        alignSelf: "center",
     },
     text: {
-        color: "white",
+        fontSize: 18,
+        color: "#fff",
+        fontWeight: "bold",
+        alignSelf: "center",
+    },
+    subtitle: {
+        fontWeight: "bold",
+        fontSize: 16,
+        marginTop: 15,
+        marginBottom: 10,
     },
 });

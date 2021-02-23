@@ -2,11 +2,12 @@ import React, { useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
 import { Modalize } from "react-native-modalize";
-import { Host, Portal } from "react-native-portalize";
+import { Portal } from "react-native-portalize";
 
 import { Text, View } from "../components/Themed";
 import TaskList from "../components/TaskList.js";
 import Modal from "../components/Modal.js";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function TabTwoScreen({
     navigation,
@@ -15,8 +16,15 @@ export default function TabTwoScreen({
     checkHandler,
     addTaskHandler,
     deleteTaskHandler,
+    editTaskHandler,
 }) {
     const modalizeRef = useRef<Modalize>(null);
+
+    const [date, setDate] = useState(new Date().toDateString());
+
+    const tasksToday = tasks.filter(
+        (task) => task != undefined && task.date.toDateString() == date
+    );
 
     const handleOpen = () => {
         modalizeRef.current?.open();
@@ -27,29 +35,6 @@ export default function TabTwoScreen({
             modalizeRef.current.close();
         }
     };
-
-    console.log(tasks);
-
-    const [tasksList, setTasksList] = useState(
-        tasks.filter(
-            (task) =>
-                task != undefined &&
-                task.date.toDateString() == new Date().toDateString()
-        )
-    );
-
-    // s
-
-    // const mainAddHandler = (task, date, categories) => {
-    //     addTaskHandler(task, date, categories);
-    //     setTasksList(
-    //         tasks.filter(
-    //             (task) =>
-    //                 task != undefined &&
-    //                 task.date.toDateString() == new Date().toDateString()
-    //         )
-    //     );
-    // };
 
     return (
         <View style={styles.container}>
@@ -80,14 +65,7 @@ export default function TabTwoScreen({
                     startDate={true}
                     calendarHeaderStyle={{ fontSize: 20, color: "white" }}
                     onDateSelected={(date) =>
-                        setTasksList(
-                            tasks.filter(
-                                (task) =>
-                                    task != undefined &&
-                                    task.date.toDateString() ==
-                                        new Date(date).toDateString()
-                            )
-                        )
+                        setDate(new Date(date).toDateString())
                     }
                 />
             </View>
@@ -95,7 +73,7 @@ export default function TabTwoScreen({
                 <Text style={styles.altTitle}>Today's Tasks</Text>
                 <View style={styles.tasks}>
                     <TaskList
-                        taskList={tasksList.sort((a, b) => {
+                        taskList={tasksToday.sort((a, b) => {
                             if (a.date - b.date > 0) return 1;
                             else if (a.date - b.date < 0) return -1;
                             else {
@@ -104,11 +82,10 @@ export default function TabTwoScreen({
                         })}
                         checkHandler={checkHandler}
                         deleteTaskHandler={deleteTaskHandler}
+                        editTaskHandler={editTaskHandler}
+                        categories={categories}
                         key={tasks}
                     />
-                    <TouchableOpacity onPress={handleOpen}>
-                        <Text>Open the modal</Text>
-                    </TouchableOpacity>
 
                     <Portal>
                         <Modalize ref={modalizeRef} modalHeight={500}>
@@ -116,10 +93,23 @@ export default function TabTwoScreen({
                                 categories={categories}
                                 handleClose={handleClose}
                                 addTaskHandler={addTaskHandler}
+                                type="add"
+                                init=""
+                                initDate={new Date()}
+                                initCategory={[]}
                             />
                         </Modalize>
                     </Portal>
                 </View>
+            </View>
+            <View style={styles.icon}>
+                <TouchableOpacity onPress={handleOpen}>
+                    <Ionicons
+                        name="ios-add-circle-outline"
+                        size={60}
+                        color="black"
+                    />
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -154,5 +144,11 @@ const styles = StyleSheet.create({
     tasks: {
         backgroundColor: "black",
         width: "95%",
+    },
+    icon: {
+        position: "absolute",
+        right: 30,
+        bottom: 175,
+        backgroundColor: "white",
     },
 });

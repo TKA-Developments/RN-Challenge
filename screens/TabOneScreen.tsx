@@ -13,6 +13,7 @@ export default function TabOneScreen({
     categories,
     checkHandler,
     deleteTaskHandler,
+    editTaskHandler,
 }) {
     console.log(tasks);
     const [search, setSearch] = useState("");
@@ -43,7 +44,10 @@ export default function TabOneScreen({
                                 numColumns={2}
                                 keyExtractor={(item) => item.id}
                                 renderItem={({ item }) => (
-                                    <CategoryCard category={item.category} />
+                                    <CategoryCard
+                                        category={item.category}
+                                        tasks={tasks}
+                                    />
                                 )}
                             />
                         </View>
@@ -66,6 +70,8 @@ export default function TabOneScreen({
                                 })}
                                 checkHandler={checkHandler}
                                 deleteTaskHandler={deleteTaskHandler}
+                                editTaskHandler={editTaskHandler}
+                                categories={categories}
                             />
                         </View>
                     </View>
@@ -92,34 +98,35 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     bottomContainer: {
-        backgroundColor: "#F4F5F9",
+        backgroundColor: "#292c36",
         width: "100%",
         height: "100%",
         borderRadius: 30,
         padding: 20,
     },
     altTitle: {
-        color: "#333333",
+        color: "#1db954",
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 20,
     },
     categories: {
-        backgroundColor: "#F4F5F9",
+        backgroundColor: "#292c36",
         alignItems: "flex-start",
         width: "96%",
     },
     textContainer: {
-        backgroundColor: "#F4F5F9",
+        backgroundColor: "#292c36",
         flexDirection: "row",
         justifyContent: "space-between",
         width: "95%",
+        marginTop: 20,
     },
     link: {
-        color: "#333333",
+        color: "#1db954",
     },
     tasks: {
-        backgroundColor: "#F4F5F9",
+        backgroundColor: "#292c36",
         width: "95%",
     },
 });
