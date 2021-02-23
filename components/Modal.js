@@ -6,6 +6,7 @@ import {
     Text,
     TextInput,
     FlatList,
+    Alert,
 } from "react-native";
 import CategoryPicker from "../components/CategoryPicker.js";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -39,6 +40,14 @@ export default function Modal({
             pickedCategories.filter((item) => item != category)
         );
     };
+
+    const emptyNameAlert = () =>
+        Alert.alert("Empty Task Name", "Please specify a name for your task.", [
+            {
+                text: "Ok",
+                onPress: () => {},
+            },
+        ]);
 
     return (
         <View style={styles.container}>
@@ -87,24 +96,26 @@ export default function Modal({
             <TouchableOpacity
                 style={styles.add}
                 onPress={
-                    type == "add"
-                        ? () => {
-                              addTaskHandler(
-                                  task,
-                                  new Date(date.toDateString()),
-                                  pickedCategories
-                              );
-                              handleClose();
-                          }
-                        : () => {
-                              editTaskHandler(
-                                  id,
-                                  task,
-                                  new Date(date.toDateString()),
-                                  pickedCategories
-                              );
-                              handleClose();
-                          }
+                    task != ""
+                        ? type == "add"
+                            ? () => {
+                                  addTaskHandler(
+                                      task,
+                                      new Date(date.toDateString()),
+                                      pickedCategories
+                                  );
+                                  handleClose();
+                              }
+                            : () => {
+                                  editTaskHandler(
+                                      id,
+                                      task,
+                                      new Date(date.toDateString()),
+                                      pickedCategories
+                                  );
+                                  handleClose();
+                              }
+                        : () => emptyNameAlert()
                 }
             >
                 {type == "add" ? (

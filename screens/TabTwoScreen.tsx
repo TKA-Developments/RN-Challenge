@@ -109,7 +109,7 @@ export default function TabTwoScreen({
                                 handleClose={handleClose}
                                 addTaskHandler={addTaskHandler}
                                 type="add"
-                                init=""
+                                initTask=""
                                 initDate={new Date()}
                                 initCategory={[]}
                             />
