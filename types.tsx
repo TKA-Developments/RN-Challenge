@@ -26,3 +26,11 @@ export interface ITodo {
   description: string;
   date: string;
 }
+
+export interface ITodoContext {
+  todos: ITodo[];
+  setTodos: React.Dispatch<React.SetStateAction<ITodo[]>>;
+  addTodo: (inp: string) => Promise<void>;
+  editTodo: (inp: string, index: number) => Promise<void>;
+  clearTodos: () => Promise<void>;
+}

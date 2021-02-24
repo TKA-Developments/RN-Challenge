@@ -44,11 +44,19 @@ export default function AllScreen() {
 
   return (
     <TodoContext.Consumer>
-      {({ todos, setTodos, addTodo, editTodo, clearTodos }) => {
-        return (
+      {({
+        todos,
+        setTodos,
+        addTodo,
+        editTodo,
+        clearTodos,
+        setDone,
+        removeTodo,
+      }) =>
+        todos.length > 0 ? (
           <View style={styles.container}>
             <View style={styles.topBarContainer}>
-              <View style={{ flex: 1 }}>
+              <View>
                 <TouchableOpacity
                   style={styles.addButton}
                   onPress={() => {
@@ -78,12 +86,29 @@ export default function AllScreen() {
                 </TouchableOpacity>
               </View>
             </View>
+            {/* {todos.length > 0 ? (
+            <View> */}
             <ToDoList
               todos={todos}
               setTodos={setTodos}
               toggleEditModal={toggleEditModal}
               screen="all"
+              removeTodo={removeTodo}
+              setDone={setDone}
             />
+            <Text
+              style={styles.tipText}
+              lightColor="#7a7a7a"
+              darkColor="rgba(255,255,255,0.6)"
+            >
+              Tip: Tap on a Todo to edit its description
+            </Text>
+            {/* </View>
+          ) : (
+            <Text style={{ bottom: 30 }}>
+              Tap the icon above to start adding Todos! 😃
+            </Text>
+          )} */}
             <Modal testID={"add-modal"} isVisible={isAddModalVisible}>
               <AddModal
                 inpDescription={inpDescription}
@@ -114,8 +139,94 @@ export default function AllScreen() {
               />
             </Modal>
           </View>
-        );
-      }}
+        ) : (
+          <View style={styles.container}>
+            <View style={styles.topBarContainer}>
+              <View>
+                <TouchableOpacity
+                  style={styles.addButton}
+                  onPress={() => {
+                    toggleAddModal();
+                  }}
+                >
+                  <MaterialIcons
+                    name="add-box"
+                    size={35}
+                    color={colorScheme === "dark" ? "white" : "black"}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={{ position: "absolute", right: 20 }}>
+                <TouchableOpacity
+                  style={styles.clearButton}
+                  onPress={() => {
+                    toggleClearModal();
+                  }}
+                >
+                  {/* <MaterialIcons
+                    name="add-box"
+                    size={35}
+                    color={colorScheme === "dark" ? "white" : "black"}
+                  /> */}
+                  <FontAwesome5 name="times-circle" size={24} color="#FC3158" />
+                </TouchableOpacity>
+              </View>
+            </View>
+            {/* {todos.length > 0 ? (
+            <View> */}
+            {/* <ToDoList
+            todos={todos}
+            setTodos={setTodos}
+            toggleEditModal={toggleEditModal}
+            screen="all"
+          />
+          <Text
+            style={styles.tipText}
+            lightColor="#7a7a7a"
+            darkColor="rgba(255,255,255,0.6)"
+          >
+            Tip: Tap on a Todo to edit its description
+          </Text> */}
+            {/* </View>
+          ) : ( */}
+            <View style={styles.container}>
+              <Text style={{ bottom: 30 }}>
+                Tap the icon above to start adding Todos! 😃
+              </Text>
+            </View>
+            {/* )} */}
+            <Modal testID={"add-modal"} isVisible={isAddModalVisible}>
+              <AddModal
+                inpDescription={inpDescription}
+                setInpDescription={setInpDescription}
+                onPress={() => {
+                  toggleAddModal();
+                }}
+                addTodo={addTodo}
+              />
+            </Modal>
+            <Modal testID={"edit-modal"} isVisible={isEditModalVisible}>
+              <EditModal
+                inpDescription={inpDescription}
+                setInpDescription={setInpDescription}
+                onPress={() => {
+                  toggleEditModal(editIndex);
+                }}
+                editTodo={editTodo}
+                editIndex={editIndex}
+              />
+            </Modal>
+            <Modal testID={"clear-modal"} isVisible={isClearModalVisible}>
+              <ClearModal
+                onPress={() => {
+                  toggleClearModal();
+                }}
+                clearTodos={clearTodos}
+              />
+            </Modal>
+          </View>
+        )
+      }
     </TodoContext.Consumer>
   );
 }
@@ -157,5 +268,11 @@ const styles = StyleSheet.create({
     padding: 15,
     // borderWidth: 2,
     // borderColor: "red",
+  },
+  tipText: {
+    fontSize: 11,
+    bottom: 10,
+    // borderWidth: 2,
+    // borderColor: "green",
   },
 });

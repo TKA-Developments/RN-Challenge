@@ -12,6 +12,8 @@ export default function ToDos({
   setTodos,
   toggleEditModal,
   screen,
+  setDone,
+  removeTodo,
 }: {
   todos: ITodo[];
   setTodos: React.Dispatch<
@@ -25,6 +27,8 @@ export default function ToDos({
   >;
   toggleEditModal: (index: number) => void;
   screen: "all" | "completed" | "incompleted";
+  setDone: (index: number) => void;
+  removeTodo: (index: number) => void;
 }) {
   const colorScheme: string = useColorScheme() === "dark" ? "white" : "black";
 
@@ -38,6 +42,7 @@ export default function ToDos({
     <SwipeListView
       keyExtractor={(e, i) => i.toString()}
       data={todos}
+      recalculateHiddenLayout={true}
       renderItem={({ item, index }) => {
         const padding = index === todos.length - 1 ? 40 : 0;
 
@@ -53,8 +58,7 @@ export default function ToDos({
             <View style={{ ...styles.todoContainer }}>
               <TouchableOpacity
                 onPress={() => {
-                  todos[index].done = !todos[index].done;
-                  setTodos([...todos]);
+                  setDone(index);
                 }}
                 style={styles.checkbox}
               >
@@ -64,7 +68,7 @@ export default function ToDos({
                       ? "checkbox-marked-circle"
                       : "checkbox-blank-circle-outline"
                   }
-                  size={28}
+                  size={30}
                   color={colorScheme}
                 />
               </TouchableOpacity>
@@ -79,7 +83,7 @@ export default function ToDos({
             </View>
             <View
               style={styles.separator}
-              lightColor="#eee"
+              lightColor="#ccc"
               darkColor="rgba(255,255,255,0.1)"
             />
           </View>
@@ -89,11 +93,11 @@ export default function ToDos({
       }}
       renderHiddenItem={({ item, index }, rowMap) => {
         const padding = index === todos.length - 1 ? 40 : 0;
-
+        console.log(screen === "completed" && item.done);
         return (screen === "completed" && item.done) ||
           (screen === "incompleted" && !item.done) ||
           screen === "all" ? (
-          <View style={{ ...styles.hiddenContainer, paddingBottom: 0 }}>
+          <View style={styles.hiddenContainer}>
             <View style={[styles.backRightBtn, styles.backRightBtnLeft]}>
               <Text style={styles.date}>Created: {item.date}</Text>
             </View>
@@ -105,8 +109,7 @@ export default function ToDos({
                 size={24}
                 color={colorScheme}
                 onPress={() => {
-                  todos.splice(index, 1);
-                  setTodos([...todos]);
+                  removeTodo(index);
                   closeRow(rowMap, index);
                 }}
               />
@@ -147,7 +150,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   description: {
-    fontSize: 14,
+    fontSize: 15,
   },
   hiddenContainer: {
     alignItems: "center",
@@ -180,7 +183,7 @@ const styles = StyleSheet.create({
   },
   separator: {
     marginVertical: 1,
-    height: 1,
+    height: 2,
     width: "80%",
   },
 });

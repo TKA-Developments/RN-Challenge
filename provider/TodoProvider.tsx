@@ -1,47 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { ITodo } from "../types";
-
-// const toDo: ITodo[] = [
-//   {
-//     done: false,
-//     description: "Berak di kosan",
-//     date: new Date().toDateString(),
-//   },
-//   {
-//     done: false,
-//     description:
-//       "Berak di kosan, abis itu mandi terus makan abis itu sikat gigi",
-//     date: new Date().toDateString(),
-//   },
-//   {
-//     done: false,
-//     description: "Mandi di sumur",
-//     date: new Date().toDateString(),
-//   },
-//   {
-//     done: false,
-//     description: "Berak di kosan",
-//     date: new Date().toDateString(),
-//   },
-//   {
-//     done: false,
-//     description:
-//       "Berak di kosan, abis itu mandi terus makan abis itu sikat gigi",
-//     date: new Date().toDateString(),
-//   },
-//   {
-//     done: false,
-//     description: "Mandi di sumur",
-//     date: new Date().toDateString(),
-//   },
-// ];
+import { ITodo, ITodoContext } from "../types";
 
 const TodoContext = React.createContext<any>(null);
 
 const TodoProvider = ({ children }: { children: any }) => {
   const [todos, setTodos] = useState<ITodo[]>([]);
+
+  const getData = async () => {
+    let data = (await AsyncStorage.getItem("todos")) ?? "[]";
+
+    let res = await JSON.parse(data);
+    setTodos(res);
+    console.log(data);
+  };
+  useEffect(() => {
+    console.log(todos);
+    // getData();
+  }, [todos]);
 
   useEffect(() => {
     console.log("TodoProvider useEffect called");
@@ -88,6 +65,32 @@ const TodoProvider = ({ children }: { children: any }) => {
     }
   };
 
+  const setDone = async (index: number) => {
+    todos[index].done = !todos[index].done;
+    const newTodo = [...todos];
+
+    setTodos(newTodo);
+
+    try {
+      await AsyncStorage.setItem("todos", JSON.stringify(newTodo));
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  const removeTodo = async (index: number) => {
+    todos.splice(index, 1);
+    const newTodo = [...todos];
+
+    setTodos(newTodo);
+
+    try {
+      await AsyncStorage.setItem("todos", JSON.stringify(newTodo));
+    } catch (err) {
+      alert(err);
+    }
+  };
+
   const clearTodos = async () => {
     const newTodo: ITodo[] = [];
 
@@ -102,7 +105,15 @@ const TodoProvider = ({ children }: { children: any }) => {
 
   return (
     <TodoContext.Provider
-      value={{ todos, setTodos, addTodo, editTodo, clearTodos }}
+      value={{
+        todos,
+        setTodos,
+        addTodo,
+        editTodo,
+        clearTodos,
+        setDone,
+        removeTodo,
+      }}
     >
       {children}
     </TodoContext.Provider>

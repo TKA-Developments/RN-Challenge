@@ -38,49 +38,39 @@ export default function CompletedScreen() {
 
   return (
     <TodoContext.Consumer>
-      {({ todos, setTodos, addTodo, editTodo }) => (
-        <View style={styles.container}>
-          {/* <TouchableOpacity
-            style={styles.addButton}
-            onPress={() => {
-              toggleAddModal();
-            }}
-          >
-            <MaterialIcons
-              name="add-box"
-              size={35}
-              color={colorScheme === "dark" ? "white" : "black"}
+      {({ todos, setTodos, addTodo, editTodo, setDone, removeTodo }) =>
+        todos.filter((e: ITodo) => {
+          return e.done;
+        }).length > 0 ? (
+          <View style={styles.container}>
+            <ToDoList
+              todos={todos}
+              setTodos={setTodos}
+              toggleEditModal={toggleEditModal}
+              screen="completed"
+              setDone={setDone}
+              removeTodo={removeTodo}
             />
-          </TouchableOpacity> */}
-          <ToDoList
-            todos={todos}
-            setTodos={setTodos}
-            toggleEditModal={toggleEditModal}
-            screen="completed"
-          />
-          {/* <Modal testID={"modal"} isVisible={isAddModalVisible}>
-            <AddModal
-              inpDescription={inpDescription}
-              setInpDescription={setInpDescription}
-              onPress={() => {
-                toggleAddModal();
-              }}
-              addTodo={addTodo}
-            />
-          </Modal> */}
-          <Modal testID={"modal"} isVisible={isEditModalVisible}>
-            <EditModal
-              inpDescription={inpDescription}
-              setInpDescription={setInpDescription}
-              onPress={() => {
-                toggleEditModal(editIndex);
-              }}
-              editTodo={editTodo}
-              editIndex={editIndex}
-            />
-          </Modal>
-        </View>
-      )}
+            <Modal testID={"modal"} isVisible={isEditModalVisible}>
+              <EditModal
+                inpDescription={inpDescription}
+                setInpDescription={setInpDescription}
+                onPress={() => {
+                  toggleEditModal(editIndex);
+                }}
+                editTodo={editTodo}
+                editIndex={editIndex}
+              />
+            </Modal>
+          </View>
+        ) : (
+          <View style={styles.container}>
+            <Text style={{ bottom: 12 }}>
+              Mark some Todos as done to see Todos here
+            </Text>
+          </View>
+        )
+      }
     </TodoContext.Consumer>
   );
 }

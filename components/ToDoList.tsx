@@ -11,6 +11,8 @@ export default function ToDoList({
   setTodos,
   toggleEditModal,
   screen,
+  setDone,
+  removeTodo,
 }: {
   todos: ITodo[];
   setTodos: React.Dispatch<
@@ -24,6 +26,8 @@ export default function ToDoList({
   >;
   toggleEditModal: (index: number) => void;
   screen: "all" | "completed" | "incompleted";
+  setDone: (index: number) => void;
+  removeTodo: (index: number) => void;
 }) {
   // useEffect(() => {
   //   setToDosFromAsyncStorage();
@@ -49,6 +53,8 @@ export default function ToDoList({
         setTodos={setTodos}
         toggleEditModal={toggleEditModal}
         screen={screen}
+        setDone={setDone}
+        removeTodo={removeTodo}
       />
     </View>
   );
