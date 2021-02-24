@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { View, Text } from "./Themed";
 import useColorScheme from "../hooks/useColorScheme";
-import { ITodo } from "../types";
+import { ITodo, todoProps } from "../types";
 
 export default function ToDos({
   todos,
@@ -14,22 +14,7 @@ export default function ToDos({
   screen,
   setDone,
   removeTodo,
-}: {
-  todos: ITodo[];
-  setTodos: React.Dispatch<
-    React.SetStateAction<
-      {
-        done: boolean;
-        description: string;
-        date: string;
-      }[]
-    >
-  >;
-  toggleEditModal: (index: number) => void;
-  screen: "all" | "completed" | "incompleted";
-  setDone: (index: number) => void;
-  removeTodo: (index: number) => void;
-}) {
+}: todoProps) {
   const colorScheme: string = useColorScheme() === "dark" ? "white" : "black";
 
   const closeRow = (rowMap: RowMap<ITodo>, rowKey: number) => {
@@ -44,8 +29,6 @@ export default function ToDos({
       data={todos}
       recalculateHiddenLayout={true}
       renderItem={({ item, index }) => {
-        const padding = index === todos.length - 1 ? 40 : 0;
-
         return (screen === "completed" && item.done) ||
           (screen === "incompleted" && !item.done) ||
           screen === "all" ? (
@@ -92,8 +75,6 @@ export default function ToDos({
         );
       }}
       renderHiddenItem={({ item, index }, rowMap) => {
-        const padding = index === todos.length - 1 ? 40 : 0;
-        console.log(screen === "completed" && item.done);
         return (screen === "completed" && item.done) ||
           (screen === "incompleted" && !item.done) ||
           screen === "all" ? (

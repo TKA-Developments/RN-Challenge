@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
+import {
+  MaterialIcons,
+  MaterialCommunityIcons,
+  FontAwesome5,
+} from "@expo/vector-icons";
 import Modal from "react-native-modal";
+import axios from "axios";
 
 import { Text, View } from "../components/Themed";
 import ToDoList from "../components/ToDoList";
@@ -10,15 +14,30 @@ import useColorScheme from "../hooks/useColorScheme";
 import AddModal from "../utils/AddModal";
 import EditModal from "../utils/EditModal";
 import ClearModal from "../utils/ClearModal";
+import CatModal from "../utils/CatModal";
 import { TodoContext } from "../provider/TodoProvider";
+const API_URL = "https://api.thecatapi.com/v1/images/search";
 
 export default function AllScreen() {
   const [isAddModalVisible, setAddModalVisible] = useState<boolean>(false);
   const [isEditModalVisible, setEditModalVisible] = useState<boolean>(false);
   const [isClearModalVisible, setClearModalVisible] = useState<boolean>(false);
+  const [isCatModalVisible, setCatModalVisible] = useState<boolean>(false);
+  const [imgIsLoading, setImgIsLoading] = useState<boolean>(false);
   const [inpDescription, setInpDescription] = useState<string>("");
   const [editIndex, setEditIndex] = useState<number>(0);
+  const [imgUrl, setImgUrl] = useState<string>("");
   const colorScheme = useColorScheme();
+
+  useEffect(() => {
+    setCatImgUrl();
+  }, []);
+
+  const setCatImgUrl = () => {
+    axios.get(API_URL).then((res) => {
+      setImgUrl(res.data[0].url);
+    });
+  };
 
   const toggleAddModal = () => {
     setAddModalVisible(!isAddModalVisible);
@@ -33,14 +52,10 @@ export default function AllScreen() {
     setClearModalVisible(!isClearModalVisible);
   };
 
-  // const addTodo = (inp:string) => {
-  //   setTodos([...todos, {done:false,description:inp,date:new Date()}])
-  // }
-
-  // const editTodo = (inp:string, index:number) => {
-  //   todos[index].description = inp
-  //   setTodos([...todos])
-  // }
+  const toggleCatModal = () => {
+    setCatModalVisible(!isCatModalVisible);
+    !isCatModalVisible && setCatImgUrl();
+  };
 
   return (
     <TodoContext.Consumer>
@@ -56,6 +71,20 @@ export default function AllScreen() {
         todos.length > 0 ? (
           <View style={styles.container}>
             <View style={styles.topBarContainer}>
+              <View style={{ position: "absolute", left: 20 }}>
+                <TouchableOpacity
+                  style={styles.catButton}
+                  onPress={() => {
+                    toggleCatModal();
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="cat"
+                    size={24}
+                    color="#FECB2E"
+                  />
+                </TouchableOpacity>
+              </View>
               <View>
                 <TouchableOpacity
                   style={styles.addButton}
@@ -77,17 +106,10 @@ export default function AllScreen() {
                     toggleClearModal();
                   }}
                 >
-                  {/* <MaterialIcons
-                    name="add-box"
-                    size={35}
-                    color={colorScheme === "dark" ? "white" : "black"}
-                  /> */}
                   <FontAwesome5 name="times-circle" size={24} color="#FC3158" />
                 </TouchableOpacity>
               </View>
             </View>
-            {/* {todos.length > 0 ? (
-            <View> */}
             <ToDoList
               todos={todos}
               setTodos={setTodos}
@@ -103,12 +125,7 @@ export default function AllScreen() {
             >
               Tip: Tap on a Todo to edit its description
             </Text>
-            {/* </View>
-          ) : (
-            <Text style={{ bottom: 30 }}>
-              Tap the icon above to start adding Todos! 😃
-            </Text>
-          )} */}
+
             <Modal testID={"add-modal"} isVisible={isAddModalVisible}>
               <AddModal
                 inpDescription={inpDescription}
@@ -138,10 +155,35 @@ export default function AllScreen() {
                 clearTodos={clearTodos}
               />
             </Modal>
+            <Modal testID={"cat-modal"} isVisible={isCatModalVisible}>
+              <CatModal
+                onPress={() => {
+                  toggleCatModal();
+                }}
+                imgUrl={imgUrl}
+                imgIsLoading={imgIsLoading}
+                setImgIsLoading={setImgIsLoading}
+                isCatModalVisible={isCatModalVisible}
+              />
+            </Modal>
           </View>
         ) : (
           <View style={styles.container}>
             <View style={styles.topBarContainer}>
+              <View style={{ position: "absolute", left: 20 }}>
+                <TouchableOpacity
+                  style={styles.catButton}
+                  onPress={() => {
+                    toggleCatModal();
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="cat"
+                    size={24}
+                    color={colorScheme === "dark" ? "white" : "black"}
+                  />
+                </TouchableOpacity>
+              </View>
               <View>
                 <TouchableOpacity
                   style={styles.addButton}
@@ -163,38 +205,15 @@ export default function AllScreen() {
                     toggleClearModal();
                   }}
                 >
-                  {/* <MaterialIcons
-                    name="add-box"
-                    size={35}
-                    color={colorScheme === "dark" ? "white" : "black"}
-                  /> */}
                   <FontAwesome5 name="times-circle" size={24} color="#FC3158" />
                 </TouchableOpacity>
               </View>
             </View>
-            {/* {todos.length > 0 ? (
-            <View> */}
-            {/* <ToDoList
-            todos={todos}
-            setTodos={setTodos}
-            toggleEditModal={toggleEditModal}
-            screen="all"
-          />
-          <Text
-            style={styles.tipText}
-            lightColor="#7a7a7a"
-            darkColor="rgba(255,255,255,0.6)"
-          >
-            Tip: Tap on a Todo to edit its description
-          </Text> */}
-            {/* </View>
-          ) : ( */}
             <View style={styles.container}>
               <Text style={{ bottom: 30 }}>
                 Tap the icon above to start adding Todos! 😃
               </Text>
             </View>
-            {/* )} */}
             <Modal testID={"add-modal"} isVisible={isAddModalVisible}>
               <AddModal
                 inpDescription={inpDescription}
@@ -222,6 +241,17 @@ export default function AllScreen() {
                   toggleClearModal();
                 }}
                 clearTodos={clearTodos}
+              />
+            </Modal>
+            <Modal testID={"cat-modal"} isVisible={isCatModalVisible}>
+              <CatModal
+                onPress={() => {
+                  toggleCatModal();
+                }}
+                imgUrl={imgUrl}
+                imgIsLoading={imgIsLoading}
+                setImgIsLoading={setImgIsLoading}
+                isCatModalVisible={isCatModalVisible}
               />
             </Modal>
           </View>
@@ -255,6 +285,10 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     // borderWidth: 2,
     // borderColor: "blue",
+  },
+  catButton: {
+    alignSelf: "flex-start",
+    padding: 15,
   },
   addButton: {
     padding: 15,

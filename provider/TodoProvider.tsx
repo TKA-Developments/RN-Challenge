@@ -8,18 +8,6 @@ const TodoContext = React.createContext<any>(null);
 const TodoProvider = ({ children }: { children: any }) => {
   const [todos, setTodos] = useState<ITodo[]>([]);
 
-  const getData = async () => {
-    let data = (await AsyncStorage.getItem("todos")) ?? "[]";
-
-    let res = await JSON.parse(data);
-    setTodos(res);
-    console.log(data);
-  };
-  useEffect(() => {
-    console.log(todos);
-    // getData();
-  }, [todos]);
-
   useEffect(() => {
     console.log("TodoProvider useEffect called");
     setToDosFromAsyncStorage();

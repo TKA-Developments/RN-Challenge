@@ -34,3 +34,20 @@ export interface ITodoContext {
   editTodo: (inp: string, index: number) => Promise<void>;
   clearTodos: () => Promise<void>;
 }
+
+export type todoProps = {
+  todos: ITodo[];
+  setTodos: React.Dispatch<
+    React.SetStateAction<
+      {
+        done: boolean;
+        description: string;
+        date: string;
+      }[]
+    >
+  >;
+  toggleEditModal: (index: number) => void;
+  screen: "all" | "completed" | "incompleted";
+  setDone: (index: number) => void;
+  removeTodo: (index: number) => void;
+};

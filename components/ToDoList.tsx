@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 
-import { View, Text } from "./Themed";
+import { View } from "./Themed";
 import ToDos from "./ToDos";
-import { ITodo } from "../types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { todoProps } from "../types";
 
 export default function ToDoList({
   todos,
@@ -13,39 +12,7 @@ export default function ToDoList({
   screen,
   setDone,
   removeTodo,
-}: {
-  todos: ITodo[];
-  setTodos: React.Dispatch<
-    React.SetStateAction<
-      {
-        done: boolean;
-        description: string;
-        date: string;
-      }[]
-    >
-  >;
-  toggleEditModal: (index: number) => void;
-  screen: "all" | "completed" | "incompleted";
-  setDone: (index: number) => void;
-  removeTodo: (index: number) => void;
-}) {
-  // useEffect(() => {
-  //   setToDosFromAsyncStorage();
-  // }, []);
-
-  // const setToDosFromAsyncStorage = async () => {
-  //   try {
-  //     console.log(todos);
-  //     const result = await AsyncStorage.getItem("todos");
-  //     console.log(result);
-  //     if (result != null) {
-  //       setTodos(JSON.parse(result));
-  //     }
-  //   } catch (err) {
-  //     alert(err);
-  //   }
-  // };
-
+}: todoProps) {
   return (
     <View style={styles.container}>
       <ToDos

@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  View,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 
 type Props = {
   onPress: () => any;
@@ -80,16 +74,5 @@ const styles = StyleSheet.create({
   clearButtonText: {
     fontSize: 18,
     color: "#FC3158",
-  },
-  inpDescription: {
-    backgroundColor: "#eee",
-    fontSize: 16,
-    // borderWidth: 2,
-    // borderColor: "blue",
-    alignSelf: "stretch",
-    height: 40,
-    textAlign: "center",
-    borderRadius: 10,
-    marginBottom: 5,
   },
 });
