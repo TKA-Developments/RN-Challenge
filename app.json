@@ -30,6 +30,6 @@
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
-    "description": "Alifyandra's React Native Todo app made in 7 days."
+    "description": "Alifyandra's React Native 7 day Todo app project."
   }
 }

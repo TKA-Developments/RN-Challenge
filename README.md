@@ -63,7 +63,7 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+To run this React Native app, you can run this locally or from the Expo website.
 
 ### Running and building on your computer using Expo:
 
@@ -79,15 +79,25 @@ Then in the root directory of the repository, run this:
 npm start
 ```
 
-A local website screen will be opened which will contain a QR code to scan to run on your device.
+A local webpage will be opened on your browser which will contain a QR code to scan on your mobile device.
 
-Download the 'Expo Go' app on your device and scan the QR code using your phone's camera, the app should open through the Expo app.
-
-
-
-### Running from Expo Website:
+Download the 'Expo Go' app on your mobile device and scan the QR code using your phone's camera, the app should open and run through the Expo app.
 
 
 
+### Running from the Expo Website:
 
+Alternatively if you're using Android, you can just download the 'Expo Go' app and scan the QR code from the public project page on the Expo website through this link: https://expo.io/@alifyandra/projects/just-todo-it
+
+If you're using iOS however, you will have to opt for the first option.
+
+
+
+------
+
+
+
+For further inquiries hit me up at alifyandra@gmail.com 
+
+Cheers! 🖐
 
