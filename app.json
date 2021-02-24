@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RN-Challenge",
-    "slug": "RN-Challenge",
+    "name": "Just Todo It!",
+    "slug": "just-todo-it",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -29,6 +29,7 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": "Alifyandra's React Native Todo app made in 7 days."
   }
 }

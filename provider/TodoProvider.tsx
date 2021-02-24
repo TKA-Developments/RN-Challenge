@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { ITodo, ITodoContext } from "../types";
+import { ITodo } from "../types";
 
 const TodoContext = React.createContext<any>(null);
 

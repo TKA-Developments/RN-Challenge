@@ -64,3 +64,30 @@ Your app should be able to complete these tasks:
 
 ## How to run the demo
 (REPLACE THIS WITH YOUR INSTRUCTIONS)
+
+### Running and building on your computer using Expo:
+
+Be sure to have installed NPM and Node 12 LTS or greater installed, then run this on your terminal:
+
+```bash
+npm install -g expo-cli
+```
+
+Then in the root directory of the repository, run this:
+
+```bash
+npm start
+```
+
+A local website screen will be opened which will contain a QR code to scan to run on your device.
+
+Download the 'Expo Go' app on your device and scan the QR code using your phone's camera, the app should open through the Expo app.
+
+
+
+### Running from Expo Website:
+
+
+
+
+

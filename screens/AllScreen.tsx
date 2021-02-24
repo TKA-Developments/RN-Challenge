@@ -180,7 +180,7 @@ export default function AllScreen() {
                   <MaterialCommunityIcons
                     name="cat"
                     size={24}
-                    color={colorScheme === "dark" ? "white" : "black"}
+                    color="#FECB2E"
                   />
                 </TouchableOpacity>
               </View>
