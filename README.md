@@ -97,6 +97,50 @@ If you're using iOS however, you will have to opt for the first option.
 
 
 
+### App Features:
+
+This app uses the AsyncStorage library to store Todo List data on your mobile device, it consists of 3 screen tabs that share the same Todo List component:
+
+- ##### All Todos Screen:
+
+  This screen contains components that consist of:
+
+  - an Add Todo button that triggers a modal prompting user to enter a description for the new Todo item.
+  - a Clear All Todos button that triggers a modal confirming if a user want to clear all todos.
+  - a Cat button! which triggers a modal that displays random images of cats from the https://thecatapi.com/ 🐱
+
+  <img src="./images/IMG_0690.PNG" width="200">	<img src="./images/IMG_0691.PNG" width="200">
+
+  
+
+- ##### Active Todos Screen:
+
+  This screen displays all active todos and contains the same Todo list component along with the same Add Todo button from the All Todos Screen on the topbar.
+
+  <img src="./images/IMG_0692.PNG" width="200">  <img src="./images/IMG_0694.PNG" width="200">
+  
+  
+  
+- ##### Completed Todos Screen:
+
+  This screen only displays completed todos and uses the Todo list component shared by all screens.
+
+  <img src="./images/IMG_0693.PNG" width="200">  <img src="./images/IMG_0695.PNG" width="200">
+
+- ##### Todo List Component Features:
+
+  The Todo List component consists of a clickable check button that changes the state of a todos completeness and a description which can be clicked that triggers a modal to edit the description.
+
+  The rows of each Todo List can be swiped left to display the date of the todo's creation as well as a delete button for you to delete the individual todo.
+
+  <img src="./images/IMG_0696.jpeg" width="350">
+
+  
+
+------
+
+
+
 For further inquiries hit me up at alifyandra@gmail.com 
 
 Cheers! 🖐
