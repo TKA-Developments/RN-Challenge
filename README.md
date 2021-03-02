@@ -8,7 +8,7 @@ This is a set of open ended challenges for you to show us your skills. Clone thi
 ## Instructions
 ### 1. Learn
 - Feel free to learn from any resources. [React Native Website](https://reactnative.dev), [YouTube](https://www.youtube.com/results?search_query=react+native+tutorial), etc. 
-- We have a udemy account you can borrow (reach out to contact@wellmart.id). This one is really good. Please reach out!
+- We have a udemy account you can borrow (reach out to team@wellmart.id). This one is really good. Please reach out!
 
 ### 2. Build
 - You have 1 week to complete the challenge. We can see the commits timeline
@@ -29,7 +29,7 @@ This is a set of open ended challenges for you to show us your skills. Clone thi
 - Commit your changes
 - Fork the challenge repository
 - Issue a Pull Request
-- Notify us. Please send an email to contact@wellmart.id
+- Notify us. Please send an email to team@wellmart.id
 
 ### Suggestions
 - Make it easy for us to try your app. Add instructions on how to run your demo. There's a section below you can fill in
