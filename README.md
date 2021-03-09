@@ -62,5 +62,15 @@ Your app should be able to complete these tasks:
 - Do some kind of sharing
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
+**Apps Feature**
+1. CRUD Todolist
+2. persist data using Async Storage
+3. Manage UI to data by reduxjs toolkit
+
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+Easy step for run this apps
+
+1. Clone the repo
+2. run 'npm install' to install missing dependency
+3. run by npm start
+4. open it by phone/emulator from dashbord expo
