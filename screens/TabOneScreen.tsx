@@ -46,6 +46,48 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
     }));
   } 
   render(){
+    const notPresses = <FlatList
+      data={this.state.todos}
+      renderItem={({item}) =>
+      <ToDo
+        text={item.text}
+        done={item.done}
+        onToggleCheck={() => this.toggleCheck(item.key)}
+        onDeleteTask={() => this.deleteTask(item.key)}
+      />}
+    />
+    
+    const notCompleted = <FlatList
+    data={this.state.todos.filter((item) => item.done == false)}
+    renderItem={({item}) =>
+      <ToDo
+        text={item.text}
+        done={item.done}
+        onToggleCheck={() => this.toggleCheck(item.key)}
+        onDeleteTask={() => this.deleteTask(item.key)}
+      />}
+    />
+
+    const isCompleted = <FlatList
+    data={this.state.todos.filter((item) => item.done == true)}
+    renderItem={({item}) =>
+      <ToDo
+        text={item.text}
+        done={item.done}
+        onToggleCheck={() => this.toggleCheck(item.key)}
+        onDeleteTask={() => this.deleteTask(item.key)}
+      />}
+    />
+
+    let list
+    if (this.state.status === 'all'){
+      list = notPresses
+    } else if (this.state.status === 'completed'){
+      list = isCompleted
+    } else if (this.state.status === 'notcompleted'){
+      list = notCompleted
+    }
+
     return (
       <View style={styles.container}>
         <KeyboardAvoidingView
@@ -69,21 +111,12 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
               status: item.value
             })}
           />
-          <FlatList
-            data={this.state.todos}
-            renderItem={({item}) => 
-            <ToDo 
-              text={item.text}
-              done={item.done} 
-              onToggleCheck={() => this.toggleCheck(item.key)}
-              onDeleteTask={() => this.deleteTask(item.key)}
-            />
-          }
-          />
+          {list}
           <View style={styles.textBox}>
           <Input
               placeholder='Add task!'
               value={this.state.textInput}
+              inputStyle={styles.textInput}
               onChangeText={(value:string) => this.setState({textInput:value})}
               onSubmitEditing={this.submitTodo}
               rightIcon={
@@ -116,6 +149,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textInput: {
-    flexGrow: 1,
+    fontSize: 14,
   },
 });
