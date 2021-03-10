@@ -81,6 +81,8 @@ expo start
     - For android you can choose android simulator or your own android by installing expo go app and then press "Scan QR Code" on the "Projects" tab of the Expo Go app and scan the QR code you see in the terminal or in Expo Dev Tools.
     - For iPhone or iPad, open the default Apple "Camera" app and scan the QR code you see in the terminal or in Expo Dev Tools.
 - To add a task, fill in the text input below and then press enter or press the add button next to the text input. Then the filled task will appear above with a checkbox and delete button. 
-- To mark that the task has been completed, just check the available checkbox. To delete the task, just press the available delete button. 
+- To mark that the task has been completed, check the available checkbox. 
+- To delete the task, press the available delete button. 
 - To filter tasks that have been completed or not, select the options in the dropdown. 
 - Complete option to display completed tasks. Not complete option to display unfinished tasks. All tasks option to display all tasks
+- To edit task, press the edit button to the left of the delete button. Then the task you want to edit will appear in the text input below. change the task title as you want. Then the edited task will appear, but the checkbox is still the same as before editing
