@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, FlatList, Text } from 'react-native';
+import { StyleSheet, FlatList, TouchableHighlight , Text } from 'react-native';
 import { View } from '../components/Themed';
 import { Input } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,6 +11,7 @@ export interface ActiveScreenProps {
 
 export interface ActiveScreenState{
   todos: Array<{ key: string, done: boolean, text: string; }>,
+  textInput: string,
 }
 export default class ActiveScreen extends React.Component<ActiveScreenProps, ActiveScreenState>{
   constructor(props:ActiveScreenProps) {
@@ -20,8 +21,15 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
         { key: uuid.v4(), done: true, text: 'Host this workshop' },
         { key: uuid.v4(), done: false, text: 'Do something else' },
       ],
+      textInput: '',
     };
   }
+  submitTodo = () => {
+    this.setState(({todos, textInput}) => ({
+      todos: [...todos, { key: uuid.v4(), done: false, text: textInput }],
+      textInput: '',
+    }))
+  } 
   render(){
     return (
       <View style={styles.container}>
@@ -32,11 +40,20 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
         <View style={styles.textBox}>
         <Input
             placeholder='Add task!'
+            value={this.state.textInput}
+            onChangeText={(value:string) => this.setState({textInput:value})}
+            onSubmitEditing={this.submitTodo}
             rightIcon={
-              <TabBarIcon
-                name='ios-add'
-                color='black'
-              />
+              <TouchableHighlight
+                activeOpacity={1}
+                underlayColor="#DDDDDD" 
+                onPress={this.submitTodo}
+              >
+                <TabBarIcon
+                  name='ios-add'
+                  color='black'
+                />
+              </TouchableHighlight>
             }
             />
             </View>
