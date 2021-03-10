@@ -1,32 +1,56 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
+import { View } from '../components/Themed';
+import { Input } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
+import uuid from 'react-native-uuid';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+export interface ActiveScreenProps {
 
-export default function TabOneScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
-    </View>
-  );
 }
 
+export interface ActiveScreenState{
+  todos: Array<{ key: string, done: boolean, text: string; }>,
+}
+export default class ActiveScreen extends React.Component<ActiveScreenProps, ActiveScreenState>{
+  constructor(props:ActiveScreenProps) {
+    super(props);
+    this.state = {
+      todos: [
+        { key: uuid.v4(), done: true, text: 'Host this workshop' },
+        { key: uuid.v4(), done: false, text: 'Do something else' },
+      ],
+    };
+  }
+  render(){
+    return (
+      <View style={styles.container}>
+        <View style={styles.textBox}>
+        <Input
+            placeholder='Add task!'
+            rightIcon={
+              <TabBarIcon
+                name='ios-add'
+                color='black'
+              />
+            }
+            />
+            </View>
+        </View>
+    );
+  }
+}
+function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
+  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  textBox: {
+    flexDirection: 'row',
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  textInput: {
+    flexGrow: 1,
   },
 });
