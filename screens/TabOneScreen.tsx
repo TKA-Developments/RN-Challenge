@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { StyleSheet, FlatList, TouchableHighlight , Text } from 'react-native';
+import { StyleSheet, FlatList, TouchableHighlight , KeyboardAvoidingView, Text } from 'react-native';
 import { View } from '../components/Themed';
 import { Input } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import uuid from 'react-native-uuid';
-
+import ToDo from './ToDo';
 export interface ActiveScreenProps {
 
 }
@@ -33,30 +33,35 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
   render(){
     return (
       <View style={styles.container}>
-        <FlatList
-          data={this.state.todos}
-          renderItem={({item}) => <Text>{item.text}</Text>}
-        />
-        <View style={styles.textBox}>
-        <Input
-            placeholder='Add task!'
-            value={this.state.textInput}
-            onChangeText={(value:string) => this.setState({textInput:value})}
-            onSubmitEditing={this.submitTodo}
-            rightIcon={
-              <TouchableHighlight
-                activeOpacity={1}
-                underlayColor="#DDDDDD" 
-                onPress={this.submitTodo}
-              >
-                <TabBarIcon
-                  name='ios-add'
-                  color='black'
-                />
-              </TouchableHighlight>
-            }
-            />
-            </View>
+        <KeyboardAvoidingView
+          behavior="padding"
+          style={styles.container}
+        >
+          <FlatList
+            data={this.state.todos}
+            renderItem={({item}) => <ToDo text={item.text} />}
+          />
+          <View style={styles.textBox}>
+          <Input
+              placeholder='Add task!'
+              value={this.state.textInput}
+              onChangeText={(value:string) => this.setState({textInput:value})}
+              onSubmitEditing={this.submitTodo}
+              rightIcon={
+                <TouchableHighlight
+                  activeOpacity={1}
+                  underlayColor="#DDDDDD" 
+                  onPress={this.submitTodo}
+                >
+                  <TabBarIcon
+                    name='ios-add'
+                    color='black'
+                  />
+                </TouchableHighlight>
+              }
+              />
+          </View>
+         </KeyboardAvoidingView>
         </View>
     );
   }
