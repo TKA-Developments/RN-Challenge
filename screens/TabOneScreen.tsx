@@ -14,6 +14,7 @@ export interface ActiveScreenState{
   todos: Array<{ key: string, done: boolean, text: string; }>,
   textInput: string,
   status: string,
+  newToDo: { key: string, done: boolean, text: string; },
 }
 export default class ActiveScreen extends React.Component<ActiveScreenProps, ActiveScreenState>{
   constructor(props:ActiveScreenProps) {
@@ -22,13 +23,25 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
       todos: [],
       textInput: '',
       status: 'all',
+      newToDo: {
+        key: '',
+        done: false,
+        text: '',
+      }
     };
   }
   submitTodo = () => {
-    this.setState(({todos, textInput}) => ({
-      todos: [...todos, { key: uuid.v4(), done: false, text: textInput }],
-      textInput: '',
-    }))
+    const newToDo = this.state.newToDo
+    if (newToDo.text != ''){
+      this.setState(({todos, textInput}) => ({
+        todos: [...todos, newToDo],
+        newToDo: {
+          key: '',
+          done: false,
+          text: '',
+        },
+      }))
+    }
   }
   toggleCheck = (key: string) => {
     this.setState(({todos}) => ({
@@ -45,15 +58,24 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
       todos: todos.filter(todo => todo.key !== key),
     }));
   } 
+  setUpdate = (key: any,done: boolean, text: string) =>{
+    const todos = this.state.todos
+    this.setState({ 
+      todos: todos.filter((item) => item.key !== key),
+      newToDo: { key: key, done:done, text:text}
+    })
+  }
   render(){
     const notPresses = <FlatList
       data={this.state.todos}
       renderItem={({item}) =>
       <ToDo
         text={item.text}
+        key={item.key}
         done={item.done}
         onToggleCheck={() => this.toggleCheck(item.key)}
         onDeleteTask={() => this.deleteTask(item.key)}
+        onChangeTask={() => this.setUpdate(item.key, item.done, item.text)}
       />}
     />
     
@@ -63,8 +85,10 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
       <ToDo
         text={item.text}
         done={item.done}
+        key={item.key}
         onToggleCheck={() => this.toggleCheck(item.key)}
         onDeleteTask={() => this.deleteTask(item.key)}
+        onChangeTask={() => this.setUpdate(item.key, item.done, item.text)}
       />}
     />
 
@@ -74,8 +98,10 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
       <ToDo
         text={item.text}
         done={item.done}
+        key={item.key}
         onToggleCheck={() => this.toggleCheck(item.key)}
         onDeleteTask={() => this.deleteTask(item.key)}
+        onChangeTask={() => this.setUpdate(item.key, item.done, item.text)}
       />}
     />
 
@@ -115,9 +141,9 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
           <View style={styles.textBox}>
           <Input
               placeholder='Add task!'
-              value={this.state.textInput}
+              value={this.state.newToDo.text}
               inputStyle={styles.textInput}
-              onChangeText={(value:string) => this.setState({textInput:value})}
+              onChangeText={(value:string) => this.setState({ newToDo: {key: uuid.v4(), done: false, text: value}})}
               onSubmitEditing={this.submitTodo}
               rightIcon={
                 <TouchableHighlight

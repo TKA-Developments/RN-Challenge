@@ -63,4 +63,24 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+- Make sure you have installed [Node.js](https://nodejs.org/en/), [Expo](https://docs.expo.io/), and [Yarn](https://classic.yarnpkg.com/en/)(optional) 
+- Run this following code in project directory
+```
+npm install
+```
+or 
+```
+yarn install
+```
+- Run expo using this code in command line to start development server
+```
+expo start
+```
+- Choose your prefereed device to run the project like
+    - For web choose "Run in web browser"
+    - For android you can choose android simulator or your own android by installing expo go app and then press "Scan QR Code" on the "Projects" tab of the Expo Go app and scan the QR code you see in the terminal or in Expo Dev Tools.
+    - For iPhone or iPad, open the default Apple "Camera" app and scan the QR code you see in the terminal or in Expo Dev Tools.
+- To add a task, fill in the text input below and then press enter or press the add button next to the text input. Then the filled task will appear above with a checkbox and delete button. 
+- To mark that the task has been completed, just check the available checkbox. To delete the task, just press the available delete button. 
+- To filter tasks that have been completed or not, select the options in the dropdown. 
+- Complete option to display completed tasks. Not complete option to display unfinished tasks. All tasks option to display all tasks

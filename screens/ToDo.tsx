@@ -1,15 +1,25 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 import { CheckBox } from 'react-native-elements';
-import {  Ionicons } from '@expo/vector-icons';
-export default ({ text, done, onToggleCheck, onDeleteTask } :any) =>
+import { Ionicons } from '@expo/vector-icons';
+import { TextInput } from 'react-native';
+
+export default ({ text, done, onToggleCheck, onDeleteTask, onChangeTask } :any) =>
   <View style={styles.container}>
     <CheckBox
       checked={done}
       onPress={onToggleCheck}
       containerStyle={styles.checkBox}
     />
+    {/* <TextInput
+      style={styles.text}
+      value={text}
+      onChangeText={() => onChangeTask()}
+    /> */}
     <Text style={styles.text}>{text}</Text>
+    <TouchableHighlight style={styles.icon} onPress={onChangeTask}>
+      <ToDoIcon name="pencil-sharp" color='black' />
+    </TouchableHighlight>
     <TouchableHighlight style={styles.icon} onPress={onDeleteTask}>
       <ToDoIcon name="trash-outline" color='black' />
     </TouchableHighlight>
