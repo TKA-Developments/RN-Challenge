@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, FlatList, Text } from 'react-native';
 import { View } from '../components/Themed';
 import { Input } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
@@ -25,6 +25,10 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
   render(){
     return (
       <View style={styles.container}>
+        <FlatList
+          data={this.state.todos}
+          renderItem={({item}) => <Text>{item.text}</Text>}
+        />
         <View style={styles.textBox}>
         <Input
             placeholder='Add task!'
