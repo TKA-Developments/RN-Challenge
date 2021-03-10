@@ -4,6 +4,7 @@ import { View } from '../components/Themed';
 import { Input } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import uuid from 'react-native-uuid';
+import DropDownPicker from 'react-native-dropdown-picker';
 import ToDo from './ToDo';
 export interface ActiveScreenProps {
 
@@ -12,16 +13,15 @@ export interface ActiveScreenProps {
 export interface ActiveScreenState{
   todos: Array<{ key: string, done: boolean, text: string; }>,
   textInput: string,
+  status: string,
 }
 export default class ActiveScreen extends React.Component<ActiveScreenProps, ActiveScreenState>{
   constructor(props:ActiveScreenProps) {
     super(props);
     this.state = {
-      todos: [
-        { key: uuid.v4(), done: true, text: 'Host this workshop' },
-        { key: uuid.v4(), done: false, text: 'Do something else' },
-      ],
+      todos: [],
       textInput: '',
+      status: 'all',
     };
   }
   submitTodo = () => {
@@ -29,6 +29,21 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
       todos: [...todos, { key: uuid.v4(), done: false, text: textInput }],
       textInput: '',
     }))
+  }
+  toggleCheck = (key: string) => {
+    this.setState(({todos}) => ({
+      todos: todos.map(todo => {
+        if (todo.key === key) {
+          todo.done = !todo.done;
+        }
+        return todo;
+      }),
+    }));
+  }
+  deleteTask = (key: string) => {
+    this.setState(({todos}) => ({
+      todos: todos.filter(todo => todo.key !== key),
+    }));
   } 
   render(){
     return (
@@ -37,9 +52,33 @@ export default class ActiveScreen extends React.Component<ActiveScreenProps, Act
           behavior="padding"
           style={styles.container}
         >
+          <DropDownPicker
+            items={[
+              {label: 'All Task', value: 'all'},
+              {label: 'Completed', value: 'completed'},
+              {label: 'Not Completed', value: 'notcompleted'},
+            ]}
+            defaultValue={this.state.status}
+            containerStyle={{height: 40}}
+            style={{backgroundColor: '#fafafa'}}
+            itemStyle={{
+              justifyContent: 'flex-start'
+             }}
+            dropDownStyle={{backgroundColor: '#fafafa'}}
+            onChangeItem={(item) => this.setState({
+              status: item.value
+            })}
+          />
           <FlatList
             data={this.state.todos}
-            renderItem={({item}) => <ToDo text={item.text} />}
+            renderItem={({item}) => 
+            <ToDo 
+              text={item.text}
+              done={item.done} 
+              onToggleCheck={() => this.toggleCheck(item.key)}
+              onDeleteTask={() => this.deleteTask(item.key)}
+            />
+          }
           />
           <View style={styles.textBox}>
           <Input
