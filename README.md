@@ -70,7 +70,6 @@ Your app should be able to complete these tasks:
 ## How to run the demo
 Easy step for run this apps
 
-1. Clone the repo
-2. run 'npm install' to install missing dependency
-3. run by npm start
-4. open it by phone/emulator from dashbord expo
+1. install expo go on your device
+2. open this link
+3. scan the qr code
