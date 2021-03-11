@@ -67,7 +67,7 @@ Your app should be able to complete these tasks:
 2. persist data using Async Storage
 3. Manage UI to data by reduxjs toolkit
 
-## How to run the demo
+## How to run the demo (Android)
 Easy step for run this apps
 
 1. install expo go on your device
