@@ -71,5 +71,5 @@ Your app should be able to complete these tasks:
 Easy step for run this apps
 
 1. install expo go on your device
-2. open this link https://expo.io/@agustrinaldokurniawan/projects/RN-Challenge
-3. scan the qr code
+2. open this link https://expo.io/--/to-exp/exp%3A%2F%2Fexp.host%2F%40agustrinaldokurniawan%2FRN-Challenge
+3. wait till the apps show completely
