@@ -4,7 +4,7 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
+  Activity: undefined;
   TabTwo: undefined;
 };
 
@@ -27,13 +27,22 @@ export type InputForm = {
   onChange: Function;
 };
 
-export type StepForm={
+export type StepForm = {
   stepOnChange: Function;
   value: string;
   number: number;
-}
+};
 
-// export type onChangeType = {
-//   lbl: string;
-//   text: string;
-// };
+export type ButtonType = {
+  onClick: Function;
+  text?: String;
+  badge?: String;
+  icon?: any;
+  color: string;
+};
+
+export type StepContainerType = {
+  onChange: Function;
+  stepValue: Array<string>;
+  save: Function;
+};

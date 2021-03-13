@@ -20,7 +20,7 @@ const Steps = ({ number, value, stepOnChange }: StepForm) => {
 const styles = StyleSheet.create({
   labelStyle: {marginRight:20, fontSize:18},
   viewStyle: { flexDirection: "row" },
-  input: { fontSize: 17, width:"90%" },
+  input: { fontSize: 17, width:"90%", color:"grey" },
 });
 
 export default Steps;

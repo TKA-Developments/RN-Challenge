@@ -17,11 +17,14 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+      initialRouteName="Activity"
+      tabBarOptions={{
+        activeTintColor: Colors[colorScheme].tint,
+        keyboardHidesTabBar: true,
+      }}
     >
       <BottomTab.Screen
-        name="TabOne"
+        name="Activity"
         component={TabOneNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
@@ -53,6 +56,7 @@ function TabBarIcon(props: {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const TabOneStack = createStackNavigator<TabOneParamList>();
 
+
 function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
@@ -61,7 +65,12 @@ function TabOneNavigator() {
         component={TabOneScreen}
         options={{
           headerTitle: "Today's Activity",
-          headerStatusBarHeight: 75,
+          headerTitleStyle: {
+            fontSize: 29,
+            top: 0,
+          },
+          headerStyle: { backgroundColor: "darkblue" },
+          headerStatusBarHeight: 100,
         }}
       />
       <TabOneStack.Screen

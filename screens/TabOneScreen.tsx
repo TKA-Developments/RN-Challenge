@@ -1,27 +1,33 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import TabOneHeader from "../components/TabOneHeader";
 import { Text, View } from "../components/Themed";
-import { ActivityList } from "../types";
+import { getDay } from "../components/Date";
 
 export default function TabOneScreen() {
-  
   const navigation = useNavigation();
-  
+
   const onTouch = () => {
-    navigation.navigate("ActivityScreen")
+    navigation.navigate("ActivityScreen");
   };
+
+  const date = getDay();
+  console.log(date?.text)
+
+  const activity = [
+    {}
+  ];
 
   return (
     <View style={styles.container} onTouchEnd={onTouch}>
       <View style={{ alignItems: "center" }}>
-          <TabOneHeader />
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-            THERE IS NO ACTIVITY FOR TODAY
-          </Text>
-          <Text style={{ fontSize: 17 }}> Tap anywhere to add activity</Text>
-        </View>
+        <TabOneHeader />
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+          THERE IS NO ACTIVITY FOR TODAY
+        </Text>
+        <Text style={{ fontSize: 17 }}> Tap anywhere to add activity</Text>
+      </View>
     </View>
   );
 }

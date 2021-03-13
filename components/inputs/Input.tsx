@@ -23,14 +23,14 @@ const Input = ({ label, value, onChange }: InputForm) => {
 
 const styles = StyleSheet.create({
   titleLabel: { fontSize: 27, fontWeight: "bold" },
-  descLabel: { fontSize: 20 , marginTop:15},
+  descLabel: { fontSize: 20, marginTop: 15 },
   input: {
     fontSize: 20,
     color: "grey",
     borderWidth: 1,
     borderRadius: 15,
     minHeight: 50,
-    paddingHorizontal:15
+    paddingHorizontal: 15,
   },
 });
 
