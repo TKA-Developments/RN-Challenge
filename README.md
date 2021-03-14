@@ -63,4 +63,9 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
+
 (REPLACE THIS WITH YOUR INSTRUCTIONS)
+
+### Demo User
+
+Email: joko@gmail.com Password: jokojoko

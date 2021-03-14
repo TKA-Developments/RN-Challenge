@@ -13,11 +13,12 @@ export default {
           },
           TabTwo: {
             screens: {
-              TabTwoScreen: 'two',
+              MoreScreen: 'more',
             },
           },
         },
       },
+      SignIn: 'signIn',
       NotFound: '*',
     },
   },
