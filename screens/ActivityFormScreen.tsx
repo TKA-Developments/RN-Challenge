@@ -36,9 +36,13 @@ const ActivityFormScreen = () => {
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.KAVstyle}>
-      <View lightColor="white" darkColor="rgba(255,255,255,0.1)" style={styles.viewStyle}>
+      <View style={styles.viewStyle}>
         <View style={{ borderBottomWidth: 1, borderBottomColor: "darkgrey" }}>
-          <Input label="Activity" value={value.activity} onChange={inputOnChange} />
+          <Input
+            label="Activity"
+            value={value.activity}
+            onChange={inputOnChange}
+          />
           <Input
             label="Description"
             value={value.description}
@@ -51,6 +55,7 @@ const ActivityFormScreen = () => {
             save={save}
             stepValue={stepValue}
             onChange={stepOnChange}
+            
           />
         </View>
       </View>
@@ -64,7 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   StepTitleStyle: { fontWeight: "bold", fontSize: 17 },
-  ViewButtonStyle: { width: "100%", marginTop: 20 },
+  ViewButtonStyle: { width: "100%", marginTop: 50, height: "100%" },
   viewStyle: { padding: 10, flex: 1 },
 });
 

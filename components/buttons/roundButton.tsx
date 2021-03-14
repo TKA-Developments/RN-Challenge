@@ -15,16 +15,14 @@ const RoundButton = ({ onClick, text, badge, icon, color }: ButtonType) => {
   return (
     <View style={styles.MarginButtonStyle}>
       <TouchableNativeFeedback onPress={() => onClick()}>
-        <View>
-          <View
-            style={{ ...styles.TouchableButton, backgroundColor: `${color}` }}
-          >
-            {badge ? (
-              <Text style={styles.TextButton}>{badge}</Text>
-            ) : (
-              <ButtonIcon name={icon} color="white" />
-            )}
-          </View>
+        <View
+          style={{ ...styles.TouchableButton, backgroundColor: `${color}` }}
+        >
+          {badge ? (
+            <Text style={styles.TextButton}>{badge}</Text>
+          ) : (
+            <ButtonIcon name={icon} color="white" />
+          )}
         </View>
       </TouchableNativeFeedback>
       <Text style={styles.BottomTextButton}>{text}</Text>
@@ -33,9 +31,15 @@ const RoundButton = ({ onClick, text, badge, icon, color }: ButtonType) => {
 };
 
 const styles = StyleSheet.create({
-  MarginButtonStyle: { marginBottom: 20, zIndex: 2, alignItems:"center" },
+  MarginButtonStyle: {
+    borderRadius: 50,
+    backgroundColor: "#ffffff00",
+    alignItems: "center",
+    width: 60,
+    height: 60,
+  },
   IconStyle: { textAlign: "center" },
-  BottomTextButton: { textAlign: "center" },
+  BottomTextButton: { textAlign: "center", color: "yellow" },
   TextButton: { fontSize: 50, textAlign: "center", bottom: 3, color: "white" },
   TouchableButton: {
     width: 60,

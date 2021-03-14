@@ -109,7 +109,11 @@ const StepText = ({
 }) => {
   return (
     <View style={styles.StepsTextContainer}>
-      <Text style={styles.StepsText}>
+      <Text
+        style={
+          check ? { ...styles.StepsText, color: "grey" } : styles.StepsText
+        }
+      >
         {num}. {step}
       </Text>
       <CheckBox style={styles.CheckBox} value={check} />

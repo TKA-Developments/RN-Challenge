@@ -54,7 +54,7 @@ export type ButtonType = {
 
 export type StepContainerType = {
   onChange: Function;
-  stepValue?: Array<string>;
+  stepValue: Array<string>;
   save: Function;
 };
 

@@ -6,7 +6,7 @@ import * as React from "react";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import ActivityFormScreen from "../screens/ActivityFormScreen";
-import TabOneScreen from "../screens/TabOneScreen";
+import TabOneScreen from "../screens/HomeScreen";
 import TodoScreen from "../screens/TodoScreen";
 import TabTwoScreen from "../screens/TodoScreen";
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";

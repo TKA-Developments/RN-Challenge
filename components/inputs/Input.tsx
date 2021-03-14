@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   descLabel: { fontSize: 20, marginVertical: 15, color: "grey" },
   input: {
     fontSize: 20,
-    color: "black",
+    color: "grey",
     borderRadius: 15,
     minHeight: 50,
     paddingHorizontal: 15,

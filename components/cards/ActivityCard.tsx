@@ -9,6 +9,8 @@ import { TouchableNativeFeedback } from "react-native-gesture-handler";
 const ActivityCard = ({ activity }: ActivityList) => {
   const navigation = useNavigation();
 
+  //  console.log(activity)
+
   return (
     <TouchableNativeFeedback
       onPress={() => navigation.navigate("TodoScreen", { activity })}
@@ -22,7 +24,7 @@ const ActivityCard = ({ activity }: ActivityList) => {
 };
 
 const styles = StyleSheet.create({
-  textStyle: { fontSize: 21 },
+  textStyle: { fontSize: 21, fontWeight: "bold" },
   cardStyle: {
     borderRadius: 15,
     flexDirection: "row",

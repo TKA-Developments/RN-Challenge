@@ -7,13 +7,13 @@ import {
   StepsCheckButton,
 } from "../components/buttons/CheckButton";
 import { Text, View } from "../components/Themed";
-import { ToDoScreen } from "../types";
 
-// const steps = ["Bring the bag", "Bring the clothing", "go to the laundry"];
 
 export default function TodoScreen() {
   const route = useRoute();
-  const todo:object|any = route.params
+  const todo = route.params?.activity
+
+  // console.log(todo);
 
   const [check, setCheck] = useState(false);
 

@@ -1,10 +1,8 @@
 import * as React from "react";
 import { StyleSheet, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import TabOneHeader from "../components/TabOneHeader";
-import { Text, View } from "../components/Themed";
+import { Text, View, ScrollView } from "../components/Themed";
 import ActivityCard from "../components/cards/ActivityCard";
-import { getDay } from "../components/Date";
 import RoundButton from "../components/buttons/roundButton";
 
 export default function TabOneScreen() {
@@ -13,9 +11,6 @@ export default function TabOneScreen() {
   const onTouch = () => {
     navigation.navigate("ActivityScreen");
   };
-
-  const date = getDay();
-  console.log(date?.text);
 
   const activity = [
     {
@@ -40,20 +35,65 @@ export default function TabOneScreen() {
       description: "with her too :p, don't waste too much money",
       steps: [],
     },
+    {
+      id: 4,
+      title: "Do Laundry",
+      description: "before the rain comes, do laundry nearby the bike rent",
+      steps: ["Bring the bag", "Bring the clothing", "go to the laundry"],
+    },
+    {
+      id: 5,
+      title: "Go To Gym",
+      description: "with her",
+      steps: [
+        "Bring mineral water",
+        "Bring her water too",
+        "dont forget to use perfume",
+      ],
+    },
+    {
+      id: 6,
+      title: "Go shopping to mall",
+      description: "with her too :p, don't waste too much money",
+      steps: [],
+    },
+    {
+      id: 7,
+      title: "Do Laundry",
+      description: "before the rain comes, do laundry nearby the bike rent",
+      steps: ["Bring the bag", "Bring the clothing", "go to the laundry"],
+    },
+    {
+      id: 8,
+      title: "Go To Gym",
+      description: "with her",
+      steps: [
+        "Bring mineral water",
+        "Bring her water too",
+        "dont forget to use perfume",
+      ],
+    },
+    {
+      id: 9,
+      title: "Go shopping to mall",
+      description: "with her too :p, don't waste too much money",
+      steps: [],
+    },
+    {
+      id: 10,
+      title: "Go To Gym",
+      description: "with her",
+      steps: [
+        "Bring mineral water",
+        "Bring her water too",
+        "dont forget to use perfume",
+      ],
+    },
   ];
 
-  // const color = ["yellow", "orange", "blue", "green"];
-  // const cardColorPicker = () => {
-  //   const num = Math.floor(Math.random() * 3) + 0; //random color picker 0-3
-  //   return num;
-  // };
-
   return (
-    <View
-      style={activity.length > 0 ? styles.filledContainer : styles.container}
-      onTouchEnd={activity.length > 0 ? undefined : onTouch}
-    >
-      <View style={{ width: "100%" }}>
+    <View style={styles.filledContainer}>
+      <ScrollView>
         {activity.length > 0 ? (
           activity.map((act) => <ActivityCard key={act.id} activity={act} />)
         ) : (
@@ -71,7 +111,7 @@ export default function TabOneScreen() {
             <Text style={{ fontSize: 17 }}> Tap anywhere to add activity</Text>
           </View>
         )}
-      </View>
+      </ScrollView>
       <View style={styles.AddButtonStyle}>
         <RoundButton color="blue" badge="+" onClick={onTouch} />
       </View>
@@ -80,7 +120,13 @@ export default function TabOneScreen() {
 }
 
 const styles = StyleSheet.create({
-  AddButtonStyle: { position: "absolute", right: 20, bottom: 0 },
+  AddButtonStyle: {
+    position: "absolute",
+    right: 20,
+    bottom: 0,
+    borderRadius: 50,
+    alignContent: "center",
+  },
   LazyStyle: { alignItems: "center" },
   image: {
     width: 130,
@@ -89,7 +135,7 @@ const styles = StyleSheet.create({
   filledContainer: {
     flex: 1,
     padding: 10,
-    alignItems: "flex-start",
+    width: "100%",
   },
   container: {
     flex: 1,
