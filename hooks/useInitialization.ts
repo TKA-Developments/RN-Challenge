@@ -1,6 +1,8 @@
+import 'expo-firestore-offline-persistence';
 import { useEffect, useState } from 'react';
 import Firebase from 'firebase';
 import firebaseCredentials from '../constants/Firebase';
+// Workaround to enable firestore with expo
 
 const initializer = async () => {
   if (Firebase.apps.length === 0) {

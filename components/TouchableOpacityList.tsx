@@ -76,6 +76,7 @@ export default ({ sections }: TouchableOpacityData) => {
     <View>
       <SectionList<TouchableOpacitySingleData, TouchableOpacitySectionData>
         sections={sections}
+        keyExtractor={(item, index) => item.title}
         renderSectionHeader={(section) =>
           <TouchableOpacityListSectionHeader
             title={section.section.title}
@@ -83,7 +84,9 @@ export default ({ sections }: TouchableOpacityData) => {
             containerStyle={themedStyles.sectionHeaderStyle}
           />}
         renderItem={({ item }) =>
-          <TouchableOpacitySingle item={item} touchableStyle={themedStyles.touchableStyle}/>}
+          <TouchableOpacitySingle
+            item={item}
+            touchableStyle={themedStyles.touchableStyle}/>}
       />
     </View>
   );

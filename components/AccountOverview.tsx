@@ -1,7 +1,7 @@
 import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
-import { signOut } from '../action/auth';
+import { signOut } from '../action/Auth';
 import { Theme, useTheme } from '@react-navigation/native';
 
 const styles = (theme: Theme) => StyleSheet.create({

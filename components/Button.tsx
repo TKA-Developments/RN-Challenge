@@ -1,27 +1,31 @@
 import React from 'react';
-import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 const style = StyleSheet.create({
-  buttonStyle: {
+  pressableStyle: {
     alignSelf: 'stretch',
     backgroundColor: '#007bff',
-    borderWidth: 2,
-  }
+  },
+  textStyle: {
+    textAlign: 'center',
+    fontSize: 20,
+    paddingVertical: 10,
+  },
 });
 
 export default ({
   children,
-  onPress
+  touchableProps,
+  textProps,
+  onPress,
 }:
   {
     children: string,
-    onPress?: (event: GestureResponderEvent) => void
-  }) => {
-  return (
-    <View>
-      <TouchableOpacity onPress={onPress} style={style.buttonStyle}>
-        <Text>{children}</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+    onPress?: TouchableOpacity['props']['onPress'],
+    touchableProps?: TouchableOpacity['props'],
+    textProps?: Text['props'],
+  }) => (
+  <TouchableOpacity {...touchableProps} onPress={onPress} style={style.pressableStyle}>
+    <Text {...textProps} style={style.textStyle}>{children}</Text>
+  </TouchableOpacity>
+);

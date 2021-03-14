@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import Firebase from 'firebase';
 import Button from './Button';
-import LabeledTextInput from './LabelledTextInput';
+import { Text } from './Themed';
+import LabeledTextInput from './TextInput';
 
 const signIn = (
   email: string,
@@ -34,7 +35,18 @@ export default () => {
   const [error, setError] = useState(null);
 
   return (
-    <View>
+    <View style={{
+      margin: 10,
+    }}>
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: 30,
+          fontWeight: 'bold',
+        }}
+      >
+        Sign In
+      </Text>
       <LabeledTextInput
         label="E-mail"
         placeholder="Enter your e-mail"
@@ -52,13 +64,15 @@ export default () => {
         isLoading ? null
           : (
             <Button
-              onPress={_ => signIn(
-                email,
-                password,
-                setUserCredential,
-                setError,
-                setIsLoading
-              )}
+              onPress={_ => {
+                signIn(
+                  email,
+                  password,
+                  setUserCredential,
+                  setError,
+                  setIsLoading
+                );
+              }}
             >
               {'Sign In '}
             </Button>
