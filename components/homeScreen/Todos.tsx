@@ -1,15 +1,13 @@
-import React from 'react';
-import { TodoItemProps } from './TodoItem';
+import React, { useContext } from 'react';
 import { Text, View } from '../../components/Themed';
 import { FlatList } from 'react-native';
+import { TodoContext } from '../../contexts/TodoContext';
 
 import TodoItem from './TodoItem';
 
-export interface TodosProps {
-    todos: TodoItemProps[],
-}
+const Todos = () => {
+    const { todos } = useContext(TodoContext);
 
-const Todos: React.FC<TodosProps> = ({ todos }) => {
     return (
         <View>
             <FlatList

@@ -1,18 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View } from '../../components/Themed';
-import { CheckBox } from 'react-native-elements'
+import { CheckBox } from 'react-native-elements';
+import { TodoContext, ITodo } from '../../contexts/TodoContext'
 
-export interface TodoItemProps {
-    id: string,
-    title: string,
-    date: string,
-    checked: boolean,
-    category: string,
-}
+const TodoItem = (props: ITodo) => {
+    const { updateTodoChecked } = useContext(TodoContext);
 
-const TodoItem: React.FC<TodoItemProps> = (props) => {
     const onPress = () => {
-        console.log('Pressed');
+        updateTodoChecked(props.id, props.checked);
     }
 
     return (
