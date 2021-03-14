@@ -7,7 +7,8 @@ import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import ActivityFormScreen from "../screens/ActivityFormScreen";
 import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import TodoScreen from "../screens/TodoScreen";
+import TabTwoScreen from "../screens/TodoScreen";
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -56,7 +57,6 @@ function TabBarIcon(props: {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const TabOneStack = createStackNavigator<TabOneParamList>();
 
-
 function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
@@ -66,6 +66,7 @@ function TabOneNavigator() {
         options={{
           headerTitle: "Today's Activity",
           headerTitleStyle: {
+            color: "white",
             fontSize: 29,
             top: 0,
           },
@@ -77,6 +78,11 @@ function TabOneNavigator() {
         name="ActivityScreen"
         component={ActivityFormScreen}
         options={{ headerTitle: "Add activity" }}
+      />
+      <TabOneStack.Screen
+        name="TodoScreen"
+        component={TodoScreen}
+        options={{ headerTitle: "Activity" }}
       />
     </TabOneStack.Navigator>
   );

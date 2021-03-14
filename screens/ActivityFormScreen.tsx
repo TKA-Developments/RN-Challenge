@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, KeyboardAvoidingView } from "react-native";
 import RoundButton from "../components/buttons/roundButton";
 import StepsContainer from "../components/container/StepsContainer";
 import Input from "../components/inputs/Input";
@@ -7,7 +7,7 @@ import { View } from "../components/Themed";
 
 const ActivityFormScreen = () => {
   const [value, setValue] = useState({
-    title: "",
+    activity: "",
     description: "",
   });
 
@@ -35,30 +35,31 @@ const ActivityFormScreen = () => {
   };
 
   return (
-    <View style={styles.viewStyle}>
-      <View>
-        <Input label="Title" value={value.title} onChange={inputOnChange} />
-        <Input
-          label="Description"
-          value={value.description}
-          onChange={inputOnChange}
-        />
-      </View>
+    <KeyboardAvoidingView behavior="padding" style={styles.KAVstyle}>
+      <View lightColor="white" darkColor="rgba(255,255,255,0.1)" style={styles.viewStyle}>
+        <View style={{ borderBottomWidth: 1, borderBottomColor: "darkgrey" }}>
+          <Input label="Activity" value={value.activity} onChange={inputOnChange} />
+          <Input
+            label="Description"
+            value={value.description}
+            onChange={inputOnChange}
+          />
+        </View>
 
-      <View style={styles.ViewButtonStyle}>
-        <StepsContainer
-          save={save}
-          stepValue={stepValue}
-          onChange={stepOnChange}
-        />
+        <View style={styles.ViewButtonStyle}>
+          <StepsContainer
+            save={save}
+            stepValue={stepValue}
+            onChange={stepOnChange}
+          />
+        </View>
       </View>
-      <RoundButton color="blue" onClick={save} icon="save" text="Save" />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
-let screenHeight = Dimensions.get("window").height;
 const styles = StyleSheet.create({
+  KAVstyle: { flex: 1 },
   container: {
     backgroundColor: "white",
   },

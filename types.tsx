@@ -11,14 +11,25 @@ export type BottomTabParamList = {
 export type TabOneParamList = {
   TabOneScreen: undefined;
   ActivityScreen: undefined;
+  TodoScreen: undefined;
 };
 
 export type TabTwoParamList = {
   TabTwoScreen: undefined;
 };
 
+export type ToDoScreen = {
+  activity: {
+    title: string;
+    description: string;
+    steps: Array<string>;
+  };
+};
+
 export type ActivityList = {
-  activity: string;
+  activity: {
+    title: string;
+  };
 };
 
 export type InputForm = {
@@ -43,6 +54,14 @@ export type ButtonType = {
 
 export type StepContainerType = {
   onChange: Function;
-  stepValue: Array<string>;
+  stepValue?: Array<string>;
   save: Function;
+};
+
+export type CheckButtonType = {
+  check: boolean;
+  onPress: Function;
+  title: string;
+  description: string;
+  steps?: Array<string>;
 };

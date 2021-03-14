@@ -33,7 +33,7 @@ const RoundButton = ({ onClick, text, badge, icon, color }: ButtonType) => {
 };
 
 const styles = StyleSheet.create({
-  MarginButtonStyle: { marginBottom: 20, zIndex: 2 },
+  MarginButtonStyle: { marginBottom: 20, zIndex: 2, alignItems:"center" },
   IconStyle: { textAlign: "center" },
   BottomTextButton: { textAlign: "center" },
   TextButton: { fontSize: 50, textAlign: "center", bottom: 3, color: "white" },

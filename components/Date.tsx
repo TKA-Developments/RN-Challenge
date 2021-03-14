@@ -42,3 +42,8 @@ export const getDay = () => {
       return;
   }
 };
+
+const getTime = () => {
+  const d = new Date().getDay();
+  
+};
