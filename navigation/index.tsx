@@ -15,7 +15,7 @@ const MainStack = createStackNavigator<RootStackParamList>();
 export const RootNavigator = () => {
   return (
     <MainStack.Navigator
-      initialRouteName={isLoggedIn() ? 'Root' : 'SignIn'}
+      initialRouteName={isLoggedIn() ? 'RootScreen' : 'SignInScreen'}
     >
       <MainStack.Screen name="Root" component={BottomTabNavigator}
                         options={{ headerShown: false }}/>

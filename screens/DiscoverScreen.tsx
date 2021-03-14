@@ -3,10 +3,11 @@ import { StyleSheet } from 'react-native';
 import FloatingActionButton from '../components/FloatingActionButton';
 import { View } from '../components/Themed';
 import TODOList from '../components/TODOList';
-import Firebase from 'firebase';
-import { ToDoSingleData } from '../components/TODOSingle';
+// import Firebase from 'firebase';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DiscoverParamList } from '../types';
+import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
+import { FilterToDos, ToDoSingle, userToDos } from '../action/ToDos';
 
 const styles = StyleSheet.create({
   modalContainerStyle: {
@@ -15,55 +16,35 @@ const styles = StyleSheet.create({
 });
 
 export default ({ navigation }: { navigation: StackNavigationProp<DiscoverParamList, 'DiscoverScreen'> }) => {
-  const [toDos, setToDos] = useState<Array<ToDoSingleData>>([]);
+  const [toDos, setToDos] = useState<Array<ToDoSingle>>([]);
+  const [filter, setFilter] = useState(FilterToDos.All);
 
-  // const onToDosChange = (toDoSnapshot: Firebase.database.DataSnapshot) => {
-  //   const toDosTemp: Array<ToDoSingleData> = [...toDos];
-  //   toDosTemp.push({
-  //     id: toDoSnapshot.key,
-  //     ...toDoSnapshot.val(),
-  //   });
-  //   setToDos(toDosTemp);
-  // };
-  // TODO: toDos are inaccessible!
-  const onTodosRemoved = (toDoSnapshot: Firebase.database.DataSnapshot) => {
-    const toDoSnapshotId = toDoSnapshot.key;
-    setToDos(toDos.filter((val) => val.id !== toDoSnapshotId));
-  };
-  const onceToDos = (todosSnapshot: Firebase.database.DataSnapshot) => {
-    const toDosTemp: Array<ToDoSingleData> = [];
+  const onToDosChange = (todosSnapshot: FirebaseDatabaseTypes.DataSnapshot) => {
+    const toDosTemp: Array<ToDoSingle> = [];
     todosSnapshot.forEach((toDoSnapshot) => {
       toDosTemp.push({
         id: toDoSnapshot.key,
         ...toDoSnapshot.val(),
       });
+      return undefined;
     });
     setToDos(toDosTemp);
   };
 
   useEffect(() => {
-    const user = Firebase.auth().currentUser;
+    const userToDosRef = userToDos(filter);
+    const onToDosChangeListener = userToDosRef
+      .on('value', onToDosChange);
 
-    if (user !== null) {
-      const userToDos = Firebase.database()
-        .ref(`users/${user.uid}/todos`);
-      userToDos
-        .once('value', onceToDos);
-      // userToDos
-      //   .on('child_added', onToDosChange);
-      userToDos
-        .on('child_removed', onTodosRemoved);
-    }
-  }, []);
+    return () => {
+      userToDosRef.off('value', onToDosChangeListener);
+    };
+  }, [filter]);
 
   return (
     <View style={styles.modalContainerStyle}>
       <TODOList
         data={toDos}
-        onChecked={() => {
-        }}
-        onUnChecked={() => {
-        }}
       />
       <FloatingActionButton onPress={() => navigation.navigate('CreateTODO')}/>
     </View>

@@ -1,22 +1,23 @@
 import 'expo-firestore-offline-persistence';
 import { useEffect, useState } from 'react';
-import Firebase from 'firebase';
-import firebaseCredentials from '../constants/Firebase';
-// Workaround to enable firestore with expo
+import Database from '@react-native-firebase/database';
 
 const initializer = async () => {
-  if (Firebase.apps.length === 0) {
-    Firebase.initializeApp(firebaseCredentials);
+  // console.log('test');
+  // if (FirebaseApp.apps.length === 0) {
+  //   console.log('test');
+  //   await FirebaseApp.initializeApp(firebaseCredentials);
+  // Firebase.firestore()
+  //   .settings({
+  //     cacheSizeBytes: Firebase.firestore.CACHE_SIZE_UNLIMITED,
+  //   });
 
-    Firebase.firestore()
-      .settings({
-        cacheSizeBytes: Firebase.firestore.CACHE_SIZE_UNLIMITED,
-      });
-
-    await Firebase
-      .firestore()
-      .enablePersistence();
-  }
+  // await Firebase
+  //   .firestore()
+  //   .enablePersistence();
+  await Database()
+    .setPersistenceEnabled(true);
+  // }
 };
 
 export default () => {

@@ -1,5 +1,6 @@
 import React from 'react';
-import { SectionList, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
+import { SectionList, StyleSheet, TouchableOpacity, } from 'react-native';
+import { Text, View } from './Themed';
 import { Theme, useTheme } from '@react-navigation/native';
 
 export type TouchableOpacitySingleData = {

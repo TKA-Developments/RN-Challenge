@@ -1,12 +1,13 @@
-import Firebase from 'firebase';
+// import Firebase from 'firebase';
+import Auth from '@react-native-firebase/auth';
 
-export const signIn = (email: string, password: string) => Firebase.auth()
-  .setPersistence(Firebase.auth.Auth.Persistence.LOCAL)
-  .then(() => Promise.resolve(Firebase.auth()
-    .signInWithEmailAndPassword(email, password)))
-  .catch((e) => Promise.reject(e));
+export const signIn = (email: string, password: string) => Auth()
+  .signInWithEmailAndPassword(email, password);
 
-export const signOut = () => Firebase.auth()
+export const signOut = () => Auth()
   .signOut();
 
-export const isLoggedIn = () => Firebase.auth().currentUser !== null;
+export const isLoggedIn = () => Auth().currentUser !== null;
+
+export const currentUser = () => Auth().currentUser;
+

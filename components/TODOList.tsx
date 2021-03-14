@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import ToDoSingle, { ToDoSingleData } from './TODOSingle';
+import ToDoSingle from './TODOSingle';
+import { ToDoSingle as ToDoSingleType } from '../action/ToDos';
 import { Theme, useTheme } from '@react-navigation/native';
 
 const styles = (theme: Theme) => StyleSheet.create({
@@ -24,14 +25,8 @@ const styles = (theme: Theme) => StyleSheet.create({
 
 export default ({
   data,
-  onChecked = () => {
-  },
-  onUnChecked = () => {
-  }
 }: {
-  data: Array<ToDoSingleData>,
-  onChecked?: () => void,
-  onUnChecked?: () => void,
+  data: Array<ToDoSingleType>,
 }) => {
   const theme = useTheme();
   const themedStyles = styles(theme);
@@ -42,8 +37,6 @@ export default ({
       renderItem={({ item }) => (
         <ToDoSingle
           data={item}
-          onChecked={onChecked}
-          onUnChecked={onUnChecked}
           checkBoxStyle={themedStyles.checkBoxToDoSingleStyle}
           titleStyle={themedStyles.titleToDoSingleStyle}
           containerStyle={themedStyles.containerToDoSingleStyle}
@@ -51,4 +44,4 @@ export default ({
       )}
     />
   );
-}
+};

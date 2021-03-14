@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "537333917823",
+    "project_id": "todolist-andraantariksa",
+    "storage_bucket": "todolist-andraantariksa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537333917823:android:3e2535c0dbaf442c92b74a",
+        "android_client_info": {
+          "package_name": "com.example.todos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "537333917823-13rivig824oetdp53tof9mq2rlu7e79j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw98xBwJOeEJb54zpiH63G9rTPJf407qI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "537333917823-13rivig824oetdp53tof9mq2rlu7e79j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

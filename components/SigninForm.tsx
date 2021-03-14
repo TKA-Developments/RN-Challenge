@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import Firebase from 'firebase';
+// import Firebase from 'firebase';
 import Button from './Button';
 import { Text } from './Themed';
 import LabeledTextInput from './TextInput';
+import Auth from '@react-native-firebase/auth';
 
 const signIn = (
   email: string,
@@ -14,12 +15,13 @@ const signIn = (
 ) => {
   setIsLoading(true);
 
-  Firebase.auth()
+  Auth()
     .signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       setUserCredential(userCredential);
     })
     .catch((reason) => {
+      console.log(reason);
       setError(reason);
     })
     .finally(() => {

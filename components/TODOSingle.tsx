@@ -1,9 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
 import RoundedCheckbox from 'react-native-rounded-checkbox';
 import { FontAwesome } from '@expo/vector-icons';
-
-export type ToDoSingleData = { id: string, title: string, description: string };
+import { ToDoSingle as ToDoSingleType } from '../action/ToDos';
+import { Text, View } from './Themed';
 
 export default ({
   data,
@@ -16,7 +15,7 @@ export default ({
   containerStyle,
   innerContainerStyle
 }: {
-  data: ToDoSingleData,
+  data: ToDoSingleType,
   onChecked?: () => void,
   onUnChecked?: () => void,
   titleStyle?: any,
@@ -29,6 +28,7 @@ export default ({
       <RoundedCheckbox
         onPress={(checked) => checked ? onChecked() : onUnChecked()}
         style={checkBoxStyle}
+        isChecked={data.isCompleted}
         component={
           <FontAwesome
             name="check"

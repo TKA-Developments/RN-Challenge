@@ -1,6 +1,7 @@
 import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View } from './Themed';
 import { signOut } from '../action/Auth';
 import { Theme, useTheme } from '@react-navigation/native';
 

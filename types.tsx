@@ -1,8 +1,8 @@
 export type RootStackParamList = {
-  Root: undefined;
-  SignIn: undefined;
-  NotFound: undefined;
-  CreateTODO: undefined;
+  RootScreen: undefined;
+  SignInScreen: undefined;
+  NotFoundScreen: undefined;
+  CreateTODOModal: undefined;
 };
 
 export type BottomTabParamList = {
@@ -12,7 +12,6 @@ export type BottomTabParamList = {
 
 export type DiscoverParamList = {
   DiscoverScreen: undefined;
-  CreateTODOModal: undefined;
 };
 
 export type TabMoreParamList = {

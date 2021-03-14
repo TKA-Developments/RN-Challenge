@@ -4,7 +4,8 @@ import TextButton from '../components/TextButton';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DiscoverParamList } from '../types';
 import { Theme, useTheme } from '@react-navigation/native';
-import Firebase from 'firebase';
+import { addToDo } from '../action/ToDos';
+// import Firebase from 'firebase';
 
 const styles = (theme: Theme) => StyleSheet.create({
   titleStyle: {
@@ -48,17 +49,13 @@ const styles = (theme: Theme) => StyleSheet.create({
   },
 });
 
-const addTODOToDatabase = (title: string, description: string) => {
-  const user = Firebase.auth().currentUser;
-
-  if (user !== null) {
-    Firebase.database()
-      .ref(`users/${user.uid}/todos`)
-      .push({
-        title,
-        description,
-      });
-  }
+const addButtonPress = (
+  navigation: StackNavigationProp<DiscoverParamList, 'DiscoverScreen'>,
+  title: string,
+  description: string,
+) => {
+  addToDo(title, description);
+  navigation.goBack();
 };
 
 export default ({ navigation }:
@@ -84,20 +81,21 @@ export default ({ navigation }:
           ref={titleTextInputRef}
           style={themedStyle.titleStyle}
           placeholder="Title"
-          placeholderTextColor="#000"
+          placeholderTextColor={theme.colors.text}
           value={title}
           onChangeText={setTitle}
         />
         <TextInput
           style={themedStyle.descriptionStyle}
           placeholder="Description"
-          placeholderTextColor="#000"
+          placeholderTextColor={theme.colors.text}
           value={description}
+          multiline={true}
           onChangeText={setDescription}
         />
         <View>
           <TextButton
-            onPress={() => addTODOToDatabase(title, description)}
+            onPress={() => addButtonPress(navigation, title, description)}
             textStyle={themedStyle.addButtonTextStyle}
             touchableStyle={themedStyle.addButtonStyle}>
             Add
