@@ -3,7 +3,7 @@ import { ITodo } from './contexts/TodoContext';
 export type RootStackParamList = {
   Root: undefined;
   Home: undefined;
-  AddTodo: undefined;
+  AddTodo: ITodo | undefined;
   TodoDetail: ITodo;
   NotFound: undefined;
 };

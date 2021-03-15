@@ -35,7 +35,7 @@ const TodoDetailScreen = ({ navigation, route }: StackScreenProps<RootStackParam
     }
 
     const onPressEdit = () => {
-
+        navigation.push('AddTodo', { ...props });
     }
 
     return (

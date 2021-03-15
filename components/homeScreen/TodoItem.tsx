@@ -5,11 +5,13 @@ import { TodoContext, ITodo } from '../../contexts/TodoContext';
 import { useNavigation } from '@react-navigation/native';
 
 const TodoItem = (props: ITodo) => {
-    const { updateTodoChecked } = useContext(TodoContext);
+    const { updateTodo } = useContext(TodoContext);
     const navigation = useNavigation();
 
     const onPress = () => {
-        updateTodoChecked(props.id, props.checked);
+        let tempTodo = { ...props };
+        tempTodo.checked = !props.checked;
+        updateTodo(tempTodo);
     }
 
     return (
@@ -17,8 +19,8 @@ const TodoItem = (props: ITodo) => {
             <CheckBox
                 title={props.title}
                 checked={props.checked}
-                onIconPress={onPress}
-                onPress={() => navigation.navigate('TodoDetail', { ...props })}
+                onPress={onPress}
+                onLongPress={() => navigation.navigate('TodoDetail', { ...props })}
             />
         </View>
     );

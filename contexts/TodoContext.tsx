@@ -1,5 +1,7 @@
 import React, { useEffect, useState, createContext, ReactNode } from 'react';
 import firebase from '../config/firebase';
+import _ from 'lodash';
+import { getTodayDate, isNDayAfter } from '../utils/datetime';
 
 export interface ITodo {
     id: string,
@@ -9,9 +11,16 @@ export interface ITodo {
     category: string,
 }
 
-interface ITodoContext {
+
+
+export interface ITodoGroupByDate {
+    date: 'string',
     todos: ITodo[],
-    updateTodoChecked: (id: string, checked: boolean) => void,
+}
+
+interface ITodoContext {
+    todos: ITodoGroupByDate[],
+    updateTodo: (todo: ITodo) => void,
     addTodo: (title: string, date: string, category: string) => void,
     deleteTodo: (id: string) => void,
 }
@@ -23,7 +32,8 @@ interface ProviderProps {
 }
 
 const TodoProvider = ({ children }: ProviderProps) => {
-    const [todos, setTodos] = useState<ITodo[]>([]);
+    let today = getTodayDate("Asia/Jakarta");
+    const [todos, setTodos] = useState<ITodoGroupByDate[]>([]);
     const todosRef = firebase.firestore().collection('todos');
 
     useEffect(() => {
@@ -44,22 +54,40 @@ const TodoProvider = ({ children }: ProviderProps) => {
                         category: doc.data().category,
                     });
                 });
-                setTodos(tempTodos);
+                // Sort todos by date
+                tempTodos.sort((a, b) => (a.date > b.date) ? 1 : ((b.date > a.date) ? -1 : 0));
+
+                // Using lodash to group todo by date
+                const groupedTodosByDate: ITodoGroupByDate[] = _(tempTodos).groupBy((todo: ITodo) => {
+                    if (isNDayAfter(new Date(today), new Date(todo.date), 1)) {
+                        return 'tomorrow'
+                    } else if (todo.date > today) {
+                        return 'upcoming';
+                    } else if (todo.date < today) {
+                        return 'overdue'
+                    } else {
+                        return 'today';
+                    }
+                }).map((todos: ITodo[], date: string) => ({ date, todos }));
+                console.log('halo');
+                setTodos(groupedTodosByDate);
             }).catch(() => {
                 console.log('Error detected');
             });
     }
 
-    const updateTodoChecked = (id: string, checked: boolean) => {
-
-        todosRef.doc(id).update({
-            checked: !checked,
+    const updateTodo = async (todo: ITodo) => {
+        await todosRef.doc(todo.id).set({
+            title: todo.title,
+            date: todo.date,
+            checked: todo.checked,
+            category: todo.category,
         });
         getTodos();
     }
 
-    const addTodo = (title: string, date: string, category: string) => {
-        todosRef.add({
+    const addTodo = async (title: string, date: string, category: string) => {
+        await todosRef.add({
             title,
             date,
             category,
@@ -76,7 +104,7 @@ const TodoProvider = ({ children }: ProviderProps) => {
     const value = {
         todos,
         addTodo,
-        updateTodoChecked,
+        updateTodo,
         deleteTodo,
     }
 
