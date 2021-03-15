@@ -6,7 +6,7 @@ import { Text, View } from './Themed';
 import { signOut } from '../action/Auth';
 
 const styles = (theme: Theme) => StyleSheet.create({
-  modalContainerStyle: {
+  containerStyle: {
     flexDirection: 'row',
     height: 80,
     alignItems: 'center',
@@ -48,7 +48,7 @@ export default ({ email }: { email: undefined | string | null }) => {
   const themedStyles = styles(theme);
 
   return (
-    <View style={themedStyles.modalContainerStyle}>
+    <View style={themedStyles.containerStyle}>
       <View style={{
         backgroundColor: 'gray',
         borderRadius: 100,

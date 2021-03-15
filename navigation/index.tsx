@@ -7,6 +7,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 import CreateTODOModal from '../screens/CreateToDoModal';
 import EditToDoModal from '../screens/EditToDoModal';
 import TodaysImageModal from '../screens/TodaysImageModal';
+import HeaderDeleteButton from '../components/HeaderDeleteButton';
 
 export const rootNavContainerRef = React.createRef<NavigationContainerRef>();
 
@@ -46,12 +47,17 @@ export const RootNavigator = () => {
       <MainStack.Screen
         name="EditToDoScreen"
         component={EditToDoModal}
+        options={{
+          headerRight: _ => <HeaderDeleteButton/>,
+          title: '',
+        }}
       />
       <MainStack.Screen
         name="TodaysImageModal"
         component={TodaysImageModal}
       />
-      <MainStack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }}/>
+      <MainStack.Screen name="NotFoundScreen" component={NotFoundScreen}
+                        options={{ title: 'Oops!' }}/>
     </MainStack.Navigator>
   );
 };

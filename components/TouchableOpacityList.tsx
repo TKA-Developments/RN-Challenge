@@ -59,7 +59,7 @@ const TouchableOpacitySingle = ({
           >
             {item.title}
           </Text>
-          {item.subtitle ? <Text>{item.subtitle}</Text> : null}
+          <Text>{item.subtitle ? item.subtitle : null}</Text>
         </View>
       </View>
     </TouchableOpacity>

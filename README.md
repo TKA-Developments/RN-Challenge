@@ -7,7 +7,8 @@ This is a set of open ended challenges for you to show us your skills. Clone thi
 
 ## Instructions
 ### 1. Learn
-- Feel free to learn from any resources. [React Native Website](https://reactnative.dev), [YouTube](https://www.youtube.com/results?search_query=react+native+tutorial), etc. 
+- Feel free to learn from any resources. [React Native Website](https://reactnative.dev)
+  , [YouTube](https://www.youtube.com/results?search_query=react+native+tutorial), etc.
 - We have a udemy account you can borrow (reach out to team@wellmart.id). This one is really good. Please reach out!
 
 ### 2. Build
@@ -50,30 +51,42 @@ Your app should be able to complete these tasks:
 
 - [x] Add a new to-do item
 - [x] Mark a to-do item as done
-- [] Delete a to-do item
-- [] Edit a to-do item
+- [x] Delete a to-do item
+- [x] Edit a to-do item
 - [x] Display all to-dos in a list or a grid
 - [x] Filter between completed and incomplete items
 
 ### Bonus:
 
-- [] Enable search for the to-do items
-- [] Include animations
-- [] Persist data using Contexts and/or Async Storage. (The data are persisted by Firebase)
+- [ ] Enable search for the to-do items
+- [ ] Include animations
+- [ ] Persist data using Contexts and/or Async Storage.
 - [x] Call some public API (image, video, weather, clocks, up to you)
 - [x] Save data to a backend server (like firebase)
-- [] Do some kind of sharing
-- [] Somehow make this boring app fun! show some crazy pokemon animation or something :P
+- [ ] Do some kind of sharing
+- [ ] Somehow make this boring app fun! show some crazy pokemon animation or something :P
+
+## Preview
+
+No preview yet
 
 ## How to run the demo
 
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+1. Install the required dependency by executing `npm install`
+2. Run `npm run android` or `npm run ios`
 
 ### Demo User
 
-Email: joko@gmail.com Password: jokojoko
+You can use a demo user below to sign in to the application.
+
+```
+Email: joko@gmail.com
+Password: jokojoko
+```
 
 ## Note
 
 - The application needs to be detached from Expo since the Firebase offline persistence does not work with it.
-- I did not have any chance to test the iOS version of the application because I don't have a MacOS machine
+- I did not have any chance to test the iOS version of the application because I don't have a MacOS machine. If you'd
+  like to try the application for iOS and you have a MacOS, you can copy the Google service credential in
+  `misc/GoogleService-Info.plist` and follow the guidelines here https://rnfirebase.io/#3-ios-setup.

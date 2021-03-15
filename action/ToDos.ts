@@ -1,10 +1,13 @@
-import Database from '@react-native-firebase/database';
+import Database, { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { currentUser } from './Auth';
 
 export type ToDoSingle = {
   title: string,
   description: string,
   isCompleted: boolean,
+  isPublished: boolean,
+  createdAt: FirebaseDatabaseTypes.ServerValue,
+  updatedAt: FirebaseDatabaseTypes.ServerValue,
 };
 
 export type ToDoSingleWithKey = ToDoSingle & { key: string };
@@ -65,6 +68,9 @@ export const addToDo = (title: string, description: string) => Database()
     title,
     description,
     isCompleted: false,
+    isPublished: false,
+    createdAt: Database.ServerValue.TIMESTAMP,
+    updatedAt: Database.ServerValue.TIMESTAMP,
   });
 
 export const getToDo = (key: string) => Database()
@@ -72,9 +78,20 @@ export const getToDo = (key: string) => Database()
   .once('value');
 
 export const markToDoAs = (isCompleted: boolean, key: string) => Database()
-  .ref(`users/${currentUser()?.uid}/todos/${key}/isCompleted`)
-  .set(isCompleted);
+  .ref(`users/${currentUser()?.uid}/todos/${key}`)
+  .update(<ToDoSingle>{
+    isCompleted,
+    updatedAt: Database.ServerValue.TIMESTAMP,
+  });
 
 export const deleteToDo = (key: string) => Database()
   .ref(`users/${currentUser()?.uid}/todos/${key}`)
   .set(null);
+
+export const editToDo = (key: string, title: string, description: string) => Database()
+  .ref(`users/${currentUser()?.uid}/todos/${key}`)
+  .update(<ToDoSingle>{
+    title,
+    description,
+    updatedAt: Database.ServerValue.TIMESTAMP,
+  });

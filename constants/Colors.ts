@@ -17,6 +17,11 @@ export default {
   },
   dark: {
     primary: '#24cd77',
+    secondary: '#6c757d',
+    success: '#28a745',
+    danger: '#dc3545',
+    warning: '#ffc107',
+    info: '#17a2b8',
     text: '#fff',
     background: '#000',
     tint: tintColorDark,

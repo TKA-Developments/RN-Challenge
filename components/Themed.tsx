@@ -1,8 +1,14 @@
 import * as React from 'react';
-import { ActivityIndicator, Text as DefaultText, View as DefaultView } from 'react-native';
-
+import {
+  ActivityIndicator,
+  Text as DefaultText,
+  TextInput as DefaultTextInput,
+  View as DefaultView,
+} from 'react-native';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+
+export type ThemedColors = typeof Colors.dark & typeof Colors.light;
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -16,6 +22,11 @@ export function useThemeColor(
   } else {
     return Colors[theme][colorName];
   }
+}
+
+export function useThemeColors() {
+  const theme = useColorScheme();
+  return Colors[theme];
 }
 
 export type ThemeProps = {
@@ -79,5 +90,39 @@ export const Spinner = (props: SpinnerProps) => {
 
   return (
     <ActivityIndicator style={[{ color }.style]} {...otherProps}/>
+  );
+};
+
+type TextInputProps = ThemeProps & DefaultTextInput['props'];
+
+export const TextInput = (props: TextInputProps) => {
+  const {
+    style,
+    lightColor,
+    darkColor,
+    ...otherProps
+  } = props;
+  const placeholderTextColor = useThemeColor({
+    light: lightColor,
+    dark: darkColor,
+  }, 'secondary');
+  const color = useThemeColor({
+    light: lightColor,
+    dark: darkColor,
+  }, 'text');
+  const backgroundColor = useThemeColor({
+    light: lightColor,
+    dark: darkColor,
+  }, 'background');
+
+  return (
+    <DefaultTextInput
+      style={[{
+        color,
+        backgroundColor
+      }, style]}
+      placeholderTextColor={placeholderTextColor}
+      {...otherProps}
+    />
   );
 };

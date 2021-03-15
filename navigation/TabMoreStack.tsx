@@ -8,7 +8,7 @@ export const TabMoreStack = createStackNavigator<TabMoreParamList>();
 
 export const TabMoreStackNavigator = () => {
   return (
-    <TabMoreStack.Navigator>
+    <TabMoreStack.Navigator>T
       <TabMoreStack.Screen
         name="TabMoreScreen"
         component={MoreScreen}
@@ -17,7 +17,7 @@ export const TabMoreStackNavigator = () => {
       <TabMoreStack.Screen
         name="AboutScreen"
         component={AboutScreen}
-        options={{ headerTitle: 'MORE' }}
+        options={{ headerTitle: 'ABOUT' }}
       />
     </TabMoreStack.Navigator>
   );

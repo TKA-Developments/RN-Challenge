@@ -4,15 +4,19 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import FloatingActionButton from '../components/FloatingActionButton';
 import { View } from '../components/Themed';
-import TODOList from '../components/TODOList';
+import ToDoList from '../components/ToDoList';
 import { DiscoverParamList, RootStackParamList } from '../types';
 import { FilterToDos, ToDoSingleWithKey, userToDos } from '../action/ToDos';
 import FloatingActionButtonGroup from '../components/FloatingActionButtonGroup';
 import FloatingFilterButton from '../components/FloatingFilterButton';
 
 const styles = StyleSheet.create({
-  modalContainerStyle: {
+  containerStyle: {
     flex: 1,
+  },
+  // Workaround for the buttons below?
+  toDoListContentContainerStyle: {
+    paddingBottom: 50,
   },
 });
 
@@ -45,9 +49,10 @@ export default ({ navigation }: {
   }, [filterBy]);
 
   return (
-    <View style={styles.modalContainerStyle}>
-      <TODOList
+    <View style={styles.containerStyle}>
+      <ToDoList
         data={toDos}
+        contentContainerStyle={styles.toDoListContentContainerStyle}
       />
       <FloatingFilterButton
         filterBy={filterBy}

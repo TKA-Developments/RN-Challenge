@@ -1,6 +1,6 @@
 import React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
-import ToDoSingle from './TODOSingle';
+import { FlatList, FlatListProps, StyleSheet } from 'react-native';
+import ToDoSingle from './ToDoSingle';
 import { markToDoAs, ToDoSingleWithKey } from '../action/ToDos';
 import { Theme, useNavigation, useTheme } from '@react-navigation/native';
 
@@ -25,8 +25,12 @@ const styles = (theme: Theme) => StyleSheet.create({
 
 export default ({
   data,
+  style,
+  contentContainerStyle,
 }: {
   data: Array<ToDoSingleWithKey>,
+  style?: FlatListProps<ToDoSingleWithKey>['style'],
+  contentContainerStyle?: FlatListProps<ToDoSingleWithKey>['contentContainerStyle'],
 }) => {
   const theme = useTheme();
   const themedStyles = styles(theme);
@@ -40,7 +44,9 @@ export default ({
 
   return (
     <FlatList
+      contentContainerStyle={contentContainerStyle}
       data={data}
+      style={style}
       renderItem={({ item }) => (
         <ToDoSingle
           onCheck={markToDoAs}

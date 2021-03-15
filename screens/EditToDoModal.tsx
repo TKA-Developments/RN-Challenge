@@ -1,50 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
-import { View } from '../components/Themed';
 import TextButton from '../components/TextButton';
+import { Spinner, ThemedColors, useThemeColors, View } from '../components/Themed';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
-import { RouteProp, Theme, useTheme } from '@react-navigation/native';
-import { getToDo, ToDoSingle } from '../action/ToDos';
+import { RouteProp } from '@react-navigation/native';
+import { editToDo, getToDo, ToDoSingle } from '../action/ToDos';
+import RoundedCheckbox from 'react-native-rounded-checkbox';
+import { FontAwesome } from '@expo/vector-icons';
 
-const styles = (theme: Theme) => StyleSheet.create({
+const styles = (colors: ThemedColors) => StyleSheet.create({
   titleStyle: {
     // flex: 1,
     fontSize: 18,
-    color: theme.colors.text,
     alignItems: 'stretch',
+    marginHorizontal: 10,
+    marginBottom: 10,
     // backgroundColor: 'white',
+    borderWidth: 1,
   },
-  descriptionStyle: {
-    color: theme.colors.text,
-    alignItems: 'stretch',
-  },
-  modalContainerStyle: {
+  bottomSectionStyle: {
     position: 'absolute',
-    alignItems: 'stretch',
     bottom: 0,
     left: 0,
     right: 0,
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     borderWidth: 1,
-    borderColor: theme.colors.border,
-    backgroundColor: theme.colors.background,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    alignItems: 'center',
   },
-  fullScreenContainerStyle: {
+  descriptionStyle: {
+    alignItems: 'stretch',
+    margin: 10,
+    borderWidth: 1,
     flex: 1,
-    padding: 10,
+  },
+  containerStyle: {
+    paddingHorizontal: 5,
+    paddingVertical: 10,
+    flex: 1,
   },
   touchOtherStyle: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   addButtonStyle: {
-    alignItems: 'flex-end',
+    marginRight: 10,
   },
   addButtonTextStyle: {
-    color: theme.colors.primary,
     fontWeight: 'bold',
+    fontSize: 18,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
   },
 });
 
@@ -52,21 +59,24 @@ const editButtonPress = (
   navigation: StackNavigationProp<RootStackParamList, 'EditToDoScreen'>,
   title: string,
   description: string,
+  key: string,
 ) => {
-  editToDo(title, description);
+  editToDo(key, title, description);
   navigation.goBack();
 };
 
 export default ({
   route,
-  navigation
+  navigation,
 }:
   {
     route: RouteProp<RootStackParamList, 'EditToDoScreen'>,
     navigation: StackNavigationProp<RootStackParamList, 'EditToDoScreen'>
   }) => {
-  const theme = useTheme();
-  const themedStyle = styles(theme);
+  const colors = useThemeColors();
+  const themedStyle = styles(colors);
+
+  const { key } = route.params;
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -74,7 +84,6 @@ export default ({
   const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
-    const { key } = route.params;
     // TODO
     // Handle error
     getToDo(key)
@@ -90,34 +99,53 @@ export default ({
   }, []);
 
   return (
-    <View style={themedStyle.fullScreenContainerStyle}>
-      <TextInput
-        style={themedStyle.titleStyle}
-        placeholder="Title"
-        placeholderTextColor={theme.colors.text}
-        value={title}
-        onChangeText={setTitle}
-      />
-      <TextInput
-        style={themedStyle.descriptionStyle}
-        placeholder="Description"
-        placeholderTextColor={theme.colors.text}
-        value={description}
-        multiline={true}
-        onChangeText={setDescription}
-      />
-      <View
-        style={{
-          flexDirection: 'column',
-        }}
-      >
-        <TextButton
-          onPress={() => editButtonPress(navigation, title, description)}
-          textStyle={themedStyle.addButtonTextStyle}
-          touchableStyle={themedStyle.addButtonStyle}>
-          Update
-        </TextButton>
-      </View>
+    <View style={themedStyle.containerStyle}>
+      {
+        isLoading ?
+          <Spinner/>
+          :
+          (
+            <>
+              <TextInput
+                style={themedStyle.titleStyle}
+                placeholder="Title"
+                placeholderTextColor={colors.text}
+                value={title}
+                onChangeText={setTitle}
+              />
+              <TextInput
+                style={themedStyle.descriptionStyle}
+                placeholder="Description"
+                placeholderTextColor={colors.text}
+                multiline
+                value={description}
+                onChangeText={setDescription}
+              />
+              <View
+                style={themedStyle.bottomSectionStyle}
+              >
+                <View>
+                  <RoundedCheckbox
+                    // onPress={(isChecked) => onCheck(isChecked, data.key)}
+                    // style={checkBoxStyle}
+                    isChecked={isCompleted}
+                    component={(
+                      <FontAwesome
+                        name="check"
+                      />
+                    )}
+                  />
+                </View>
+                <TextButton
+                  onPress={() => editButtonPress(navigation, title, description, key)}
+                  textStyle={themedStyle.addButtonTextStyle}
+                  touchableStyle={themedStyle.addButtonStyle}>
+                  Update
+                </TextButton>
+              </View>
+            </>
+          )
+      }
     </View>
   );
 };
