@@ -8,6 +8,7 @@ import TODOList from '../components/TODOList';
 import { DiscoverParamList, RootStackParamList } from '../types';
 import { FilterToDos, ToDoSingleWithKey, userToDos } from '../action/ToDos';
 import FloatingActionButtonGroup from '../components/FloatingActionButtonGroup';
+import FloatingFilterButton from '../components/FloatingFilterButton';
 
 const styles = StyleSheet.create({
   modalContainerStyle: {
@@ -19,7 +20,7 @@ export default ({ navigation }: {
   navigation: StackNavigationProp<DiscoverParamList & RootStackParamList, 'DiscoverScreen'>
 }) => {
   const [toDos, setToDos] = useState<Array<ToDoSingleWithKey>>([]);
-  const [filter, setFilter] = useState(FilterToDos.All);
+  const [filterBy, setFilterBy] = useState(FilterToDos.NotCompleted);
 
   const onToDosChange = (todosSnapshot: FirebaseDatabaseTypes.DataSnapshot) => {
     const toDosTemp: typeof toDos = [];
@@ -34,19 +35,23 @@ export default ({ navigation }: {
   };
 
   useEffect(() => {
-    const userToDosRef = userToDos(filter);
+    const userToDosRef = userToDos(filterBy);
     const onToDosChangeListener = userToDosRef
       .on('value', onToDosChange);
 
     return () => {
       userToDosRef.off('value', onToDosChangeListener);
     };
-  }, [filter]);
+  }, [filterBy]);
 
   return (
     <View style={styles.modalContainerStyle}>
       <TODOList
         data={toDos}
+      />
+      <FloatingFilterButton
+        filterBy={filterBy}
+        setFilterBy={setFilterBy}
       />
       <FloatingActionButtonGroup>
         <FloatingActionButton

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 import { View } from '../components/Themed';
 import TextButton from '../components/TextButton';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -13,13 +13,11 @@ const styles = (theme: Theme) => StyleSheet.create({
     fontSize: 18,
     color: theme.colors.text,
     alignItems: 'stretch',
-    margin: 10,
     // backgroundColor: 'white',
   },
   descriptionStyle: {
     color: theme.colors.text,
     alignItems: 'stretch',
-    margin: 10,
   },
   modalContainerStyle: {
     position: 'absolute',
@@ -35,13 +33,13 @@ const styles = (theme: Theme) => StyleSheet.create({
   },
   fullScreenContainerStyle: {
     flex: 1,
+    padding: 10,
   },
   touchOtherStyle: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   addButtonStyle: {
-    margin: 10,
     alignItems: 'flex-end',
   },
   addButtonTextStyle: {
@@ -93,36 +91,32 @@ export default ({
 
   return (
     <View style={themedStyle.fullScreenContainerStyle}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={themedStyle.touchOtherStyle}>
-      </TouchableOpacity>
-      <View style={themedStyle.modalContainerStyle}>
-        <TextInput
-          style={themedStyle.titleStyle}
-          placeholder="Title"
-          placeholderTextColor={theme.colors.text}
-          value={title}
-          onChangeText={setTitle}
-        />
-        <TextInput
-          style={themedStyle.descriptionStyle}
-          placeholder="Description"
-          placeholderTextColor={theme.colors.text}
-          value={description}
-          multiline={true}
-          onChangeText={setDescription}
-        />
-        <View
-          style={{
-            flexDirection: 'row'
-          }}
-        >
-          <TextButton
-            onPress={() => editButtonPress(navigation, title, description)}
-            textStyle={themedStyle.addButtonTextStyle}
-            touchableStyle={themedStyle.addButtonStyle}>
-            Add
-          </TextButton>
-        </View>
+      <TextInput
+        style={themedStyle.titleStyle}
+        placeholder="Title"
+        placeholderTextColor={theme.colors.text}
+        value={title}
+        onChangeText={setTitle}
+      />
+      <TextInput
+        style={themedStyle.descriptionStyle}
+        placeholder="Description"
+        placeholderTextColor={theme.colors.text}
+        value={description}
+        multiline={true}
+        onChangeText={setDescription}
+      />
+      <View
+        style={{
+          flexDirection: 'column',
+        }}
+      >
+        <TextButton
+          onPress={() => editButtonPress(navigation, title, description)}
+          textStyle={themedStyle.addButtonTextStyle}
+          touchableStyle={themedStyle.addButtonStyle}>
+          Update
+        </TextButton>
       </View>
     </View>
   );

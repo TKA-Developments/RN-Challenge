@@ -1,10 +1,25 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Button, Linking, Text, View } from 'react-native';
+
+const styles = {
+  textStyle: {
+    marginBottom: 20,
+  },
+  textCopyRightStyle: {
+    marginTop: 10,
+    textAlign: 'center',
+  },
+  buttonStyle: {},
+  containerStyle: {
+    flex: 1,
+    margin: 20,
+  },
+};
 
 export default () => {
   return (
-    <View>
-      <Text>
+    <View style={styles.containerStyle}>
+      <Text style={styles.textStyle}>
         But I must explain to you how all this mistaken idea of denouncing
         pleasure and praising pain was born and I will give you a complete
         account of the system, and expound the actual teachings of the
@@ -21,6 +36,17 @@ export default () => {
         who chooses to enjoy a pleasure that has no annoying consequences,
         or one who avoids a pain that produces no resultant pleasure?
       </Text>
+
+      <Button
+        style={styles.buttonStyle}
+        onPress={() => Linking.openURL('mailto:andra.antariksa@gmail.com')}
+        title="Contact Me"
+      />
+
+      <Text style={styles.textCopyRightStyle}>
+        &copy; 2021 Andra Antariksa
+      </Text>
+
     </View>
   );
 }

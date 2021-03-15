@@ -9,6 +9,8 @@ const styles = StyleSheet.create({
     bottom: 10,
     borderRadius: 1,
     borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: 'transparent',
   },
 });
 

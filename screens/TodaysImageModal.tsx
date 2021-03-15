@@ -18,7 +18,7 @@ export default () => {
       .then((jsonData: WallpaperDataResponse) => {
         images = [{
           // Guaranteed to have at least one image
-          url: `https://www.bing.com/${jsonData.images[0].url}`,
+          url: `https://www.bing.com${jsonData.images[0].url}`,
         }];
       })
       .catch((e) => {
@@ -30,11 +30,12 @@ export default () => {
   }, []);
 
   return (
-    <View>
+    <View style={{ flex: 1, }}>
       {
         isLoading ?
           <Spinner/> :
-          <ImageViewer imageUrls={images!!}/>
+          <ImageViewer imageUrls={images!!} style={{ flex: 1, }} renderIndicator={() => {
+          }}/>
       }
     </View>
   );

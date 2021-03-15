@@ -10,10 +10,36 @@ export type ToDoSingle = {
 export type ToDoSingleWithKey = ToDoSingle & { key: string };
 
 export enum FilterToDos {
-  All,
-  Completed,
   NotCompleted,
+  All,
+  Completed
 }
+
+export const nextFilter = (filter: FilterToDos): FilterToDos => {
+  switch (filter) {
+    case FilterToDos.NotCompleted:
+      return FilterToDos.All;
+    case FilterToDos.All:
+      return FilterToDos.Completed;
+    case FilterToDos.Completed:
+      return FilterToDos.NotCompleted;
+    default:
+      return FilterToDos.NotCompleted;
+  }
+};
+
+export const filterToString = (filter: FilterToDos) => {
+  switch (filter) {
+    case FilterToDos.NotCompleted:
+      return 'Not Completed';
+    case FilterToDos.All:
+      return 'All';
+    case FilterToDos.Completed:
+      return 'Completed';
+    default:
+      return '';
+  }
+};
 
 // Get a reference to current user ToDos
 export const userToDos = (filterBy: FilterToDos = FilterToDos.All) => {
