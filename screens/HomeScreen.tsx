@@ -1,103 +1,48 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-community/async-storage";
 import { Text, View, ScrollView } from "../components/Themed";
 import ActivityCard from "../components/cards/ActivityCard";
 import RoundButton from "../components/buttons/roundButton";
+import { ActivityHomeList } from "../types";
+import { TouchableNativeFeedback } from "react-native-gesture-handler";
 
 export default function TabOneScreen() {
+  const [activity, setActivity] = useState<Array<ActivityHomeList>>([]);
+
+  const getActivityData = () => {
+    // AsyncStorage.removeItem("activityData")
+    AsyncStorage.getItem("activityData").then((res: any) => {
+      if (res) {
+        let data: ActivityHomeList;
+        data = JSON.parse(res);
+        setActivity([data]);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getActivityData();
+  }, []);
+
+  console.log("activity: ");
+  console.log(activity);
   const navigation = useNavigation();
 
   const onTouch = () => {
     navigation.navigate("ActivityScreen");
   };
 
-  const activity = [
-    {
-      id: 1,
-      title: "Do Laundry",
-      description: "before the rain comes, do laundry nearby the bike rent",
-      steps: ["Bring the bag", "Bring the clothing", "go to the laundry"],
-    },
-    {
-      id: 2,
-      title: "Go To Gym",
-      description: "with her",
-      steps: [
-        "Bring mineral water",
-        "Bring her water too",
-        "dont forget to use perfume",
-      ],
-    },
-    {
-      id: 3,
-      title: "Go shopping to mall",
-      description: "with her too :p, don't waste too much money",
-      steps: [],
-    },
-    {
-      id: 4,
-      title: "Do Laundry",
-      description: "before the rain comes, do laundry nearby the bike rent",
-      steps: ["Bring the bag", "Bring the clothing", "go to the laundry"],
-    },
-    {
-      id: 5,
-      title: "Go To Gym",
-      description: "with her",
-      steps: [
-        "Bring mineral water",
-        "Bring her water too",
-        "dont forget to use perfume",
-      ],
-    },
-    {
-      id: 6,
-      title: "Go shopping to mall",
-      description: "with her too :p, don't waste too much money",
-      steps: [],
-    },
-    {
-      id: 7,
-      title: "Do Laundry",
-      description: "before the rain comes, do laundry nearby the bike rent",
-      steps: ["Bring the bag", "Bring the clothing", "go to the laundry"],
-    },
-    {
-      id: 8,
-      title: "Go To Gym",
-      description: "with her",
-      steps: [
-        "Bring mineral water",
-        "Bring her water too",
-        "dont forget to use perfume",
-      ],
-    },
-    {
-      id: 9,
-      title: "Go shopping to mall",
-      description: "with her too :p, don't waste too much money",
-      steps: [],
-    },
-    {
-      id: 10,
-      title: "Go To Gym",
-      description: "with her",
-      steps: [
-        "Bring mineral water",
-        "Bring her water too",
-        "dont forget to use perfume",
-      ],
-    },
-  ];
+  // const activity: Array<{ id?: number; activity: string; title: string }> = [];
 
   return (
     <View style={styles.filledContainer}>
-      <ScrollView>
-        {activity.length > 0 ? (
-          activity.map((act) => <ActivityCard key={act.id} activity={act} />)
-        ) : (
-          <View style={styles.LazyStyle}>
+      {activity?.length > 0 ? (
+        <ActivityList data={activity} />
+      ) : (
+        <TouchableNativeFeedback onPress={onTouch} style={styles.LazyStyle}>
+          <View>
             <Image
               style={styles.image}
               source={{
@@ -108,10 +53,12 @@ export default function TabOneScreen() {
             <Text style={{ fontSize: 20, fontWeight: "bold" }}>
               THERE IS NO ACTIVITY FOR TODAY
             </Text>
-            <Text style={{ fontSize: 17 }}> Tap anywhere to add activity</Text>
+            <Text style={{ fontSize: 17, alignSelf: "center" }}>
+              Tap anywhere to add activity
+            </Text>
           </View>
-        )}
-      </ScrollView>
+        </TouchableNativeFeedback>
+      )}
       <View style={styles.AddButtonStyle}>
         <RoundButton color="blue" badge="+" onClick={onTouch} />
       </View>
@@ -119,28 +66,37 @@ export default function TabOneScreen() {
   );
 }
 
+const ActivityList = ({ data }: { data: any }) => {
+  return (
+    <ScrollView>
+      {data.map((act: any, idx: number) => (
+        <ActivityCard key={act.id} data={act} />
+      ))}
+    </ScrollView>
+  );
+};
+
 const styles = StyleSheet.create({
   AddButtonStyle: {
     position: "absolute",
     right: 20,
-    bottom: 0,
+    bottom: 10,
     borderRadius: 50,
     alignContent: "center",
   },
-  LazyStyle: { alignItems: "center" },
+  LazyStyle: {
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   image: {
     width: 130,
     height: 100,
+    alignSelf: "center",
   },
   filledContainer: {
     flex: 1,
     padding: 10,
-    width: "100%",
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
   title: {
     fontSize: 20,

@@ -1,15 +1,52 @@
-import React, { useState } from "react";
-import { StyleSheet, Dimensions, KeyboardAvoidingView } from "react-native";
-import RoundButton from "../components/buttons/roundButton";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, KeyboardAvoidingView, BackHandler } from "react-native";
 import StepsContainer from "../components/container/StepsContainer";
 import Input from "../components/inputs/Input";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useNavigation } from "@react-navigation/native";
 import { View } from "../components/Themed";
+import { ShowCurrentDate } from "../components/Date";
 
 const ActivityFormScreen = () => {
+  const navigation = useNavigation();
   const [value, setValue] = useState({
     activity: "",
     description: "",
   });
+  const [stepValue, setStepValue] = useState([""]);
+
+  const { date, hour, minute, month, year } = ShowCurrentDate;
+
+  useEffect(() => {
+    const saveData = {
+      id: `${date + "" + month + "" + year + "" + hour + "" + minute}`,
+      activity: {
+        title: value.activity,
+        description: value.description,
+        steps: stepValue,
+      },
+    };
+
+    let backAction: any;
+    backAction = async () => {
+      try {
+        // console.log(saveData);
+        await AsyncStorage.setItem("activityData", JSON.stringify(saveData));
+        navigation.goBack();
+      } catch (error) {
+        console.log(error);
+        return error;
+      }
+    };
+
+    if (value.activity.length > 0) {
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+      return () => backHandler.remove();
+    }
+  }, [value, stepValue]);
 
   const inputOnChange = (lbl: string, text: string) => {
     const label = lbl.toLowerCase();
@@ -21,21 +58,15 @@ const ActivityFormScreen = () => {
     });
   };
 
-  const [stepValue, setStepValue] = useState([""]);
-
   const stepOnChange = (num: number, text: string) => {
     let arr = [...stepValue];
     arr[num] = text;
     setStepValue(arr);
   };
 
-  const save = () => {
-    console.log(value);
-    console.log(stepValue);
-  };
-
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.KAVstyle}>
+      {/* <BacktosaveModal visible={modal} /> */}
       <View style={styles.viewStyle}>
         <View style={{ borderBottomWidth: 1, borderBottomColor: "darkgrey" }}>
           <Input
@@ -51,12 +82,7 @@ const ActivityFormScreen = () => {
         </View>
 
         <View style={styles.ViewButtonStyle}>
-          <StepsContainer
-            save={save}
-            stepValue={stepValue}
-            onChange={stepOnChange}
-            
-          />
+          <StepsContainer stepValue={stepValue} onChange={stepOnChange} />
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -69,8 +95,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   StepTitleStyle: { fontWeight: "bold", fontSize: 17 },
-  ViewButtonStyle: { width: "100%", marginTop: 50, height: "100%" },
-  viewStyle: { padding: 10, flex: 1 },
+  ViewButtonStyle: {
+    marginTop: 50,
+    height: "100%",
+  },
+  viewStyle: { padding: 10 },
 });
 
 export default ActivityFormScreen;

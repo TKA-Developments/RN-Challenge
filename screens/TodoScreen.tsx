@@ -1,19 +1,24 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useRoute, RouteProp } from "@react-navigation/native";
 import {
   TitleCheckButton,
   StepsCheckButton,
 } from "../components/buttons/CheckButton";
+import { ActivityRouteProps } from "../types";
 import { Text, View } from "../components/Themed";
 
-
 export default function TodoScreen() {
-  const route = useRoute();
-  const todo = route.params?.activity
-
-  // console.log(todo);
+  const route = useRoute<RouteProp<ActivityRouteProps, "data">>();
+  const todo = route.params;
+  console.log(todo.complete);
+  useEffect(() => {
+    if (todo.complete) {
+      setCheck(todo?.complete);
+      
+    }
+  }, [todo, route]);
 
   const [check, setCheck] = useState(false);
 
@@ -22,7 +27,13 @@ export default function TodoScreen() {
       <TitleCheckButton
         title={todo.title}
         description={todo.description}
-        onPress={() => setCheck(!check)}
+        onPress={async () => {
+          setCheck(!check);
+          await AsyncStorage.mergeItem(
+            "activityData",
+            JSON.stringify({ complete: !check })
+          );
+        }}
         check={check}
       />
       <StepsCheckButton steps={todo.steps} checkAll={check} />

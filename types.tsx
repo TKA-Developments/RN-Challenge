@@ -26,11 +26,13 @@ export type ToDoScreen = {
   };
 };
 
-export type ActivityList = {
-  activity: {
-    title: string;
-  };
-};
+// export type ActivityList = {
+//   data: {
+//     activity: {
+//       title:
+//     }
+//   };
+// };
 
 export type InputForm = {
   label: string;
@@ -55,7 +57,7 @@ export type ButtonType = {
 export type StepContainerType = {
   onChange: Function;
   stepValue: Array<string>;
-  save: Function;
+  save?: Function;
 };
 
 export type CheckButtonType = {
@@ -65,3 +67,32 @@ export type CheckButtonType = {
   description: string;
   steps?: Array<string>;
 };
+
+export type ActivityRouteProps = {
+  data: {
+    title: string;
+    description: string;
+    steps: [string];
+    complete?: boolean;
+  };
+};
+
+export type ActivityHomeList = {
+  id: string;
+  activity: {
+    title: string;
+    description: string;
+    steps: [string];
+  };
+  complete?: boolean;
+};
+
+// export type DetailActivity = {
+//   id: string;
+//   activity: {
+//     title: string;
+//     description: string;
+//     steps: [string];
+//   };
+//   complete?: boolean;
+// };

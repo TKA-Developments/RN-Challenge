@@ -12,41 +12,46 @@ import { Text, View, ScrollView } from "../Themed";
 import { StepContainerType } from "../../types";
 
 const StepsContainer = ({ onChange, stepValue, save }: StepContainerType) => {
-  const [stepCount, setStepCount] = useState(0);
+  const [stepCount, setStepCount] = useState(1);
 
   const addStep = () => {
     setStepCount(stepCount + 1);
   };
 
   return (
-    <KeyboardAvoidingView style={styles.ViewStyle}>
+    <KeyboardAvoidingView
+      behavior="height"
+      style={{ flex: 1 }}
+    >
       {stepCount > 0 && <Text style={styles.stepsTitle}>Steps</Text>}
-      <ScrollView keyboardShouldPersistTaps="handled">
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+      >
         <View style={{ marginLeft: 20 }}>
-          <View>
-            {[...Array(stepCount)].map((x, i) => {
-              return (
-                <Steps
-                  key={i}
-                  number={i}
-                  stepOnChange={onChange}
-                  value={stepValue[i]}
-                />
-              );
-            })}
-          </View>
+          {[...Array(stepCount)].map((x, i) => {
+            return (
+              <Steps
+                key={i}
+                number={i}
+                stepOnChange={onChange}
+                value={stepValue[i]}
+              />
+            );
+          })}
         </View>
 
         <View
           style={{
-            alignItems: "flex-end",
-            borderRadius: 50,
+            width: 60,
+            height: 60,
+            borderRadius:50,
+            alignSelf:"flex-end",
+            alignItems: "center",
             alignContent: "center",
           }}
         >
           <RoundButton
             onClick={addStep}
-            text="Add Step"
             badge="+"
             color="grey"
           />
@@ -57,9 +62,9 @@ const StepsContainer = ({ onChange, stepValue, save }: StepContainerType) => {
 };
 
 const styles = StyleSheet.create({
-  TouchableButton: { backgroundColor: "blue", width: 70, height: 70 },
+  TouchableButton: { width: 70, height: 70 },
   stepsTitle: { fontSize: 20 },
-  ViewStyle: { height: "100%", width: "100%" },
+  ViewStyle: {},
 });
 
 export default StepsContainer;
