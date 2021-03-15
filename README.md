@@ -45,22 +45,25 @@ Joko is a very responsible and organized person. He writes down all his to-do it
 Create a React Native app where Joko can keep track of the things he need to do in his day
 
 ## Requirements
+
 Your app should be able to complete these tasks:
-- Add a new to-do item
-- Mark a to-do item as done
-- Delete a to-do item
-- Edit a to-do item
-- Display all to-dos in a list or a grid
-- Filter between completed and incomplete items
+
+- [x] Add a new to-do item
+- [x] Mark a to-do item as done
+- [] Delete a to-do item
+- [] Edit a to-do item
+- [x] Display all to-dos in a list or a grid
+- [] Filter between completed and incomplete items
 
 ### Bonus:
-- Enable search for the to-do items
-- Include animations
-- Persist data using Contexts and/or Async Storage
-- Call some public API (image, video, weather, clocks, up to you)
-- Save data to a backend server (like firebase)
-- Do some kind of sharing
-- Somehow make this boring app fun! show some crazy pokemon animation or something :P
+
+- [] Enable search for the to-do items
+- [] Include animations
+- [] Persist data using Contexts and/or Async Storage. (The data are persisted by Firebase)
+- [] Call some public API (image, video, weather, clocks, up to you)
+- [x] Save data to a backend server (like firebase)
+- [] Do some kind of sharing
+- [] Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
 
@@ -69,3 +72,8 @@ Your app should be able to complete these tasks:
 ### Demo User
 
 Email: joko@gmail.com Password: jokojoko
+
+## Note
+
+- The application needs to be detached from Expo since the Firebase offline persistence does not work with it.
+- I did not have any chance to test the iOS version of the application because I don't have a MacOS machine

@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
-// import Firebase from 'firebase';
 import Button from './Button';
-import { Text } from './Themed';
+import { Spinner, Text, View } from './Themed';
 import LabeledTextInput from './TextInput';
 import Auth from '@react-native-firebase/auth';
 
-const signIn = (
+const onPressSignIn = (
   email: string,
   password: string,
-  setUserCredential: React.Dispatch<React.SetStateAction<Firebase.auth.UserCredential | null>>,
   setError: React.Dispatch<React.SetStateAction<any>>,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
@@ -17,11 +14,10 @@ const signIn = (
 
   Auth()
     .signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      setUserCredential(userCredential);
+    // No need to handle, because the authentication has been listened at the top level
+    .then(_ => {
     })
     .catch((reason) => {
-      console.log(reason);
       setError(reason);
     })
     .finally(() => {
@@ -33,7 +29,6 @@ export default () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [userCredential, setUserCredential] = useState<null | Firebase.auth.UserCredential>(null);
   const [error, setError] = useState(null);
 
   return (
@@ -63,14 +58,16 @@ export default () => {
         secureTextEntry
       />
       {
-        isLoading ? null
-          : (
+        isLoading ?
+          (
+            <Spinner/>
+          ) :
+          (
             <Button
               onPress={_ => {
-                signIn(
+                onPressSignIn(
                   email,
                   password,
-                  setUserCredential,
                   setError,
                   setIsLoading
                 );
@@ -78,6 +75,17 @@ export default () => {
             >
               {'Sign In '}
             </Button>
+          )
+      }
+      {
+        isLoading ?
+          null :
+          (
+            <View colorState="danger">
+              <Text>
+                {error}
+              </Text>
+            </View>
           )
       }
     </View>

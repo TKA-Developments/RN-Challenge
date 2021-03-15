@@ -1,9 +1,9 @@
 import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Theme, useTheme } from '@react-navigation/native';
 import { Text, View } from './Themed';
 import { signOut } from '../action/Auth';
-import { Theme, useTheme } from '@react-navigation/native';
 
 const styles = (theme: Theme) => StyleSheet.create({
   modalContainerStyle: {
@@ -32,9 +32,12 @@ const SignOutButton = () => {
   const themedStyles = styles(theme);
 
   return (
-    <TouchableOpacity style={themedStyles.signOutButtonStyle} onPress={() => {
-      signOut();
-    }}>
+    <TouchableOpacity
+      style={themedStyles.signOutButtonStyle}
+      onPress={() => {
+        signOut();
+      }}
+    >
       <Text style={themedStyles.logoutTextStyle}>SignOut</Text>
     </TouchableOpacity>
   );
@@ -52,9 +55,10 @@ export default ({ email }: { email: undefined | string | null }) => {
         width: 50,
         height: 50,
         alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <FontAwesome name="user" color={theme.colors.text} size={40} color="#FFFF"/>
+        justifyContent: 'center',
+      }}
+      >
+        <FontAwesome name="user" color={theme.colors.text} size={40}/>
       </View>
       <Text style={themedStyles.emailTextStyle}>{email ?? 'No email'}</Text>
       <SignOutButton/>

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import FloatingActionButton from '../components/FloatingActionButton';
 import { View } from '../components/Themed';
 import TODOList from '../components/TODOList';
-// import Firebase from 'firebase';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { DiscoverParamList } from '../types';
-import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
-import { FilterToDos, ToDoSingle, userToDos } from '../action/ToDos';
+import { DiscoverParamList, RootStackParamList } from '../types';
+import { FilterToDos, ToDoSingleWithKey, userToDos } from '../action/ToDos';
+import FloatingActionButtonGroup from '../components/FloatingActionButtonGroup';
 
 const styles = StyleSheet.create({
   modalContainerStyle: {
@@ -15,15 +15,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ({ navigation }: { navigation: StackNavigationProp<DiscoverParamList, 'DiscoverScreen'> }) => {
-  const [toDos, setToDos] = useState<Array<ToDoSingle>>([]);
+export default ({ navigation }: {
+  navigation: StackNavigationProp<DiscoverParamList & RootStackParamList, 'DiscoverScreen'>
+}) => {
+  const [toDos, setToDos] = useState<Array<ToDoSingleWithKey>>([]);
   const [filter, setFilter] = useState(FilterToDos.All);
 
   const onToDosChange = (todosSnapshot: FirebaseDatabaseTypes.DataSnapshot) => {
-    const toDosTemp: Array<ToDoSingle> = [];
+    const toDosTemp: typeof toDos = [];
     todosSnapshot.forEach((toDoSnapshot) => {
       toDosTemp.push({
-        id: toDoSnapshot.key,
+        key: toDoSnapshot.key,
         ...toDoSnapshot.val(),
       });
       return undefined;
@@ -46,8 +48,16 @@ export default ({ navigation }: { navigation: StackNavigationProp<DiscoverParamL
       <TODOList
         data={toDos}
       />
-      <FloatingActionButton onPress={() => navigation.navigate('CreateTODO')}/>
+      <FloatingActionButtonGroup>
+        <FloatingActionButton
+          onPress={() => navigation.navigate('TodaysImageModal')}
+          iconName="image"
+        />
+        <FloatingActionButton
+          onPress={() => navigation.navigate('CreateToDoModal')}
+          iconName="add"
+        />
+      </FloatingActionButtonGroup>
     </View>
   );
-}
-;
+};

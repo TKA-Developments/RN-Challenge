@@ -33,22 +33,32 @@ const styles = (theme: Theme) => StyleSheet.create({
 
 const TouchableOpacitySingle = ({
   item,
-  touchableStyle
+  touchableStyle,
 }:
   { item: TouchableOpacitySingleData, touchableStyle: any }) => {
   return (
-    <TouchableOpacity style={touchableStyle} onPress={item.onPress}>
-      <View style={{
-        flexDirection: 'row',
-        marginHorizontal: 8,
-        marginVertical: 12,
-      }}>
+    <TouchableOpacity
+      style={touchableStyle}
+      onPress={item.onPress}
+      activeOpacity={item.onPress ? 0.2 : 1}
+    >
+      <View
+        style={{
+          flexDirection: 'row',
+          marginHorizontal: 8,
+          marginVertical: 12,
+        }}
+      >
         {item.icon ?? item.icon}
         <View style={{ justifyContent: 'center', }}>
-          <Text style={{
-            fontWeight: 'bold',
-            fontSize: 15,
-          }}>{item.title}</Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 15,
+            }}
+          >
+            {item.title}
+          </Text>
           {item.subtitle ? <Text>{item.subtitle}</Text> : null}
         </View>
       </View>

@@ -7,6 +7,7 @@ import Version from '../constants/Version';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { TabMoreParamList } from '../types';
 import { currentUser } from '../action/Auth';
+import { rootNavContainerRef } from '../navigation';
 
 const sections: Array<TouchableOpacitySectionData> = [
   // {
@@ -27,9 +28,12 @@ const sections: Array<TouchableOpacitySectionData> = [
       },
       {
         title: 'About',
-      }
-    ]
-  }
+        onPress: () => {
+          rootNavContainerRef.current?.navigate('AboutScreen');
+        },
+      },
+    ],
+  },
 ];
 
 export default ({ navigation }: { navigation: StackNavigationProp<TabMoreParamList, 'TabMoreScreen'> }) => {

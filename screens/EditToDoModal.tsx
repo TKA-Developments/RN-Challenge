@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View } from '../components/Themed';
 import TextButton from '../components/TextButton';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { DiscoverParamList } from '../types';
-import { Theme, useTheme } from '@react-navigation/native';
-import { addToDo } from '../action/ToDos';
-// import Firebase from 'firebase';
+import { RootStackParamList } from '../types';
+import { RouteProp, Theme, useTheme } from '@react-navigation/native';
+import { getToDo, ToDoSingle } from '../action/ToDos';
 
 const styles = (theme: Theme) => StyleSheet.create({
   titleStyle: {
@@ -42,6 +42,7 @@ const styles = (theme: Theme) => StyleSheet.create({
   },
   addButtonStyle: {
     margin: 10,
+    alignItems: 'flex-end',
   },
   addButtonTextStyle: {
     color: theme.colors.primary,
@@ -49,27 +50,45 @@ const styles = (theme: Theme) => StyleSheet.create({
   },
 });
 
-const addButtonPress = (
-  navigation: StackNavigationProp<DiscoverParamList, 'DiscoverScreen'>,
+const editButtonPress = (
+  navigation: StackNavigationProp<RootStackParamList, 'EditToDoScreen'>,
   title: string,
   description: string,
 ) => {
-  addToDo(title, description);
+  editToDo(title, description);
   navigation.goBack();
 };
 
-export default ({ navigation }:
-  { navigation: StackNavigationProp<DiscoverParamList, 'DiscoverScreen'> }) => {
+export default ({
+  route,
+  navigation
+}:
+  {
+    route: RouteProp<RootStackParamList, 'EditToDoScreen'>,
+    navigation: StackNavigationProp<RootStackParamList, 'EditToDoScreen'>
+  }) => {
   const theme = useTheme();
   const themedStyle = styles(theme);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-
-  const titleTextInputRef = useRef<null | TouchableOpacity>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
-    titleTextInputRef.current?.focus();
+    const { key } = route.params;
+    // TODO
+    // Handle error
+    getToDo(key)
+      .then((snapshot) => {
+        const toDo: ToDoSingle = snapshot.val();
+        setTitle(toDo.title);
+        setIsCompleted(toDo.isCompleted);
+        setDescription(toDo.description);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   return (
@@ -78,7 +97,6 @@ export default ({ navigation }:
       </TouchableOpacity>
       <View style={themedStyle.modalContainerStyle}>
         <TextInput
-          ref={titleTextInputRef}
           style={themedStyle.titleStyle}
           placeholder="Title"
           placeholderTextColor={theme.colors.text}
@@ -93,9 +111,13 @@ export default ({ navigation }:
           multiline={true}
           onChangeText={setDescription}
         />
-        <View>
+        <View
+          style={{
+            flexDirection: 'row'
+          }}
+        >
           <TextButton
-            onPress={() => addButtonPress(navigation, title, description)}
+            onPress={() => editButtonPress(navigation, title, description)}
             textStyle={themedStyle.addButtonTextStyle}
             touchableStyle={themedStyle.addButtonStyle}>
             Add

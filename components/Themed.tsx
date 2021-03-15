@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Text as DefaultText, View as DefaultView } from 'react-native';
+import { ActivityIndicator, Text as DefaultText, View as DefaultView } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark
+  colorName: keyof typeof Colors.light & keyof typeof Colors.dark,
 ) {
   const theme = useColorScheme();
   const colorFromProps = props[theme];
@@ -18,15 +18,14 @@ export function useThemeColor(
   }
 }
 
-type ThemeProps = {
+export type ThemeProps = {
   lightColor?: string;
   darkColor?: string;
 };
 
-export type TextProps = ThemeProps & DefaultText['props'];
-export type ViewProps = ThemeProps & DefaultView['props'];
+type TextProps = ThemeProps & DefaultText['props'];
 
-export function Text(props: TextProps) {
+export const Text = (props: TextProps) => {
   const {
     style,
     lightColor,
@@ -35,23 +34,50 @@ export function Text(props: TextProps) {
   } = props;
   const color = useThemeColor({
     light: lightColor,
-    dark: darkColor
+    dark: darkColor,
   }, 'text');
 
   return <DefaultText style={[{ color }, style]} {...otherProps} />;
-}
+};
 
-export function View(props: ViewProps) {
+type ColorState = 'danger' | 'primary' | 'secondary' | 'success' | 'warning' | 'info';
+
+type ViewProps = ThemeProps &
+  DefaultView['props'] &
+  { colorState?: ColorState };
+
+export const View = (props: ViewProps) => {
+  const {
+    style,
+    lightColor,
+    darkColor,
+    colorState,
+    ...otherProps
+  } = props;
+  const backgroundColor = useThemeColor({
+      light: lightColor,
+      dark: darkColor
+    },
+    colorState as keyof typeof Colors.light & keyof typeof Colors.dark ?? 'background');
+
+  return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+};
+
+type SpinnerProps = ThemeProps & ActivityIndicator['props'];
+
+export const Spinner = (props: SpinnerProps) => {
   const {
     style,
     lightColor,
     darkColor,
     ...otherProps
   } = props;
-  const backgroundColor = useThemeColor({
+  const color = useThemeColor({
     light: lightColor,
-    dark: darkColor
-  }, 'background');
+    dark: darkColor,
+  }, 'primary');
 
-  return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
-}
+  return (
+    <ActivityIndicator style={[{ color }.style]} {...otherProps}/>
+  );
+};

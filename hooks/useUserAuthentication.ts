@@ -6,10 +6,13 @@ export default () => {
   const [isUserAuth, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
   useEffect(() => {
-    Auth()
+    const unsubscribeAuthStateListener = Auth()
       .onAuthStateChanged((user) => {
         setUser(user);
       });
+    return () => {
+      unsubscribeAuthStateListener();
+    };
   }, []);
 
   return isUserAuth;
