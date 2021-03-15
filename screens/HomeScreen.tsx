@@ -5,10 +5,12 @@ import { RootStackParamList } from '../types';
 
 import { Text, View } from '../components/Themed';
 import Todos from '../components/homeScreen/Todos';
+// import SearchBar from '../components/homeScreen/SearchBar';
 
 const HomeScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Home'>) => {
     return (
         <View style={styles.container}>
+            {/* <SearchBar /> */}
             <Text>Hello, Nanda!</Text>
             <Text>You have 3 tasks today!</Text>
             <Todos />

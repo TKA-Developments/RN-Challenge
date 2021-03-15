@@ -4,22 +4,23 @@ import { FlatList } from 'react-native';
 import { TodoContext, ITodoGroupByDate } from '../../contexts/TodoContext';
 
 import TodosGroupDate from './TodosGroupDate';
+import SearchBar from './SearchBar';
 
 const Todos = () => {
-    const { todos } = useContext(TodoContext);
+    const { todosGroupDate } = useContext(TodoContext);
     // somehow todos can't be supplied directly to flatlist
     let todosTemp: ITodoGroupByDate[] = [];
-    todos.forEach(todo => {
+    todosGroupDate.forEach(todo => {
         todosTemp.push(todo);
     });
 
-
     return (
         <View>
+            <SearchBar />
             <FlatList
                 data={todosTemp}
+                keyExtractor={(item) => item.date}
                 renderItem={({ item }) => {
-                    console.log(item);
                     return (
                         <TodosGroupDate todos={item} />
                     )

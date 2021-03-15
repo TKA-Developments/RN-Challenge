@@ -17,14 +17,8 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
     const [category, setCategory] = useState<string>('');
     const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
     const [date, setDate] = useState<string>(today);
-    const { addTodo, updateTodo } = useContext(TodoContext);
+    const { addTodo, updateTodo, categories } = useContext(TodoContext);
     const colorScheme = useColorScheme();
-
-    const categories = [
-        { id: '1', title: 'Academic', color: 'pink' },
-        { id: '2', title: 'Intern', color: 'green' },
-        { id: '3', title: 'Organization', color: 'yellow' },
-    ]
 
     useEffect(() => {
         if (route.params) {
@@ -103,7 +97,7 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
                 {categories.map(cat => (
                     <TouchableOpacity style={styles.radioContainer} onPress={() => selectCategory(cat.title)}>
                         <RadioButton
-                            key={cat.id}
+                            key={cat.title}
                             value={cat.title}
                             uncheckedColor={cat.color}
                             color={cat.color}

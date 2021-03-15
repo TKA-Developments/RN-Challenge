@@ -11,18 +11,27 @@ export interface ITodo {
     category: string,
 }
 
-
-
 export interface ITodoGroupByDate {
     date: 'string',
     todos: ITodo[],
 }
 
+export interface ICategory {
+    title: string,
+    color: string
+}
+
 interface ITodoContext {
-    todos: ITodoGroupByDate[],
+    todos: ITodo[],
+    todosGroupDate: ITodoGroupByDate[],
+    search: string,
+    categories: ICategory[],
     updateTodo: (todo: ITodo) => void,
     addTodo: (title: string, date: string, category: string) => void,
     deleteTodo: (id: string) => void,
+    updateSearch: (word: string) => void,
+    updateStatus: (word: string) => void,
+    updateCategory: (word: string) => void,
 }
 
 export const TodoContext = createContext<ITodoContext>({} as ITodoContext);
@@ -33,12 +42,26 @@ interface ProviderProps {
 
 const TodoProvider = ({ children }: ProviderProps) => {
     let today = getTodayDate("Asia/Jakarta");
-    const [todos, setTodos] = useState<ITodoGroupByDate[]>([]);
+    const [todos, setTodos] = useState<ITodo[]>([]);
+    const [todosGroupDate, setTodosGroupDate] = useState<ITodoGroupByDate[]>([]);
+    const [categories, setCategories] = useState<ICategory[]>([
+        { title: 'Academic', color: 'pink' },
+        { title: 'Intern', color: 'green' },
+        { title: 'Organization', color: 'yellow' },
+    ])
+    const [search, setSearch] = useState<string>('');
+    const [todoStatus, setTodoStatus] = useState<string>('All');
+    const [category, setCategory] = useState<string>('');
+
     const todosRef = firebase.firestore().collection('todos');
 
     useEffect(() => {
         getTodos();
     }, []);
+
+    useEffect(() => {
+        groupTodoByDate();
+    }, [todos, search, todoStatus, category]);
 
     const getTodos = async () => {
         let tempTodos: ITodo[] = [];
@@ -54,26 +77,49 @@ const TodoProvider = ({ children }: ProviderProps) => {
                         category: doc.data().category,
                     });
                 });
-                // Sort todos by date
-                tempTodos.sort((a, b) => (a.date > b.date) ? 1 : ((b.date > a.date) ? -1 : 0));
 
-                // Using lodash to group todo by date
-                const groupedTodosByDate: ITodoGroupByDate[] = _(tempTodos).groupBy((todo: ITodo) => {
-                    if (isNDayAfter(new Date(today), new Date(todo.date), 1)) {
-                        return 'tomorrow'
-                    } else if (todo.date > today) {
-                        return 'upcoming';
-                    } else if (todo.date < today) {
-                        return 'overdue'
-                    } else {
-                        return 'today';
-                    }
-                }).map((todos: ITodo[], date: string) => ({ date, todos }));
-                console.log('halo');
-                setTodos(groupedTodosByDate);
+                setTodos(tempTodos);
             }).catch(() => {
                 console.log('Error detected');
             });
+    }
+
+    const groupTodoByDate = () => {
+        let tempTodos = todos.filter(todo => {
+            let searchFilter;
+            let statusFilter;
+            let categoryFilter;
+
+            searchFilter = todo.title.includes(search);
+
+            if (todoStatus != 'All') {
+                let filterChecked = todoStatus === 'Complete';
+                statusFilter = todo.checked === filterChecked;
+            } else {
+                statusFilter = true;
+            }
+
+            if (category) {
+                categoryFilter = todo.category === category;
+            } else {
+                categoryFilter = true;
+            }
+
+            return statusFilter && searchFilter && categoryFilter;
+        });
+        // Using lodash to group todo by date
+        const groupedTodosByDate: ITodoGroupByDate[] = _(tempTodos).groupBy((todo: ITodo) => {
+            if (isNDayAfter(new Date(today), new Date(todo.date), 1)) {
+                return 'tomorrow'
+            } else if (todo.date > today) {
+                return 'upcoming';
+            } else if (todo.date < today) {
+                return 'overdue'
+            } else {
+                return 'today';
+            }
+        }).map((todos: ITodo[], date: string) => ({ date, todos }));
+        setTodosGroupDate(groupedTodosByDate);
     }
 
     const updateTodo = async (todo: ITodo) => {
@@ -101,11 +147,29 @@ const TodoProvider = ({ children }: ProviderProps) => {
         getTodos();
     }
 
+    const updateSearch = (word: string) => {
+        setSearch(word);
+    }
+
+    const updateStatus = (word: string) => {
+        setTodoStatus(word);
+    }
+
+    const updateCategory = (word: string) => {
+        setCategory(word);
+    }
+
     const value = {
         todos,
+        todosGroupDate,
+        search,
+        categories,
         addTodo,
         updateTodo,
         deleteTodo,
+        updateSearch,
+        updateStatus,
+        updateCategory
     }
 
     return (
