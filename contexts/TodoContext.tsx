@@ -12,6 +12,8 @@ export interface ITodo {
 interface ITodoContext {
     todos: ITodo[],
     updateTodoChecked: (id: string, checked: boolean) => void,
+    addTodo: (title: string, date: string, category: string) => void,
+    deleteTodo: (id: string) => void,
 }
 
 export const TodoContext = createContext<ITodoContext>({} as ITodoContext);
@@ -56,11 +58,26 @@ const TodoProvider = ({ children }: ProviderProps) => {
         getTodos();
     }
 
+    const addTodo = (title: string, date: string, category: string) => {
+        todosRef.add({
+            title,
+            date,
+            category,
+            checked: false,
+        });
+        getTodos();
+    }
 
+    const deleteTodo = (id: string) => {
+        todosRef.doc(id).delete();
+        getTodos();
+    }
 
     const value = {
         todos,
-        updateTodoChecked
+        addTodo,
+        updateTodoChecked,
+        deleteTodo,
     }
 
     return (
