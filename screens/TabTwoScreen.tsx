@@ -193,6 +193,7 @@ export default function TabTwoScreen() {
           dbh.collection("todolist").doc(data).delete().then(() => {
               fetchDatabase();
               fetchCompletedArray();
+              fetchUncompletedArray();
               }).catch((error) => {
               console.error("Error removing document: ", error);
               });
@@ -579,7 +580,7 @@ export default function TabTwoScreen() {
       <Item>
         <Title>Uncompleted Item</Title>
         {/* <Text>{arrayItem}</Text> */}
-        {
+        { uncompletedItemArray &&
           uncompletedItemArray.map((list,key) => (
             <View style = {styles.inputview}>
               <Text style= {styles.todotext}> {list.name}  </Text>
