@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext, ReactNode } from 'react';
+import React, { useEffect, useState, createContext, ReactNode, useContext } from 'react';
 import firebase from '../config/firebase';
 import _ from 'lodash';
 import { getTodayDate, isNDayAfter } from '../utils/datetime';
@@ -12,7 +12,7 @@ export interface ITodo {
 }
 
 export interface ITodoGroupByDate {
-    date: 'string',
+    date: string,
     todos: ITodo[],
 }
 
@@ -26,15 +26,23 @@ interface ITodoContext {
     todosGroupDate: ITodoGroupByDate[],
     search: string,
     categories: ICategory[],
+    category: string,
+    todoStatus: string,
+    showOverdue: boolean,
     updateTodo: (todo: ITodo) => void,
     addTodo: (title: string, date: string, category: string) => void,
     deleteTodo: (id: string) => void,
     updateSearch: (word: string) => void,
     updateStatus: (word: string) => void,
     updateCategory: (word: string) => void,
+    getCategoryColor: (word: string) => string,
+    toggleOverdue: () => void,
 }
 
 export const TodoContext = createContext<ITodoContext>({} as ITodoContext);
+export const useTodoContext = () => {
+    return useContext(TodoContext);
+}
 
 interface ProviderProps {
     children: ReactNode,
@@ -51,7 +59,8 @@ const TodoProvider = ({ children }: ProviderProps) => {
     ])
     const [search, setSearch] = useState<string>('');
     const [todoStatus, setTodoStatus] = useState<string>('All');
-    const [category, setCategory] = useState<string>('');
+    const [category, setCategory] = useState<string>('All');
+    const [showOverdue, setShowOverdue] = useState<boolean>(false);
 
     const todosRef = firebase.firestore().collection('todos');
 
@@ -61,7 +70,7 @@ const TodoProvider = ({ children }: ProviderProps) => {
 
     useEffect(() => {
         groupTodoByDate();
-    }, [todos, search, todoStatus, category]);
+    }, [todos, search, todoStatus, category, showOverdue]);
 
     const getTodos = async () => {
         let tempTodos: ITodo[] = [];
@@ -99,7 +108,7 @@ const TodoProvider = ({ children }: ProviderProps) => {
                 statusFilter = true;
             }
 
-            if (category) {
+            if (category != 'All') {
                 categoryFilter = todo.category === category;
             } else {
                 categoryFilter = true;
@@ -157,6 +166,20 @@ const TodoProvider = ({ children }: ProviderProps) => {
 
     const updateCategory = (word: string) => {
         setCategory(word);
+
+    }
+
+    const getCategoryColor = (word: string): string => {
+        let selected = categories.filter(cat => cat.title === word);
+        if (selected.length > 0) {
+            return selected[0].color;
+        } else {
+            return 'white';
+        }
+    }
+
+    const toggleOverdue = () => {
+        setShowOverdue(!showOverdue);
     }
 
     const value = {
@@ -164,12 +187,17 @@ const TodoProvider = ({ children }: ProviderProps) => {
         todosGroupDate,
         search,
         categories,
+        category,
+        todoStatus,
+        showOverdue,
         addTodo,
         updateTodo,
         deleteTodo,
         updateSearch,
         updateStatus,
-        updateCategory
+        updateCategory,
+        getCategoryColor,
+        toggleOverdue,
     }
 
     return (
