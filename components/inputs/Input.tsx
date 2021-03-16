@@ -3,9 +3,9 @@ import { StyleSheet, TextInput } from "react-native";
 import { Text, View } from "../Themed";
 import { InputForm } from "../../types";
 
-const Input = ({ label, value, onChange }: InputForm) => {
+const Input = ({ label, value, onChange, editValue }: InputForm) => {
   const [input, setInput] = useState(false);
-
+  console.log(editValue);
   return (
     <View>
       {!input && (
@@ -27,6 +27,7 @@ const Input = ({ label, value, onChange }: InputForm) => {
               : styles.input
           }
           placeholder={` ${label}`}
+          defaultValue="ggwp"
           value={value}
           onChangeText={(text) => onChange(label, text)}
         />

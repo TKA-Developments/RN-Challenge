@@ -89,11 +89,17 @@ export const StepsCheckButton = ({
           There is not step for this activity
         </Text>
       )}
-      {steps?.map((step, idx) => (
-        <TouchableNativeFeedback key={idx} onPress={() => checkThisStep(idx)}>
-          <StepText step={step} num={idx + 1} check={checkOne(idx)} />
-        </TouchableNativeFeedback>
-      ))}
+      {steps?.map(
+        (step, idx) =>
+          step.length > 0 && (
+            <TouchableNativeFeedback
+              key={idx}
+              onPress={() => checkThisStep(idx)}
+            >
+              <StepText step={step} num={idx + 1} check={checkOne(idx)} />
+            </TouchableNativeFeedback>
+          )
+      )}
     </View>
   );
 };

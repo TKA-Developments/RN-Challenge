@@ -8,12 +8,19 @@ import { TouchableNativeFeedback } from "react-native-gesture-handler";
 
 const ActivityCard = ({ data }: any) => {
   const navigation = useNavigation();
-
+  // console.log("datacard")
+  // console.log(data.activity)
   return (
     <TouchableNativeFeedback
-      onPress={() => navigation.navigate("TodoScreen", data.activity)}
+      onPress={() => navigation.navigate("TodoScreen", data)}
     >
-      <View style={data.complete === true? {...styles.cardStyle, backgroundColor:"grey"}:{...styles.cardStyle, backgroundColor:"skyblue"}}>
+      <View
+        style={
+          data.activity.complete === true
+            ? { ...styles.cardStyle, backgroundColor: "grey" }
+            : { ...styles.cardStyle, backgroundColor: "skyblue" }
+        }
+      >
         <Text style={styles.textStyle}>{data.activity.title}</Text>
         <CheckBox />
       </View>

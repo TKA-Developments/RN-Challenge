@@ -3,36 +3,93 @@ import { StyleSheet, KeyboardAvoidingView, BackHandler } from "react-native";
 import StepsContainer from "../components/container/StepsContainer";
 import Input from "../components/inputs/Input";
 import AsyncStorage from "@react-native-community/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import {
+  useNavigation,
+  useIsFocused,
+  useRoute,
+  RouteProp,
+} from "@react-navigation/native";
 import { View } from "../components/Themed";
 import { ShowCurrentDate } from "../components/Date";
+import { ActivityRouteProps } from "../types";
 
 const ActivityFormScreen = () => {
+  const route = useRoute<RouteProp<any, "">>();
+  const todo = route.params;
+
+  const isFocused = useIsFocused();
   const navigation = useNavigation();
   const [value, setValue] = useState({
     activity: "",
     description: "",
   });
-  const [stepValue, setStepValue] = useState([""]);
 
-  const { date, hour, minute, month, year } = ShowCurrentDate;
+  const [editValue, setEditValue] = useState({
+    activity: "",
+    description: "",
+  });
+
+  const [stepEditValue, setStepEditValue] = useState([""]);
+
+  const [stepValue, setStepValue] = useState([""]);
+  // const [id, setId] = useState();
 
   useEffect(() => {
+    const { date, hour, minute, month, year } = ShowCurrentDate;
+    // console.log("todo");
+    // console.log(todo);
+    if (todo) {
+      setEditValue({
+        activity: todo.todo.activity.title,
+        description: todo.todo.activity.description,
+      });
+      if (todo.todo.activity.steps.length > 0) {
+        todo.todo.activity.steps.forEach((step: any) => {
+          setStepEditValue((prevState) => {
+            return [...prevState, step];
+          });
+        });
+      }
+    } else {
+      return;
+    }
+
     const saveData = {
-      id: `${date + "" + month + "" + year + "" + hour + "" + minute}`,
+      date: year + "/" + month + "/" + date + ":" + hour + "." + minute,
       activity: {
         title: value.activity,
         description: value.description,
         steps: stepValue,
+        complete: false,
       },
     };
 
     let backAction: any;
-    backAction = async () => {
+    backAction = () => {
       try {
-        // console.log(saveData);
-        await AsyncStorage.setItem("activityData", JSON.stringify(saveData));
-        navigation.goBack();
+        AsyncStorage.getItem("activityData")
+          .then((res: any) => {
+            const obj = JSON.parse(res);
+            // console.log(obj);
+            if (obj !== null) {
+              const data = [];
+              data.push(...obj, saveData);
+              AsyncStorage.setItem("activityData", JSON.stringify(data)).then(
+                () => {
+                  console.log("data has been added");
+                }
+              );
+            } else {
+              AsyncStorage.setItem(
+                "activityData",
+                JSON.stringify([saveData])
+              ).then(() => {
+                console.log("data has been created");
+              });
+            }
+            navigation.navigate("TabOneScreen");
+          })
+          .catch((error) => console.log(error));
       } catch (error) {
         console.log(error);
         return error;
@@ -46,7 +103,7 @@ const ActivityFormScreen = () => {
       );
       return () => backHandler.remove();
     }
-  }, [value, stepValue]);
+  }, [value, stepValue, todo, isFocused]);
 
   const inputOnChange = (lbl: string, text: string) => {
     const label = lbl.toLowerCase();
@@ -73,16 +130,22 @@ const ActivityFormScreen = () => {
             label="Activity"
             value={value.activity}
             onChange={inputOnChange}
+            editValue={editValue.activity}
           />
           <Input
             label="Description"
             value={value.description}
             onChange={inputOnChange}
+            editValue={editValue.description}
           />
         </View>
 
         <View style={styles.ViewButtonStyle}>
-          <StepsContainer stepValue={stepValue} onChange={stepOnChange} />
+          <StepsContainer
+            stepEditValue={stepEditValue}
+            stepValue={stepValue}
+            onChange={stepOnChange}
+          />
         </View>
       </View>
     </KeyboardAvoidingView>

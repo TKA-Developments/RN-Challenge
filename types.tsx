@@ -38,9 +38,11 @@ export type InputForm = {
   label: string;
   value: string;
   onChange: Function;
+  editValue?: string;
 };
 
 export type StepForm = {
+  editValue?: string;
   stepOnChange: Function;
   value: string;
   number: number;
@@ -58,6 +60,7 @@ export type StepContainerType = {
   onChange: Function;
   stepValue: Array<string>;
   save?: Function;
+  stepEditValue: Array<string>;
 };
 
 export type CheckButtonType = {
@@ -70,10 +73,12 @@ export type CheckButtonType = {
 
 export type ActivityRouteProps = {
   data: {
-    title: string;
-    description: string;
-    steps: [string];
-    complete?: boolean;
+    activity: {
+      title: string;
+      description: string;
+      steps: [string];
+      complete: boolean;
+    };
   };
 };
 
@@ -83,8 +88,8 @@ export type ActivityHomeList = {
     title: string;
     description: string;
     steps: [string];
+    complete: boolean;
   };
-  complete?: boolean;
 };
 
 // export type DetailActivity = {

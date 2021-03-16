@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-community/async-storage";
 import { Text, View, ScrollView } from "../components/Themed";
 import ActivityCard from "../components/cards/ActivityCard";
@@ -9,32 +9,38 @@ import { ActivityHomeList } from "../types";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 
 export default function TabOneScreen() {
-  const [activity, setActivity] = useState<Array<ActivityHomeList>>([]);
+  const isFocused = useIsFocused();
+  const [activity, setActivity] = useState<any>([]);
 
   const getActivityData = () => {
-    // AsyncStorage.removeItem("activityData")
+    // AsyncStorage.removeItem("activityData").then((res:any)=>{
+    //   setActivity([]);
+    // })
     AsyncStorage.getItem("activityData").then((res: any) => {
       if (res) {
-        let data: ActivityHomeList;
+        // console.log(res);
+        let data: any;
         data = JSON.parse(res);
-        setActivity([data]);
+        setActivity(data);
+      } else {
+        console.log("no data");
       }
     });
   };
 
   useEffect(() => {
-    getActivityData();
-  }, []);
+    if (isFocused) {
+      getActivityData();
+    }
+  }, [isFocused]);
 
-  console.log("activity: ");
-  console.log(activity);
+  // console.log("activity: ");
+  // console.log(activity);
   const navigation = useNavigation();
 
   const onTouch = () => {
     navigation.navigate("ActivityScreen");
   };
-
-  // const activity: Array<{ id?: number; activity: string; title: string }> = [];
 
   return (
     <View style={styles.filledContainer}>
@@ -70,7 +76,7 @@ const ActivityList = ({ data }: { data: any }) => {
   return (
     <ScrollView>
       {data.map((act: any, idx: number) => (
-        <ActivityCard key={act.id} data={act} />
+        <ActivityCard key={idx} data={act} />
       ))}
     </ScrollView>
   );
