@@ -134,14 +134,14 @@ export default function TabTwoScreen() {
       ]
     );
 
-  const markAsDoneAlert = (name,description) =>
+  const markAsDoneAlert = (name) =>
     Alert.alert(
       "Confirm Done Item",
       "Are you sure want to mark this item as done?",
       [
         {
           text: "Yes",
-          onPress: () => markAsDone(name,description),
+          onPress: () => markAsDone(name),
         },
         {
           text: "Cancel",
@@ -315,17 +315,15 @@ export default function TabTwoScreen() {
   }
 
 
-  function markAsDone(name,description) {
+  function markAsDone(name) {
     dbh.collection("todolist").where("name","==",name)
       .get()
       .then((snapshot) => {
         const list = [];
         snapshot.forEach((doc) => {
           const data = doc.id;
-          dbh.collection("todolist").doc(data).set({
+          dbh.collection("todolist").doc(data).update({
             completed : true,
-            name: name,
-            description: description,
           }).then(() => {
             fetchCompletedArray();
             fetchUncompletedArray();
@@ -393,7 +391,7 @@ export default function TabTwoScreen() {
         <Container>
         <ScrollView>
         <Text style = {styles.title}> Search Result </Text>
-        {searchItem && searchItem.map((list) => (
+        {searchItem && searchItem.map((list,key) => (
           <View style={styles.inputview2}>
             <Title>{list.name}</Title>
             <Text style={styles.modalText}>To do : {list.description}</Text>
@@ -491,7 +489,7 @@ export default function TabTwoScreen() {
                   backgroundColor = "#f4f4f4"
                   size={25} 
                   color="green"
-                  onPress = {() => markAsDoneAlert(list.name,list.description)}>Mark As Done</Ionicons.Button>
+                  onPress = {() => markAsDoneAlert(list.name)}>Mark As Done</Ionicons.Button>
               </Text>
               </View>
               
