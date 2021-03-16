@@ -11,15 +11,15 @@ const styles = (theme: Theme) => StyleSheet.create({
   },
   containerToDoSingleStyle: {
     flexDirection: 'row',
-    minHeight: 20,
+    // minHeight: 20,
     margin: 5,
     paddingVertical: 5,
     alignItems: 'center',
-    borderWidth: 1,
+    // borderBottomWidth: 1,
   },
   checkBoxToDoSingleStyle: {},
   innerContainerStyle: {
-    flexDirection: 'row',
+    marginLeft: 10,
   },
 });
 
@@ -55,6 +55,7 @@ export default ({
           checkBoxStyle={themedStyles.checkBoxToDoSingleStyle}
           titleStyle={themedStyles.titleToDoSingleStyle}
           containerStyle={themedStyles.containerToDoSingleStyle}
+          innerContainerStyle={themedStyles.innerContainerStyle}
         />
       )}
     />

@@ -5,6 +5,7 @@ import { Text, ThemedColors, useThemeColors } from './Themed';
 const styles = (colors: ThemedColors) => StyleSheet.create({
   touchableStyle: {
     // margin: 20,
+    backgroundColor: 'transparent',
   },
   textStyle: {
     color: colors.primary,

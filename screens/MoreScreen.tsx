@@ -1,24 +1,26 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
-// import Firebase from 'firebase';
-import TouchableOpacityList, { TouchableOpacitySectionData } from '../components/TouchableOpacityList';
+import { StyleSheet } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import MenuList, { MenuListSectionData } from '../components/MenuList';
 import AccountOverview from '../components/AccountOverview';
 import Version from '../constants/Version';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { TabMoreParamList } from '../types';
 import { currentUser } from '../action/Auth';
-import { rootNavContainerRef } from '../navigation';
+import { View } from '../components/Themed';
 
-const sections: Array<TouchableOpacitySectionData> = [
-  // {
-  //   title: 'Configuration',
-  //   data: [
-  //     {
-  //       icon: <MaterialIcons name="palette" size={30}/>,
-  //       title: 'Theme',
-  //     },
-  //   ],
-  // },
+const sections = (
+  navigation: StackNavigationProp<TabMoreParamList, 'TabMoreScreen'>
+): Array<MenuListSectionData> => [
+  {
+    title: 'Configuration',
+    data: [
+      {
+        icon: <MaterialIcons name="palette" size={30}/>,
+        title: 'Theme',
+      },
+    ],
+  },
   {
     title: 'General',
     data: [
@@ -29,8 +31,17 @@ const sections: Array<TouchableOpacitySectionData> = [
       {
         title: 'About',
         onPress: () => {
-          rootNavContainerRef.current?.navigate('AboutScreen');
+          navigation.navigate('AboutScreen');
         },
+      },
+    ],
+  },
+  {
+    title: 'Misc',
+    data: [
+      {
+        icon: <MaterialIcons name="palette" size={30}/>,
+        title: 'Animation Demo',
       },
     ],
   },
@@ -42,8 +53,8 @@ export default ({ navigation }: { navigation: StackNavigationProp<TabMoreParamLi
   return (
     <View>
       <AccountOverview email={email}/>
-      <TouchableOpacityList
-        sections={sections}
+      <MenuList
+        sections={sections(navigation)}
       />
     </View>
   );

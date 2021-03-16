@@ -8,16 +8,32 @@ import useInitialization from './hooks/useInitialization';
 import useUserAuthentication from './hooks/useUserAuthentication';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
 import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import SignInScreen from './screens/SignInScreen';
+import AuthNavigator from './navigation/auth';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+
+const Main = ({
+  user,
+  isLoading,
+}:
+  {
+    user: FirebaseAuthTypes.User,
+    isLoading: boolean,
+  }) => {
+  if (isLoading) {
+    return <SplashScreen/>;
+  }
+
+  if (user === null) {
+    return <AuthNavigator/>;
+  }
+
+  return <RootNavigator/>;
+};
 
 export default () => {
   const isLoading = useInitialization();
   const colorScheme = useColorScheme();
   const user = useUserAuthentication();
-
-  if (isLoading) {
-    return <SplashScreen/>;
-  }
 
   return (
     <SafeAreaProvider>
@@ -25,7 +41,7 @@ export default () => {
         ref={rootNavContainerRef}
         linking={LinkingConfiguration}
         theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        {user === null ? <SignInScreen/> : <RootNavigator/>}
+        <Main isLoading={isLoading} user={user}/>
       </NavigationContainer>
       <StatusBar/>
     </SafeAreaProvider>

@@ -1,6 +1,5 @@
 import React from 'react';
-import RoundedCheckbox from 'react-native-rounded-checkbox';
-import { FontAwesome } from '@expo/vector-icons';
+import RoundedCheckbox, { IRoundedCheckboxProps } from '../components/RoundedCheckBox';
 import { ToDoSingleWithKey } from '../action/ToDos';
 import { Text, View } from './Themed';
 import { TouchableOpacity } from 'react-native';
@@ -18,7 +17,7 @@ export default ({
   onCheck: (isChecked: boolean, key: string) => void,
   onPress: (data: ToDoSingleWithKey) => void,
   titleStyle?: any,
-  checkBoxStyle?: any,
+  checkBoxStyle?: IRoundedCheckboxProps,
   containerStyle?: any,
   innerContainerStyle?: any,
 }) => {
@@ -28,16 +27,11 @@ export default ({
         onPress={(isChecked) => onCheck(isChecked, data.key)}
         style={checkBoxStyle}
         isChecked={data.isCompleted}
-        component={
-          <FontAwesome
-            name="check"
-            size={30}
-          />
-        }
       />
       <View style={innerContainerStyle}>
         <Text style={titleStyle}>{data.title}</Text>
-        <Text>{data.description.substring(0, 50)}</Text>
+        {data.description || data.description.trim() !== '' ?
+          <Text>{data.description.substring(0, 20)}</Text> : null}
       </View>
     </TouchableOpacity>
   );

@@ -1,67 +1,58 @@
 import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Theme, useTheme } from '@react-navigation/native';
-import { Text, View } from './Themed';
+import { Text, ThemedColors, useThemeColors, View } from './Themed';
 import { signOut } from '../action/Auth';
 
-const styles = (theme: Theme) => StyleSheet.create({
+const styles = (colors: ThemedColors) => StyleSheet.create({
   containerStyle: {
     flexDirection: 'row',
     height: 80,
     alignItems: 'center',
     padding: 15,
   },
+  userIconStyle: {
+    backgroundColor: colors.text,
+    borderRadius: 100,
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   signOutButtonStyle: {
     alignItems: 'flex-end',
   },
   emailTextStyle: {
-    color: theme.colors.text,
     flex: 1,
+    color: colors.text,
     fontSize: 17,
     marginLeft: 10,
   },
   logoutTextStyle: {
-    color: theme.colors.primary,
+    color: colors.primary,
     fontSize: 17,
   },
 });
 
-const SignOutButton = () => {
-  const theme = useTheme();
-  const themedStyles = styles(theme);
-
-  return (
-    <TouchableOpacity
-      style={themedStyles.signOutButtonStyle}
-      onPress={() => {
-        signOut();
-      }}
-    >
-      <Text style={themedStyles.logoutTextStyle}>SignOut</Text>
-    </TouchableOpacity>
-  );
-};
-
 export default ({ email }: { email: undefined | string | null }) => {
-  const theme = useTheme();
-  const themedStyles = styles(theme);
+  const colors = useThemeColors();
+  const themedStyles = styles(colors);
 
   return (
     <View style={themedStyles.containerStyle}>
-      <View style={{
-        backgroundColor: 'gray',
-        borderRadius: 100,
-        width: 50,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
+      <View style={themedStyles.userIconStyle}
       >
-        <FontAwesome name="user" color={theme.colors.text} size={40}/>
+        <FontAwesome name="user" color={colors.background} size={40}/>
       </View>
       <Text style={themedStyles.emailTextStyle}>{email ?? 'No email'}</Text>
-      <SignOutButton/>
+      <TouchableOpacity
+        style={themedStyles.signOutButtonStyle}
+        onPress={() => {
+          signOut();
+        }}
+      >
+        <Text style={themedStyles.logoutTextStyle}>SignOut</Text>
+      </TouchableOpacity>
     </View>
   );
 };

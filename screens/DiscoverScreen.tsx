@@ -9,6 +9,7 @@ import { DiscoverParamList, RootStackParamList } from '../types';
 import { FilterToDos, ToDoSingleWithKey, userToDos } from '../action/ToDos';
 import FloatingActionButtonGroup from '../components/FloatingActionButtonGroup';
 import FloatingFilterButton from '../components/FloatingFilterButton';
+import SearchTextInput from '../components/SearchTextInput';
 
 const styles = StyleSheet.create({
   containerStyle: {
@@ -50,6 +51,7 @@ export default ({ navigation }: {
 
   return (
     <View style={styles.containerStyle}>
+      <SearchTextInput/>
       <ToDoList
         data={toDos}
         contentContainerStyle={styles.toDoListContentContainerStyle}

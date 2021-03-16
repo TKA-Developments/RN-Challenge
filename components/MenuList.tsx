@@ -1,41 +1,42 @@
 import React from 'react';
 import { SectionList, StyleSheet, TouchableOpacity, } from 'react-native';
-import { Text, View } from './Themed';
-import { Theme, useTheme } from '@react-navigation/native';
+import { Text, ThemedColors, useThemeColors, View } from './Themed';
 
-export type TouchableOpacitySingleData = {
+export type MenuListItemData = {
   icon?: any,
   title: string,
   subtitle?: string,
   onPress?: () => void,
 };
-export type TouchableOpacitySectionData = {
+export type MenuListSectionData = {
   title: string,
-  data: Array<TouchableOpacitySingleData>
+  data: Array<MenuListItemData>
 };
-export type TouchableOpacityData = { sections: Array<TouchableOpacitySectionData> }
+export type TouchableOpacityData = { sections: Array<MenuListSectionData> }
 
-const styles = (theme: Theme) => StyleSheet.create({
+const styles = (colors: ThemedColors) => StyleSheet.create({
   sectionHeaderTextStyle: {
-    color: theme.colors.text,
     fontWeight: 'bold',
     margin: 10,
+    color: colors.inactive,
   },
   sectionHeaderStyle: {
-    backgroundColor: 'gray',
     flex: 1,
+    borderTopWidth: 1,
+    borderTopColor: colors.inactive,
   },
   touchableStyle: {
-    borderWidth: 1,
+    // borderWidth: 1,
+    // paddingLeft: 20,
     flex: 1,
   },
 });
 
-const TouchableOpacitySingle = ({
+const MenuListItem = ({
   item,
   touchableStyle,
 }:
-  { item: TouchableOpacitySingleData, touchableStyle: any }) => {
+  { item: MenuListItemData, touchableStyle: any }) => {
   return (
     <TouchableOpacity
       style={touchableStyle}
@@ -59,14 +60,17 @@ const TouchableOpacitySingle = ({
           >
             {item.title}
           </Text>
-          <Text>{item.subtitle ? item.subtitle : null}</Text>
+          {item.subtitle ?
+            <Text>{item.subtitle}</Text> :
+            null
+          }
         </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-const TouchableOpacityListSectionHeader = ({
+const MenuListSectionHeader = ({
   title,
   containerStyle,
   textStyle
@@ -80,22 +84,22 @@ const TouchableOpacityListSectionHeader = ({
 };
 
 export default ({ sections }: TouchableOpacityData) => {
-  const theme = useTheme();
-  const themedStyles = styles(theme);
+  const colors = useThemeColors();
+  const themedStyles = styles(colors);
 
   return (
     <View>
-      <SectionList<TouchableOpacitySingleData, TouchableOpacitySectionData>
+      <SectionList<MenuListItemData, MenuListSectionData>
         sections={sections}
         keyExtractor={(item, index) => item.title}
         renderSectionHeader={(section) =>
-          <TouchableOpacityListSectionHeader
+          <MenuListSectionHeader
             title={section.section.title}
             textStyle={themedStyles.sectionHeaderTextStyle}
             containerStyle={themedStyles.sectionHeaderStyle}
           />}
         renderItem={({ item }) =>
-          <TouchableOpacitySingle
+          <MenuListItem
             item={item}
             touchableStyle={themedStyles.touchableStyle}/>}
       />

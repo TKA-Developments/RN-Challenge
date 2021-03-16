@@ -51,7 +51,7 @@ export const Text = (props: TextProps) => {
   return <DefaultText style={[{ color }, style]} {...otherProps} />;
 };
 
-type ColorState = 'danger' | 'primary' | 'secondary' | 'success' | 'warning' | 'info';
+export type ColorState = 'danger' | 'primary' | 'secondary' | 'success' | 'warning' | 'info';
 
 type ViewProps = ThemeProps &
   DefaultView['props'] &
@@ -89,7 +89,7 @@ export const Spinner = (props: SpinnerProps) => {
   }, 'primary');
 
   return (
-    <ActivityIndicator style={[{ color }.style]} {...otherProps}/>
+    <ActivityIndicator color={color} {...otherProps}/>
   );
 };
 

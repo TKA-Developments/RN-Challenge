@@ -7,7 +7,7 @@ import { Text, ThemedColors, useThemeColors, View } from '../components/Themed';
 const styles = (colors: ThemedColors) => StyleSheet.create({
   touchableStyle: {
     borderRadius: 70,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondaryBackground,
     paddingHorizontal: 20,
     paddingVertical: 10,
     flexDirection: 'row',
@@ -27,9 +27,12 @@ const styles = (colors: ThemedColors) => StyleSheet.create({
 export default ({
   filterBy,
   setFilterBy,
-}: { filterBy: FilterToDos, setFilterBy: React.Dispatch<FilterToDos> }) => {
-  const themes = useThemeColors();
-  const themedStyle = styles(themes);
+}: {
+  filterBy: FilterToDos,
+  setFilterBy: React.Dispatch<FilterToDos>
+}) => {
+  const themeColors = useThemeColors();
+  const themedStyle = styles(themeColors);
 
   return (
     <View style={themedStyle.containerStyle}>
@@ -37,7 +40,7 @@ export default ({
         style={themedStyle.touchableStyle}
         onPress={() => setFilterBy(nextFilter(filterBy))}
       >
-        <MaterialIcons name="filter-alt" size={20}/>
+        <MaterialIcons name="filter-alt" size={20} color={themeColors.primary}/>
         <Text>
           Filter by
           {' '}

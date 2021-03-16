@@ -1,10 +1,12 @@
 import React from 'react';
 import SigninForm from '../components/SigninForm';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { View } from '../components/Themed';
 
 const styles = StyleSheet.create({
   containerStyle: {
     flex: 1,
+    padding: 10,
   },
 });
 

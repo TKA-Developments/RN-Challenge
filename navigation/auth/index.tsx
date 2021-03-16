@@ -17,7 +17,13 @@ export default () => {
       initialRouteName="SignIn"
       headerMode="screen"
     >
-      <AuthStack.Screen name="SignIn" component={SignInScreen}/>
+      <AuthStack.Screen
+        name="SignIn"
+        component={SignInScreen}
+        options={{
+          title: 'Sign In',
+        }}
+      />
       {/*<AuthStack.Screen name="SignUp" component={SignUpScreen} />*/}
     </AuthStack.Navigator>
   );

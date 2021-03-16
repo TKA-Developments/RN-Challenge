@@ -59,7 +59,7 @@ export default ({
   const color = useThemeColor({
     light: lightColor,
     dark: darkColor,
-  }, 'text');
+  }, 'primary');
   const route = useRoute<RouteProp<RootStackParamList, 'EditToDoScreen'>>();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'EditToDoScreen'>>();
 

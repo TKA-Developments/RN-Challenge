@@ -5,25 +5,27 @@ import { Spinner, ThemedColors, useThemeColors, View } from '../components/Theme
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import { RouteProp } from '@react-navigation/native';
-import { editToDo, getToDo, ToDoSingle } from '../action/ToDos';
-import RoundedCheckbox from 'react-native-rounded-checkbox';
-import { FontAwesome } from '@expo/vector-icons';
+import { editToDo, getToDo, markToDoAs, ToDoSingle } from '../action/ToDos';
+import RoundedCheckbox from '../components/RoundedCheckBox';
 
-const styles = (colors: ThemedColors) => StyleSheet.create({
+const styles = (color: ThemedColors) => StyleSheet.create({
   titleStyle: {
     // flex: 1,
-    fontSize: 18,
+    fontSize: 22,
     alignItems: 'stretch',
-    marginHorizontal: 10,
-    marginBottom: 10,
+    marginBottom: 5,
+    color: color.text,
     // backgroundColor: 'white',
-    borderWidth: 1,
+    marginHorizontal: 10,
+    paddingHorizontal: 10,
+    // borderWidth: 1,
+    // backgroundColor: color.textInput,
   },
   bottomSectionStyle: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    // position: 'absolute',
+    // bottom: 0,
+    // left: 0,
+    // right: 0,
     marginBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -31,9 +33,14 @@ const styles = (colors: ThemedColors) => StyleSheet.create({
     alignItems: 'center',
   },
   descriptionStyle: {
-    alignItems: 'stretch',
-    margin: 10,
-    borderWidth: 1,
+    alignItems: 'flex-start',
+    // borderWidth: 1,
+    color: color.text,
+    // backgroundColor: color.textInput,
+    fontSize: 17,
+    marginHorizontal: 10,
+    paddingHorizontal: 10,
+    textAlignVertical: 'top',
     flex: 1,
   },
   containerStyle: {
@@ -63,6 +70,10 @@ const editButtonPress = (
 ) => {
   editToDo(key, title, description);
   navigation.goBack();
+};
+
+const onCheck = (isChecked: boolean, key: string) => {
+  markToDoAs(isChecked, key);
 };
 
 export default ({
@@ -109,14 +120,14 @@ export default ({
               <TextInput
                 style={themedStyle.titleStyle}
                 placeholder="Title"
-                placeholderTextColor={colors.text}
+                placeholderTextColor={colors.secondary}
                 value={title}
                 onChangeText={setTitle}
               />
               <TextInput
                 style={themedStyle.descriptionStyle}
                 placeholder="Description"
-                placeholderTextColor={colors.text}
+                placeholderTextColor={colors.secondary}
                 multiline
                 value={description}
                 onChangeText={setDescription}
@@ -126,14 +137,9 @@ export default ({
               >
                 <View>
                   <RoundedCheckbox
-                    // onPress={(isChecked) => onCheck(isChecked, data.key)}
+                    onPress={(isChecked) => onCheck(isChecked, key)}
                     // style={checkBoxStyle}
                     isChecked={isCompleted}
-                    component={(
-                      <FontAwesome
-                        name="check"
-                      />
-                    )}
                   />
                 </View>
                 <TextButton

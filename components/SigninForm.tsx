@@ -1,8 +1,23 @@
 import React, { useState } from 'react';
-import Button from './Button';
-import { Spinner, Text, View } from './Themed';
-import LabeledTextInput from './TextInput';
+import { StyleSheet } from 'react-native';
 import Auth from '@react-native-firebase/auth';
+import Button from './Button';
+import { View } from './Themed';
+import LabeledTextInput from './LabelledTextInput';
+import AlertBox from './AlertBox';
+
+const styles = StyleSheet.create({
+  buttonStyle: {
+    marginTop: 10,
+  },
+  alertStyle: {
+    marginTop: 20,
+  },
+  containerStyle: {
+    margin: 10,
+    flex: 1,
+  },
+});
 
 const onPressSignIn = (
   email: string,
@@ -11,6 +26,7 @@ const onPressSignIn = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   setIsLoading(true);
+  setError(null);
 
   Auth()
     .signInWithEmailAndPassword(email, password)
@@ -18,7 +34,12 @@ const onPressSignIn = (
     .then(_ => {
     })
     .catch((reason) => {
-      setError(reason);
+      if (
+        reason.code === 'auth/invalid-email' ||
+        reason.code === 'auth/wrong-password' ||
+        reason.code === 'auth/user-not-found') {
+        setError('Invalid email or password');
+      }
     })
     .finally(() => {
       setIsLoading(false);
@@ -29,21 +50,10 @@ export default () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<null | string>(null);
 
   return (
-    <View style={{
-      margin: 10,
-    }}>
-      <Text
-        style={{
-          textAlign: 'center',
-          fontSize: 30,
-          fontWeight: 'bold',
-        }}
-      >
-        Sign In
-      </Text>
+    <View style={styles.containerStyle}>
       <LabeledTextInput
         label="E-mail"
         placeholder="Enter your e-mail"
@@ -57,35 +67,30 @@ export default () => {
         onChangeText={setPassword}
         secureTextEntry
       />
+      <View style={styles.buttonStyle}>
+        {
+          isLoading ?
+            null :
+            (
+              <Button
+                onPress={_ => onPressSignIn(email, password, setError, setIsLoading)}
+                disabled={email === '' || password === ''}
+              >
+                {'Sign In '}
+              </Button>
+            )
+        }
+      </View>
       {
-        isLoading ?
-          (
-            <Spinner/>
-          ) :
-          (
-            <Button
-              onPress={_ => {
-                onPressSignIn(
-                  email,
-                  password,
-                  setError,
-                  setIsLoading
-                );
-              }}
-            >
-              {'Sign In '}
-            </Button>
-          )
-      }
-      {
-        isLoading ?
+        error === null ?
           null :
           (
-            <View colorState="danger">
-              <Text>
-                {error}
-              </Text>
-            </View>
+            <AlertBox
+              style={styles.alertStyle}
+              message={error}
+              colorState="danger"
+              setMessage={setError}
+            />
           )
       }
     </View>

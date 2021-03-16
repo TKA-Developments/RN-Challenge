@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, TextInput, } from 'react-native';
-import { Text, View } from './Themed';
+import { StyleSheet, } from 'react-native';
+import { Text, TextInput, View } from './Themed';
 
 const styles = StyleSheet.create({
   containerStyle: {
@@ -35,8 +35,8 @@ export default (
       value: string,
       onChangeText: (text: string) => void,
       secureTextEntry?: boolean,
-      containerProps?: View['props'],
-      textInputProps?: TextInput['props'],
+      containerProps?: typeof View['props'],
+      textInputProps?: typeof TextInput['props'],
       labelProps?: Text['props'],
     }) => {
   return (

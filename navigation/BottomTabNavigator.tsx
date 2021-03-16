@@ -1,13 +1,11 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
 import { BottomTabParamList } from '../types';
 import { StyleSheet } from 'react-native';
 import { TabDiscoverStackNavigator } from './TabDiscoverStack';
 import { TabMoreStackNavigator } from './TabMoreStack';
+import { useThemeColors } from '../components/Themed';
 
 const styles = StyleSheet.create({
   bottomTabStyle: {},
@@ -16,14 +14,16 @@ const styles = StyleSheet.create({
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+  const color = useThemeColors();
 
   return (
     <>
       <BottomTab.Navigator
-        initialRouteName="Discover"
         tabBarOptions={{
-          activeTintColor: Colors[colorScheme].tint,
+          activeTintColor: color.primary,
+          inactiveTintColor: color.tabIconDefault,
+          activeBackgroundColor: color.secondaryBackground,
+          inactiveBackgroundColor: color.secondaryBackground,
           labelStyle: {
             fontSize: 15,
             marginVertical: 5,

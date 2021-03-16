@@ -8,7 +8,7 @@ export const TabMoreStack = createStackNavigator<TabMoreParamList>();
 
 export const TabMoreStackNavigator = () => {
   return (
-    <TabMoreStack.Navigator>T
+    <TabMoreStack.Navigator>
       <TabMoreStack.Screen
         name="TabMoreScreen"
         component={MoreScreen}
