@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, } from 'react-native';
-import { Text, TextInput, View } from './Themed';
+import { Text, TextInput, ThemedColors, useThemeColors, View } from './Themed';
 
-const styles = StyleSheet.create({
+const styles = (colors: ThemedColors) => StyleSheet.create({
   containerStyle: {
     marginVertical: 5,
   },
@@ -12,9 +12,11 @@ const styles = StyleSheet.create({
   textInputStyle: {
     marginVertical: 5,
     fontSize: 20,
-    borderWidth: 1,
+    // borderWidth: 1,
     paddingVertical: 5,
     paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.primary,
   },
 });
 
@@ -39,15 +41,20 @@ export default (
       textInputProps?: typeof TextInput['props'],
       labelProps?: Text['props'],
     }) => {
+  const themedColor = useThemeColors();
+  const themedStyles = styles(themedColor);
+
   return (
-    <View {...containerProps} style={styles.containerStyle}>
+    <View {...containerProps} style={themedStyles.containerStyle}>
       <Text
         {...labelProps}
-        style={styles.textLabelStyle}
-      >{label}</Text>
+        style={themedStyles.textLabelStyle}
+      >
+        {label}
+      </Text>
       <TextInput
         {...textInputProps}
-        style={styles.textInputStyle}
+        style={themedStyles.textInputStyle}
         value={value}
         placeholder={placeholder}
         onChangeText={onChangeText}

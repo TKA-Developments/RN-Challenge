@@ -57,9 +57,14 @@ export const userToDos = (filterBy: FilterToDos = FilterToDos.All) => {
 };
 
 // Filter should be done by the backend, but Firebase does not support such features
-export const filterResult = (toDos: Array<ToDoSingle>, searchKeyword: string) => toDos
+export const searchToDoResult = (
+  toDos: Array<ToDoSingleWithKey>,
+  keyword?: string,
+) => toDos
   .filter((toDo) => {
-    return toDo.title.indexOf(searchKeyword) || toDo.description.indexOf(searchKeyword);
+    return keyword === undefined ?
+      true :
+      toDo.description.search(keyword) !== -1 || toDo.title.search(keyword) !== -1;
   });
 
 export const addToDo = (title: string, description: string) => Database()

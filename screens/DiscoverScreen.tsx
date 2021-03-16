@@ -6,7 +6,7 @@ import FloatingActionButton from '../components/FloatingActionButton';
 import { View } from '../components/Themed';
 import ToDoList from '../components/ToDoList';
 import { DiscoverParamList, RootStackParamList } from '../types';
-import { FilterToDos, ToDoSingleWithKey, userToDos } from '../action/ToDos';
+import { FilterToDos, searchToDoResult, ToDoSingleWithKey, userToDos } from '../action/ToDos';
 import FloatingActionButtonGroup from '../components/FloatingActionButtonGroup';
 import FloatingFilterButton from '../components/FloatingFilterButton';
 import SearchTextInput from '../components/SearchTextInput';
@@ -26,6 +26,7 @@ export default ({ navigation }: {
 }) => {
   const [toDos, setToDos] = useState<Array<ToDoSingleWithKey>>([]);
   const [filterBy, setFilterBy] = useState(FilterToDos.NotCompleted);
+  const [searchText, setSearchText] = useState('');
 
   const onToDosChange = (todosSnapshot: FirebaseDatabaseTypes.DataSnapshot) => {
     const toDosTemp: typeof toDos = [];
@@ -51,9 +52,9 @@ export default ({ navigation }: {
 
   return (
     <View style={styles.containerStyle}>
-      <SearchTextInput/>
+      <SearchTextInput onChangeText={setSearchText}/>
       <ToDoList
-        data={toDos}
+        data={searchToDoResult(toDos, searchText === '' ? undefined : searchText)}
         contentContainerStyle={styles.toDoListContentContainerStyle}
       />
       <FloatingFilterButton

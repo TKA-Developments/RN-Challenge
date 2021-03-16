@@ -3,18 +3,28 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { ThemedColors, useThemeColors } from './Themed';
 
-const styles = (color: ThemedColors) => StyleSheet.create({
+const styles = (colors: ThemedColors) => StyleSheet.create({
   roundTouchableOpacityStyle: {
     width: 60,
     height: 60,
     borderRadius: 100,
     marginTop: 10,
-    backgroundColor: color.secondaryBackground,
+    backgroundColor: colors.secondaryBackground,
     justifyContent: 'center',
     alignItems: 'center',
+
+    shadowColor: colors.text,
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.44,
+    shadowRadius: 10.32,
+
+    elevation: 16,
   },
   iconStyle: {
-    color: color.primary,
+    color: colors.primary,
   },
 });
 

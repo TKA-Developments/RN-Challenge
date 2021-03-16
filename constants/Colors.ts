@@ -31,7 +31,7 @@ export default {
     background: '#1d2221',
     secondaryBackground: '#353938',
     tint: tintColorDark,
-    textInput: '#dedede',
+    textInput: '#353938',
     inactive: '#808184',
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,

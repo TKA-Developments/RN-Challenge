@@ -93,7 +93,7 @@ export const Spinner = (props: SpinnerProps) => {
   );
 };
 
-type TextInputProps = ThemeProps & DefaultTextInput['props'];
+export type TextInputProps = ThemeProps & DefaultTextInput['props'];
 
 export const TextInput = (props: TextInputProps) => {
   const {

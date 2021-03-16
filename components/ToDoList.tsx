@@ -2,12 +2,13 @@ import React from 'react';
 import { FlatList, FlatListProps, StyleSheet } from 'react-native';
 import ToDoSingle from './ToDoSingle';
 import { markToDoAs, ToDoSingleWithKey } from '../action/ToDos';
-import { Theme, useNavigation, useTheme } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { ThemedColors, useThemeColors } from './Themed';
 
-const styles = (theme: Theme) => StyleSheet.create({
+const styles = (colors: ThemedColors) => StyleSheet.create({
   titleToDoSingleStyle: {
     fontSize: 22,
-    color: theme.colors.text,
+    color: colors.text,
   },
   containerToDoSingleStyle: {
     flexDirection: 'row',
@@ -32,8 +33,8 @@ export default ({
   style?: FlatListProps<ToDoSingleWithKey>['style'],
   contentContainerStyle?: FlatListProps<ToDoSingleWithKey>['contentContainerStyle'],
 }) => {
-  const theme = useTheme();
-  const themedStyles = styles(theme);
+  const colors = useThemeColors();
+  const themedColors = styles(colors);
   const navigation = useNavigation();
 
   const onPressToDoSingle = ({ key }: { key: string }) => {
@@ -52,10 +53,10 @@ export default ({
           onCheck={markToDoAs}
           onPress={onPressToDoSingle}
           data={item}
-          checkBoxStyle={themedStyles.checkBoxToDoSingleStyle}
-          titleStyle={themedStyles.titleToDoSingleStyle}
-          containerStyle={themedStyles.containerToDoSingleStyle}
-          innerContainerStyle={themedStyles.innerContainerStyle}
+          checkBoxStyle={themedColors.checkBoxToDoSingleStyle}
+          titleStyle={themedColors.titleToDoSingleStyle}
+          containerStyle={themedColors.containerToDoSingleStyle}
+          innerContainerStyle={themedColors.innerContainerStyle}
         />
       )}
     />

@@ -11,7 +11,7 @@ export const TabDiscoverStackNavigator = () => {
       <TabDiscoverStack.Screen
         name="DiscoverScreen"
         component={DiscoverScreen}
-        options={{ headerTitle: 'DISCOVER' }}
+        options={{ headerTitle: 'TO DO' }}
       />
     </TabDiscoverStack.Navigator>
   );

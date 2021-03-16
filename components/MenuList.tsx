@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { ReactChild, ReactChildren } from 'react';
 import { SectionList, StyleSheet, TouchableOpacity, } from 'react-native';
 import { Text, ThemedColors, useThemeColors, View } from './Themed';
 
 export type MenuListItemData = {
-  icon?: any,
+  additionalComponentLeft?: ReactChild | ReactChildren,
+  additionalComponentRight?: ReactChild | ReactChildren,
   title: string,
   subtitle?: string,
   onPress?: () => void,
@@ -19,6 +20,7 @@ const styles = (colors: ThemedColors) => StyleSheet.create({
     fontWeight: 'bold',
     margin: 10,
     color: colors.inactive,
+    alignSelf: 'stretch',
   },
   sectionHeaderStyle: {
     flex: 1,
@@ -26,7 +28,11 @@ const styles = (colors: ThemedColors) => StyleSheet.create({
     borderTopColor: colors.inactive,
   },
   touchableStyle: {
-    // borderWidth: 1,
+    borderWidth: 1,
+    paddingVertical: 5,
+    marginVertical: 5,
+    minHeight: 55,
+    justifyContent: 'center',
     // paddingLeft: 20,
     flex: 1,
   },
@@ -46,25 +52,53 @@ const MenuListItem = ({
       <View
         style={{
           flexDirection: 'row',
+          // justifyContent: 'space-between',
           marginHorizontal: 8,
-          marginVertical: 12,
+          // marginVertical: 12,
+          borderWidth: 1,
         }}
       >
-        {item.icon ?? item.icon}
-        <View style={{ justifyContent: 'center', }}>
+        {item.additionalComponentLeft ? <View style={{
+          justifyContent: 'center',
+          borderWidth: 1,
+        }}>{item.additionalComponentLeft}</View> : null}
+        <View
+          style={{
+            // flexWrap: 'wrap',
+            flexShrink: 1,
+            paddingLeft: 10,
+          }}
+        >
           <Text
             style={{
               fontWeight: 'bold',
+              // textAlign: 'left',
               fontSize: 15,
+              // flexWrap: 'wrap',
+              // borderWidth: 1,
             }}
           >
             {item.title}
           </Text>
           {item.subtitle ?
-            <Text>{item.subtitle}</Text> :
+            <Text
+              style={{
+                // textAlignVertical: 'center',
+                // textAlign: 'left',
+                // flexWrap: 'wrap',
+                // // flex: 1,
+                // borderWidth: 1,
+              }}
+            >
+              {item.subtitle}
+            </Text> :
             null
           }
         </View>
+        {item.additionalComponentRight ? <View style={{
+          justifyContent: 'center',
+          borderWidth: 1,
+        }}>{item.additionalComponentRight}</View> : null}
       </View>
     </TouchableOpacity>
   );

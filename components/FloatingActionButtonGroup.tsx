@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
     right: 10,
     bottom: 10,
     borderRadius: 1,
-    borderColor: 'black',
-    borderWidth: 1,
+    // borderColor: 'black',
+    // borderWidth: 1,
     backgroundColor: 'transparent',
   },
 });

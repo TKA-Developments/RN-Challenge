@@ -58,12 +58,12 @@ Your app should be able to complete these tasks:
 
 ### Bonus:
 
-- [ ] Enable search for the to-do items
+- [x] Enable search for the to-do items
 - [ ] Include animations
 - [ ] Persist data using Contexts and/or Async Storage.
 - [x] Call some public API (image, video, weather, clocks, up to you)
 - [x] Save data to a backend server (like firebase)
-- [ ] Do some kind of sharing
+- [x] Do some kind of sharing
 - [ ] Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## Preview

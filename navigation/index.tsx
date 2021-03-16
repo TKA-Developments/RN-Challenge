@@ -7,7 +7,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 import CreateTODOModal from '../screens/CreateToDoModal';
 import EditToDoModal from '../screens/EditToDoModal';
 import TodaysImageModal from '../screens/TodaysImageModal';
-import HeaderDeleteButton from '../components/HeaderDeleteButton';
+import HeaderDeleteButton from '../components/HeaderRightButton';
 
 export const rootNavContainerRef = React.createRef<NavigationContainerRef>();
 
