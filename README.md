@@ -63,4 +63,11 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+- Open the project folder in text editor (i'm using vsCode)
+- Open CMD or Terminal and go to Project Folder 
+- Run npm install / yarn install in terminal to install dependencies
+- Once the installation completed, npm start
+- The expo developer tools will appear in your default browser
+- Scan the QR code at the left bottom of your browser with your phone using Expo Go application (install from AppStore or PlayStore)
+- make sure both of your laptop and phone are in the same internet access point (connected to same wifi)
+- the apps will be running automatically in your phone
