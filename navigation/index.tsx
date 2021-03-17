@@ -39,24 +39,7 @@ function RootNavigator() {
       }
     }}>
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="AddTodo" component={AddTodoScreen} options={({ navigation }) => ({
-        headerShown: true,
-        title: 'New Task',
-        headerLeftContainerStyle: {
-          position: 'absolute'
-        },
-        headerRight: () => (
-          <View>
-            <Text></Text>
-          </View>
-        ),
-        headerTitleStyle: {
-          alignSelf: 'center',
-        },
-        cardStyle: {
-          paddingTop: 0,
-        }
-      })} />
+      <Stack.Screen name="AddTodo" component={AddTodoScreen} />
       <Stack.Screen name="TodoDetail" component={TodoDetailScreen} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>

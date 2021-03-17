@@ -43,6 +43,8 @@ const TodoItem = (props: ITodo) => {
                 }}
                 checkedColor={getCategoryColor(props.category)}
                 uncheckedColor={getCategoryColor(props.category)}
+            // checkedIcon='check-square'
+            // uncheckedIcon='square'
             />
         </View>
     );

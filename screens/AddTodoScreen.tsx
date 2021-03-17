@@ -7,9 +7,10 @@ import { TodoContext } from '../contexts/TodoContext';
 import { Overlay } from 'react-native-elements';
 import { RadioButton, Divider } from 'react-native-paper';
 import useColorScheme from '../hooks/useColorScheme';
+import { AntDesign, FontAwesome5, FontAwesome } from '@expo/vector-icons';
+import Colors from '../constants/Colors';
 
-import { Text, View } from '../components/Themed';
-import { setStatusBarHidden } from 'expo-status-bar';
+import { Text, View, TextMedium } from '../components/Themed';
 
 const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamList, 'AddTodo'>) => {
     let today = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Jakarta" })).toISOString().slice(0, 10);
@@ -17,7 +18,7 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
     const [category, setCategory] = useState<string>('');
     const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
     const [date, setDate] = useState<string>(today);
-    const { addTodo, updateTodo, categories } = useContext(TodoContext);
+    const { addTodo, updateTodo, categories, getCategoryColor } = useContext(TodoContext);
     const colorScheme = useColorScheme();
 
     useEffect(() => {
@@ -59,43 +60,116 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
 
     return (
         <View style={styles.container}>
-            <TextInput
-                style={styles.input}
-                value={title}
-                onChangeText={setTitle}
-                placeholder="What are you planning?"
-            />
-            <View style={styles.buttonGroup}>
-                <DatePicker
-                    style={styles.dateButton}
-                    date={date}
-                    mode="date"
-                    placeholder="select date"
-                    format="YYYY-MM-DD"
-                    minDate={today}
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                        dateIcon: {
-                            position: 'absolute',
-                            left: 0,
-                            top: 4,
-                            marginLeft: 0
-                        },
-                        // ... You can check the source to find the other keys.
+            <View style={{
+                ...styles.headerContainer,
+                backgroundColor: Colors[colorScheme].backgroundDarkest
+            }}>
+                <View style={{
+                    ...styles.leftHeaderContainer,
+                    backgroundColor: Colors[colorScheme].backgroundDarkest
+                }}>
+                    <TouchableOpacity onPress={() => navigation.pop()}>
+                        <AntDesign name='close' size={28} color={Colors[colorScheme].text} />
+                    </TouchableOpacity>
+                </View>
+
+                <TouchableOpacity
+                    style={{
+                        ...styles.actionButton,
+                        backgroundColor: Colors[colorScheme].text
                     }}
-                    onDateChange={(date: string) => { setDate(date) }}
-                />
-                <TouchableOpacity style={styles.categoryButton} onPress={toggleOverlay}>
-                    <Text style={styles.categoryText}>{category ? category : 'Category'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.addButton} onPress={onSubmit}>
-                    <Text style={styles.addText}>{route.params ? 'Edit Task' : 'Add Task'}</Text>
+                    onPress={onSubmit}
+                >
+                    <TextMedium
+                        style={{
+                            ...styles.actionText,
+                            color: Colors[colorScheme].backgroundDarkest
+                        }}
+                    >{route.params ? 'Edit Task' : 'Add Task'}</TextMedium>
                 </TouchableOpacity>
             </View>
-            <Overlay overlayStyle={{ backgroundColor: colorScheme == 'dark' ? 'black' : 'white' }} isVisible={overlayVisible} onBackdropPress={toggleOverlay}>
+            <View style={styles.contentContainer}>
+                <TextInput
+                    style={{
+                        ...styles.input,
+                        color: Colors[colorScheme].text,
+                        borderBottomColor: Colors[colorScheme].textDarkest,
+                    }}
+                    value={title}
+                    onChangeText={setTitle}
+                    placeholder="Task title..."
+                    placeholderTextColor={Colors[colorScheme].textDarkest}
+                />
+                <View
+                    style={{
+                        ...styles.buttonContainer,
+                        borderBottomColor: Colors[colorScheme].textDarkest,
+                    }}
+                >
+                    <FontAwesome5 name='clock' size={20} color={Colors[colorScheme].highlighDarker} />
+                    <DatePicker
+                        style={styles.dateButton}
+                        date={date}
+                        mode="date"
+                        placeholder="select date"
+                        format="YYYY-MM-DD"
+                        minDate={today}
+                        showIcon={false}
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        customStyles={{
+                            dateInput: {
+                                borderWidth: 0,
+                            },
+                            placeholderText: {
+                                color: Colors[colorScheme].textDarkest,
+                            },
+                            dateText: {
+                                fontSize: 16,
+                                color: Colors[colorScheme].text,
+                            }
+                            // ... You can check the source to find the other keys.
+                        }}
+                        onDateChange={(date: string) => { setDate(date) }}
+                    />
+                </View>
+                <View
+                    style={{
+                        ...styles.buttonContainer,
+                        borderBottomColor: Colors[colorScheme].textDarkest,
+                    }}
+                >
+                    <FontAwesome5 name='tasks' size={20} color={Colors[colorScheme].highlighDarker} />
+                    <TouchableOpacity style={styles.categoryButton} onPress={toggleOverlay}>
+                        <Text style={styles.categoryText}>{category ? <>
+                            <FontAwesome
+                                name='square'
+                                size={20}
+                                color={getCategoryColor(category)}
+                            />
+                            {`  ${category}`}
+                        </> : 'Select Category'}</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <Overlay overlayStyle={{
+                backgroundColor: Colors[colorScheme].background,
+                ...styles.overlayContainer
+            }}
+                isVisible={overlayVisible}
+                onBackdropPress={toggleOverlay}
+            >
+                <View style={styles.overlayHeaderContainer}>
+                    <Text style={styles.overlayHeaderText}>Categories</Text>
+                </View>
                 {categories.map(cat => (
-                    <TouchableOpacity style={styles.radioContainer} onPress={() => selectCategory(cat.title)}>
+                    <TouchableOpacity
+                        style={{
+                            ...styles.radioContainer,
+                            borderBottomColor: Colors[colorScheme].textDarkest
+                        }}
+                        onPress={() => selectCategory(cat.title)}
+                    >
                         <RadioButton
                             key={cat.title}
                             value={cat.title}
@@ -108,7 +182,7 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
 
                 ))}
             </Overlay>
-        </View>
+        </View >
     );
 }
 
@@ -117,44 +191,72 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         flex: 1,
     },
-    input: {
-        height: 200,
-        borderWidth: 1,
-        backgroundColor: 'white',
-        flex: 0.8,
+    headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        height: 50,
+        width: '100%',
+        paddingHorizontal: 20,
     },
-    buttonGroup: {
-        flex: 0.2
+    leftHeaderContainer: {
+
+    },
+    contentContainer: {
+        padding: 20,
+    },
+    input: {
+        fontSize: 16,
+        letterSpacing: 1,
+        borderBottomWidth: 1,
+        marginBottom: 10,
+        paddingVertical: 4
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+        borderBottomWidth: 0.3,
+        paddingVertical: 5
     },
     dateButton: {
-        width: '100%',
-        flex: 0.3,
-        backgroundColor: 'white',
+        flex: 1,
+        borderWidth: 0,
     },
     categoryButton: {
-        borderWidth: 1,
-        borderColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 0.3
+        flex: 1,
     },
     categoryText: {
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: 16,
     },
-    addButton: {
-        backgroundColor: 'white',
-        flex: 0.4,
-        justifyContent: 'center',
-        alignItems: 'center'
+    actionButton: {
+        paddingHorizontal: 10,
+        paddingVertical: 1,
+        borderRadius: 10,
     },
-    addText: {
-        color: 'black'
+    actionText: {
+        fontSize: 16,
+        letterSpacing: 1,
+    },
+    overlayContainer: {
+        padding: 20,
+        width: '60%'
+    },
+    overlayHeaderContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    overlayHeaderText: {
+        fontSize: 18,
+        paddingRight: 7.5,
     },
     radioContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         borderBottomWidth: 0.5,
-        borderBottomColor: '#999'
     }
 });
 

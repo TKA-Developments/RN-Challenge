@@ -138,7 +138,7 @@ const TodoProvider = ({ children }: ProviderProps) => {
             checked: todo.checked,
             category: todo.category,
         });
-        getTodos();
+        await getTodos();
     }
 
     const addTodo = async (title: string, date: string, category: string) => {
@@ -148,12 +148,12 @@ const TodoProvider = ({ children }: ProviderProps) => {
             category,
             checked: false,
         });
-        getTodos();
+        await getTodos();
     }
 
-    const deleteTodo = (id: string) => {
+    const deleteTodo = async (id: string) => {
         todosRef.doc(id).delete();
-        getTodos();
+        await getTodos();
     }
 
     const updateSearch = (word: string) => {
