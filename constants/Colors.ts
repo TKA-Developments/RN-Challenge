@@ -16,7 +16,7 @@ export default {
     inactive: '#808184',
     tint: tintColorLight,
     textInput: '#DEDEDE',
-    tabIconDefault: '#ccc',
+    tabIconDefault: '#9e9d9d',
     tabIconSelected: tintColorLight,
   },
   dark: {

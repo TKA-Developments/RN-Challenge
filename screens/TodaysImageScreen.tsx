@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type';
 import { fetchWallpaperData, WallpaperDataResponse } from '../action/BingDailyWallpaper';
-import { Spinner, View } from '../components/Themed';
+import SplashScreen from './SplashScreen';
 
 // Store the data on top level
 let images: Array<IImageInfo> | null = null;
@@ -29,14 +29,14 @@ export default () => {
       });
   }, []);
 
-  return (
-    <View style={{ flex: 1, }}>
-      {
-        isLoading ?
-          <Spinner/> :
-          <ImageViewer imageUrls={images!!} style={{ flex: 1, }} renderIndicator={() => {
-          }}/>
-      }
-    </View>
-  );
+  return isLoading
+    ? <SplashScreen/>
+    : (
+      <ImageViewer
+        imageUrls={images!!}
+        style={{ flex: 1 }}
+        renderIndicator={() => {
+        }}
+      />
+    );
 };

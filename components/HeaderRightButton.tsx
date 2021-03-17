@@ -1,17 +1,17 @@
 import { Entypo, FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
-import { Alert, Share, StyleSheet, TouchableOpacity } from 'react-native';
-import { ThemedColors, useThemeColors, View } from './Themed';
+import { Alert, Share, StyleSheet, TouchableOpacity, } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { RootStackParamList } from '../types';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { ThemedColors, useThemeColors, View } from './Themed';
+import { RootStackParamList } from '../types';
 import { deleteToDo } from '../action/ToDos';
 import Backend from '../constants/Backend';
 import { currentUser } from '../action/Auth';
 
 const onPressButton = (
   key: string,
-  navigation: StackNavigationProp<RootStackParamList, 'EditToDoScreen'>
+  navigation: StackNavigationProp<RootStackParamList, 'EditToDoScreen'>,
 ) => {
   Alert.alert(
     'Delete confirmation',
@@ -28,15 +28,15 @@ const onPressButton = (
         // Proceed delete
         onPress: () => {
           deleteToDo(key)
-            .then(_ => {
+            .then((_) => {
               navigation.goBack();
             })
             .catch((e) => {
               console.log('Error', e);
             });
         },
-      }
-    ]
+      },
+    ],
   );
 };
 
@@ -44,6 +44,7 @@ const styles = (colors: ThemedColors) => StyleSheet.create({
   containerStyle: {
     flexDirection: 'row',
     flex: 1,
+    backgroundColor: 'transparent',
   },
   touchableStyle: {
     alignItems: 'center',

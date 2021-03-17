@@ -1,18 +1,22 @@
+import { ReactChild, ReactChildren } from 'react';
+
+export type ReactChildrenComponent = ReactChild | ReactChild[] | ReactChildren | ReactChildren[];
+
 export type RootStackParamList = {
   Root: undefined;
   CreateToDoModal: undefined;
   EditToDoScreen: { key: string };
-  TodaysImageModal: undefined;
+  TodaysImageScreen: undefined;
   NotFoundScreen: undefined;
 };
 
 export type BottomTabParamList = {
-  Discover: undefined;
+  ToDos: undefined;
   More: undefined;
 };
 
-export type DiscoverParamList = {
-  DiscoverScreen: undefined;
+export type ToDosParamList = {
+  ToDosScreen: undefined;
 };
 
 export type TabMoreParamList = {

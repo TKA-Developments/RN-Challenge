@@ -1,49 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useContext } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import useColorScheme from './hooks/useColorScheme';
-import { rootNavContainerRef, RootNavigator } from './navigation';
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { RootNavigator } from './navigation';
 import SplashScreen from './screens/SplashScreen';
 import useInitialization from './hooks/useInitialization';
-import useUserAuthentication from './hooks/useUserAuthentication';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
-import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import AuthNavigator from './navigation/auth';
-import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { UserContext, UserProvider } from './context/UserContext';
+import { ThemeContext, ThemeProvider } from './context/ThemeContext';
 
-const Main = ({
-  user,
-  isLoading,
-}:
-  {
-    user: FirebaseAuthTypes.User,
-    isLoading: boolean,
-  }) => {
+const Main = () => {
+  const isLoading = useInitialization();
+
+  const { user } = useContext(UserContext);
+  const { choiceByTheme } = useContext(ThemeContext);
+
+  // return <AnimationDemoScreen />;
+
   if (isLoading) {
     return <SplashScreen/>;
   }
 
-  if (user === null) {
-    return <AuthNavigator/>;
-  }
-
-  return <RootNavigator/>;
-};
-
-export default () => {
-  const isLoading = useInitialization();
-  const colorScheme = useColorScheme();
-  const user = useUserAuthentication();
-
   return (
-    <SafeAreaProvider>
-      <NavigationContainer
-        ref={rootNavContainerRef}
-        linking={LinkingConfiguration}
-        theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Main isLoading={isLoading} user={user}/>
-      </NavigationContainer>
-      <StatusBar/>
-    </SafeAreaProvider>
+    <NavigationContainer
+      linking={LinkingConfiguration}
+      theme={choiceByTheme({
+        dark: DarkTheme,
+        light: DefaultTheme,
+      })}
+    >
+      {user === null ? <AuthNavigator/> : <RootNavigator/>}
+    </NavigationContainer>
   );
 };
+
+export default () => (
+  <SafeAreaProvider>
+    <UserProvider>
+      <ThemeProvider>
+        <Main/>
+      </ThemeProvider>
+    </UserProvider>
+    {/* <StatusBar/> */}
+  </SafeAreaProvider>
+);

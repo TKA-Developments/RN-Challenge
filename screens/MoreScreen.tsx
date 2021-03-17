@@ -1,20 +1,26 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useContext } from 'react';
 import { StyleSheet, Switch } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { StackNavigationProp } from '@react-navigation/stack';
 import MenuList, { MenuListSectionData } from '../components/MenuList';
 import AccountOverview from '../components/AccountOverview';
 import Version from '../constants/Version';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { TabMoreParamList } from '../types';
 import { currentUser } from '../action/Auth';
-import { useThemeColors, View } from '../components/Themed';
+import { View } from '../components/Themed';
+import { ThemeContext } from '../context/ThemeContext';
+
+const styles = StyleSheet.create({});
 
 const useSections = (
-  navigation: StackNavigationProp<TabMoreParamList, 'TabMoreScreen'>
+  navigation: StackNavigationProp<TabMoreParamList, 'TabMoreScreen'>,
 ): Array<MenuListSectionData> => {
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
-  const colors = useThemeColors();
+  const {
+    theme,
+    setTheme,
+    colors
+  } = useContext(ThemeContext);
 
   return [
     {
@@ -24,8 +30,11 @@ const useSections = (
           additionalComponentLeft: <MaterialIcons name="palette" size={30} color={colors.primary}/>,
           title: 'Dark Theme',
           subtitle: 'For those of you who can\'t stand in a daylight',
-          additionalComponentRight: <Switch value={isDarkTheme} onValueChange={setIsDarkTheme}
-                                            color={colors.primary}/>,
+          additionalComponentRight: <Switch
+            value={theme === 'dark'}
+            onValueChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+            // color={colors.primary}
+          />,
         },
       ],
     },
@@ -68,6 +77,4 @@ export default ({ navigation }: { navigation: StackNavigationProp<TabMoreParamLi
       />
     </View>
   );
-}
-
-const styles = StyleSheet.create({});
+};

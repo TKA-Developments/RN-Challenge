@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import {
   ActivityIndicator,
   Text as DefaultText,
@@ -6,26 +7,26 @@ import {
   View as DefaultView,
 } from 'react-native';
 import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
+import { ThemeContext } from '../context/ThemeContext';
 
 export type ThemedColors = typeof Colors.dark & typeof Colors.light;
+export type ThemedColorChoice = keyof typeof Colors.light & keyof typeof Colors.dark;
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark,
+  colorName: ThemedColorChoice,
 ) {
-  const theme = useColorScheme();
+  const { theme } = useContext(ThemeContext);
   const colorFromProps = props[theme];
 
   if (colorFromProps) {
     return colorFromProps;
-  } else {
-    return Colors[theme][colorName];
   }
+  return Colors[theme][colorName];
 }
 
 export function useThemeColors() {
-  const theme = useColorScheme();
+  const { theme } = useContext(ThemeContext);
   return Colors[theme];
 }
 
@@ -43,7 +44,10 @@ export const Text = (props: TextProps) => {
     darkColor,
     ...otherProps
   } = props;
-  const color = useThemeColor({
+
+  const { getColorCustomOrThemeDefault } = useContext(ThemeContext);
+
+  const color = getColorCustomOrThemeDefault({
     light: lightColor,
     dark: darkColor,
   }, 'text');
@@ -65,9 +69,12 @@ export const View = (props: ViewProps) => {
     colorState,
     ...otherProps
   } = props;
-  const backgroundColor = useThemeColor({
+
+  const { getColorCustomOrThemeDefault } = useContext(ThemeContext);
+
+  const backgroundColor = getColorCustomOrThemeDefault({
       light: lightColor,
-      dark: darkColor
+      dark: darkColor,
     },
     colorState as keyof typeof Colors.light & keyof typeof Colors.dark ?? 'background');
 
@@ -83,13 +90,16 @@ export const Spinner = (props: SpinnerProps) => {
     darkColor,
     ...otherProps
   } = props;
-  const color = useThemeColor({
+
+  const { getColorCustomOrThemeDefault } = useContext(ThemeContext);
+
+  const color = getColorCustomOrThemeDefault({
     light: lightColor,
     dark: darkColor,
   }, 'primary');
 
   return (
-    <ActivityIndicator color={color} {...otherProps}/>
+    <ActivityIndicator color={color} {...otherProps} />
   );
 };
 
@@ -102,15 +112,18 @@ export const TextInput = (props: TextInputProps) => {
     darkColor,
     ...otherProps
   } = props;
-  const placeholderTextColor = useThemeColor({
+
+  const { getColorCustomOrThemeDefault } = useContext(ThemeContext);
+
+  const placeholderTextColor = getColorCustomOrThemeDefault({
     light: lightColor,
     dark: darkColor,
   }, 'secondary');
-  const color = useThemeColor({
+  const color = getColorCustomOrThemeDefault({
     light: lightColor,
     dark: darkColor,
   }, 'text');
-  const backgroundColor = useThemeColor({
+  const backgroundColor = getColorCustomOrThemeDefault({
     light: lightColor,
     dark: darkColor,
   }, 'background');
@@ -119,7 +132,7 @@ export const TextInput = (props: TextInputProps) => {
     <DefaultTextInput
       style={[{
         color,
-        backgroundColor
+        backgroundColor,
       }, style]}
       placeholderTextColor={placeholderTextColor}
       {...otherProps}

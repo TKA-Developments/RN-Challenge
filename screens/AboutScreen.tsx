@@ -1,7 +1,8 @@
-import React from 'react';
-import { Linking, StyleSheet, Text, View } from 'react-native';
-import { ThemedColors, useThemeColors } from '../components/Themed';
+import React, { useContext } from 'react';
+import { Linking, StyleSheet, Text, View, } from 'react-native';
+import { ThemedColors } from '../components/Themed';
 import Button from '../components/Button';
+import { ThemeContext } from '../context/ThemeContext';
 
 const styles = (colors: ThemedColors) => StyleSheet.create({
   textStyle: {
@@ -17,18 +18,19 @@ const styles = (colors: ThemedColors) => StyleSheet.create({
     color: colors.primary,
   },
   containerStyle: {
+    backgroundColor: 'transparent',
     flex: 1,
     margin: 20,
   },
 });
 
 export default () => {
-  const themeColors = useThemeColors();
-  const themedStyle = styles(themeColors);
+  const { colors } = useContext(ThemeContext);
+  const themedStyles = styles(colors);
 
   return (
-    <View style={themedStyle.containerStyle}>
-      <Text style={themedStyle.textStyle}>
+    <View style={themedStyles.containerStyle}>
+      <Text style={themedStyles.textStyle}>
         But I must explain to you how all this mistaken idea of denouncing
         pleasure and praising pain was born and I will give you a complete
         account of the system, and expound the actual teachings of the
@@ -46,16 +48,16 @@ export default () => {
         or one who avoids a pain that produces no resultant pleasure?
       </Text>
       <Button
-        style={themedStyle.buttonStyle}
+        style={themedStyles.buttonStyle}
         onPress={() => Linking.openURL('mailto:andra.antariksa@gmail.com')}
       >
         Contact Me
       </Button>
 
-      <Text style={themedStyle.textCopyRightStyle}>
+      <Text style={themedStyles.textCopyRightStyle}>
         &copy; 2021 Andra Antariksa
       </Text>
 
     </View>
   );
-}
+};

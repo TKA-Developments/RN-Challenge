@@ -1,8 +1,9 @@
 import { FontAwesome } from '@expo/vector-icons';
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Text, ThemedColors, useThemeColors, View } from './Themed';
+import { Text, ThemedColors, View } from './Themed';
 import { signOut } from '../action/Auth';
+import { ThemeContext } from '../context/ThemeContext';
 
 const styles = (colors: ThemedColors) => StyleSheet.create({
   containerStyle: {
@@ -12,7 +13,7 @@ const styles = (colors: ThemedColors) => StyleSheet.create({
     padding: 15,
   },
   userIconStyle: {
-    backgroundColor: colors.text,
+    backgroundColor: colors.primary,
     borderRadius: 100,
     width: 50,
     height: 50,
@@ -35,13 +36,12 @@ const styles = (colors: ThemedColors) => StyleSheet.create({
 });
 
 export default ({ email }: { email: undefined | string | null }) => {
-  const colors = useThemeColors();
+  const { colors } = useContext(ThemeContext);
   const themedStyles = styles(colors);
 
   return (
     <View style={themedStyles.containerStyle}>
-      <View style={themedStyles.userIconStyle}
-      >
+      <View style={themedStyles.userIconStyle}>
         <FontAwesome name="user" color={colors.background} size={40}/>
       </View>
       <Text style={themedStyles.emailTextStyle}>{email ?? 'No email'}</Text>

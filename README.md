@@ -60,7 +60,7 @@ Your app should be able to complete these tasks:
 
 - [x] Enable search for the to-do items
 - [ ] Include animations
-- [ ] Persist data using Contexts and/or Async Storage.
+- [x] Persist data using Contexts and/or Async Storage.
 - [x] Call some public API (image, video, weather, clocks, up to you)
 - [x] Save data to a backend server (like firebase)
 - [x] Do some kind of sharing

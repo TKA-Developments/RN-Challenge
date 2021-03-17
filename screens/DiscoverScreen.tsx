@@ -5,8 +5,8 @@ import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import FloatingActionButton from '../components/FloatingActionButton';
 import { View } from '../components/Themed';
 import ToDoList from '../components/ToDoList';
-import { DiscoverParamList, RootStackParamList } from '../types';
-import { FilterToDos, searchToDoResult, ToDoSingleWithKey, userToDos } from '../action/ToDos';
+import { RootStackParamList, ToDosParamList } from '../types';
+import { FilterToDos, searchToDoResult, ToDoSingleWithKey, userToDos, } from '../action/ToDos';
 import FloatingActionButtonGroup from '../components/FloatingActionButtonGroup';
 import FloatingFilterButton from '../components/FloatingFilterButton';
 import SearchTextInput from '../components/SearchTextInput';
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 });
 
 export default ({ navigation }: {
-  navigation: StackNavigationProp<DiscoverParamList & RootStackParamList, 'DiscoverScreen'>
+  navigation: StackNavigationProp<ToDosParamList & RootStackParamList, 'ToDosScreen'>
 }) => {
   const [toDos, setToDos] = useState<Array<ToDoSingleWithKey>>([]);
   const [filterBy, setFilterBy] = useState(FilterToDos.NotCompleted);

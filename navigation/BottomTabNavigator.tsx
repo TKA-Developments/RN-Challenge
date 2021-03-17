@@ -1,9 +1,9 @@
 import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import { BottomTabParamList } from '../types';
 import { StyleSheet } from 'react-native';
-import { TabDiscoverStackNavigator } from './TabDiscoverStack';
+import { BottomTabParamList } from '../types';
+import { TabDiscoverStackNavigator } from './TabToDosStack';
 import { TabMoreStackNavigator } from './TabMoreStack';
 import { useThemeColors } from '../components/Themed';
 
@@ -37,14 +37,13 @@ export default function BottomTabNavigator() {
         }}
       >
         <BottomTab.Screen
-          name="To Do"
+          name="ToDos"
           component={TabDiscoverStackNavigator}
           options={{
             tabBarIcon: ({
               color,
-              size
-            }) =>
-              <Octicons size={25} color={color} name="checklist"/>
+              size,
+            }) => <Octicons size={25} color={color} name="checklist"/>,
           }}
         />
         <BottomTab.Screen
@@ -61,4 +60,3 @@ export default function BottomTabNavigator() {
     </>
   );
 }
-

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
-import TextButton from '../components/TextButton';
-import { Spinner, ThemedColors, useThemeColors, View } from '../components/Themed';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types';
 import { RouteProp } from '@react-navigation/native';
-import { editToDo, getToDo, markToDoAs, ToDoSingle } from '../action/ToDos';
+import TextButton from '../components/TextButton';
+import { Spinner, ThemedColors, View } from '../components/Themed';
+import { RootStackParamList } from '../types';
+import { editToDo, getToDo, markToDoAs, ToDoSingle, } from '../action/ToDos';
 import RoundedCheckbox from '../components/RoundedCheckBox';
+import { ThemeContext } from '../context/ThemeContext';
 
 const styles = (color: ThemedColors) => StyleSheet.create({
   titleStyle: {
@@ -26,7 +27,7 @@ const styles = (color: ThemedColors) => StyleSheet.create({
     // bottom: 0,
     // left: 0,
     // right: 0,
-    marginBottom: 10,
+    paddingBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderWidth: 1,
@@ -84,7 +85,7 @@ export default ({
     route: RouteProp<RootStackParamList, 'EditToDoScreen'>,
     navigation: StackNavigationProp<RootStackParamList, 'EditToDoScreen'>
   }) => {
-  const colors = useThemeColors();
+  const { colors } = useContext(ThemeContext);
   const themedStyle = styles(colors);
 
   const { key } = route.params;
@@ -112,10 +113,9 @@ export default ({
   return (
     <View style={themedStyle.containerStyle}>
       {
-        isLoading ?
-          <Spinner/>
-          :
-          (
+        isLoading
+          ? <Spinner/>
+          : (
             <>
               <TextInput
                 style={themedStyle.titleStyle}
@@ -145,7 +145,8 @@ export default ({
                 <TextButton
                   onPress={() => editButtonPress(navigation, title, description, key)}
                   textStyle={themedStyle.addButtonTextStyle}
-                  touchableStyle={themedStyle.addButtonStyle}>
+                  touchableStyle={themedStyle.addButtonStyle}
+                >
                   Update
                 </TextButton>
               </View>
