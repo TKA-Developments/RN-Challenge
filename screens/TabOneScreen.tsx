@@ -12,18 +12,15 @@ export default function TabOneScreen() {
 
 
   const [text, onChangeText] = React.useState("")
-  const [arrayItem, setToDoItem] = React.useState()
   const [description, onChangeDescription] = React.useState("")
-  const [objectMap, setMap] = React.useState();
+  const [arrayItem, setArrayItem] = React.useState([]);
   
 
   function addItem(text) {
-    var map = new Map();
-    map.set(text, 0);
-    console.log(map)
-    setMap(map)
-    for (let element of map){
-    console.log(element) }
+    var arraycopy = arrayItem;
+    arraycopy.push(text)
+    setArrayItem(arraycopy)
+    console.log(arraycopy)
   }
 
   return (
@@ -45,8 +42,7 @@ export default function TabOneScreen() {
           value = {description}
           placeholder = 'Set description'
       />
-      
-        {/* <Text>{objectMap.keys()</Text> */}
+      {/* {objectMap && objectMap} */}
 
       </View>
       <View style = {styles.container}>
