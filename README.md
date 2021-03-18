@@ -64,3 +64,21 @@ Your app should be able to complete these tasks:
 
 ## How to run the demo
 (REPLACE THIS WITH YOUR INSTRUCTIONS)
+
+
+- Install the dependencies in your local devices
+- Type 'yarn install' if using yarn, but 'expo install' is the same
+- Install additional dependencies that used in the app:
+- Type 'yarn add styled-components' on the terminal
+- Type 'yarn add react-native-bootstrap-styles' on the terminal
+- Do not forget to install the firebase configuration also:
+- Type 'expo install firebase' on the terminal
+- If all the instructions above have been done, you can start running the application:
+- Type 'yarn start'
+- You will be redirected to the localhost page on the browser
+- Select the option on which device simulator you would like to run the application, or you can use the web browser
+- If you are using iOS Simulator, make sure XCode is installed on your Mac
+- If you are using Android Simulator, make sure the Android Simulator is installed
+- If you wish to open it on your device, download the Expo application first on the devices
+- On iOS, you can scan the QR Code instantly with the iOS Camera which provided in the terminal when you run the application
+- Open Tab 2 on the screen, and start working with your to-do list!
