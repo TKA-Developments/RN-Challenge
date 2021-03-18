@@ -33,7 +33,7 @@ export default ({
     onPress?: TouchableOpacity['props']['onPress'],
     touchableProps?: TouchableOpacity['props'],
     textProps?: Text['props'],
-    disabled: boolean,
+    disabled?: boolean,
   }) => {
   const themedColors = useThemeColors();
   const themedStyle = styles(themedColors);

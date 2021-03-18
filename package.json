@@ -22,6 +22,7 @@
     "@react-navigation/bottom-tabs": "5.11.2",
     "@react-navigation/native": "~5.8.10",
     "@react-navigation/stack": "~5.12.8",
+    "@types/matter-js": "^0.14.10",
     "expo": "~40.0.0",
     "expo-asset": "~8.2.1",
     "expo-constants": "~9.3.0",
@@ -34,18 +35,20 @@
     "expo-updates": "~0.4.0",
     "expo-web-browser": "~8.6.0",
     "indexeddbshim": "^7.1.0",
+    "matter-js": "^0.16.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
+    "react-native-game-engine": "^1.2.0",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-image-zoom-viewer": "^3.0.1",
-    "react-native-reanimated": "~1.13.0",
     "react-native-rounded-checkbox": "^0.1.4",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.0",
     "react-native-unimodules": "~0.12.0",
     "react-native-web": "~0.13.12",
-    "react-spritesheet": "^1.0.1"
+    "rn-sprite-sheet": "^1.1.12",
+    "sync-storage": "^0.4.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
@@ -67,6 +70,7 @@
     "typescript": "~4.0.0"
   },
   "private": true,
-  "name": "RN-Challenge",
-  "version": "1.0.0"
+  "name": "Todos",
+  "version": "1.0.0",
+  "license": "MIT"
 }

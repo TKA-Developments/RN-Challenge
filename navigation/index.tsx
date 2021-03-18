@@ -1,24 +1,27 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainerRef } from '@react-navigation/native';
 import React from 'react';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList } from '../types';
+import { MainStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import CreateTODOModal from '../screens/CreateToDoModal';
-import EditToDoModal from '../screens/EditToDoModal';
-import TodaysImageModal from '../screens/TodaysImageScreen';
+import EditToDoScreen from '../screens/EditToDoScreen';
 import HeaderDeleteButton from '../components/HeaderRightButton';
+import TodaysImageScreen from '../screens/TodaysImageScreen';
+import GameDemoScreen from '../screens/GameDemoScreen';
 
-export const rootNavContainerRef = React.createRef<NavigationContainerRef>();
+const MainStack = createStackNavigator<MainStackParamList>();
 
-const MainStack = createStackNavigator<RootStackParamList>();
-
-export const RootNavigator = () => (
+export const MainNavigator = () => (
   <MainStack.Navigator>
     <MainStack.Screen
-      name="Root"
+      name="BottomTabNavigator"
       component={BottomTabNavigator}
       options={{ headerShown: false }}
+    />
+    <MainStack.Screen
+      name="NotFoundScreen"
+      component={NotFoundScreen}
+      options={{ title: 'Oops!' }}
     />
     <MainStack.Screen
       name="CreateToDoModal"
@@ -28,12 +31,12 @@ export const RootNavigator = () => (
         cardStyle: { backgroundColor: 'transparent' },
         cardOverlayEnabled: true,
         cardStyleInterpolator: ({ current: { progress } }) => ({
-          cardStyle: {
-            opacity: progress.interpolate({
-              inputRange: [0, 0.5, 0.9, 1],
-              outputRange: [0, 0.25, 0.7, 1],
-            }),
-          },
+          // cardStyle: {
+          //   opacity: progress.interpolate({
+          //     inputRange: [0, 0.5, 0.9, 1],
+          //     outputRange: [0, 0.25, 0.7, 1],
+          //   }),
+          // },
           overlayStyle: {
             opacity: progress.interpolate({
               inputRange: [0, 1],
@@ -46,21 +49,21 @@ export const RootNavigator = () => (
     />
     <MainStack.Screen
       name="EditToDoScreen"
-      component={EditToDoModal}
+      component={EditToDoScreen}
       options={{
         headerRight: (_) => <HeaderDeleteButton/>,
         title: '',
       }}
     />
     <MainStack.Screen
-      name="TodaysImageModal"
-      component={TodaysImageModal}
+      name="TodaysImageScreen"
+      component={TodaysImageScreen}
       options={{ title: 'Today\'s Image' }}
     />
     <MainStack.Screen
-      name="NotFoundScreen"
-      component={NotFoundScreen}
-      options={{ title: 'Oops!' }}
+      name="GameDemoScreen"
+      component={GameDemoScreen}
+      options={{ title: 'Mario Jump Demo' }}
     />
   </MainStack.Navigator>
 );

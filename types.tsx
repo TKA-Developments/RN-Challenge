@@ -2,17 +2,18 @@ import { ReactChild, ReactChildren } from 'react';
 
 export type ReactChildrenComponent = ReactChild | ReactChild[] | ReactChildren | ReactChildren[];
 
-export type RootStackParamList = {
-  Root: undefined;
+export type MainStackParamList = {
+  BottomTabNavigator: undefined;
   CreateToDoModal: undefined;
-  EditToDoScreen: { key: string };
+  EditToDoScreen: { id: string };
   TodaysImageScreen: undefined;
+  GameDemoScreen: undefined;
   NotFoundScreen: undefined;
 };
 
 export type BottomTabParamList = {
-  ToDos: undefined;
-  More: undefined;
+  ToDosStack: undefined;
+  MoreStack: undefined;
 };
 
 export type ToDosParamList = {
@@ -20,6 +21,10 @@ export type ToDosParamList = {
 };
 
 export type TabMoreParamList = {
-  TabMoreScreen: undefined;
+  MoreScreen: undefined;
   AboutScreen: undefined;
+};
+export type AuthStackParamList = {
+  SignInScreen: undefined,
+  SignUpScreen: undefined,
 };

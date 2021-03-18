@@ -1,38 +1,39 @@
 import React from 'react';
-import RoundedCheckbox, { IRoundedCheckboxProps } from '../components/RoundedCheckBox';
-import { ToDoSingleWithKey } from '../action/ToDos';
-import { Text, View } from './Themed';
 import { TouchableOpacity } from 'react-native';
+import RoundedCheckbox from './RoundedCheckBox';
+import { Text, View } from './Themed';
+import { ToDoSingleWithID } from '../action/ToDos';
 
 export default ({
   data,
   onCheck,
   onPress,
   titleStyle,
-  checkBoxStyle,
   containerStyle,
-  innerContainerStyle
+  innerContainerStyle,
 }: {
-  data: ToDoSingleWithKey,
-  onCheck: (isChecked: boolean, key: string) => void,
-  onPress: (data: ToDoSingleWithKey) => void,
+  data: ToDoSingleWithID,
+  onCheck: (isChecked: boolean, id: string) => void,
+  onPress: (data: ToDoSingleWithID) => void,
   titleStyle?: any,
-  checkBoxStyle?: IRoundedCheckboxProps,
   containerStyle?: any,
   innerContainerStyle?: any,
-}) => {
-  return (
-    <TouchableOpacity style={containerStyle} onPress={() => onPress(data)}>
-      <RoundedCheckbox
-        onPress={(isChecked) => onCheck(isChecked, data.key)}
-        style={checkBoxStyle}
-        isChecked={data.isCompleted}
-      />
-      <View style={innerContainerStyle}>
-        <Text style={titleStyle}>{data.title}</Text>
-        {data.description || data.description.trim() !== '' ?
-          <Text>{data.description.substring(0, 20)}</Text> : null}
-      </View>
-    </TouchableOpacity>
-  );
-};
+}) => (
+  <TouchableOpacity style={containerStyle} onPress={() => onPress(data)}>
+    <RoundedCheckbox
+      onPress={(isChecked) => onCheck(isChecked, data.id)}
+      isChecked={data.isCompleted}
+    />
+    <View style={innerContainerStyle}>
+      <Text style={titleStyle}>{data.title}</Text>
+      {data.description || data.description.trim() !== ''
+        ? (
+          <Text>
+            {data.description.substring(0, 20)
+              .replace('\n', '')}
+            {data.description.length > 20 ? '...' : null}
+          </Text>
+        ) : null}
+    </View>
+  </TouchableOpacity>
+);

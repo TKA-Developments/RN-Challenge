@@ -1,24 +1,31 @@
 import * as Linking from 'expo-linking';
+import { LinkingOptions } from '@react-navigation/native';
 
-export default {
+export default <LinkingOptions>{
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
-      Root: {
+      BottomTabNavigator: {
         screens: {
-          TabOne: {
+          ToDosStack: {
             screens: {
-              TabOneScreen: 'one',
+              ToDosScreen: 'todos',
+              CreateToDoModal: 'createtodos',
+              EditToDoScreen: {
+                path: 'todos/:id',
+              },
+              TodaysImageScreen: 'todaysimage',
             },
           },
-          TabTwo: {
+          MoreStack: {
             screens: {
-              MoreScreen: 'more',
+              TabMoreScreen: 'more',
+              AboutScreen: 'about',
             },
           },
         },
       },
-      SignIn: 'signIn',
+      SignIn: 'signin',
       NotFound: '*',
     },
   },

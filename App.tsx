@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import { RootNavigator } from './navigation';
+import { MainNavigator } from './navigation';
 import SplashScreen from './screens/SplashScreen';
 import useInitialization from './hooks/useInitialization';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
@@ -15,8 +15,6 @@ const Main = () => {
   const { user } = useContext(UserContext);
   const { choiceByTheme } = useContext(ThemeContext);
 
-  // return <AnimationDemoScreen />;
-
   if (isLoading) {
     return <SplashScreen/>;
   }
@@ -29,7 +27,7 @@ const Main = () => {
         light: DefaultTheme,
       })}
     >
-      {user === null ? <AuthNavigator/> : <RootNavigator/>}
+      {user === null ? <AuthNavigator/> : <MainNavigator/>}
     </NavigationContainer>
   );
 };

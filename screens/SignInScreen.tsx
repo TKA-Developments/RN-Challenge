@@ -1,6 +1,6 @@
 import React from 'react';
-import SigninForm from '../components/SigninForm';
 import { StyleSheet } from 'react-native';
+import SigninForm from '../components/SignInForm';
 import { View } from '../components/Themed';
 
 const styles = StyleSheet.create({
@@ -10,10 +10,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default () => {
-  return (
-    <View style={styles.containerStyle}>
-      <SigninForm/>
-    </View>
-  );
-};
+export default () => (
+  <View style={styles.containerStyle}>
+    <SigninForm/>
+  </View>
+);

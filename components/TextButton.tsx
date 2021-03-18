@@ -34,7 +34,11 @@ export default ({
   const themedStyle = styles(themes);
 
   return (
-    <TouchableOpacity onPress={onPress} style={[themedStyle.touchableStyle, touchableStyle]}>
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.2}
+      style={[themedStyle.touchableStyle, touchableStyle]}
+    >
       <Text style={[themedStyle.textStyle, textStyle]}>{children}</Text>
     </TouchableOpacity>
   );

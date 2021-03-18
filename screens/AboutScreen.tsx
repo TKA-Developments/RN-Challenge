@@ -14,9 +14,6 @@ const styles = (colors: ThemedColors) => StyleSheet.create({
     textAlign: 'center',
     color: colors.text,
   },
-  buttonStyle: {
-    color: colors.primary,
-  },
   containerStyle: {
     backgroundColor: 'transparent',
     flex: 1,
@@ -48,14 +45,13 @@ export default () => {
         or one who avoids a pain that produces no resultant pleasure?
       </Text>
       <Button
-        style={themedStyles.buttonStyle}
         onPress={() => Linking.openURL('mailto:andra.antariksa@gmail.com')}
       >
         Contact Me
       </Button>
 
       <Text style={themedStyles.textCopyRightStyle}>
-        &copy; 2021 Andra Antariksa
+        &copy; 2021 Todos
       </Text>
 
     </View>

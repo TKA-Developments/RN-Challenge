@@ -1,8 +1,8 @@
 import React from 'react';
 import { FlatList, FlatListProps, StyleSheet } from 'react-native';
-import ToDoSingle from './ToDoSingle';
-import { markToDoAs, ToDoSingleWithKey } from '../action/ToDos';
 import { useNavigation } from '@react-navigation/native';
+import ToDoSingle from './ToDoSingle';
+import { markToDoAsCompleted, ToDoSingleWithID } from '../action/ToDos';
 import { ThemedColors, useThemeColors } from './Themed';
 
 const styles = (colors: ThemedColors) => StyleSheet.create({
@@ -18,7 +18,6 @@ const styles = (colors: ThemedColors) => StyleSheet.create({
     alignItems: 'center',
     // borderBottomWidth: 1,
   },
-  checkBoxToDoSingleStyle: {},
   innerContainerStyle: {
     marginLeft: 10,
   },
@@ -29,17 +28,17 @@ export default ({
   style,
   contentContainerStyle,
 }: {
-  data: Array<ToDoSingleWithKey>,
-  style?: FlatListProps<ToDoSingleWithKey>['style'],
-  contentContainerStyle?: FlatListProps<ToDoSingleWithKey>['contentContainerStyle'],
+  data: Array<ToDoSingleWithID>,
+  style?: FlatListProps<ToDoSingleWithID>['style'],
+  contentContainerStyle?: FlatListProps<ToDoSingleWithID>['contentContainerStyle'],
 }) => {
   const colors = useThemeColors();
   const themedColors = styles(colors);
   const navigation = useNavigation();
 
-  const onPressToDoSingle = ({ key }: { key: string }) => {
+  const onPressToDoSingle = ({ id }: { id: string }) => {
     navigation.navigate('EditToDoScreen', {
-      key,
+      id,
     });
   };
 
@@ -48,12 +47,12 @@ export default ({
       contentContainerStyle={contentContainerStyle}
       data={data}
       style={style}
+      keyExtractor={({ id }) => id}
       renderItem={({ item }) => (
         <ToDoSingle
-          onCheck={markToDoAs}
+          onCheck={markToDoAsCompleted}
           onPress={onPressToDoSingle}
           data={item}
-          checkBoxStyle={themedColors.checkBoxToDoSingleStyle}
           titleStyle={themedColors.titleToDoSingleStyle}
           containerStyle={themedColors.containerToDoSingleStyle}
           innerContainerStyle={themedColors.innerContainerStyle}

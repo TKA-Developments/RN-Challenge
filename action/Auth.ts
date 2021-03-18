@@ -7,7 +7,4 @@ export const signIn = (email: string, password: string) => Auth()
 export const signOut = () => Auth()
   .signOut();
 
-export const isLoggedIn = () => Auth().currentUser !== null;
-
-export const currentUser = () => Auth().currentUser;
-
+export const currentUser = () => Auth()?.currentUser;

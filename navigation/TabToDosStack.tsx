@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { ToDosParamList } from '../types';
-import DiscoverScreen from '../screens/DiscoverScreen';
+import DiscoverScreen from '../screens/ToDosScreen';
 
 export const TabToDosStack = createStackNavigator<ToDosParamList>();
 

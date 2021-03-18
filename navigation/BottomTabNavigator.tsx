@@ -37,23 +37,25 @@ export default function BottomTabNavigator() {
         }}
       >
         <BottomTab.Screen
-          name="ToDos"
+          name="ToDosStack"
           component={TabDiscoverStackNavigator}
           options={{
             tabBarIcon: ({
               color,
               size,
             }) => <Octicons size={25} color={color} name="checklist"/>,
+            title: 'To Do',
           }}
         />
         <BottomTab.Screen
-          name="More"
+          name="MoreStack"
           component={TabMoreStackNavigator}
           options={{
             tabBarIcon: ({
               color,
               size,
             }) => <MaterialCommunityIcons size={25} color={color} name="dots-horizontal"/>,
+            title: 'More',
           }}
         />
       </BottomTab.Navigator>

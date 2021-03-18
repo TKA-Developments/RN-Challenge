@@ -1,26 +1,25 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { StyleSheet, Switch } from 'react-native';
+import { Switch } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 import MenuList, { MenuListSectionData } from '../components/MenuList';
 import AccountOverview from '../components/AccountOverview';
 import Version from '../constants/Version';
-import { TabMoreParamList } from '../types';
+import { MainStackParamList, TabMoreParamList } from '../types';
 import { currentUser } from '../action/Auth';
 import { View } from '../components/Themed';
 import { ThemeContext } from '../context/ThemeContext';
 
-const styles = StyleSheet.create({});
-
-const useSections = (
-  navigation: StackNavigationProp<TabMoreParamList, 'TabMoreScreen'>,
-): Array<MenuListSectionData> => {
+const useSections = (): Array<MenuListSectionData> => {
   const {
     theme,
     setTheme,
-    colors
+    colors,
   } = useContext(ThemeContext);
+
+  const navigation = useNavigation<StackNavigationProp<MainStackParamList & TabMoreParamList, 'MoreScreen'>>();
 
   return [
     {
@@ -39,6 +38,22 @@ const useSections = (
       ],
     },
     {
+      title: 'Misc',
+      data: [
+        {
+          additionalComponentLeft: <MaterialIcons
+            name="animation"
+            size={30}
+            color={colors.primary}
+          />,
+          title: 'Mario Jump Demo',
+          onPress: () => {
+            navigation.navigate('GameDemoScreen');
+          },
+        },
+      ],
+    },
+    {
       title: 'General',
       data: [
         {
@@ -53,21 +68,12 @@ const useSections = (
         },
       ],
     },
-    {
-      title: 'Misc',
-      data: [
-        {
-          additionalComponentLeft: <MaterialIcons name="palette" size={30} color={colors.primary}/>,
-          title: 'Animation Demo',
-        },
-      ],
-    },
   ];
 };
 
-export default ({ navigation }: { navigation: StackNavigationProp<TabMoreParamList, 'TabMoreScreen'> }) => {
+export default () => {
   const { email } = currentUser() || {};
-  const sections = useSections(navigation);
+  const sections = useSections();
 
   return (
     <View>

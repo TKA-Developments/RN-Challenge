@@ -5,8 +5,8 @@ import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import FloatingActionButton from '../components/FloatingActionButton';
 import { View } from '../components/Themed';
 import ToDoList from '../components/ToDoList';
-import { RootStackParamList, ToDosParamList } from '../types';
-import { FilterToDos, searchToDoResult, ToDoSingleWithKey, userToDos, } from '../action/ToDos';
+import { MainStackParamList, ToDosParamList } from '../types';
+import { FilterToDos, searchToDoResult, ToDoSingleWithID, userToDos, } from '../action/ToDos';
 import FloatingActionButtonGroup from '../components/FloatingActionButtonGroup';
 import FloatingFilterButton from '../components/FloatingFilterButton';
 import SearchTextInput from '../components/SearchTextInput';
@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
 });
 
 export default ({ navigation }: {
-  navigation: StackNavigationProp<ToDosParamList & RootStackParamList, 'ToDosScreen'>
+  navigation: StackNavigationProp<ToDosParamList & MainStackParamList, 'ToDosScreen'>
 }) => {
-  const [toDos, setToDos] = useState<Array<ToDoSingleWithKey>>([]);
+  const [toDos, setToDos] = useState<Array<ToDoSingleWithID>>([]);
   const [filterBy, setFilterBy] = useState(FilterToDos.NotCompleted);
   const [searchText, setSearchText] = useState('');
 
@@ -32,7 +32,7 @@ export default ({ navigation }: {
     const toDosTemp: typeof toDos = [];
     todosSnapshot.forEach((toDoSnapshot) => {
       toDosTemp.push({
-        key: toDoSnapshot.key,
+        id: toDoSnapshot.key,
         ...toDoSnapshot.val(),
       });
       return undefined;
@@ -63,7 +63,7 @@ export default ({ navigation }: {
       />
       <FloatingActionButtonGroup>
         <FloatingActionButton
-          onPress={() => navigation.navigate('TodaysImageModal')}
+          onPress={() => navigation.navigate('TodaysImageScreen')}
           iconName="image"
         />
         <FloatingActionButton

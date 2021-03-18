@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RN-Challenge",
-    "slug": "RN-Challenge",
+    "name": "Todos",
+    "slug": "Todos",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

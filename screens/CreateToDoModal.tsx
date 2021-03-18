@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { TextInput, ThemedColors, View } from '../components/Themed';
 import TextButton from '../components/TextButton';
-import { RootStackParamList } from '../types';
+import { MainStackParamList } from '../types';
 import { addToDo } from '../action/ToDos';
 import { ThemeContext } from '../context/ThemeContext';
 
@@ -46,37 +46,33 @@ const styles = (colors: ThemedColors) => StyleSheet.create({
     paddingBottom: 10,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    borderWidth: 1,
+    // borderWidth: 1,
     alignItems: 'center',
   },
   addButtonStyle: {
     // justifyContent: 'flex-end',
     // alignItems: 'flex-end',
-    borderWidth: 1,
+    // borderWidth: 1,
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
-  addButtonTextStyle: {
+  editButtonTextStyle: {
     fontWeight: 'bold',
   },
 });
 
-const addButtonPress = (
-  navigation: StackNavigationProp<RootStackParamList, 'CreateToDoModal'>,
-  title: string,
-  description: string,
-) => {
-  addToDo(title, description);
-  navigation.goBack();
-};
-
 export default ({ navigation }:
-  { navigation: StackNavigationProp<RootStackParamList, 'CreateToDoModal'> }) => {
+  { navigation: StackNavigationProp<MainStackParamList, 'CreateToDoModal'> }) => {
   const { colors } = useContext(ThemeContext);
   const themedStyle = styles(colors);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+  const addButtonPress = () => {
+    addToDo(title, description);
+    navigation.goBack();
+  };
 
   return (
     <View style={themedStyle.containerStyle}>
@@ -100,8 +96,8 @@ export default ({ navigation }:
           style={themedStyle.bottomSectionStyle}
         >
           <TextButton
-            onPress={() => addButtonPress(navigation, title, description)}
-            textStyle={themedStyle.addButtonTextStyle}
+            onPress={addButtonPress}
+            textStyle={themedStyle.editButtonTextStyle}
             touchableStyle={themedStyle.addButtonStyle}
           >
             Add

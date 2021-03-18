@@ -1,30 +1,28 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SignInScreen from '../../screens/SignInScreen';
+import { AuthStackParamList } from '../../types';
+import SignUpScreen from '../../screens/SignUpScreen';
 
-type AuthStackParamList = {
-  SignIn: undefined,
-  SignUp: undefined,
-};
+export const AuthStack = createStackNavigator<AuthStackParamList>();
 
-const AuthStack = createStackNavigator<AuthStackParamList>();
-
-// TODO
-// Header not showing for some unknown reason
-export default () => {
-  return (
-    <AuthStack.Navigator
-      initialRouteName="SignIn"
-      headerMode="screen"
-    >
-      <AuthStack.Screen
-        name="SignIn"
-        component={SignInScreen}
-        options={{
-          title: 'Sign In',
-        }}
-      />
-      {/*<AuthStack.Screen name="SignUp" component={SignUpScreen} />*/}
-    </AuthStack.Navigator>
-  );
-};
+export default () => (
+  <AuthStack.Navigator
+    headerMode="screen"
+  >
+    <AuthStack.Screen
+      name="SignInScreen"
+      component={SignInScreen}
+      options={{
+        title: 'SIGN IN',
+      }}
+    />
+    <AuthStack.Screen
+      name="SignUpScreen"
+      component={SignUpScreen}
+      options={{
+        title: 'SIGN UP',
+      }}
+    />
+  </AuthStack.Navigator>
+);

@@ -1,42 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type';
-import { fetchWallpaperData, WallpaperDataResponse } from '../action/BingDailyWallpaper';
 import SplashScreen from './SplashScreen';
-
-// Store the data on top level
-let images: Array<IImageInfo> | null = null;
+import AlertBox from '../components/AlertBox';
+import useBingDailyWallpaperUrl from '../hooks/useBingDailyWallpaperUrl';
 
 export default () => {
-  const [imageUrl, setImageUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const {
+    isLoading,
+    errorMessage,
+    imageUrl,
+  } = useBingDailyWallpaperUrl();
 
-  useEffect(() => {
-    fetchWallpaperData()
-      .then((resp) => resp.json())
-      .then((jsonData: WallpaperDataResponse) => {
-        images = [{
-          // Guaranteed to have at least one image
-          url: `https://www.bing.com${jsonData.images[0].url}`,
-        }];
-      })
-      .catch((e) => {
-        setError(e);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+  if (isLoading) {
+    return (<SplashScreen/>);
+  }
 
-  return isLoading
-    ? <SplashScreen/>
-    : (
+  return errorMessage !== null
+    ? <AlertBox message={errorMessage}/> : (
       <ImageViewer
-        imageUrls={images!!}
+        imageUrls={[{ url: imageUrl }]}
         style={{ flex: 1 }}
-        renderIndicator={() => {
-        }}
+        renderIndicator={() => <></>}
       />
     );
 };

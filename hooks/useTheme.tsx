@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// @ts-ignore
+// import SyncStorage from 'sync-storage';
 import useColorScheme from './useColorScheme';
 
 export type ThemeData = ReturnType<typeof useColorScheme>;
@@ -23,6 +25,8 @@ export default (): [
       .catch((reason) => {
         console.error(`Error on getting theme: ${reason}`);
       });
+    // const theme = SyncStorage.get('theme');
+    // setTheme(theme);
   }, []);
 
   useEffect(() => {
@@ -31,6 +35,7 @@ export default (): [
       .catch((reason) => {
         console.error(`Error on setting theme: ${reason}`);
       });
+    // SyncStorage.set('theme', theme);
   }, [theme]);
 
   return [theme, setTheme];

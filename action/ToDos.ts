@@ -10,7 +10,7 @@ export type ToDoSingle = {
   updatedAt: FirebaseDatabaseTypes.ServerValue,
 };
 
-export type ToDoSingleWithKey = ToDoSingle & { key: string };
+export type ToDoSingleWithID = ToDoSingle & { id: string };
 
 export enum FilterToDos {
   NotCompleted,
@@ -58,14 +58,12 @@ export const userToDos = (filterBy: FilterToDos = FilterToDos.All) => {
 
 // Filter should be done by the backend, but Firebase does not support such features
 export const searchToDoResult = (
-  toDos: Array<ToDoSingleWithKey>,
+  toDos: Array<ToDoSingleWithID>,
   keyword?: string,
 ) => toDos
-  .filter((toDo) => {
-    return keyword === undefined ?
-      true :
-      toDo.description.search(keyword) !== -1 || toDo.title.search(keyword) !== -1;
-  });
+  .filter((toDo) => (keyword === undefined
+    ? true
+    : toDo.description.search(keyword) !== -1 || toDo.title.search(keyword) !== -1));
 
 export const addToDo = (title: string, description: string) => Database()
   .ref(`users/${currentUser()?.uid}/todos`)
@@ -78,23 +76,28 @@ export const addToDo = (title: string, description: string) => Database()
     updatedAt: Database.ServerValue.TIMESTAMP,
   });
 
-export const getToDo = (key: string) => Database()
-  .ref(`users/${currentUser()?.uid}/todos/${key}`)
-  .once('value');
+export const toDoRef = (id: string) => Database()
+  .ref(`users/${currentUser()?.uid}/todos/${id}`);
 
-export const markToDoAs = (isCompleted: boolean, key: string) => Database()
-  .ref(`users/${currentUser()?.uid}/todos/${key}`)
+export const markToDoAsCompleted = (isCompleted: boolean, id: string) => Database()
+  .ref(`users/${currentUser()?.uid}/todos/${id}`)
   .update(<ToDoSingle>{
     isCompleted,
     updatedAt: Database.ServerValue.TIMESTAMP,
   });
 
-export const deleteToDo = (key: string) => Database()
-  .ref(`users/${currentUser()?.uid}/todos/${key}`)
+export const publishToDo = (isPublished: boolean, id: string) => Database()
+  .ref(`users/${currentUser()?.uid}/todos/${id}`)
+  .update(<ToDoSingle>{
+    isPublished,
+  });
+
+export const deleteToDo = (id: string) => Database()
+  .ref(`users/${currentUser()?.uid}/todos/${id}`)
   .set(null);
 
-export const editToDo = (key: string, title: string, description: string) => Database()
-  .ref(`users/${currentUser()?.uid}/todos/${key}`)
+export const editToDo = (id: string, title: string, description: string) => Database()
+  .ref(`users/${currentUser()?.uid}/todos/${id}`)
   .update(<ToDoSingle>{
     title,
     description,

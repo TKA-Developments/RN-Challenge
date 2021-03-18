@@ -1,7 +1,7 @@
-import { ColorState, Text, ThemeProps, View } from './Themed';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, ViewProps } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { ColorState, Text, ThemeProps, View, } from './Themed';
 
 const styles = StyleSheet.create({
   containerStyle: {
@@ -11,16 +11,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   messageStyle: {
+    fontSize: 20,
     paddingHorizontal: 10,
     paddingBottom: 10,
-  }
+  },
 });
 
 export default (
   props: ThemeProps &
     Readonly<ViewProps> &
     { colorState?: ColorState }
-    & { message: string, setMessage: React.Dispatch<React.SetStateAction<string | null>> },
+    & { message: string, setMessage?: React.Dispatch<React.SetStateAction<string | null>> },
 ) => {
   const {
     style,
@@ -31,7 +32,7 @@ export default (
   const [isClosed, setIsClosed] = useState(false);
 
   useEffect(() => {
-    if (isClosed) {
+    if (isClosed && setMessage !== undefined) {
       setMessage(null);
     }
   }, [isClosed]);
@@ -41,13 +42,22 @@ export default (
   }
 
   return (
-    <View style={[styles.containerStyle, style]} colorState={colorState}>
-      <TouchableOpacity onPress={() => setIsClosed(!isClosed)} style={styles.closeButtonStyle}>
-        <AntDesign name="closecircle" size={30}/>
-      </TouchableOpacity>
+    <View style={[styles.containerStyle, style]} colorState={colorState ?? 'danger'}>
+      {
+        setMessage !== undefined
+          ? (
+            <TouchableOpacity
+              onPress={() => setIsClosed(!isClosed)}
+              style={styles.closeButtonStyle}
+            >
+              <AntDesign name="closecircle" size={30}/>
+            </TouchableOpacity>
+          )
+          : null
+      }
       <Text style={styles.messageStyle}>
         {message}
       </Text>
     </View>
   );
-}
+};

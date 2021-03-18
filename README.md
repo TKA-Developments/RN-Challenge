@@ -68,12 +68,26 @@ Your app should be able to complete these tasks:
 
 ## Preview
 
-No preview yet
+![Create To Do](misc/assets/preview/createtodo.png)
+
+Create To Do
+
+![Edit To Do](misc/assets/preview/edittodo.png)
+
+Edit To Do
+
+![Today's image](misc/assets/preview/todaysimage.png)
+
+Shows you today's image from Bing wallpaper.
+
+![Mario Jump](misc/assets/preview/mariojump.png)
+
+Just a mario jumping on the bricks.
 
 ## How to run the demo
 
-1. Install the required dependency by executing `npm install`
-2. Run `npm run android` or `npm run ios`
+1. Install the required dependency by executing `yarn install`
+2. Run `yarn run android`
 
 ### Demo User
 
@@ -89,4 +103,9 @@ Password: jokojoko
 - The application needs to be detached from Expo since the Firebase offline persistence does not work with it.
 - I did not have any chance to test the iOS version of the application because I don't have a MacOS machine. If you'd
   like to try the application for iOS and you have a MacOS, you can copy the Google service credential in
-  `misc/GoogleService-Info.plist` and follow the guidelines here https://rnfirebase.io/#3-ios-setup.
+  `misc/GoogleService-Info.plist` and follow the guidelines
+  here [https://rnfirebase.io/#3-ios-setup](https://rnfirebase.io/#3-ios-setup) .
+
+---
+
+For further inquiries, please email me at andra.antariksa \[at\] gmail.com
