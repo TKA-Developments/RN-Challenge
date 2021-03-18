@@ -131,7 +131,7 @@ const SearchBarComp = () => {
                                 onHideUnderlay={() => setPressed('')}
                                 containerConditional={category === item.title}
                                 textConditional={pressed === item.title || category === item.title}
-                                categoryColor={item.color}
+                                categoryColor={item.color[colorScheme]}
                             />
                         ))}
                         <FilterItem
@@ -141,14 +141,6 @@ const SearchBarComp = () => {
                             onHideUnderlay={() => setPressed('')}
                             containerConditional={category === 'All'}
                             textConditional={pressed === 'AllCategory' || category === 'All'}
-                        />
-                        <FilterItem
-                            title="+ Add Category"
-                            onPress={() => console.log('Add Category')}
-                            onShowUnderlay={() => setPressed('+')}
-                            onHideUnderlay={() => setPressed('')}
-                            containerConditional={category === '+'}
-                            textConditional={pressed === '+' || category === '+'}
                         />
                     </View>
                 </View>

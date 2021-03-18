@@ -8,8 +8,11 @@ import TodoProvider from './contexts/TodoContext'
 import Navigation from './navigation';
 import { LogBox } from 'react-native';
 
-LogBox.ignoreLogs(['Setting a timer']);
-LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreLogs([
+  'Setting a timer',
+  'Warning: componentWillReceiveProps',
+  'Warning: DatePickerAndroid'
+]);
 
 export default function App() {
   const isLoadingComplete = useCachedResources();

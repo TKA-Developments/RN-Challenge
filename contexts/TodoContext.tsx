@@ -2,6 +2,7 @@ import React, { useEffect, useState, createContext, ReactNode, useContext } from
 import firebase from '../config/firebase';
 import _ from 'lodash';
 import { getTodayDate, isNDayAfter } from '../utils/datetime';
+import useColorScheme from '../hooks/useColorScheme';
 
 export interface ITodo {
     id: string,
@@ -17,8 +18,14 @@ export interface ITodoGroupByDate {
 }
 
 export interface ICategory {
+    id: string,
     title: string,
-    color: string
+    color: ICategoryColor
+}
+
+interface ICategoryColor {
+    light: string,
+    dark: string
 }
 
 interface ITodoContext {
@@ -55,14 +62,15 @@ const TodoProvider = ({ children }: ProviderProps) => {
     const [todos, setTodos] = useState<ITodo[]>([]);
     const [todosGroupDate, setTodosGroupDate] = useState<ITodoGroupByDate[]>([]);
     const [categories, setCategories] = useState<ICategory[]>([
-        { title: 'Academic', color: 'pink' },
-        { title: 'Intern', color: 'green' },
-        { title: 'Organization', color: 'yellow' },
+        { id: '1', title: 'Academic', color: { light: 'crimson', dark: 'pink' } },
+        { id: '2', title: 'Intern', color: { light: 'green', dark: 'lightgreen' } },
+        { id: '3', title: 'Organization', color: { light: 'gold', dark: 'yellow' } },
     ])
     const [search, setSearch] = useState<string>('');
     const [todoStatus, setTodoStatus] = useState<string>('All');
     const [category, setCategory] = useState<string>('All');
     const [showOverdue, setShowOverdue] = useState<boolean>(false);
+    const colorScheme = useColorScheme();
 
     const todosRef = firebase.firestore().collection('todos');
 
@@ -134,12 +142,12 @@ const TodoProvider = ({ children }: ProviderProps) => {
             } else {
                 return 'today';
             }
-        }).map((todos: ITodo[], date: string) => ({ date, todos }));
+        }).map((todos: ITodo[], date: string) => ({ date, todos })).value();
         setTodosGroupDate(groupedTodosByDate);
     }
 
     const updateTodo = async (todo: ITodo) => {
-        setLoading(true);
+        // setLoading(true);
         await todosRef.doc(todo.id).set({
             title: todo.title,
             date: todo.date,
@@ -147,7 +155,7 @@ const TodoProvider = ({ children }: ProviderProps) => {
             category: todo.category,
         });
         await getTodos();
-        setLoading(false);
+        // setLoading(false);
     }
 
     const addTodo = async (title: string, date: string, category: string) => {
@@ -185,7 +193,7 @@ const TodoProvider = ({ children }: ProviderProps) => {
     const getCategoryColor = (word: string): string => {
         let selected = categories.filter(cat => cat.title === word);
         if (selected.length > 0) {
-            return selected[0].color;
+            return selected[0].color[colorScheme];
         } else {
             return 'white';
         }

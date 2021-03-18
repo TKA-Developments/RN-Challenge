@@ -1,13 +1,10 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
-import { Text, View } from '../components/Themed';
-import { StackScreenProps } from '@react-navigation/stack';
+import { ColorSchemeName, StatusBar } from 'react-native';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
-import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
 import HomeScreen from '../screens/HomeScreen';
@@ -45,15 +42,3 @@ function RootNavigator() {
     </Stack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  exit: {
-    position: 'absolute',
-    top: 20,
-    right: 20,
-  },
-  exitText: {
-    fontSize: 25,
-    color: 'white'
-  }
-});

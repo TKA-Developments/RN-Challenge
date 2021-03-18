@@ -41,6 +41,7 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
     const onSubmit = async () => {
         // Select Category akan diterapkan menyusul
         if (date && title && category) {
+            navigation.popToTop();
             if (!route.params) {
                 await addTodo(title, date, category);
             } else {
@@ -51,7 +52,6 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
                     category: category,
                 });
             }
-            navigation.popToTop();
         } else {
             Alert.alert(
                 'Please fill all the items!',
@@ -165,6 +165,7 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
                 </View>
                 {categories.map(cat => (
                     <TouchableOpacity
+                        key={cat.id}
                         style={{
                             ...styles.radioContainer,
                             borderBottomColor: Colors[colorScheme].textTertiary
@@ -174,8 +175,8 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
                         <RadioButton
                             key={cat.title}
                             value={cat.title}
-                            uncheckedColor={cat.color}
-                            color={cat.color}
+                            uncheckedColor={cat.color[colorScheme]}
+                            color={cat.color[colorScheme]}
                             status={category === cat.title ? 'checked' : 'unchecked'}
                         />
                         <Text>{cat.title}</Text>
