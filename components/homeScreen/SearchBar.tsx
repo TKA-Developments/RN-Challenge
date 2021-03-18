@@ -51,7 +51,7 @@ const SearchBarComp = () => {
     const lineStyle = {
         height: 0.5,
         flex: 1,
-        backgroundColor: Colors[colorScheme].textDarkest,
+        backgroundColor: Colors[colorScheme].textTertiary,
     }
 
     return (
@@ -70,7 +70,7 @@ const SearchBarComp = () => {
                     height: 40,
                     backgroundColor: Colors[colorScheme].background,
                     borderBottomWidth: 1,
-                    borderColor: Colors[colorScheme].textDarkest,
+                    borderColor: Colors[colorScheme].textTertiary,
                 }}
                 inputStyle={{
                     color: Colors[colorScheme].text
@@ -190,10 +190,10 @@ const FilterItem = (props: IFilterItem) => {
     return (
         <TouchableHighlight style={{
             ...styles.itemContainer,
-            borderColor: props.categoryColor ? props.categoryColor : Colors[colorScheme].textDarken,
-            backgroundColor: props.containerConditional ? (props.categoryColor ? props.categoryColor : Colors[colorScheme].textDarken) : '',
+            borderColor: props.categoryColor ? props.categoryColor : Colors[colorScheme].textSecondary,
+            backgroundColor: props.containerConditional ? (props.categoryColor ? props.categoryColor : Colors[colorScheme].textSecondary) : '',
         }}
-            underlayColor={props.categoryColor ? props.categoryColor : Colors[colorScheme].textDarken}
+            underlayColor={props.categoryColor ? props.categoryColor : Colors[colorScheme].textSecondary}
             onPress={props.onPress}
             onLongPress={props.onPress}
             onShowUnderlay={props.onShowUnderlay}

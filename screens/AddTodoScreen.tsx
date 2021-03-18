@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, TextInput, Touchable, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, Alert, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import DatePicker from 'react-native-datepicker';
 import { TodoContext } from '../contexts/TodoContext';
 import { Overlay } from 'react-native-elements';
-import { RadioButton, Divider } from 'react-native-paper';
+import { RadioButton } from 'react-native-paper';
 import useColorScheme from '../hooks/useColorScheme';
 import { AntDesign, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
@@ -18,7 +18,7 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
     const [category, setCategory] = useState<string>('');
     const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
     const [date, setDate] = useState<string>(today);
-    const { addTodo, updateTodo, categories, getCategoryColor } = useContext(TodoContext);
+    const { addTodo, updateTodo, categories, getCategoryColor, loading } = useContext(TodoContext);
     const colorScheme = useColorScheme();
 
     useEffect(() => {
@@ -53,8 +53,9 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
             }
             navigation.popToTop();
         } else {
-            // Nanti akan dibuat warning
-            console.log('Fill first!');
+            Alert.alert(
+                'Please fill all the items!',
+            )
         }
     }
 
@@ -62,11 +63,11 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
         <View style={styles.container}>
             <View style={{
                 ...styles.headerContainer,
-                backgroundColor: Colors[colorScheme].backgroundDarkest
+                backgroundColor: Colors[colorScheme].backgroundTertiary
             }}>
                 <View style={{
                     ...styles.leftHeaderContainer,
-                    backgroundColor: Colors[colorScheme].backgroundDarkest
+                    backgroundColor: Colors[colorScheme].backgroundTertiary
                 }}>
                     <TouchableOpacity onPress={() => navigation.pop()}>
                         <AntDesign name='close' size={28} color={Colors[colorScheme].text} />
@@ -76,14 +77,15 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
                 <TouchableOpacity
                     style={{
                         ...styles.actionButton,
-                        backgroundColor: Colors[colorScheme].text
+                        backgroundColor: loading ? Colors[colorScheme].background + '50' : Colors[colorScheme].background
                     }}
                     onPress={onSubmit}
+                    disabled={loading}
                 >
                     <TextMedium
                         style={{
                             ...styles.actionText,
-                            color: Colors[colorScheme].backgroundDarkest
+                            color: Colors[colorScheme].text
                         }}
                     >{route.params ? 'Edit Task' : 'Add Task'}</TextMedium>
                 </TouchableOpacity>
@@ -93,20 +95,20 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
                     style={{
                         ...styles.input,
                         color: Colors[colorScheme].text,
-                        borderBottomColor: Colors[colorScheme].textDarkest,
+                        borderBottomColor: Colors[colorScheme].textTertiary,
                     }}
                     value={title}
                     onChangeText={setTitle}
                     placeholder="Task title..."
-                    placeholderTextColor={Colors[colorScheme].textDarkest}
+                    placeholderTextColor={Colors[colorScheme].textTertiary}
                 />
                 <View
                     style={{
                         ...styles.buttonContainer,
-                        borderBottomColor: Colors[colorScheme].textDarkest,
+                        borderBottomColor: Colors[colorScheme].textTertiary,
                     }}
                 >
-                    <FontAwesome5 name='clock' size={20} color={Colors[colorScheme].highlighDarker} />
+                    <FontAwesome5 name='clock' size={20} color={Colors[colorScheme].highlightSecondary} />
                     <DatePicker
                         style={styles.dateButton}
                         date={date}
@@ -122,13 +124,12 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
                                 borderWidth: 0,
                             },
                             placeholderText: {
-                                color: Colors[colorScheme].textDarkest,
+                                color: Colors[colorScheme].textTertiary,
                             },
                             dateText: {
                                 fontSize: 16,
                                 color: Colors[colorScheme].text,
                             }
-                            // ... You can check the source to find the other keys.
                         }}
                         onDateChange={(date: string) => { setDate(date) }}
                     />
@@ -136,10 +137,10 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
                 <View
                     style={{
                         ...styles.buttonContainer,
-                        borderBottomColor: Colors[colorScheme].textDarkest,
+                        borderBottomColor: Colors[colorScheme].textTertiary,
                     }}
                 >
-                    <FontAwesome5 name='tasks' size={20} color={Colors[colorScheme].highlighDarker} />
+                    <FontAwesome5 name='tasks' size={20} color={Colors[colorScheme].highlightSecondary} />
                     <TouchableOpacity style={styles.categoryButton} onPress={toggleOverlay}>
                         <Text style={styles.categoryText}>{category ? <>
                             <FontAwesome
@@ -166,7 +167,7 @@ const AddTodoScreen = ({ navigation, route }: StackScreenProps<RootStackParamLis
                     <TouchableOpacity
                         style={{
                             ...styles.radioContainer,
-                            borderBottomColor: Colors[colorScheme].textDarkest
+                            borderBottomColor: Colors[colorScheme].textTertiary
                         }}
                         onPress={() => selectCategory(cat.title)}
                     >

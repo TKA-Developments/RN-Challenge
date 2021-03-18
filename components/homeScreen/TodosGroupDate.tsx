@@ -21,7 +21,7 @@ const TodosGroupDate = ({ todos }: ITodosGroupDateProps) => {
                 <View style={{
                     height: 0.5,
                     flex: 1,
-                    backgroundColor: Colors[colorScheme].textDarkest,
+                    backgroundColor: Colors[colorScheme].textTertiary,
                 }} />
             </View>
             <FlatList

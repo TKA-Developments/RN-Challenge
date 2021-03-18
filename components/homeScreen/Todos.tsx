@@ -5,9 +5,10 @@ import { TodoContext, ITodoGroupByDate } from '../../contexts/TodoContext';
 
 import TodosGroupDate from './TodosGroupDate';
 import SearchBar from './SearchBar';
+import Loading from '../common/Loading';
 
 const Todos = () => {
-    const { todosGroupDate, showOverdue } = useContext(TodoContext);
+    const { todosGroupDate, showOverdue, loading } = useContext(TodoContext);
     // somehow todos can't be supplied directly to flatlist
     let todosTemp: ITodoGroupByDate[] = [];
     todosGroupDate.forEach(todo => {
@@ -18,19 +19,21 @@ const Todos = () => {
     return (
         <View style={styles.container}>
             <SearchBar />
-            <FlatList
-                data={todosTemp}
-                keyExtractor={(item) => item.date}
-                renderItem={({ item }) => {
-                    if (showOverdue || item.date != 'overdue') {
-                        return (
-                            <TodosGroupDate todos={item} />
-                        )
-                    } else {
-                        return null
-                    }
-                }}
-            />
+            {loading ? <Loading /> :
+                <FlatList
+                    data={todosTemp}
+                    keyExtractor={(item) => item.date}
+                    renderItem={({ item }) => {
+                        if (showOverdue || item.date != 'overdue') {
+                            return (
+                                <TodosGroupDate todos={item} />
+                            )
+                        } else {
+                            return null
+                        }
+                    }}
+                />
+            }
         </View>
     );
 }

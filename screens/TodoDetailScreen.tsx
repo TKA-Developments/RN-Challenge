@@ -51,11 +51,11 @@ const TodoDetailScreen = ({ navigation, route }: StackScreenProps<RootStackParam
         <View style={styles.container}>
             <View style={{
                 ...styles.headerContainer,
-                backgroundColor: Colors[colorScheme].backgroundDarkest
+                backgroundColor: Colors[colorScheme].backgroundTertiary
             }}>
                 <View style={{
                     ...styles.leftHeaderContainer,
-                    backgroundColor: Colors[colorScheme].backgroundDarkest
+                    backgroundColor: Colors[colorScheme].backgroundTertiary
                 }}>
                     <TouchableOpacity onPress={() => navigation.pop()}>
                         <AntDesign name='close' size={28} color={Colors[colorScheme].text} />
@@ -63,7 +63,7 @@ const TodoDetailScreen = ({ navigation, route }: StackScreenProps<RootStackParam
                 </View>
                 <View style={{
                     ...styles.rightHeaderContainer,
-                    backgroundColor: Colors[colorScheme].backgroundDarkest,
+                    backgroundColor: Colors[colorScheme].backgroundTertiary,
                 }}>
                     <TouchableOpacity onPress={onPressEdit}>
                         <AntDesign name='edit' size={28} color={Colors[colorScheme].text} />
@@ -80,26 +80,22 @@ const TodoDetailScreen = ({ navigation, route }: StackScreenProps<RootStackParam
                 </View>
                 <View style={{
                     height: 0.5,
-                    backgroundColor: Colors[colorScheme].textDarkest,
+                    backgroundColor: Colors[colorScheme].textTertiary,
                     marginVertical: 10
                 }}></View>
                 <View style={styles.infoContainer}>
-                    <FontAwesome5 name='clock' size={20} color={Colors[colorScheme].highlighDarker} />
+                    <FontAwesome5 name='clock' size={20} color={Colors[colorScheme].highlightSecondary} />
                     <TextMedium style={styles.infoText}>{props.date}</TextMedium>
                 </View>
                 <View style={styles.infoContainer}>
-                    <FontAwesome name='tasks' size={20} color={Colors[colorScheme].highlighDarker} />
+                    <FontAwesome name='tasks' size={20} color={Colors[colorScheme].highlightSecondary} />
                     <TextMedium style={styles.infoText}>{props.category}</TextMedium>
                 </View>
                 <View style={{
                     height: 0.3,
-                    backgroundColor: Colors[colorScheme].textDarkest,
+                    backgroundColor: Colors[colorScheme].textTertiary,
                     marginBottom: 15,
                 }}></View>
-                {/* <View style={styles.descriptionContainer}>
-                    <FontAwesome name='book' size={20} color={Colors[colorScheme].highlighDarker} />
-                    <TextLight style={styles.descriptionText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</TextLight>
-                </View> */}
             </View>
             <TouchableOpacity style={styles.actionButton} onPress={onPressMarkAsDone}>
                 <TextSemiBold>Mark as {props.checked ? 'Undone' : 'Done'}</TextSemiBold>

@@ -9,6 +9,7 @@ import Navigation from './navigation';
 import { LogBox } from 'react-native';
 
 LogBox.ignoreLogs(['Setting a timer']);
+LogBox.ignoreLogs(['Warning: ...']);
 
 export default function App() {
   const isLoadingComplete = useCachedResources();

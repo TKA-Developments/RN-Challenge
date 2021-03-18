@@ -29,6 +29,7 @@ interface ITodoContext {
     category: string,
     todoStatus: string,
     showOverdue: boolean,
+    loading: boolean,
     updateTodo: (todo: ITodo) => void,
     addTodo: (title: string, date: string, category: string) => void,
     deleteTodo: (id: string) => void,
@@ -50,6 +51,7 @@ interface ProviderProps {
 
 const TodoProvider = ({ children }: ProviderProps) => {
     let today = getTodayDate("Asia/Jakarta");
+    const [loading, setLoading] = useState<boolean>(false);
     const [todos, setTodos] = useState<ITodo[]>([]);
     const [todosGroupDate, setTodosGroupDate] = useState<ITodoGroupByDate[]>([]);
     const [categories, setCategories] = useState<ICategory[]>([
@@ -65,7 +67,12 @@ const TodoProvider = ({ children }: ProviderProps) => {
     const todosRef = firebase.firestore().collection('todos');
 
     useEffect(() => {
-        getTodos();
+        const getTodosMounted = async () => {
+            setLoading(true);
+            await getTodos();
+            setLoading(false);
+        }
+        getTodosMounted();
     }, []);
 
     useEffect(() => {
@@ -132,6 +139,7 @@ const TodoProvider = ({ children }: ProviderProps) => {
     }
 
     const updateTodo = async (todo: ITodo) => {
+        setLoading(true);
         await todosRef.doc(todo.id).set({
             title: todo.title,
             date: todo.date,
@@ -139,9 +147,11 @@ const TodoProvider = ({ children }: ProviderProps) => {
             category: todo.category,
         });
         await getTodos();
+        setLoading(false);
     }
 
     const addTodo = async (title: string, date: string, category: string) => {
+        setLoading(true);
         await todosRef.add({
             title,
             date,
@@ -149,11 +159,14 @@ const TodoProvider = ({ children }: ProviderProps) => {
             checked: false,
         });
         await getTodos();
+        setLoading(false);
     }
 
     const deleteTodo = async (id: string) => {
-        todosRef.doc(id).delete();
+        setLoading(true);
+        await todosRef.doc(id).delete();
         await getTodos();
+        setLoading(false);
     }
 
     const updateSearch = (word: string) => {
@@ -190,6 +203,7 @@ const TodoProvider = ({ children }: ProviderProps) => {
         category,
         todoStatus,
         showOverdue,
+        loading,
         addTodo,
         updateTodo,
         deleteTodo,

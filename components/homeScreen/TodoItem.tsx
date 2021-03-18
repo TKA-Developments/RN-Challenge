@@ -32,7 +32,7 @@ const TodoItem = (props: ITodo) => {
                     textDecorationLine: props.checked ? 'line-through' : 'none'
                 }}
                 containerStyle={{
-                    backgroundColor: Colors[colorScheme].backgroundDarker,
+                    backgroundColor: Colors[colorScheme].backgroundSecondary,
                     borderColor: Colors[colorScheme].text,
                     borderWidth: 0.1,
                     paddingVertical: 15,
