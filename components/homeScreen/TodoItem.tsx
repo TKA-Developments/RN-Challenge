@@ -37,7 +37,7 @@ const TodoItem = (props: ITodo) => {
                     borderWidth: 0.1,
                     paddingVertical: 15,
                     paddingHorizontal: 20,
-                    borderRadius: 10,
+                    borderRadius: 30,
                     width: '100%',
                     marginLeft: 0
                 }}

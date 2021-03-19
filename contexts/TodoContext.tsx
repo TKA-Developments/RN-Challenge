@@ -65,6 +65,7 @@ const TodoProvider = ({ children }: ProviderProps) => {
         { id: '1', title: 'Academic', color: { light: 'crimson', dark: 'pink' } },
         { id: '2', title: 'Intern', color: { light: 'green', dark: 'lightgreen' } },
         { id: '3', title: 'Organization', color: { light: 'gold', dark: 'yellow' } },
+        { id: '4', title: 'Fun', color: { light: 'aqua', dark: 'aqua' } },
     ])
     const [search, setSearch] = useState<string>('');
     const [todoStatus, setTodoStatus] = useState<string>('All');

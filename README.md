@@ -63,4 +63,38 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+### Prerequisites
+1. `Node.js` and `npm` installed on your device. I used npm instead of yarn, so all the commands I put here will be using npm.
+2. An android phone with Expo App installed or an IOS phone with the built-in QR code scanner of the Camera App.
+
+### Running the app
+1. Make sure you have the prequisites!
+2. Install Expo CLI with the following command:
+```
+npm install -g expo-cli
+```
+3. Install all of the dependencies with the following command:
+```
+npm install
+```
+4. Run the app with the following command:
+```
+npm run start
+```
+ 
+5. If ran successfully, your browser will open a site that has info about the running application.You will see a QR Code in that site. Scan it with your Expo App for Android phone or QR code scanner of Camera App for IOS phone.
+<br />
+Alternatives:
+* You can run the app on a simulator in your virtual device. To run the app on the IOS Simulator or an Android Virtual Device, you can find the documentation [here](https://docs.expo.io/workflow/expo-cli/). I used the app on my android phone because it's more laptop-friendly :D
+* You can run the app in web browser, but what comes out will not be as good if you open it from a real phone or a simulator from my experience.
+6. Enjoy the app!
+
+### About the app
+1. To-dos will be grouped and showed into 4 types, which is `overdue`, `today`, `tomorrow`, and `upcoming` based on the date of the to-do.
+2. Each to-dos will be categorized into 4 categories, which is `Academic`, `Intern`, `Organization`, and `Fun` each with their own colors. This categories are my own preferences. For future upgrades, the user can be allowed to add and edit the category's name and color.
+3. To-dos can be filtered using the search bar and/or filtered by their status and/or category.
+4. Short press will toggle the to-do's status, and long press will open the to-do's detail screen to edit/delete the to-do.
+5. Please keep in mind that the todos that will be displayed from the database will be my todos :D For future upgrades, a login and register method can be implemented! If the todos is empty when you open it, you can add your own!
+
+## Author
+Ananda Yulizar Muhammad [@anandayulizar](github.com/anandayulizar)
