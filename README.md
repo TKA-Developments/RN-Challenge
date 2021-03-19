@@ -86,13 +86,13 @@ Just a mario jumping on the bricks.
 
 ![Search and filter](misc/assets/preview/searchfilter.gif)
 
-Just a mario jumping on the bricks.
+Search the To Do by a keyword and filter the completed, incompleted, or without any filter.
 
 ![Share](misc/assets/preview/share.gif)
 
 ![Web](misc/assets/preview/webshare.png)
 
-Share your to do to the web.
+Share your To Do to the web.
 
 ![Theme Switch](misc/assets/preview/theme.gif)
 
@@ -104,6 +104,9 @@ And others...
 
 1. Install the required dependency by executing `yarn install`
 2. Run `yarn run android`
+3. Sign in to the apps (You have to have a working internet connection, you can use the application offline afterwards).
+   See **Demo User** section below for a demo user account.
+4. Enjoy the app!
 
 ### Demo User
 

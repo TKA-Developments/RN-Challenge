@@ -100,7 +100,7 @@ export default () => {
             : (
               <Button
                 onPress={onPressChangePassword}
-                disabled={newPassword === ''}
+                disabled={oldPassword === '' || newPassword === ''}
               >
                 Change Password
               </Button>

@@ -125,12 +125,10 @@ export default ({
 
   const editButtonPress = () => {
     editToDo(id, toDo!!.title, toDo!!.description)
-      .then(() => {
-        navigation.goBack();
-      })
       .catch((reason) => {
         AlertError('save the To Do', reason);
       });
+    navigation.goBack();
   };
 
   useEffect(() => {

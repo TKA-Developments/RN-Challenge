@@ -21,7 +21,7 @@ export default {
   },
   dark: {
     primary: '#24cd77',
-    primaryDarken: '#24cd77',
+    primaryDarken: '#137242',
     secondary: '#6c757d',
     success: '#28a745',
     danger: '#dc3545',

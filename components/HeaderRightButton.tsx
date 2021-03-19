@@ -59,12 +59,10 @@ export default ({
           // Proceed delete
           onPress: () => {
             deleteToDo(id)
-              .then((_) => {
-                navigation.goBack();
-              })
               .catch((reason) => {
                 AlertError('delete To Do', reason);
               });
+            navigation.goBack();
           },
         },
       ],
