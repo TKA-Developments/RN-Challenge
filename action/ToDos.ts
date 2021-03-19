@@ -14,15 +14,15 @@ export type ToDoSingleWithID = ToDoSingle & { id: string };
 
 export enum FilterToDos {
   NotCompleted,
-  All,
+  NoFilter,
   Completed
 }
 
 export const nextFilter = (filter: FilterToDos): FilterToDos => {
   switch (filter) {
     case FilterToDos.NotCompleted:
-      return FilterToDos.All;
-    case FilterToDos.All:
+      return FilterToDos.NoFilter;
+    case FilterToDos.NoFilter:
       return FilterToDos.Completed;
     case FilterToDos.Completed:
       return FilterToDos.NotCompleted;
@@ -35,8 +35,8 @@ export const filterToString = (filter: FilterToDos) => {
   switch (filter) {
     case FilterToDos.NotCompleted:
       return 'Not Completed';
-    case FilterToDos.All:
-      return 'All';
+    case FilterToDos.NoFilter:
+      return 'No Filter';
     case FilterToDos.Completed:
       return 'Completed';
     default:
@@ -45,10 +45,10 @@ export const filterToString = (filter: FilterToDos) => {
 };
 
 // Get a reference to current user ToDos
-export const userToDos = (filterBy: FilterToDos = FilterToDos.All) => {
+export const userToDos = (filterBy: FilterToDos = FilterToDos.NoFilter) => {
   const ref = Database()
     .ref(`users/${currentUser()?.uid}/todos`);
-  if (filterBy !== FilterToDos.All) {
+  if (filterBy !== FilterToDos.NoFilter) {
     return ref
       .orderByChild('isCompleted')
       .equalTo(filterBy === FilterToDos.Completed);
@@ -60,10 +60,18 @@ export const userToDos = (filterBy: FilterToDos = FilterToDos.All) => {
 export const searchToDoResult = (
   toDos: Array<ToDoSingleWithID>,
   keyword?: string,
-) => toDos
-  .filter((toDo) => (keyword === undefined
-    ? true
-    : toDo.description.search(keyword) !== -1 || toDo.title.search(keyword) !== -1));
+) => {
+  if (keyword === undefined) {
+    return toDos;
+  }
+  const keywordLowercased = keyword.toLowerCase();
+
+  return toDos
+    .filter((toDo) => toDo.description.toLowerCase()
+      .search(keywordLowercased) !== -1
+        || toDo.title.toLowerCase()
+          .search(keywordLowercased) !== -1);
+};
 
 export const addToDo = (title: string, description: string) => Database()
   .ref(`users/${currentUser()?.uid}/todos`)

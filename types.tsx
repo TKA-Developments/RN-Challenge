@@ -8,6 +8,7 @@ export type MainStackParamList = {
   EditToDoScreen: { id: string };
   TodaysImageScreen: undefined;
   GameDemoScreen: undefined;
+  ChangePasswordScreen: undefined;
   NotFoundScreen: undefined;
 };
 

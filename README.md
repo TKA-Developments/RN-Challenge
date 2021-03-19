@@ -76,13 +76,29 @@ Create To Do
 
 Edit To Do
 
-![Today's image](misc/assets/preview/todaysimage.png)
+![Today's image](misc/assets/preview/todaysimage.gif)
 
 Shows you today's image from Bing wallpaper.
 
-![Mario Jump](misc/assets/preview/mariojump.png)
+![Mario Jump](misc/assets/preview/mario.gif)
 
 Just a mario jumping on the bricks.
+
+![Search and filter](misc/assets/preview/searchfilter.gif)
+
+Just a mario jumping on the bricks.
+
+![Share](misc/assets/preview/share.gif)
+
+![Web](misc/assets/preview/webshare.png)
+
+Share your to do to the web.
+
+![Theme Switch](misc/assets/preview/theme.gif)
+
+Don't forget a dark theme mode to assert your dominance.
+
+And others...
 
 ## How to run the demo
 
@@ -102,7 +118,7 @@ Password: jokojoko
 
 - The application needs to be detached from Expo since the Firebase offline persistence does not work with it.
 - I did not have any chance to test the iOS version of the application because I don't have a MacOS machine. If you'd
-  like to try the application for iOS and you have a MacOS, you can copy the Google service credential in
+  like to try the application for iOS and you have a MacOS, you have configure the Google service credential in
   `misc/GoogleService-Info.plist` and follow the guidelines
   here [https://rnfirebase.io/#3-ios-setup](https://rnfirebase.io/#3-ios-setup) .
 

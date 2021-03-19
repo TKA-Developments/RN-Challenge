@@ -1,6 +1,8 @@
 import React, { ReactChild, ReactChildren } from 'react';
 import { SectionList, StyleSheet, TouchableOpacity } from 'react-native';
-import { Text, ThemedColors, useThemeColors, View, } from './Themed';
+import {
+  Text, ThemedColors, useThemeColors, View,
+} from './Themed';
 
 export type MenuListItemData = {
   additionalComponentLeft?: ReactChild | ReactChildren,
@@ -43,74 +45,74 @@ const MenuListItem = ({
   touchableStyle,
 }:
   { item: MenuListItemData, touchableStyle: any }) => (
-  <TouchableOpacity
-    style={touchableStyle}
-    onPress={item.onPress}
-    activeOpacity={item.onPress ? 0.2 : 1}
-  >
-    <View
-      style={{
-        flexDirection: 'row',
-        // justifyContent: 'space-between',
-        marginHorizontal: 8,
-        // marginVertical: 12,
-        // borderWidth: 1,
-      }}
+    <TouchableOpacity
+      style={touchableStyle}
+      onPress={item.onPress}
+      activeOpacity={item.onPress ? 0.2 : 1}
     >
-      {item.additionalComponentLeft ? (
-        <View style={{
-          justifyContent: 'center',
-          // borderWidth: 1,
-        }}
-        >
-          {item.additionalComponentLeft}
-        </View>
-      ) : null}
       <View
         style={{
-          // flexWrap: 'wrap',
-          flexShrink: 1,
-          paddingLeft: 10,
+          flexDirection: 'row',
+          // justifyContent: 'space-between',
+          marginHorizontal: 8,
+        // marginVertical: 12,
+        // borderWidth: 1,
         }}
       >
-        <Text
+        {item.additionalComponentLeft ? (
+          <View style={{
+            justifyContent: 'center',
+          // borderWidth: 1,
+          }}
+          >
+            {item.additionalComponentLeft}
+          </View>
+        ) : null}
+        <View
           style={{
-            fontWeight: 'bold',
-            // textAlign: 'left',
-            fontSize: 15,
-            // flexWrap: 'wrap',
-            // borderWidth: 1,
+          // flexWrap: 'wrap',
+            flexShrink: 1,
+            paddingLeft: 10,
           }}
         >
-          {item.title}
-        </Text>
-        {item.subtitle
-          ? (
-            <Text
-              style={{
+          <Text
+            style={{
+              fontWeight: 'bold',
+              // textAlign: 'left',
+              fontSize: 15,
+            // flexWrap: 'wrap',
+            // borderWidth: 1,
+            }}
+          >
+            {item.title}
+          </Text>
+          {item.subtitle
+            ? (
+              <Text
+                style={{
                 // textAlignVertical: 'center',
                 // textAlign: 'left',
                 // flexWrap: 'wrap',
                 // // flex: 1,
                 // borderWidth: 1,
-              }}
-            >
-              {item.subtitle}
-            </Text>
-          )
-          : null}
-      </View>
-      {item.additionalComponentRight ? (
-        <View style={{
-          justifyContent: 'center',
-          // borderWidth: 1,
-        }}
-        >
-          {item.additionalComponentRight}
+                }}
+              >
+                {item.subtitle}
+              </Text>
+            )
+            : null}
         </View>
-      ) : null}
-    </View>
-  </TouchableOpacity>
+        {item.additionalComponentRight ? (
+          <View style={{
+            justifyContent: 'center',
+          // borderWidth: 1,
+          }}
+          >
+            {item.additionalComponentRight}
+          </View>
+        ) : null}
+      </View>
+    </TouchableOpacity>
 );
 
 const MenuListSectionHeader = ({
@@ -119,9 +121,9 @@ const MenuListSectionHeader = ({
   textStyle,
 }:
   { title: string, containerStyle: any, textStyle: any }) => (
-  <View style={containerStyle}>
-    <Text style={textStyle}>{title}</Text>
-  </View>
+    <View style={containerStyle}>
+      <Text style={textStyle}>{title}</Text>
+    </View>
 );
 
 export default ({ sections }: TouchableOpacityData) => {
@@ -129,9 +131,10 @@ export default ({ sections }: TouchableOpacityData) => {
   const themedStyles = styles(colors);
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <SectionList<MenuListItemData, MenuListSectionData>
         sections={sections}
+        keyExtractor={(item, index) => index.toString()}
         renderSectionHeader={(section) => (
           <MenuListSectionHeader
             title={section.section.title}

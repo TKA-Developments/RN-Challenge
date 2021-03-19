@@ -42,7 +42,7 @@ export default ({ email }: { email: undefined | string | null }) => {
   return (
     <View style={themedStyles.containerStyle}>
       <View style={themedStyles.userIconStyle}>
-        <FontAwesome name="user" color={colors.background} size={40}/>
+        <FontAwesome name="user" color={colors.background} size={40} />
       </View>
       <Text style={themedStyles.emailTextStyle}>{email ?? 'No email'}</Text>
       <TouchableOpacity
@@ -51,7 +51,7 @@ export default ({ email }: { email: undefined | string | null }) => {
           signOut();
         }}
       >
-        <Text style={themedStyles.logoutTextStyle}>SignOut</Text>
+        <Text style={themedStyles.logoutTextStyle}>SIGN OUT</Text>
       </TouchableOpacity>
     </View>
   );

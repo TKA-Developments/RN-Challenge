@@ -8,6 +8,7 @@ import EditToDoScreen from '../screens/EditToDoScreen';
 import HeaderDeleteButton from '../components/HeaderRightButton';
 import TodaysImageScreen from '../screens/TodaysImageScreen';
 import GameDemoScreen from '../screens/GameDemoScreen';
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 
 const MainStack = createStackNavigator<MainStackParamList>();
 
@@ -51,7 +52,7 @@ export const MainNavigator = () => (
       name="EditToDoScreen"
       component={EditToDoScreen}
       options={{
-        headerRight: (_) => <HeaderDeleteButton/>,
+        headerRight: (_) => <HeaderDeleteButton />,
         title: '',
       }}
     />
@@ -64,6 +65,11 @@ export const MainNavigator = () => (
       name="GameDemoScreen"
       component={GameDemoScreen}
       options={{ title: 'Mario Jump Demo' }}
+    />
+    <MainStack.Screen
+      name="ChangePasswordScreen"
+      component={ChangePasswordScreen}
+      options={{ title: 'Change Password' }}
     />
   </MainStack.Navigator>
 );

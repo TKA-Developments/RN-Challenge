@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { Switch } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import MenuList, { MenuListSectionData } from '../components/MenuList';
@@ -23,10 +23,20 @@ const useSections = (): Array<MenuListSectionData> => {
 
   return [
     {
+      title: 'Account',
+      data: [
+        {
+          additionalComponentLeft: <Entypo name="key" size={30} color={colors.primary} />,
+          title: 'Change Password',
+          onPress: () => { navigation.navigate('ChangePasswordScreen'); },
+        },
+      ],
+    },
+    {
       title: 'Configuration',
       data: [
         {
-          additionalComponentLeft: <MaterialIcons name="palette" size={30} color={colors.primary}/>,
+          additionalComponentLeft: <MaterialIcons name="palette" size={30} color={colors.primary} />,
           title: 'Dark Theme',
           subtitle: 'For those of you who can\'t stand in a daylight',
           additionalComponentRight: <Switch
@@ -76,8 +86,8 @@ export default () => {
   const sections = useSections();
 
   return (
-    <View>
-      <AccountOverview email={email}/>
+    <View style={{ flex: 1 }}>
+      <AccountOverview email={email} />
       <MenuList
         sections={sections}
       />
