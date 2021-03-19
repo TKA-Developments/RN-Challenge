@@ -82,8 +82,7 @@ npm install
 npm run start
 ```
  
-5. If ran successfully, your browser will open a site that has info about the running application.You will see a QR Code in that site. Scan it with your Expo App for Android phone or QR code scanner of Camera App for IOS phone.
-<br />
+5. If ran successfully, your browser will open a site that has info about the running application.You will see a QR Code in that site. Scan it with your Expo App for Android phone or QR code scanner of Camera App for IOS phone.  
 Alternatives:
 * You can run the app on a simulator in your virtual device. To run the app on the IOS Simulator or an Android Virtual Device, you can find the documentation [here](https://docs.expo.io/workflow/expo-cli/). I used the app on my android phone because it's more laptop-friendly :D
 * You can run the app in web browser, but what comes out will not be as good if you open it from a real phone or a simulator from my experience.
@@ -97,4 +96,4 @@ Alternatives:
 5. Please keep in mind that the todos that will be displayed from the database will be my todos :D For future upgrades, a login and register method can be implemented! If the todos is empty when you open it, you can add your own!
 
 ## Author
-Ananda Yulizar Muhammad [@anandayulizar](github.com/anandayulizar)
+Ananda Yulizar Muhammad [@anandayulizar](http://github.com/anandayulizar)
