@@ -14,9 +14,20 @@ const Greeting = () => {
     greeting = "Good Evening";
   }
 
-  return <Text>{greeting} {name}</Text>;
+  return <View style={styles.container}>
+    <Text style={styles.header}>{greeting},</Text>
+    <Text style={styles.header}>{name}!</Text>
+    </View>
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+  },
+  header: {
+    fontSize: 40,
+    textAlign: "center",
+    fontWeight: "bold"
+  }
+});
 
 export default Greeting;
