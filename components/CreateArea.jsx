@@ -11,13 +11,6 @@ const CreateArea = (props) => {
         note: ""
     })
 
-
-    // const [isClicked, setIsClicked] = useState(false);
-    
-    // function ready() {
-    //     setIsClicked(true);
-    // }
-
     function handleChange(event, name){
         setNewItem (prevInput => {
             return { 
@@ -31,7 +24,7 @@ const CreateArea = (props) => {
         props.onAdd(newItem);
         setNewItem({
             title:"",
-            content:""
+            note:""
         });
 }
     return (
@@ -47,10 +40,8 @@ const CreateArea = (props) => {
             value={newItem.note} 
             onChangeText={event => handleChange(event, "note")} 
             placeholder="Add description" 
-            // multiline={true}
-            // numberOfLines={isClicked ? 3 : 0}
             />
-        <TouchableOpacity onPress={handlePress}>
+        <TouchableOpacity onPress={(e) => handlePress(e)}>
             <Text>Add</Text>
         </TouchableOpacity>
         </View>
