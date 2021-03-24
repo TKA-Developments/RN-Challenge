@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {View, Text, StyleSheet, FlatList} from "react-native";
+import {CheckBox} from "react-native-elements";
 
-const ItemCard = ({array, deleteItem}) => {
-    // const [isDone, setIsDone] = useState(false);
+const ItemCard = ({array, deleteItem, checkItem}) => {
 
     return <FlatList 
     keyExtractor={(item) => item.title}
@@ -10,8 +10,11 @@ const ItemCard = ({array, deleteItem}) => {
     renderItem={({item}) => {
         return (
             <View style={styles.container}>
-                <Text >{item.title}</Text>
-                <Text >{item.note}</Text>
+                <CheckBox 
+                title={item.title}
+                checked={item.isChecked}
+                onIconPress={() => checkItem(item)}
+                />
                 <Text onPress={() => deleteItem(item.title)}>DELETE</Text>
                 <Text>EDIT</Text>
             </View>

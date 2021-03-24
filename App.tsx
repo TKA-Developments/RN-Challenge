@@ -5,9 +5,10 @@ import { MainStackNavigator } from "./navigation/StackNavigator";
 
  const App = () => {
   return (
-    <NavigationContainer>
+      <NavigationContainer>
       <MainStackNavigator />
     </NavigationContainer>
   );
 }
+
 export default App

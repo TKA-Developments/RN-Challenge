@@ -21,15 +21,30 @@ const PlanningScreen = () => {
              }
          )
      })   
-    // setIsDone((prevValue) => {
-    //     return !prevValue;
-    // });
 }
+    function handleIconPress(item) {
+        const newArray =  listArray.map((eachItem) => {
+            if (eachItem.title === item.title) {
+                let itemChecked = {...item};
+                itemChecked.isChecked = !item.isChecked;
+                return {
+                        ...eachItem,
+                        isChecked: itemChecked.isChecked
+                    }
+                }
+                 else {
+                    return {
+                        ...eachItem,
+                    }
+                }
+        });
+        setListArray(newArray);
+    }
     return (
         <View style={styles.container}>
         <SearchBar/>
         <CreateArea onAdd={addItem}/>
-        <ItemCard array={listArray} deleteItem={handlePress}/>
+        <ItemCard array={listArray} deleteItem={handlePress} checkItem={handleIconPress}/>
         </View>
 
     )
