@@ -8,15 +8,12 @@ import Zoom from "@material-ui/core/Zoom";
 const CreateArea = (props) => {
     const [newItem, setNewItem] = useState({
         title: "",
-        note: ""
+        isChecked: false
     })
 
-    function handleChange(event, name){
-        setNewItem (prevInput => {
-            return { 
-                ...prevInput,
-                [name]: event
-            };
+    function handleChange(event){
+        setNewItem ({
+            title: event
         });
     }
     
@@ -24,7 +21,7 @@ const CreateArea = (props) => {
         props.onAdd(newItem);
         setNewItem({
             title:"",
-            note:""
+            isChecked: false
         });
 }
     return (
@@ -32,14 +29,8 @@ const CreateArea = (props) => {
             <TextInput 
             autoCorrect={false}
             value={newItem.title} 
-            onChangeText={event => handleChange(event, "title")} 
-            placeholder="Add title" 
-            />
-            <TextInput 
-            autoCorrect={false}
-            value={newItem.note} 
-            onChangeText={event => handleChange(event, "note")} 
-            placeholder="Add description" 
+            onChangeText={event => handleChange(event)} 
+            placeholder="New To Do" 
             />
         <TouchableOpacity onPress={(e) => handlePress(e)}>
             <Text>Add</Text>

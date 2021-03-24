@@ -8,69 +8,43 @@ import ItemCard from "../components/ItemCard";
 
 
 const PlanningScreen = () => {
-    const [incompleteArray, setIncompleteArray] = useState([]);
-    const [completedArray, setCompletedArray] = useState([]);
+    const [listArray, setListArray] = useState([]);
 
-    const [completedItem, setCompletedItem] = useState({
-        title:"",
-        note:""
-    });
-    const [isDone, setIsDone] = useState(false)
+  function addItem(newItem) {
+    setListArray(prevValue => [newItem, ...prevValue]);
+  }
 
-    function toCompletedArray(itemTitle, itemNote) {
-            setCompletedItem({
-                title: itemTitle,
-                note: itemNote
-            });
-            setCompletedArray(prevValue => [completedItem, ...prevValue]);
-            setIncompleteArray(prevValue => {
-                return prevValue.filter((item) => {
-                        return item.title !== itemTitle
+  function handlePress(key) {
+     setListArray(prevValue => {
+         return prevValue.filter((item) => {
+                 return item.title !== key
+             }
+         )
+     })   
+}
+    function handleIconPress(item) {
+        const newArray =  listArray.map((eachItem) => {
+            if (eachItem.title === item.title) {
+                let itemChecked = {...item};
+                itemChecked.isChecked = !item.isChecked;
+                return {
+                        ...eachItem,
+                        isChecked: itemChecked.isChecked
                     }
-                )
-            });
-            setIsDone(true);
-    };
-
-    function generateCard(newArray) {
-        return isDone ? <ItemCard 
-    array={newArray} 
-    deleteItem={handlePress2} 
-    checkedItem={toCompletedArray} 
-    lineThrough={true}/> : null
-    }
-
-    function addItem(newItem) {
-        setIncompleteArray(prevValue => [newItem, ...prevValue]);
-    }
-
-    function handlePress1(key) {
-        setIncompleteArray(prevValue => {
-            return prevValue.filter((item) => {
-                    return item.title !== key
                 }
-            )
+                 else {
+                    return {
+                        ...eachItem,
+                    }
+                }
         });
+        setListArray(newArray);
     }
-    function handlePress2(key) {
-        setCompletedArray(prevValue => {
-            return prevValue.filter((item) => {
-                    return item.title !== key
-                }
-            )
-        });   
-    }
-
     return (
         <View style={styles.container}>
         <SearchBar/>
         <CreateArea onAdd={addItem}/>
-        <ItemCard 
-        array={incompleteArray} 
-        deleteItem={handlePress1} 
-        checkedItem={toCompletedArray} 
-        lineThrough={false}/>
-        {generateCard(completedArray)}
+        <ItemCard array={listArray} deleteItem={handlePress} checkItem={handleIconPress}/>
         </View>
     )
 };
