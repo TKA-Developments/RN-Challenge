@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, StyleSheet, TextInput, FlatList} from "react-native";
+import {View, Text, StyleSheet, TextInput, FlatList, ScrollView} from "react-native";
 
 import SearchBar from "../components/SearchBar";
 import Filter from "../components/Filter";
@@ -9,20 +9,24 @@ import ItemCard from "../components/ItemCard";
 
 const PlanningScreen = () => {
     const [listArray, setListArray] = useState([]);
+    const [filterArray, setFilterArray] = useState([]);
 
-  function addItem(newItem) {
-    setListArray(prevValue => [newItem, ...prevValue]);
-  }
+    const [filterOn, setFilterOn] = useState(false);
 
-  function handlePress(key) {
-     setListArray(prevValue => {
-         return prevValue.filter((item) => {
+    function addItem(newItem) {
+        setListArray(prevValue => [newItem, ...prevValue]);
+    }
+
+    function handleDelete(key) {
+        setListArray(prevValue => {
+            return prevValue.filter((item) => {
                  return item.title !== key
-             }
-         )
-     })   
-}
-    function handleIconPress(item) {
+            }
+        )
+    })   
+    }
+
+    function handleIconCheck(item) {
         const newArray =  listArray.map((eachItem) => {
             if (eachItem.title === item.title) {
                 let itemChecked = {...item};
@@ -31,27 +35,62 @@ const PlanningScreen = () => {
                         ...eachItem,
                         isChecked: itemChecked.isChecked
                     }
+            }
+            else {
+                return {
+                    ...eachItem,
                 }
-                 else {
-                    return {
-                        ...eachItem,
-                    }
-                }
+            }
         });
         setListArray(newArray);
     }
+    
+    function handleSearch(searchItem) {
+        const newArray = listArray.filter((item) => {
+            return item.title.toLowerCase().includes(searchItem.toLowerCase())
+        });
+
+        setFilterArray(newArray);
+        setFilterOn(true);  
+    }
+    
+    const handleFilter = (filterOpt) => {
+        if (filterOpt === "completed") {
+            const newArray = listArray.filter((eachItem) => {
+                return eachItem.isChecked === true
+            });
+            setFilterArray(newArray);
+            setFilterOn(true);
+        }
+        else if (filterOpt === "incomplete") {
+            const newArray = listArray.filter((eachItem) => {
+                return eachItem.isChecked === false
+            });
+            setFilterArray(newArray);
+            setFilterOn(true);
+        }
+        else {
+            setFilterOn(false);
+        }
+    }
+
     return (
         <View style={styles.container}>
-        <SearchBar/>
+        <SearchBar onSearch={handleSearch}/>
+        <Filter filterCard={handleFilter}/>
         <CreateArea onAdd={addItem}/>
-        <ItemCard array={listArray} deleteItem={handlePress} checkItem={handleIconPress}/>
+            <ItemCard 
+                array={filterOn ? filterArray : listArray} 
+                deleteItem={handleDelete} 
+                checkItem={handleIconCheck}/>
         </View>
     )
 };
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 25
+        paddingHorizontal: 25,
+        flex: 1
     }
 });
 

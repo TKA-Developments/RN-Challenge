@@ -1,13 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
 import {View, Text, StyleSheet, TextInput} from "react-native";
 
 import {Feather} from "@expo/vector-icons";
 
-const SearchBar = () => {
-    return <View style={styles.background}>
-    <Feather name="search" style={styles.iconStyle}/>
-    <TextInput placeholder="Search" style={styles.inputStyle}/>
-</View>
+const SearchBar = ({onSearch}) => {
+    const [searchItem, setSearchItem] = useState("");
+
+    function triggerSearch() {
+        onSearch(searchItem);
+        setSearchItem("");
+    }
+
+    return (
+    <View style={styles.background}>
+        <Feather 
+        name="search" 
+        style={styles.iconStyle}/>
+        <TextInput
+        autoCorrect={false}
+        value={searchItem}
+        onChangeText={(newSearch) => setSearchItem(newSearch)} 
+        onSubmitEditing={triggerSearch}
+        placeholder="Search" 
+        style={styles.inputStyle}/>
+    </View>
+    )
 };
 
 const styles = StyleSheet.create({
@@ -15,7 +32,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#F0EEEE",
         height: 50,
         borderRadius: 5,
-        flexDirection: "row"
+        flexDirection: "row",
+        borderWidth: 3
     },
     inputStyle: {
         flex: 1,

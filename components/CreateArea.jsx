@@ -11,30 +11,23 @@ const CreateArea = (props) => {
         isChecked: false
     })
 
-    function handleChange(event){
-        setNewItem ({
-            title: event
-        });
-    }
-    
-    function handlePress(event) {
+    function handleAdd() {
         props.onAdd(newItem);
         setNewItem({
             title:"",
-            isChecked: false
         });
-}
+    }
+
     return (
         <View style={styles.container}>
             <TextInput 
+            style={styles.text}
             autoCorrect={false}
             value={newItem.title} 
-            onChangeText={event => handleChange(event)} 
+            onChangeText={(newInput) => setNewItem({title: newInput, isChecked: false})} 
+            onSubmitEditing={() => handleAdd()}
             placeholder="New To Do" 
             />
-        <TouchableOpacity onPress={(e) => handlePress(e)}>
-            <Text>Add</Text>
-        </TouchableOpacity>
         </View>
         
     )
@@ -42,7 +35,14 @@ const CreateArea = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        borderWidth: 3
+        borderWidth: 3,
+        height: 50,
+        marginTop: 30,
+        marginBottom: 10
+    },
+    text: {
+        fontSize: 18,
+        flex: 1
     }
 });
 
