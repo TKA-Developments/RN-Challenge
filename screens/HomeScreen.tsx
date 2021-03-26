@@ -10,7 +10,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
         <Greeting/>
         <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("To Do List")}
+        onPress={() => navigation.navigate("TASK LIST")}
         >
             <Text style={styles.buttonText}>Let's Start Planning</Text>
         </TouchableOpacity>
@@ -23,16 +23,22 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: "center",
         flex: 1,
-        paddingHorizontal: 50
+        paddingHorizontal: 50,
+        backgroundColor: "#007580",
     },
     button: {
+        borderColor: "#fed049",
         borderWidth: 3,
+        height: 50,
+        borderRadius: 5,
         marginTop: 50,
-        marginBottom: 80
+        marginBottom: 80,
+        justifyContent: "center"
     },
     buttonText: {
         fontSize: 25,
-        textAlign: "center"
+        textAlign: "center",
+        color: "#fed049",
     }
 });
 

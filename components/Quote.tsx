@@ -33,14 +33,17 @@ const styles = StyleSheet.create({
     container: {
     },
     title: {
-        marginBottom: 25
+        marginBottom: 25,
+        color: "#282846"
     },
     content: {
         lineHeight: 25,
-        fontStyle: "italic"
+        fontStyle: "italic",
+        color: "#282846"
     },
     author: {
         textAlign: "right",
+        color: "#282846"
     }
 });
 

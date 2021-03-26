@@ -8,7 +8,6 @@ import Zoom from "@material-ui/core/Zoom";
 const CreateArea = (props) => {
     const [newItem, setNewItem] = useState({
         title: "",
-        isChecked: false
     })
 
     function handleAdd() {
@@ -24,9 +23,9 @@ const CreateArea = (props) => {
             style={styles.text}
             autoCorrect={false}
             value={newItem.title} 
-            onChangeText={(newInput) => setNewItem({title: newInput, isChecked: false})} 
+            onChangeText={(newInput) => setNewItem({title: newInput, isChecked: false, isModalVisible: false})} 
             onSubmitEditing={() => handleAdd()}
-            placeholder="New To Do" 
+            placeholder="Add Task" 
             />
         </View>
         
@@ -36,13 +35,18 @@ const CreateArea = (props) => {
 const styles = StyleSheet.create({
     container: {
         borderWidth: 3,
+        borderColor: "#282846",
+        borderRadius: 5,
         height: 50,
         marginTop: 30,
-        marginBottom: 10
+        marginBottom: 10,
+        backgroundColor: "#d8ebe4",
+        paddingHorizontal: 5
     },
     text: {
         fontSize: 18,
-        flex: 1
+        flex: 1,
+        color: "#282846"
     }
 });
 

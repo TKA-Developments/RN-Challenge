@@ -1017,6 +1017,11 @@
   "resolved" "https://registry.npmjs.org/@emotion/hash/-/hash-0.8.0.tgz"
   "version" "0.8.0"
 
+"@expo-google-fonts/inter@^0.1.0":
+  "integrity" "sha512-Y6GCqsUX6JwexQ2wmBkMiJBY6M2GpNQRTczzIGbBGhXWQxqGmP5awRcf0ZJV+OlLeJcKAzas/TW45ZLdpG3yzA=="
+  "resolved" "https://registry.npmjs.org/@expo-google-fonts/inter/-/inter-0.1.0.tgz"
+  "version" "0.1.0"
+
 "@expo/babel-preset-cli@0.2.18":
   "integrity" "sha512-y2IZFynVtRxMQ4uxXYUnrnXZa+pvSH1R1aSUAfC6RsUb2UNOxC6zRehdLGSOyF4s9Wy+j3/CPm6fC0T5UJYoQg=="
   "resolved" "https://registry.npmjs.org/@expo/babel-preset-cli/-/babel-preset-cli-0.2.18.tgz"
@@ -3751,7 +3756,7 @@
   dependencies:
     "uuid" "^3.4.0"
 
-"expo-font@~8.4.0":
+"expo-font@^8.4.0", "expo-font@~8.4.0":
   "integrity" "sha512-CPGcHLUkPP+yf618fiw2bWTFLojIYCCqWonco/JONcM3tsv6wjkafx4Qw1mMCRoFL7XoiBfHylkKnD0avpzQIQ=="
   "resolved" "https://registry.npmjs.org/expo-font/-/expo-font-8.4.0.tgz"
   "version" "8.4.0"

@@ -1,12 +1,24 @@
 import React from "react";
-import {View, Text, StyleSheet} from "react-native";
+import {View, Text, StyleSheet, TouchableHighlight} from "react-native";
 
 const Filter = ({filterCard}) => {
     return (
     <View style={styles.container}>
-            <Text onPress={() => filterCard("completed")}style={styles.text}>Completed</Text>
-            <Text onPress={() => filterCard("incomplete")}style={styles.text}>Incomplete</Text>
-            <Text onPress={() => filterCard("all")}style={styles.text}>All</Text>
+        <TouchableHighlight
+        onPress={() => filterCard("completed")}
+        underlayColor="#fed049">
+            <Text style={styles.text}>Completed</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+        onPress={() => filterCard("incomplete")}
+        underlayColor="#fed049">
+            <Text style={styles.text}>Incomplete</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+        onPress={() => filterCard("all")}
+        underlayColor="#fed049">
+        <Text style={styles.text}>All</Text>
+        </TouchableHighlight>
         </View>
     )
 };
@@ -15,12 +27,15 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         justifyContent: "space-evenly",
-        marginTop: 10
+        marginTop: 10,
     },
     text: {
         borderWidth: 3,
+        borderColor: "#fed049",
+        color: "#fed049",
         width: 100,
         textAlign: "center",
+        justifyContent: "center",
     }
 });
 

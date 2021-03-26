@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {View, Text, StyleSheet, FlatList, Animated} from "react-native";
+import {View, Text, StyleSheet, FlatList, Animated, Modal, TouchableOpacity, TextInput} from "react-native";
 import {CheckBox} from "react-native-elements";
-import {MaterialIcons} from '@expo/vector-icons';
+import {Feather} from '@expo/vector-icons';
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
-const ItemCard = ({array, deleteItem, checkItem}) => {
+const ItemCard = ({array, deleteItem, checkItem, editItem, saveEdit}) => {
+    const [editValue, setEditValue] = useState("");
 
     const rightSwipe = (progress, dragX) => {
         const scale = dragX.interpolate({
@@ -25,18 +26,49 @@ const ItemCard = ({array, deleteItem, checkItem}) => {
     data={array} 
     renderItem={({item}) => {
         return (
-            <Swipeable
-            renderRightActions={rightSwipe}
-            onSwipeableRightOpen={() => deleteItem(item.title)}>
-            <View style={styles.container}>
-                <CheckBox 
-                containerStyle={styles.cb}
-                title={item.title}
-                checked={item.isChecked}
-                onIconPress={() => checkItem(item)}
-                />
+            <View>
+                <Swipeable
+                renderRightActions={rightSwipe}
+                onSwipeableRightOpen={() => deleteItem(item.title)}>
+                <View style={styles.container}>
+                    <CheckBox 
+                    containerStyle={styles.cb}
+                    textStyle={styles.itemText}
+                    checkedColor="#fed049"
+                    title={item.title}
+                    checked={item.isChecked}
+                    onIconPress={() => checkItem(item)}
+                    onPress={() => checkItem(item)}
+                    />
+                    <TouchableOpacity onPress={() => editItem(item)}>
+                        <Feather name="edit-2" size={25} color="#d8ebe4" />
+                    </TouchableOpacity>
+                </View>
+                </Swipeable>
+                <Modal animationType="fade" visible={item.isModalVisible}>
+                    <View style={styles.editScreen}>
+                        <View style={styles.EditTextBox}>
+                        <TextInput 
+                        autoCorrect={false}
+                        onChangeText={(value) => setEditValue(value)}
+                        placeholder="Change Task"
+                        style={styles.editText}
+                        />
+                        </View>
+                        <View style={styles.editButtons}>
+                        <Text
+                        style={styles.editButtonsText}
+                        onPress={() => saveEdit(editValue, "save")}>
+                            SAVE
+                        </Text>
+                        <Text
+                        style={styles.editButtonsText}
+                        onPress={() => saveEdit(editValue, "discard")}>
+                        DISCARD</Text>
+                        </View>
+                    </View>
+                </Modal>
             </View>
-        </Swipeable>
         )
     }}
     />
@@ -45,12 +77,18 @@ const ItemCard = ({array, deleteItem, checkItem}) => {
 const styles = StyleSheet.create({
     container: {
         borderWidth: 3,
+        borderRadius: 5,
+        borderColor: "#d8ebe4",
         flexDirection: "row",
-        backgroundColor: "white"
+        backgroundColor: "#007580",
+        alignItems: "center",
+        paddingRight: 5,
+        marginVertical: 5
     },
-    text: {
+    itemText: {
         alignSelf: "center",
-        borderWidth: 3,
+        fontSize: 18,
+        color: "#d8ebe4"
     },
     cb: {
         flex: 1,
@@ -58,15 +96,44 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent"
     },
     delete: {
-        backgroundColor: "red",
+        backgroundColor: "#e40017",
         justifyContent: "center",
         alignItems: "flex-end",
         flex: 1,
-        paddingRight: 5
+        paddingRight: 5,
+        borderRadius: 5,
+        marginVertical: 5
     },
     deleteText: {
         fontWeight: "bold",
-        color: "white"
+        color: "#fed049"
+    },
+    editScreen: {
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+        paddingHorizontal: 25
+    },
+    EditTextBox: {
+        flexDirection: "row",
+        borderWidth: 3,
+        height: 50,
+    },
+    editText: {
+        fontSize: 18,
+        flex: 1
+    },
+    editButtons: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 10,
+    },
+    editButtonsText: {
+        borderWidth: 3,
+        marginHorizontal: 10,
+        width: 100,
+        textAlign: "center",
+        fontSize: 18
     }
 });
 

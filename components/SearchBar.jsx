@@ -29,22 +29,26 @@ const SearchBar = ({onSearch}) => {
 
 const styles = StyleSheet.create({
     background: {
-        backgroundColor: "#F0EEEE",
+        backgroundColor: "#d8ebe4",
         height: 50,
         borderRadius: 5,
         flexDirection: "row",
-        borderWidth: 3
+        borderWidth: 3,
+        borderColor: "#282846"
     },
     inputStyle: {
         flex: 1,
-        fontSize: 18
+        fontSize: 18,
+        color: "#282846"
     },
     iconStyle: {
         fontSize: 30,
         alignSelf: "center",
-        marginHorizontal: 15
+        paddingHorizontal: 5,
+        color: "#282846"
     }
 });
 
 export default SearchBar;
 
+//#F0EEEE

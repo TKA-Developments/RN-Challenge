@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 40,
     textAlign: "center",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "#d8ebe4",
   }
 });
 
