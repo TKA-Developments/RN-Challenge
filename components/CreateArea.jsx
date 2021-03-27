@@ -1,9 +1,7 @@
 import React, {useState} from "react";
 import {View, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native";
 
-import AddIcon from '@material-ui/icons/Add';
-import Fab from "@material-ui/core/Fab";
-import Zoom from "@material-ui/core/Zoom";
+import { Ionicons } from '@expo/vector-icons';
 
 const CreateArea = (props) => {
     const [newItem, setNewItem] = useState({
@@ -24,9 +22,12 @@ const CreateArea = (props) => {
             autoCorrect={false}
             value={newItem.title} 
             onChangeText={(newInput) => setNewItem({title: newInput, isChecked: false, isModalVisible: false})} 
-            onSubmitEditing={() => handleAdd()}
             placeholder="Add Task" 
             />
+            <TouchableOpacity
+            onPress={() => handleAdd()}>
+                <Ionicons name="add-circle" size={35} color="#282846" />
+            </TouchableOpacity>
         </View>
         
     )
@@ -34,19 +35,24 @@ const CreateArea = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        borderWidth: 3,
-        borderColor: "#282846",
         borderRadius: 5,
         height: 50,
         marginTop: 30,
         marginBottom: 10,
-        backgroundColor: "#d8ebe4",
-        paddingHorizontal: 5
+        backgroundColor: "#98ded9",
+        paddingHorizontal: 5,
+        elevation: 5,
+        shadowColor: '#282846',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 5,  
+        flexDirection: "row",
+        alignItems: "center"
     },
     text: {
         fontSize: 18,
         flex: 1,
-        color: "#282846"
+        color: "#282846",
     }
 });
 

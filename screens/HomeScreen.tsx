@@ -1,5 +1,6 @@
 import React from "react";
-import {View, Text, StyleSheet, TouchableOpacity} from "react-native";
+import {View, Text, StyleSheet, TouchableHighlight} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import Greeting from "../components/Greeting";
 import Quote from "../components/Quote";
@@ -12,7 +13,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
         style={styles.button}
         onPress={() => navigation.navigate("TASK LIST")}
         >
-            <Text style={styles.buttonText}>Let's Start Planning</Text>
+            <Text style={styles.buttonText}>LET'S START PLANNING</Text>
         </TouchableOpacity>
         <Quote/>
     </View>
@@ -27,18 +28,22 @@ const styles = StyleSheet.create({
         backgroundColor: "#007580",
     },
     button: {
-        borderColor: "#fed049",
-        borderWidth: 3,
+        backgroundColor: "#fed049",
         height: 50,
         borderRadius: 5,
         marginTop: 50,
         marginBottom: 80,
-        justifyContent: "center"
+        justifyContent: "center",
+        elevation: 5,
+        shadowColor: '#282846',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 5,  
     },
     buttonText: {
-        fontSize: 25,
+        fontSize: 20,
         textAlign: "center",
-        color: "#fed049",
+        color: "#007580",
     }
 });
 

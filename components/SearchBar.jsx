@@ -29,12 +29,15 @@ const SearchBar = ({onSearch}) => {
 
 const styles = StyleSheet.create({
     background: {
-        backgroundColor: "#d8ebe4",
+        backgroundColor: "#98ded9",
         height: 50,
         borderRadius: 5,
         flexDirection: "row",
-        borderWidth: 3,
-        borderColor: "#282846"
+        // elevation: 5,
+        // shadowColor: '#282846',
+        // shadowOffset: { width: 0, height: 1 },
+        // shadowOpacity: 0.8,
+        // shadowRadius: 5,  
     },
     inputStyle: {
         flex: 1,

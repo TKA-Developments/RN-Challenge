@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {View, Text, StyleSheet, FlatList, Animated, Modal, TouchableOpacity, TextInput} from "react-native";
+import {View, Text, StyleSheet, FlatList, Animated, Modal, TouchableOpacity, TouchableHighlight, TextInput} from "react-native";
 import {CheckBox} from "react-native-elements";
 import {Feather} from '@expo/vector-icons';
 import Swipeable from "react-native-gesture-handler/Swipeable";
@@ -34,14 +34,14 @@ const ItemCard = ({array, deleteItem, checkItem, editItem, saveEdit}) => {
                     <CheckBox 
                     containerStyle={styles.cb}
                     textStyle={styles.itemText}
-                    checkedColor="#fed049"
+                    checkedColor="#007580"
                     title={item.title}
                     checked={item.isChecked}
                     onIconPress={() => checkItem(item)}
                     onPress={() => checkItem(item)}
                     />
                     <TouchableOpacity onPress={() => editItem(item)}>
-                        <Feather name="edit-2" size={25} color="#d8ebe4" />
+                        <Feather name="edit-2" size={27} color="#282846" />
                     </TouchableOpacity>
                 </View>
                 </Swipeable>
@@ -55,16 +55,21 @@ const ItemCard = ({array, deleteItem, checkItem, editItem, saveEdit}) => {
                         style={styles.editText}
                         />
                         </View>
-                        <View style={styles.editButtons}>
-                        <Text
-                        style={styles.editButtonsText}
+                        <View style={styles.editBC}>
+                        <TouchableOpacity
+                        style={styles.editB}
                         onPress={() => saveEdit(editValue, "save")}>
-                            SAVE
-                        </Text>
-                        <Text
-                        style={styles.editButtonsText}
+                            <Text
+                            style={styles.editBT}>SAVE
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                        style={styles.editB}
                         onPress={() => saveEdit(editValue, "discard")}>
-                        DISCARD</Text>
+                            <Text
+                            style={styles.editBT}>
+                            DISCARD</Text>
+                        </TouchableOpacity>
                         </View>
                     </View>
                 </Modal>
@@ -76,23 +81,29 @@ const ItemCard = ({array, deleteItem, checkItem, editItem, saveEdit}) => {
 
 const styles = StyleSheet.create({
     container: {
-        borderWidth: 3,
         borderRadius: 5,
-        borderColor: "#d8ebe4",
+        height: 50,
         flexDirection: "row",
-        backgroundColor: "#007580",
+        backgroundColor: "#d8ebe4",
         alignItems: "center",
-        paddingRight: 5,
-        marginVertical: 5
+        paddingRight: 7,
+        marginVertical: 5,
+        elevation: 5,
+        shadowColor: '#282846',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 5,  
     },
     itemText: {
         alignSelf: "center",
         fontSize: 18,
-        color: "#d8ebe4"
+        color: "#282846"
     },
     cb: {
         flex: 1,
         borderWidth: 0,
+        padding: 0,
+        margin: 0,
         backgroundColor: "transparent"
     },
     delete: {
@@ -112,28 +123,48 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         flex: 1,
-        paddingHorizontal: 25
+        paddingHorizontal: 25,
+        backgroundColor: "#007580"
     },
     EditTextBox: {
         flexDirection: "row",
-        borderWidth: 3,
+        paddingHorizontal: 5,
+        elevation: 5,
+        shadowColor: '#282846',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 5,  
+        borderRadius: 5,
         height: 50,
+        backgroundColor:"#98ded9"
     },
     editText: {
         fontSize: 18,
-        flex: 1
+        flex: 1,
+        color: "#282846"
     },
-    editButtons: {
+    editBC: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginTop: 10,
+        marginTop: 20,
     },
-    editButtonsText: {
+    editB: {
         borderWidth: 3,
-        marginHorizontal: 10,
+        borderColor: "#fed049",
+        backgroundColor: "#fed049",
+        marginHorizontal: 15,
         width: 100,
+        elevation: 5,
+        shadowColor: '#282846',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        borderRadius: 2  
+    },
+    editBT: {
+        color: "#007580",
         textAlign: "center",
-        fontSize: 18
+        fontSize: 15,
     }
 });
 
