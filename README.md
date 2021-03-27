@@ -63,4 +63,16 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+- clone the repo
+- run npm install and npm start
+- open app on your selected platform
+- click "LET'S START PLANNING" to... start planning
+- Input new task in the "Add Task" text input, note: each task must be unique.
+- Click the "+" button to add task
+- Click the search bar to search tasks, search items will be generated on submit
+- Click the "ALL" button to return all tasks
+- Click the "INCOMPLETED, COMPLETED, and ALL" buttons to filter notes
+- Click the check box or the text of each task to check off task
+- Click the pen icon to edit selected task
+- Click buttons to either discard or save changes
+- Swipe task to the left to delete a task
