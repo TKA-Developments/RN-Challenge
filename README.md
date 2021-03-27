@@ -63,10 +63,10 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-- clone the repo
-- run npm install and npm start
-- open app on your selected platform
-- click "LET'S START PLANNING" to... start planning
+- Clone the repo
+- Run npm install and npm start
+- Open app on your selected platform
+- Click "LET'S START PLANNING" to... start planning
 - Input new task in the "Add Task" text input, note: each task must be unique.
 - Click the "+" button to add task
 - Click the search bar to search tasks, search items will be generated on submit
