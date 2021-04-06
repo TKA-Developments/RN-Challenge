@@ -18,6 +18,10 @@ export function useThemeColor(
   }
 }
 
+export function useColor(colorName: keyof typeof Colors.light & keyof typeof Colors.dark) {
+  return useThemeColor({}, colorName);
+}
+
 type ThemeProps = {
   lightColor?: string;
   darkColor?: string;
@@ -38,4 +42,10 @@ export function View(props: ViewProps) {
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+}
+
+export function getGradientColor() {
+  const shadeBelow = useColor('shadeBelow');
+  const shadeAbove = useColor('shadeAbove');
+  return [shadeAbove, shadeBelow];
 }

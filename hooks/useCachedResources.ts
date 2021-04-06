@@ -16,6 +16,12 @@ export default function useCachedResources() {
         await Font.loadAsync({
           ...Ionicons.font,
           'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          'nunito': require('../assets/fonts/Nunito-Regular.ttf'),
+          'nunito-extralight': require('../assets/fonts/Nunito-ExtraLight.ttf'),
+          'nunito-light': require('../assets/fonts/Nunito-Light.ttf'),
+          'nunito-semibold': require('../assets/fonts/Nunito-SemiBold.ttf'),
+          'nunito-bold': require('../assets/fonts/Nunito-Bold.ttf'),
+          'nunito-extrabold': require('../assets/fonts/Nunito-ExtraBold.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
