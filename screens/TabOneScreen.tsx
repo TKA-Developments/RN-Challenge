@@ -1,24 +1,31 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, VirtualizedList } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
+import SearchBar from '../components/one/SearchBar';
 import { Text, View } from '../components/Themed';
+import TodoLists from '../components/one/TodoLists';
 
 export default function TabOneScreen() {
+  let data: string[] = [];
+  for(var i = 0; i<100; i++)
+    data.push('auo'+i)
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
+      <SearchBar/>
+      <TodoLists lists={data}/>
+      {/*<EditScreenInfo path="/screens/TabOneScreen.tsx" />*/}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'stretch',    
+    justifyContent: 'flex-start',
+    paddingTop: 15,
+    paddingHorizontal:10,
   },
   title: {
     fontSize: 20,
@@ -29,4 +36,4 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
-});
+})
