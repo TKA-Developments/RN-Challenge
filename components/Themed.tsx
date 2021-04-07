@@ -1,5 +1,10 @@
+import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
-import { Text as DefaultText, View as DefaultView, TextInput as DefaultTextInput } from 'react-native';
+import { 
+  Text as DefaultText, 
+  View as DefaultView, 
+  TextInput as DefaultTextInput,
+  TouchableOpacity as DefaultTouchableOpacity } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -26,6 +31,7 @@ type ThemeProps = {
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
 export type TextInputProps = ThemeProps & DefaultTextInput['props'];
+export type TouchableOpacityProps = ThemeProps & DefaultTouchableOpacity['props'];
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
@@ -46,4 +52,24 @@ export function TextInput(props: TextInputProps){
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
   return <DefaultTextInput style={[ { color }, style ]} {...otherProps} />;
+}
+
+export function FloatingActionButton(props: TouchableOpacityProps){
+  return (
+  <DefaultTouchableOpacity onPress = { props.onPress } style = { props.style } >
+    <View
+      style={{
+        flex:1,
+        width: 55,
+        borderRadius: 55,
+        alignItems:'center',
+        backgroundColor: '#40C4FF',
+      }}
+    >
+        <Ionicons 
+          name='add-sharp'
+          size={30}
+        />
+    </View>
+    </DefaultTouchableOpacity >)
 }

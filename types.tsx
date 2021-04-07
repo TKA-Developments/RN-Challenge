@@ -15,3 +15,33 @@ export type TabOneParamList = {
 export type TabTwoParamList = {
   TabTwoScreen: undefined;
 };
+
+export type Todo = {
+  id: number,
+  title: string,
+  description: string,
+  date: Date,
+  done?: boolean,
+};
+
+export type TodoLists = Todo[];
+
+export type AddTodoAction = {
+  type: string,
+  todoData: Todo,
+}
+
+export type UpdateTodoAction = {
+  type: string,
+  todoData: Todo,
+}
+
+export type RemoveTodoAction = {
+  type: string,
+  id: number,
+}
+
+// export type TodoListActions = 
+//  | AddTodoAction 
+//  | UpdateTodoAction 
+//  | RemoveTodoAction

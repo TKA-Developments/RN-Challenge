@@ -1,21 +1,86 @@
 import * as React from 'react';
-import { StyleSheet, VirtualizedList } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import SearchBar from '../components/one/SearchBar';
-import { Text, View } from '../components/Themed';
+import { Text, View, FloatingActionButton } from '../components/Themed';
+
 import TodoLists from '../components/one/TodoLists';
+import { TodoContext, TodoProvider } from '../context/todoContexts';
+import { TODO_LIST_ACTION_TYPES } from '../context/todoReducer';
 
 export default function TabOneScreen() {
-  let data: string[] = [];
-  for(var i = 0; i<100; i++)
-    data.push('auo'+i)
+  
+  const [todo, setTodo] = React.useState({
+    id: 0,
+    title: "",
+    description: "",
+    date: new Date(),
+    done: false,
+  })
+
+  const { state, dispatch } = React.useContext(TodoContext)
+
+  const handleTodo = (type: string, value: string) => {
+    setTodo(todo => ({
+      ...todo,
+      [type]: value
+    }))
+  }
+
+  const addTodo = () => {
+    var date = new Date()
+    dispatch({
+      type: TODO_LIST_ACTION_TYPES.ADD_TODO,
+      payload: {
+        id: date.getTime() / 1000,
+        title: todo.title,
+        description: todo.description,
+        date: date,
+        done: false,
+      }
+    })
+  }
+
+  const removeTodo = () => {
+    dispatch({
+      type: TODO_LIST_ACTION_TYPES.REMOVE_TODO,
+      payload: {
+        id: todo.id,
+      }
+    })
+  }
+
+  const updateTodo = () => {
+    dispatch({
+      type: TODO_LIST_ACTION_TYPES.UPDATE_TODO,
+      payload: {
+        id: todo.id,
+        title: todo.title,
+        description: todo.description,
+        date: todo.date,
+        done: todo.done,
+      }
+    })
+  }
+
   return (
-    <View style={styles.container}>
-      <SearchBar/>
-      <TodoLists lists={data}/>
-      {/*<EditScreenInfo path="/screens/TabOneScreen.tsx" />*/}
-    </View>
+    <TodoProvider>
+      <View style={styles.container}>
+        <ScrollView removeClippedSubviews={false}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={styles.scrollContentStyle}>
+          <View>
+        <SearchBar/>
+          </View>
+        <TodoLists />
+        </ScrollView>
+        <FloatingActionButton 
+          style={styles.fabStyle}          
+          />
+        {/*<EditScreenInfo path="/screens/TabOneScreen.tsx" />*/}
+      </View>
+    </TodoProvider>
   )
 }
 
@@ -24,8 +89,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',    
     justifyContent: 'flex-start',
-    paddingTop: 15,
     paddingHorizontal:10,
+  },
+  scrollContentStyle:{
+    paddingVertical:15,
   },
   title: {
     fontSize: 20,
@@ -36,4 +103,10 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  fabStyle:{
+    position:'absolute',
+    marginRight:15,
+    bottom:10,
+    right:10,
+  }
 })

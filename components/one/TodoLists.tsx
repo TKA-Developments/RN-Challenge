@@ -3,17 +3,21 @@ import { Ionicons } from '@expo/vector-icons';
 import { Text, View } from '../Themed';
 import { FlatList, StyleSheet, VirtualizedList } from 'react-native';
 import TodoCard from './TodoCard';
+import { TodoContext } from '../../context/todoContexts';
+import { TODO_LIST_ACTION_TYPES } from '../../context/todoReducer';
 
-export default function TodoList({lists}:{lists:any[]}){
+export default function TodoList(){
+
+    const { state, dispatch } = React.useContext(TodoContext)
+    
     return(
         <View style={styles.container}>
             <FlatList
-                contentContainerStyle={styles.flatList}
-                data={lists}
+                data={state}
                 keyExtractor={(item, index) => index.toString() }
                 renderItem={({ item }) => (
                     <TodoCard
-                        label={item}/>
+                        todo={item}/>
                 )}
                 showsVerticalScrollIndicator = {false}
                 overScrollMode = "never"                
@@ -28,7 +32,4 @@ const styles = StyleSheet.create({
         alignItems:'stretch',
         paddingTop: 10,
     },
-    flatList:{
-        paddingBottom: 5,
-    }
 })

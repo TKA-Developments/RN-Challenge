@@ -15,7 +15,7 @@ export default function SearchBar(){
                         />
             <TextInput  style={styles.textInputStyle}
                         placeholder='Search'
-                        defaultValue='' 
+                        defaultValue=''
                         />
         </View>
     );
@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     },
     textInputStyle:{
         flex: 1,
-        marginHorizontal: 5
+        marginHorizontal: 5,
+        borderWidth: 0,
     }
 
 })
