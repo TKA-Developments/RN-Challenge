@@ -3,8 +3,9 @@ const tintColorDark = '#fff';
 
 export default {
   light: {
-    text: '#2b2b2b',
+    text: '#2B2B2B',
     textSecondary: '#8F8F8F',
+    textTertiary: '#2B2B2B',
     background: '#FFFBF0',
     backgroundSecondary: '#F28AAD',
     backgroundTertiary: '#FFFBF0',
@@ -15,8 +16,9 @@ export default {
     shadeBelow: '#FCDAB7',
   },
   dark: {
-    text: '#e5d4fa',
+    text: '#E5D4fA',
     textSecondary: '#8289cf',
+    textTertiary: '#FFFF',
     background: '#301B3F',
     backgroundSecondary: '#EC407A',
     backgroundTertiary: '#2E1C40',

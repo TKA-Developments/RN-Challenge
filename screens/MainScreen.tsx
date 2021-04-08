@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import { getGradientColor } from '../components/Themed';
@@ -9,11 +9,19 @@ import SearchBar from '../components/SearchBar';
 import { Icon } from 'react-native-elements';
 import { useColor } from '../components/Themed';
 import TimeCategory from '../components/TaskComponents/TimeCategory';
-import Task from '../components/TaskComponents/Task';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ITimeCategory } from '../components/TaskComponents/type';
+import useTaskContext from '../hooks/useTasksContext';
 
-const MainScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Main'>) => {
+const MainScreen = ({}: StackScreenProps<RootStackParamList, 'Main'>) => {
+  console.log('AAA');
+  const { timeBasedTasks, loading, allTasks, setLoading } = useTaskContext();
+
+  const aaa = () => {
+    setLoading(!loading);
+    console.log(timeBasedTasks);
+  };
+
   return (
     <LinearGradient style={styles.container} colors={getGradientColor()}>
       <TextExtraBold style={styles.titleText}>Fauzan's TODOS</TextExtraBold>
@@ -36,11 +44,15 @@ const MainScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Main'>
         </TouchableOpacity>
       </View>
       <ScrollView>
-        <TimeCategory title={data.title} tasks={data.tasks} />
-        <TimeCategory title={data.title} tasks={data.tasks} />
-        <TimeCategory title={data.title} tasks={data.tasks} />
+        {loading ? (
+          <TextBold>asdasd</TextBold>
+        ) : (
+          timeBasedTasks.map((item, index) => {
+            return <TimeCategory key={index} title={item.title} tasks={item.tasks} />;
+          })
+        )}
       </ScrollView>
-      <TouchableOpacity style={styles.plusButton}>
+      <TouchableOpacity onPress={() => aaa()} style={styles.plusButton}>
         <View
           style={{
             ...styles.plusIconWrapper,
@@ -57,33 +69,6 @@ const MainScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Main'>
       </TouchableOpacity>
     </LinearGradient>
   );
-};
-
-const data: ITimeCategory = {
-  title: 'Today',
-  tasks: [
-    {
-      id: '1',
-      name: 'Muhammad',
-      done: false,
-      date: '23 Maret 2021',
-      category: 'hobby',
-    },
-    {
-      id: '2',
-      name: 'Fauzan',
-      done: false,
-      date: '26 Maret 2021',
-      category: 'school',
-    },
-    {
-      id: '3',
-      name: 'Al-Ghifari',
-      done: false,
-      date: '29 Maret 2021',
-      category: 'general',
-    },
-  ],
 };
 
 const styles = StyleSheet.create({

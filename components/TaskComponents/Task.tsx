@@ -4,17 +4,36 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { TextSemiBold, TextLight } from '../../components/StyledText';
 import { useColor } from '../../components/Themed';
 import { getCategoryColor } from './TaskColor';
+import { CheckBox } from 'react-native-elements';
 
 const Task: React.FC<ITask> = (props: ITask) => {
   return (
     <TouchableOpacity>
       <View style={{ ...styles.container, backgroundColor: useColor('backgroundTertiary') }}>
-        <View
-          style={{ ...styles.category, backgroundColor: getCategoryColor(props.category) }}
-        ></View>
+        <View style={{ ...styles.category, backgroundColor: getCategoryColor(props.category) }}>
+          <CheckBox
+            center
+            iconType="ionicon"
+            checkedIcon="checkbox"
+            uncheckedIcon="square-outline"
+            checkedColor={useColor('textTertiary')}
+            uncheckedColor={useColor('textTertiary')}
+            checked={props.done}
+          />
+        </View>
         <View style={styles.textContainer}>
-          <TextSemiBold style={styles.text}>{props.name}</TextSemiBold>
-          <TextLight style={{ color: useColor('textSecondary') }}>{props.date}</TextLight>
+          <TextSemiBold style={props.done ? [styles.done, styles.text] : styles.text}>
+            {props.name}
+          </TextSemiBold>
+          <TextLight
+            style={
+              props.done
+                ? { color: useColor('textSecondary'), ...styles.done }
+                : { color: useColor('textSecondary') }
+            }
+          >
+            {props.date}
+          </TextLight>
         </View>
       </View>
     </TouchableOpacity>
@@ -30,6 +49,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
+  },
+  done: {
+    textDecorationLine: 'line-through',
   },
   textContainer: {
     padding: 15,
