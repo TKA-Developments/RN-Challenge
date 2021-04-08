@@ -39,7 +39,7 @@ export const TasksProvider = ({ children }: IProvider) => {
   useEffect(() => {
     setTimeBasedTasks([
       {
-        title: 'Todayy',
+        title: 'Today',
         tasks: allTasks,
       },
     ]);

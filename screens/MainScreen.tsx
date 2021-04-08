@@ -12,47 +12,29 @@ import TimeCategory from '../components/TaskComponents/TimeCategory';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ITimeCategory } from '../components/TaskComponents/type';
 import useTaskContext from '../hooks/useTasksContext';
+import OverlayFilter from '../components/OverlayComponents/Overlay';
 
 const MainScreen = ({}: StackScreenProps<RootStackParamList, 'Main'>) => {
   console.log('AAA');
-  const { timeBasedTasks, loading, allTasks, setLoading } = useTaskContext();
-
-  const aaa = () => {
-    setLoading(!loading);
-    console.log(timeBasedTasks);
-  };
+  const { timeBasedTasks, loading } = useTaskContext();
 
   return (
     <LinearGradient style={styles.container} colors={getGradientColor()}>
       <TextExtraBold style={styles.titleText}>Fauzan's TODOS</TextExtraBold>
       <View style={styles.searchBarContainer}>
         <SearchBar />
-        <TouchableOpacity>
-          <View
-            style={{
-              ...styles.filterIconWrapper,
-              backgroundColor: useColor('background'),
-            }}
-          >
-            <Icon
-              iconStyle={styles.filterIcon}
-              name="filter-outline"
-              type="ionicon"
-              color={useColor('textSecondary')}
-            />
-          </View>
-        </TouchableOpacity>
+        <OverlayFilter />
       </View>
       <ScrollView>
         {loading ? (
-          <TextBold>asdasd</TextBold>
+          <TextBold>Loading</TextBold>
         ) : (
           timeBasedTasks.map((item, index) => {
             return <TimeCategory key={index} title={item.title} tasks={item.tasks} />;
           })
         )}
       </ScrollView>
-      <TouchableOpacity onPress={() => aaa()} style={styles.plusButton}>
+      <TouchableOpacity style={styles.plusButton}>
         <View
           style={{
             ...styles.plusIconWrapper,
@@ -86,21 +68,10 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
   },
-  filterIcon: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
   plusIconWrapper: {
     width: 70,
     height: 70,
     borderRadius: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  filterIconWrapper: {
-    padding: 7,
-    height: 50,
-    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
