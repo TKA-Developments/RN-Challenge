@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 
-export default ({ title, color, onPress, onDelete }) => {
+export default ({ title, color, onPress, onDelete, onOptions }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -13,7 +13,7 @@ export default ({ title, color, onPress, onDelete }) => {
         <Text style={styles.itemTitle}>{title}</Text>
       </View>
       <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={onOptions}>
           <Ionicons name="options-outline" size={24} color="white" />
         </TouchableOpacity>
         <TouchableOpacity onPress={onDelete}>

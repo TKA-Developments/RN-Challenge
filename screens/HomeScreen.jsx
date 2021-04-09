@@ -9,10 +9,12 @@ import {
 import ListItem from "../components/ListItem";
 import Colors from "../constants/Colors";
 
-const renderAddListIcon = (addItem) => {
+const renderAddListIcon = (navigation, addItemToList) => {
   return (
     <TouchableOpacity
-      onPress={() => addItem({ title: "Title", color: Colors.orange })}
+      onPress={() =>
+        navigation.navigate("Edit", { saveChanges: addItemToList })
+      }
     >
       <Text style={styles.icon}>+</Text>
     </TouchableOpacity>
@@ -38,7 +40,7 @@ export default ({ navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => renderAddListIcon(addItemToList),
+      headerRight: () => renderAddListIcon(navigation, addItemToList),
     });
   });
 
@@ -54,6 +56,9 @@ export default ({ navigation }) => {
               navigation={navigation}
               onPress={() => {
                 navigation.navigate("TodoList", { title, color });
+              }}
+              onOptions={() => {
+                navigation.navigate("Edit", { title, color });
               }}
               onDelete={() => removeItemFromList(index)}
             />
