@@ -9,6 +9,20 @@ import {
   TextInput,
 } from "react-native";
 import Colors from "../constants/Colors";
+import ColorSelector from "../components/ColorSelector";
+
+const colorList = [
+  "blue",
+  "teal",
+  "green",
+  "olive",
+  "yellow",
+  "orange",
+  "red",
+  "pink",
+  "purple",
+  "blueGray",
+];
 
 export default ({ navigation, route }) => {
   const [title, setTitle] = useState(route.params.title || "");
@@ -38,6 +52,15 @@ export default ({ navigation, route }) => {
           placeholder={"New list name"}
           maxLength={30}
           style={[styles.input, { outline: "none" }]}
+        />
+        <Text style={styles.label}>Choose Color</Text>
+        <ColorSelector
+          onSelect={(color) => {
+            setColor(color);
+            navigation.dispatch(CommonActions.setParams({ color }));
+          }}
+          selectedColor={color}
+          colorOptions={colorList}
         />
       </View>
       <TouchableOpacity
