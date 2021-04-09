@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 
-export default ({ title, color }) => {
+export default ({ title, color, onPress, onDelete }) => {
   return (
     <TouchableOpacity
-      onPress={() => {}}
+      onPress={onPress}
       style={[styles.itemContainer, { backgroundColor: color }]}
     >
       <View>
@@ -16,7 +16,7 @@ export default ({ title, color }) => {
         <TouchableOpacity onPress={() => {}}>
           <Ionicons name="options-outline" size={24} color="white" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={onDelete}>
           <Ionicons name="trash-outline" size={24} color="white" />
         </TouchableOpacity>
       </View>
@@ -41,10 +41,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 15,
     backgroundColor: Colors.black,
-  },
-  icon: {
-    padding: 5,
-    fontSize: 24,
   },
   centeredView: {
     justifyContent: "center",
