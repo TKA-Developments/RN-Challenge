@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
     borderWidth: 3,
+    opacity: 0.8,
   },
 });
 

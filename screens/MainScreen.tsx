@@ -14,9 +14,12 @@ import { ITimeCategory } from '../components/TaskComponents/type';
 import useTaskContext from '../hooks/useTasksContext';
 import OverlayFilter from '../components/OverlayComponents/Overlay';
 
-const MainScreen = ({}: StackScreenProps<RootStackParamList, 'Main'>) => {
-  console.log('AAA');
+const MainScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Main'>) => {
   const { timeBasedTasks, loading } = useTaskContext();
+
+  const onPlusPress = () => {
+    navigation.navigate('AddTask');
+  };
 
   return (
     <LinearGradient style={styles.container} colors={getGradientColor()}>
@@ -34,7 +37,7 @@ const MainScreen = ({}: StackScreenProps<RootStackParamList, 'Main'>) => {
           })
         )}
       </ScrollView>
-      <TouchableOpacity style={styles.plusButton}>
+      <TouchableOpacity onPress={onPlusPress} style={styles.plusButton}>
         <View
           style={{
             ...styles.plusIconWrapper,
