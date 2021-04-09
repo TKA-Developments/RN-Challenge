@@ -28,6 +28,12 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
+const forFade = ({ current }: any) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+});
+
 function RootNavigator() {
   return (
     <Stack.Navigator
@@ -38,8 +44,16 @@ function RootNavigator() {
         },
       }}
     >
-      <Stack.Screen name="Main" component={MainScreen} />
-      <Stack.Screen name="AddTask" component={AddTaskScreen} />
+      <Stack.Screen
+        name="Main"
+        options={{ cardStyleInterpolator: forFade }}
+        component={MainScreen}
+      />
+      <Stack.Screen
+        options={{ cardStyleInterpolator: forFade }}
+        name="AddTask"
+        component={AddTaskScreen}
+      />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );

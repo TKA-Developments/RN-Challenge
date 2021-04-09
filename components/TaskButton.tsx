@@ -8,11 +8,13 @@ interface ITaskButton {
   positionBottom: number;
   positionRight: number;
   iconName: string;
+  onPress: () => void;
 }
 
 const TaskButton = (props: ITaskButton) => {
   return (
     <TouchableOpacity
+      onPress={props.onPress}
       style={{ ...styles.checkButton, bottom: props.positionBottom, right: props.positionRight }}
     >
       <View

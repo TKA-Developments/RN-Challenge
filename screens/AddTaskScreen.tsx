@@ -16,6 +16,10 @@ const AddTaskScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Add
   const [value, setValue] = useState('first');
   const [date, setDate] = useState(new Date());
 
+  const onCrossPress = () => {
+    navigation.goBack();
+  };
+
   return (
     <LinearGradient style={styles.container} colors={getGradientColor()}>
       <TextExtraBold style={styles.titleText}>Add a Task</TextExtraBold>
@@ -77,9 +81,24 @@ const AddTaskScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Add
         placeholder="select date"
         format="DD/MM/YYYY"
       />
-      <TaskButton positionBottom={30} positionRight={30} iconName="checkmark-outline" />
-      <TaskButton positionBottom={30} positionRight={100} iconName="close-outline" />
-      <TaskButton positionBottom={30} positionRight={170} iconName="trash-outline" />
+      <TaskButton
+        onPress={onCrossPress}
+        positionBottom={30}
+        positionRight={30}
+        iconName="checkmark-outline"
+      />
+      <TaskButton
+        onPress={onCrossPress}
+        positionBottom={30}
+        positionRight={100}
+        iconName="close-outline"
+      />
+      <TaskButton
+        onPress={onCrossPress}
+        positionBottom={30}
+        positionRight={170}
+        iconName="trash-outline"
+      />
     </LinearGradient>
   );
 };
