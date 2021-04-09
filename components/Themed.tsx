@@ -4,10 +4,13 @@ import {
   Text as DefaultText, 
   View as DefaultView, 
   TextInput as DefaultTextInput,
-  TouchableOpacity as DefaultTouchableOpacity } from 'react-native';
+  TouchableOpacity as DefaultTouchableOpacity,
+  } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+// import { TodoLists } from '../types';
+// import TodoList from './one/TodoLists';
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -28,10 +31,23 @@ type ThemeProps = {
   darkColor?: string;
 };
 
+// type ListFilterProps = {
+//   data?: any;
+//   textFilter?: string;
+// };
+
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
 export type TextInputProps = ThemeProps & DefaultTextInput['props'];
 export type TouchableOpacityProps = ThemeProps & DefaultTouchableOpacity['props'];
+// export type FlatListProps = ThemeProps & ListFilterProps & DefaultFlatList['props'];
+
+// export function FlatList(props: FlatListProps){
+//   const { style, lightColor, darkColor, ...otherProps } = props;
+//   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
+
+//   return <DefaultFlatList style={[{ backgroundColor }, style]} {...otherProps} />;
+// }
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;

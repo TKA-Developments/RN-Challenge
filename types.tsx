@@ -24,7 +24,10 @@ export type Todo = {
   done?: boolean,
 };
 
-export type TodoLists = Todo[];
+export type TodoLists = {
+  filter: string,
+  lists: Todo[]
+};
 
 export type AddTodoAction = {
   type: string,

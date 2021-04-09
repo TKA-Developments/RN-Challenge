@@ -2,8 +2,21 @@ import * as React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { TextInput, View } from '../Themed';
 import { StyleSheet } from 'react-native';
+import { TodoContext } from '../../context/todoContexts';
+import { TodoActions } from '../../context/todoReducer';
 
 export default function SearchBar(){
+
+    const { state, dispatch } = React.useContext(TodoContext)
+
+    const filterTodo = (value: string) => {
+        dispatch({
+            type: TodoActions.Filter,
+            payload: {
+                keyword: value,
+            }
+        })
+    }
     return(
         <View style={styles.container}
             darkColor="#424242"
@@ -15,7 +28,8 @@ export default function SearchBar(){
                         />
             <TextInput  style={styles.textInputStyle}
                         placeholder='Search'
-                        defaultValue=''
+                        value={state.filter}
+                        onChangeText={filterTodo}
                         />
         </View>
     );

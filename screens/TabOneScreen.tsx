@@ -7,7 +7,7 @@ import { Text, View, FloatingActionButton } from '../components/Themed';
 
 import TodoLists from '../components/one/TodoLists';
 import { TodoContext, TodoProvider } from '../context/todoContexts';
-import { TODO_LIST_ACTION_TYPES } from '../context/todoReducer';
+import { TodoActions } from '../context/todoReducer';
 
 export default function TabOneScreen() {
   
@@ -31,7 +31,7 @@ export default function TabOneScreen() {
   const addTodo = () => {
     var date = new Date()
     dispatch({
-      type: TODO_LIST_ACTION_TYPES.ADD_TODO,
+      type: TodoActions.Add,
       payload: {
         id: date.getTime() / 1000,
         title: todo.title,
@@ -44,7 +44,7 @@ export default function TabOneScreen() {
 
   const removeTodo = () => {
     dispatch({
-      type: TODO_LIST_ACTION_TYPES.REMOVE_TODO,
+      type: TodoActions.Remove,
       payload: {
         id: todo.id,
       }
@@ -53,7 +53,7 @@ export default function TabOneScreen() {
 
   const updateTodo = () => {
     dispatch({
-      type: TODO_LIST_ACTION_TYPES.UPDATE_TODO,
+      type: TodoActions.Update,
       payload: {
         id: todo.id,
         title: todo.title,
@@ -64,17 +64,19 @@ export default function TabOneScreen() {
     })
   }
 
+
+
   return (
     <TodoProvider>
       <View style={styles.container}>
-        <ScrollView removeClippedSubviews={false}
+        {/* <ScrollView removeClippedSubviews={false}
                     showsVerticalScrollIndicator={false}
-                    contentContainerStyle={styles.scrollContentStyle}>
-          <View>
-        <SearchBar/>
-          </View>
+                    contentContainerStyle={styles.scrollContentStyle}> */}
+          {/* <View> */}
+        <SearchBar />
+          {/* </View> */}
         <TodoLists />
-        </ScrollView>
+        {/* </ScrollView> */}
         <FloatingActionButton 
           style={styles.fabStyle}          
           />
@@ -89,6 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',    
     justifyContent: 'flex-start',
+    paddingTop: 15,
     paddingHorizontal:10,
   },
   scrollContentStyle:{
