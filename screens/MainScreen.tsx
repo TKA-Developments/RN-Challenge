@@ -13,6 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { ITimeCategory } from '../components/TaskComponents/type';
 import useTaskContext from '../hooks/useTasksContext';
 import OverlayFilter from '../components/OverlayComponents/Overlay';
+import Loading from '../components/Loading';
 
 const MainScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Main'>) => {
   const { timeBasedTasks, loading } = useTaskContext();
@@ -30,7 +31,7 @@ const MainScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Main'>
       </View>
       <ScrollView>
         {loading ? (
-          <TextBold>Loading</TextBold>
+          <Loading />
         ) : (
           timeBasedTasks.map((item, index) => {
             return <TimeCategory key={index} title={item.title} tasks={item.tasks} />;
