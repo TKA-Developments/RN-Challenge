@@ -36,7 +36,17 @@ export default ({ text, isChecked, onChecked, onChangeText }) => {
               onBlur={() => setIsEditMode(false)}
             />
           ) : (
-            <Text style={styles.text}>{text}</Text>
+            <Text
+              style={[
+                styles.text,
+                {
+                  color: isChecked ? Colors.lightGray : Colors.black,
+                  textDecoration: isChecked ? "line-through" : "none",
+                },
+              ]}
+            >
+              {text}
+            </Text>
           )}
         </TouchableOpacity>
       </View>
