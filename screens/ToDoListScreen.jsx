@@ -1,10 +1,75 @@
-import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
-import ListItem from "../components/ListItem";
+import React, { useState, useLayoutEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
+import TodoItem from "../components/TodoItem";
 import Colors from "../constants/Colors";
 
-export default () => {
-  return <View style={styles.container}></View>;
+const renderAddListIcon = (addItem) => {
+  return (
+    <TouchableOpacity
+      onPress={() => addItem({ text: "Hello2", isChecked: false })}
+    >
+      <Text style={styles.icon}>+</Text>
+    </TouchableOpacity>
+  );
+};
+
+export default ({ navigation }) => {
+  const [toDoItems, setToDoItems] = useState([
+    { text: "hello", isChecked: false },
+  ]);
+
+  const addItemToList = (item) => {
+    toDoItems.push(item);
+    setToDoItems([...toDoItems]);
+  };
+
+  const removeItemFromList = (index) => {
+    toDoItems.splice(index, 1);
+    setToDoItems([...toDoItems]);
+  };
+
+  const updateItemFromList = (index, item) => {
+    toDoItems[index] = item;
+    setToDoItems([...toDoItems]);
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => renderAddListIcon(addItemToList),
+    });
+  });
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={toDoItems}
+        renderItem={({ item: { text, isChecked }, index }) => {
+          return (
+            <TodoItem
+              text={text}
+              isChecked={isChecked}
+              onChecked={() => {
+                const toDoItem = toDoItems[index];
+                toDoItem.isChecked = !isChecked;
+                updateItemFromList(index, toDoItem);
+              }}
+              onChangeText={(newText) => {
+                const toDoItem = toDoItems[index];
+                toDoItem.text = newText;
+                updateItemFromList(index, toDoItem);
+              }}
+            />
+          );
+        }}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
