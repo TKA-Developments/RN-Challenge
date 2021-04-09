@@ -34,7 +34,7 @@ const TaskButton = (props: ITaskButton) => {
 
 const styles = StyleSheet.create({
   checkIcon: {
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: 'bold',
   },
   checkIconWrapper: {
