@@ -38,6 +38,11 @@ export default ({ navigation }) => {
     setLists([...lists]);
   };
 
+  const updateItemFromList = (index, item) => {
+    lists[index] = item;
+    setLists([...lists]);
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => renderAddListIcon(navigation, addItemToList),
@@ -58,7 +63,11 @@ export default ({ navigation }) => {
                 navigation.navigate("TodoList", { title, color });
               }}
               onOptions={() => {
-                navigation.navigate("Edit", { title, color });
+                navigation.navigate("Edit", {
+                  title,
+                  color,
+                  saveChanges: (item) => updateItemFromList(index, item),
+                });
               }}
               onDelete={() => removeItemFromList(index)}
             />
