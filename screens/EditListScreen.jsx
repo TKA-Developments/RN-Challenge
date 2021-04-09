@@ -13,17 +13,28 @@ import Colors from "../constants/Colors";
 export default ({ navigation, route }) => {
   const [title, setTitle] = useState(route.params.title || "");
   const [color, setColor] = useState(route.params.color || Colors.blue);
+  const [isValid, setIsValid] = useState(true);
 
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.label}>List Name</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.label}>List Name</Text>
+          {!isValid && (
+            <Text style={{ marginLeft: 4, color: Colors.red, fontSize: 12 }}>
+              * List Name cannot be empty
+            </Text>
+          )}
+        </View>
         <TextInput
           underlineColorAndroid={"transparent"}
           selectionColor={"transparent"}
           autoFocus={true}
           value={title}
-          onChangeText={setTitle}
+          onChangeText={(text) => {
+            setTitle(text);
+            setIsValid(true);
+          }}
           placeholder={"New list name"}
           maxLength={30}
           style={[styles.input, { outline: "none" }]}
@@ -36,6 +47,7 @@ export default ({ navigation, route }) => {
             route.params.saveChanges({ title, color });
             navigation.dispatch(CommonActions.goBack());
           } else {
+            setIsValid(false);
           }
         }}
       >
