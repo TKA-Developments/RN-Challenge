@@ -6,8 +6,11 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import { TasksProvider } from './context/taskContext';
+import { LogBox } from 'react-native';
 
 export default function App() {
+  LogBox.ignoreLogs(['Warning: ...']);
+  LogBox.ignoreAllLogs();
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
   const statusbarColor = useColor('shadeAbove');

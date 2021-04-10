@@ -7,6 +7,7 @@ import { getCategoryColor } from './TaskColor';
 import { CheckBox } from 'react-native-elements';
 
 const Task: React.FC<ITask> = (props: ITask) => {
+  // console.log(props.date);
   return (
     <TouchableOpacity>
       <View style={{ ...styles.container, backgroundColor: useColor('backgroundTertiary') }}>
@@ -32,7 +33,7 @@ const Task: React.FC<ITask> = (props: ITask) => {
                 : { color: useColor('textSecondary') }
             }
           >
-            {props.date}
+            {props.date.format('DD MMM YYYY')}
           </TextLight>
         </View>
       </View>

@@ -3,7 +3,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import { getGradientColor } from '../components/Themed';
 import { TextExtraBold } from '../components/StyledText';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Icon, Input } from 'react-native-elements';
 import { useColor } from '../components/Themed';
@@ -11,13 +11,35 @@ import { RadioButton } from 'react-native-paper';
 import TaskButton from '../components/TaskButton';
 import DatePicker from 'react-native-datepicker';
 import { getCategoryColor } from '../components/TaskComponents/TaskColor';
+import moment, { Moment } from 'moment';
+import useTaskContext from '../hooks/useTasksContext';
 
 const AddTaskScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'AddTask'>) => {
-  const [value, setValue] = useState('first');
-  const [date, setDate] = useState(new Date());
+  const [value, setValue] = useState<string>('general');
+  const [date, setDate] = useState<moment.Moment>(moment(new Date(), 'DD/MM/YYYY'));
+  const [title, setTitle] = useState<string>('');
+
+  const { addTask, setLoading } = useTaskContext();
+
+  const onDonePress = () => {
+    if (title) {
+      navigation.goBack();
+      addTask(title, value, date);
+    } else {
+      Alert.alert('Warning', 'Fill Title of The Task First');
+    }
+  };
 
   const onCrossPress = () => {
     navigation.goBack();
+  };
+
+  const onDateChange = (date: string) => {
+    setDate(moment(date, 'DD/MM/YYYY'));
+  };
+
+  const onTitleChange = (title: string) => {
+    setTitle(title);
   };
 
   return (
@@ -27,6 +49,8 @@ const AddTaskScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Add
         placeholder="Title"
         leftIcon={{ type: 'ionicon', name: 'newspaper-outline', color: useColor('text') }}
         inputStyle={{ ...styles.input, color: useColor('text') }}
+        value={title}
+        onChangeText={onTitleChange}
       />
       <TextExtraBold style={styles.titleText}>Select Category</TextExtraBold>
       <RadioButton.Group onValueChange={(value) => setValue(value)} value={value}>
@@ -76,13 +100,14 @@ const AddTaskScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Add
             opacity: 0.9,
           },
         }}
-        date={'26/03/2000'}
+        date={date}
         mode="date"
         placeholder="select date"
         format="DD/MM/YYYY"
+        onDateChange={onDateChange}
       />
       <TaskButton
-        onPress={onCrossPress}
+        onPress={onDonePress}
         positionBottom={30}
         positionRight={30}
         iconName="checkmark-outline"

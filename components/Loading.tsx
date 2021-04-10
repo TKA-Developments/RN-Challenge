@@ -35,9 +35,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
   },
   animated: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    marginTop: 30,
   },
 });
 

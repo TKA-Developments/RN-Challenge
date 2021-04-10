@@ -1,8 +1,10 @@
+import moment from 'moment';
+
 export interface ITask {
   id: string;
   name: string;
   done: boolean;
-  date: string;
+  date: moment.Moment;
   category: string;
 }
 
