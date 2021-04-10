@@ -13,13 +13,14 @@ const CheckBox = (props: ICheckBox) => {
       uncheckedIcon="square-outline"
       checkedColor={props.checkColor ? props.checkColor : useColor('textTertiary')}
       uncheckedColor={props.checkColor ? props.checkColor : useColor('textTertiary')}
-      checked={true}
+      checked={props.checked}
       containerStyle={{
         ...styles.container,
         borderColor: useColor('shadeAbove'),
         backgroundColor: useColor('backgroundTertiary'),
       }}
       textStyle={{ color: useColor('text') }}
+      onPress={props.onPress}
     />
   );
 };

@@ -1,4 +1,4 @@
-import { ITasksContext, IProvider } from './type';
+import { ITasksContext, IProvider, IFilterOption } from './type';
 import React, { useState, createContext, useEffect } from 'react';
 import { ITask, ITimeCategory } from '../components/TaskComponents/type';
 import firebase from '../api/config';
@@ -9,9 +9,19 @@ export const TasksProvider = ({ children }: IProvider) => {
   const [allTasks, setAllTasks] = useState<ITask[]>([]);
   const [timeBasedTasks, setTimeBasedTasks] = useState<ITimeCategory[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [filterOption, setFilterOption] = useState<IFilterOption>({
+    finished: true,
+    notFinished: true,
+    past: false,
+    general: true,
+    school: true,
+    hobby: true,
+    search: '',
+  });
 
   const tasksRef = firebase.firestore().collection('tasks');
 
+  // Get all Tasks
   useEffect(() => {
     const saveAllTasks = async () => {
       setLoading(true);
@@ -20,6 +30,7 @@ export const TasksProvider = ({ children }: IProvider) => {
     saveAllTasks();
   }, []);
 
+  // Filtering
   useEffect(() => {
     const timeBasedTasks: ITimeCategory[] = [];
     const todayTask: ITimeCategory = { title: 'Today', tasks: [] };
@@ -27,8 +38,26 @@ export const TasksProvider = ({ children }: IProvider) => {
     const futureTask: ITimeCategory = { title: 'In The Future', tasks: [] };
     const pastTask: ITimeCategory = { title: 'Past', tasks: [] };
 
+    // Option Filter
+    let filteredTasks = allTasks.filter((task) => {
+      if (filterOption.finished && task.done) return task;
+      if (filterOption.notFinished && !task.done) return task;
+    });
+
+    // Category Filter
+    filteredTasks = filteredTasks.filter((task) => {
+      if (filterOption.general && task.category == 'general') return task;
+      if (filterOption.hobby && task.category == 'hobby') return task;
+      if (filterOption.school && task.category == 'school') return task;
+    });
+
+    // Searc Filter
+    filteredTasks = filteredTasks.filter((task) => {
+      if (task.name.includes(filterOption.search)) return task;
+    });
+
     // Date Filter
-    allTasks.forEach((task) => {
+    filteredTasks.forEach((task) => {
       const today = moment(new Date(), 'DD/MM/YYYY');
       const week = moment(new Date(), 'DD/MM/YYYY').add(7, 'days');
 
@@ -43,13 +72,13 @@ export const TasksProvider = ({ children }: IProvider) => {
       }
     });
 
-    timeBasedTasks.push(todayTask);
-    timeBasedTasks.push(weekTask);
-    timeBasedTasks.push(futureTask);
-    timeBasedTasks.push(pastTask);
+    if (todayTask.tasks.length) timeBasedTasks.push(todayTask);
+    if (weekTask.tasks.length) timeBasedTasks.push(weekTask);
+    if (futureTask.tasks.length) timeBasedTasks.push(futureTask);
+    if (pastTask.tasks.length && filterOption.past) timeBasedTasks.push(pastTask);
 
     setTimeBasedTasks(timeBasedTasks);
-  }, [allTasks]);
+  }, [allTasks, filterOption]);
 
   const getAllTasks = async () => {
     let allTasks: ITask[] = [];
@@ -89,12 +118,19 @@ export const TasksProvider = ({ children }: IProvider) => {
     getAllTasks();
   };
 
+  const setFilterAttribute = (attribute: string, value: boolean | string) => {
+    const newOption = { ...filterOption, [attribute]: value };
+    setFilterOption(newOption);
+  };
+
   const value = {
     allTasks,
     timeBasedTasks,
     loading,
     setLoading,
     addTask,
+    filterOption,
+    setFilterAttribute,
   };
 
   return <TasksContext.Provider value={value}>{children}</TasksContext.Provider>;
