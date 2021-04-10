@@ -8,16 +8,28 @@ import {
 } from "react-native";
 import ListItem from "../components/ListItem";
 import Colors from "../constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
 
 const renderAddListIcon = (navigation, addItemToList) => {
   return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("Edit", { saveChanges: addItemToList })
-      }
-    >
-      <Text style={styles.icon}>+</Text>
-    </TouchableOpacity>
+    <View style={{ flexDirection: "row" }}>
+      <TouchableOpacity
+        style={{ justifyContent: "center", marginRight: 4 }}
+        onPress={() =>
+          navigation.navigate("Settings", { saveChanges: addItemToList })
+        }
+      >
+        <Ionicons name="settings" size={16} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{ justifyContent: "center", marginRight: 8 }}
+        onPress={() =>
+          navigation.navigate("Edit", { saveChanges: addItemToList })
+        }
+      >
+        <Text style={styles.icon}>+</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 

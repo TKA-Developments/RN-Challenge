@@ -19,13 +19,26 @@ const validateFields = (email, password) => {
 };
 
 import LabeledInput from "../components/LabeledInput";
+import { auth } from "firebase";
 
-const createAccount = (email, password) => {};
+const login = (email, password) => {
+  auth()
+    .signInWithEmailAndPassword(email, password)
+    .then(() => {
+      console.log("LoggedIn");
+    });
+};
 
-const login = (email, password) => {};
+const createAccount = (email, password) => {
+  auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(({ user }) => {
+      console.log("creating user");
+    });
+};
 
 export default () => {
-  const [isCreateMode, setIsCreateMode] = useState(true);
+  const [isCreateMode, setIsCreateMode] = useState(false);
   const [emailField, setEmailField] = useState({
     text: "",
     errorMessage: "",
