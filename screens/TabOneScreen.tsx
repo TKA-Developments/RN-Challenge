@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
+	Animated,
 	StyleSheet,
 	ScrollView,
 	TouchableOpacity,
 	TextInput,
+	Keyboard,
 } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import TodoItem from '../components/TodoItem';
+import ToggleContainer from '../components/ToggleContainer';
 
 export default function TabOneScreen() {
 	const [newItem, setNewItem] = useState('');
@@ -16,18 +19,71 @@ export default function TabOneScreen() {
 		{ id: 2, title: 'Watch TV', done: false },
 		{ id: 3, title: 'Do HW', done: true },
 	]);
+	let nextId =
+		Math.max.apply(
+			Math,
+			todoItems.map((item) => item.id)
+		) + 1;
 
+	const [viewedTodoItems, setViewedTodoItems] = useState(todoItems);
+
+	// Event Handlers, writing and deleting todo items
 	const onSubmit = (): void => {
 		setTodoItems([
 			...todoItems,
 			{
-				id: todoItems.length + 1,
+				id: nextId,
 				title: newItem,
 				done: false,
 			},
 		]);
 		setNewItem('');
+		fadeIn;
+		Keyboard.dismiss();
 	};
+
+	const onDelete = (id: number): void => {
+		setTodoItems(todoItems.filter((item) => item.id !== id));
+	};
+
+	const setTitle = (id: number, newTitle: string): void => {
+		let copy = todoItems;
+		let index = copy.findIndex((item) => item.id === id);
+		copy[index].title = newTitle;
+		setTodoItems(copy);
+	};
+
+	// Toggle Views
+	const viewAll = () => {
+		setViewedTodoItems(todoItems);
+		fadeIn();
+	};
+	const viewNotCompleted = () => {
+		setViewedTodoItems(todoItems.filter((item) => item.done === false));
+		fadeIn();
+	};
+	const viewCompleted = () => {
+		setViewedTodoItems(todoItems.filter((item) => item.done === true));
+		fadeIn();
+	};
+
+	// Animation variables
+	const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
+	const fadeIn = () => {
+		// Will change fadeAnim value to 1 in 5 seconds
+		fadeAnim.setValue(0);
+		Animated.timing(fadeAnim, {
+			toValue: 1,
+			duration: 500,
+			useNativeDriver: true,
+		}).start();
+	};
+
+	useEffect(fadeIn, []);
+	useEffect(() => {
+		setViewedTodoItems(todoItems);
+		fadeIn();
+	}, [todoItems]);
 
 	return (
 		<View style={styles.container}>
@@ -39,35 +95,46 @@ export default function TabOneScreen() {
 					onChangeText={(text) => setNewItem(text)}
 					value={newItem}
 				/>
-				<TouchableOpacity style={styles.newItem}>
+				<TouchableOpacity style={styles.newItem} onPress={onSubmit}>
 					<Text
 						style={{
 							textAlign: 'center',
 							paddingTop: '13%',
 						}}
-						onPress={onSubmit}
 					>
 						Add
 					</Text>
 				</TouchableOpacity>
 			</View>
-			<ScrollView>
-				{todoItems.map(({ id, title, done }) => (
+			<Animated.ScrollView style={[styles.scroll, { opacity: fadeAnim }]}>
+				{viewedTodoItems.map(({ id, title, done }) => (
 					<TodoItem
 						id={id}
 						title={title}
 						done={done}
+						onDelete={onDelete}
 						onPress={() => {
 							const index = todoItems.findIndex(
 								(item) => item.id === id
 							);
 							todoItems[index].done = !todoItems[index].done;
-							console.log(`${id} pressed`);
 						}}
+						setTitle={setTitle}
 						key={id}
 					/>
 				))}
-			</ScrollView>
+			</Animated.ScrollView>
+			<View style={styles.toggleViewContainer}>
+				<ToggleContainer onPress={viewAll} text={'View All'} />
+				<ToggleContainer
+					onPress={viewNotCompleted}
+					text="View Not Completed"
+				/>
+				<ToggleContainer
+					onPress={viewCompleted}
+					text="View Completed"
+				/>
+			</View>
 			{/* <View
 				style={styles.separator}
 				lightColor="#eee"
@@ -103,6 +170,14 @@ const styles = StyleSheet.create({
 		backgroundColor: '#283655',
 		marginLeft: '10%',
 	},
+	scroll: {
+		height: '60%',
+	},
+	separator: {
+		marginVertical: 30,
+		height: 1,
+		width: '80%',
+	},
 	title: {
 		position: 'absolute',
 		top: '5%',
@@ -127,9 +202,10 @@ const styles = StyleSheet.create({
 		alignItems: 'flex-start',
 		width: '80%',
 	},
-	separator: {
-		marginVertical: 30,
-		height: 1,
-		width: '80%',
+	toggleViewContainer: {
+		flexDirection: 'row',
+		alignSelf: 'flex-end',
+		marginBottom: '10%',
+		justifyContent: 'space-between',
 	},
 });

@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import EditTodo from '../components/EditTodo';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -20,7 +21,7 @@ export default function BottomTabNavigator() {
 			tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
 		>
 			<BottomTab.Screen
-				name="TODO items"
+				name="TODO Items"
 				component={TabOneNavigator}
 				options={{
 					tabBarIcon: ({ color }) => (
@@ -58,9 +59,9 @@ function TabOneNavigator() {
 	return (
 		<TabOneStack.Navigator>
 			<TabOneStack.Screen
-				name="TabOneScreen"
+				name="TODO Items"
 				component={TabOneScreen}
-				options={{ headerTitle: 'Tab One Title' }}
+				options={{ headerTitle: 'TODO Items' }}
 			/>
 		</TabOneStack.Navigator>
 	);
