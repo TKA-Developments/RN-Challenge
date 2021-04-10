@@ -5,11 +5,26 @@ import { TextSemiBold, TextLight } from '../../components/StyledText';
 import { useColor } from '../../components/Themed';
 import { getCategoryColor } from './TaskColor';
 import { CheckBox } from 'react-native-elements';
+import useTasksContext from '../../hooks/useTasksContext';
+import { useNavigation } from '@react-navigation/native';
 
 const Task: React.FC<ITask> = (props: ITask) => {
-  // console.log(props.date);
+  const { updateTask, setIsEditing } = useTasksContext();
+  const navigation = useNavigation();
+
+  const changeStatus = (task: ITask) => {
+    const newTask = { ...task };
+    newTask.done = !task.done;
+    updateTask(newTask);
+  };
+
+  const editing = () => {
+    setIsEditing(true);
+    navigation.navigate('AddTask', { ...props });
+  };
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => changeStatus(props)} onLongPress={() => editing()}>
       <View style={{ ...styles.container, backgroundColor: useColor('backgroundTertiary') }}>
         <View style={{ ...styles.category, backgroundColor: getCategoryColor(props.category) }}>
           <CheckBox
@@ -20,6 +35,7 @@ const Task: React.FC<ITask> = (props: ITask) => {
             checkedColor={useColor('textTertiary')}
             uncheckedColor={useColor('textTertiary')}
             checked={props.done}
+            onPress={() => changeStatus(props)}
           />
         </View>
         <View style={styles.textContainer}>

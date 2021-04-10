@@ -1,8 +1,10 @@
+import { ITask } from './components/TaskComponents/type';
+
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
   Main: undefined;
-  AddTask: undefined;
+  AddTask: undefined | ITask;
 };
 
 export type BottomTabParamList = {

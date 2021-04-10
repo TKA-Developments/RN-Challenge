@@ -10,6 +10,10 @@ export interface ITasksContext {
   addTask: (name: string, category: string, date: moment.Moment) => void;
   filterOption: IFilterOption,
   setFilterAttribute: (attribute: string, value: boolean | string) => void;
+  updateTask: (task: ITask) => Promise<void>;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  deleteTask: (id: string | undefined) => Promise<void>;
 }
 
 export interface IProvider {

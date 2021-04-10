@@ -9,6 +9,7 @@ export const TasksProvider = ({ children }: IProvider) => {
   const [allTasks, setAllTasks] = useState<ITask[]>([]);
   const [timeBasedTasks, setTimeBasedTasks] = useState<ITimeCategory[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [filterOption, setFilterOption] = useState<IFilterOption>({
     finished: true,
     notFinished: true,
@@ -102,6 +103,7 @@ export const TasksProvider = ({ children }: IProvider) => {
   };
 
   const addTask = (name: string, category: string, date: moment.Moment): void => {
+    setLoading(true);
     tasksRef
       .add({
         category: category,
@@ -123,6 +125,22 @@ export const TasksProvider = ({ children }: IProvider) => {
     setFilterOption(newOption);
   };
 
+  const updateTask = async (task: ITask) => {
+    await tasksRef.doc(task.id).set({
+      category: task.category,
+      date: task.date.toDate(),
+      done: task.done,
+      name: task.name,
+    });
+    await getAllTasks();
+  };
+
+  const deleteTask = async (id: string | undefined) => {
+    setLoading(true);
+    await tasksRef.doc(id).delete();
+    await getAllTasks();
+  };
+
   const value = {
     allTasks,
     timeBasedTasks,
@@ -131,6 +149,10 @@ export const TasksProvider = ({ children }: IProvider) => {
     addTask,
     filterOption,
     setFilterAttribute,
+    updateTask,
+    isEditing,
+    setIsEditing,
+    deleteTask,
   };
 
   return <TasksContext.Provider value={value}>{children}</TasksContext.Provider>;

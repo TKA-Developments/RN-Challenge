@@ -13,24 +13,54 @@ import DatePicker from 'react-native-datepicker';
 import { getCategoryColor } from '../components/TaskComponents/TaskColor';
 import moment, { Moment } from 'moment';
 import useTaskContext from '../hooks/useTasksContext';
+import { ITask } from '../components/TaskComponents/type';
 
-const AddTaskScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'AddTask'>) => {
+const AddTaskScreen = ({ navigation, route }: StackScreenProps<RootStackParamList, 'AddTask'>) => {
   const [value, setValue] = useState<string>('general');
   const [date, setDate] = useState<moment.Moment>(moment(new Date(), 'DD/MM/YYYY'));
   const [title, setTitle] = useState<string>('');
 
-  const { addTask, setLoading } = useTaskContext();
+  const { addTask, isEditing, setIsEditing, deleteTask, updateTask, setLoading } = useTaskContext();
+  const props = route.params;
+
+  useEffect(() => {
+    if (props) {
+      setValue(props.category);
+      setDate(props.date);
+      setTitle(props.name);
+    }
+  }, []);
 
   const onDonePress = () => {
-    if (title) {
+    if (props) {
+      const updatedTask: ITask = {
+        id: props.id,
+        name: title,
+        category: value,
+        done: props.done,
+        date,
+      };
+      setLoading(true);
+      updateTask(updatedTask);
       navigation.goBack();
-      addTask(title, value, date);
     } else {
-      Alert.alert('Warning', 'Fill Title of The Task First');
+      if (title) {
+        navigation.goBack();
+        addTask(title, value, date);
+      } else {
+        Alert.alert('Warning', 'Fill Title of The Task First');
+      }
     }
   };
 
   const onCrossPress = () => {
+    if (isEditing) setIsEditing(false);
+    navigation.goBack();
+  };
+
+  const onTrashPress = () => {
+    if (isEditing) setIsEditing(false);
+    deleteTask(props?.id);
     navigation.goBack();
   };
 
@@ -44,7 +74,9 @@ const AddTaskScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Add
 
   return (
     <LinearGradient style={styles.container} colors={getGradientColor()}>
-      <TextExtraBold style={styles.titleText}>Add a Task</TextExtraBold>
+      <TextExtraBold style={styles.titleText}>
+        {isEditing ? 'Editing a Task' : 'Add a Task'}
+      </TextExtraBold>
       <Input
         placeholder="Title"
         leftIcon={{ type: 'ionicon', name: 'newspaper-outline', color: useColor('text') }}
@@ -118,12 +150,14 @@ const AddTaskScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Add
         positionRight={100}
         iconName="close-outline"
       />
-      <TaskButton
-        onPress={onCrossPress}
-        positionBottom={30}
-        positionRight={170}
-        iconName="trash-outline"
-      />
+      {isEditing && (
+        <TaskButton
+          onPress={onTrashPress}
+          positionBottom={30}
+          positionRight={170}
+          iconName="trash-outline"
+        />
+      )}
     </LinearGradient>
   );
 };
