@@ -22,17 +22,33 @@ export const TasksProvider = ({ children }: IProvider) => {
 
   useEffect(() => {
     const timeBasedTasks: ITimeCategory[] = [];
-    const today: ITimeCategory = { title: 'Today' } as ITimeCategory;
-    const week: ITimeCategory = { title: 'In 7 Days Ahead' } as ITimeCategory;
-    const future: ITimeCategory = { title: 'In The Future' } as ITimeCategory;
-    const past: ITimeCategory = { title: 'Past' } as ITimeCategory;
+    const todayTask: ITimeCategory = { title: 'Today', tasks: [] };
+    const weekTask: ITimeCategory = { title: 'In 7 Days Ahead', tasks: [] };
+    const futureTask: ITimeCategory = { title: 'In The Future', tasks: [] };
+    const pastTask: ITimeCategory = { title: 'Past', tasks: [] };
 
-    setTimeBasedTasks([
-      {
-        title: 'Today',
-        tasks: allTasks,
-      },
-    ]);
+    // Date Filter
+    allTasks.forEach((task) => {
+      const today = moment(new Date(), 'DD/MM/YYYY');
+      const week = moment(new Date(), 'DD/MM/YYYY').add(7, 'days');
+
+      if (task.date.isSame(today, 'day')) {
+        todayTask.tasks.push(task);
+      } else if (task.date.isBetween(today, week)) {
+        weekTask.tasks.push(task);
+      } else if (task.date.isAfter(week, 'day')) {
+        futureTask.tasks.push(task);
+      } else {
+        pastTask.tasks.push(task);
+      }
+    });
+
+    timeBasedTasks.push(todayTask);
+    timeBasedTasks.push(weekTask);
+    timeBasedTasks.push(futureTask);
+    timeBasedTasks.push(pastTask);
+
+    setTimeBasedTasks(timeBasedTasks);
   }, [allTasks]);
 
   const getAllTasks = async () => {
@@ -60,8 +76,8 @@ export const TasksProvider = ({ children }: IProvider) => {
     tasksRef
       .add({
         category: category,
-        date: moment(date, 'DD/MM/YYYY'),
-        done: true,
+        date: date.toDate(),
+        done: false,
         name: name,
       })
       .then((docRef) => {
