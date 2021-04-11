@@ -1,4 +1,3 @@
-import { Alert } from "react-native";
 import { TodoLists } from "../types";
 
 export enum TodoActions {
@@ -7,8 +6,6 @@ export enum TodoActions {
     Update = 'UPDATE_TODO',
     Filter = 'FILTER_TODO',
     UpdateDone = 'UPDATE_TODO_DONE',
-    UpdateTempTitle = 'UPDATE_TEMP_TITLE',
-    UpdateTempDesc = 'UPDATE_TEMP_DESC',
 }
 
 type TodoPayload = {
@@ -57,21 +54,8 @@ export const todoReducer = (
 ) => {
     
     switch (action.type){
-        case TodoActions.Add:
-            //if(state.temp == undefined) return
-            // if(isEmpty(state.temp?.title) && isEmpty(state.temp?.description)){
-            //     state.temp = {
-            //         id: 0,
-            //         title: '',
-            //         description: '',
-            //         date: new Date(0),
-            //         done: false,
-            //     }
-            // }
-            var count = state.indexCount++
-            //var done = state.temp.done == undefined ? false : state.temp.done
-            //Alert.alert(`${action.payload.title} ${action.payload.description}`)
-            
+        case TodoActions.Add:            
+            var count = state.indexCount++            
             return {
                 filter: state.filter,
                 indexCount: count,
@@ -109,8 +93,7 @@ export const todoReducer = (
             }
         case TodoActions.UpdateDone:
             var index = state.lists.findIndex((i) => i.id == action.payload.id)
-            state.lists[index].done = !state.lists[index].done
-            //Alert.alert(`updateTodo called ! value: ${state.lists[index].done}`);       
+            state.lists[index].done = !state.lists[index].done    
         default:
             return state
     }

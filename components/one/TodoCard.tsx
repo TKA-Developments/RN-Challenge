@@ -12,14 +12,6 @@ export default function TodoCard({todo} : {todo: Todo}){
     const [cbColor, setcbColor] = React.useState('#40C4FF')
     const { state, dispatch } = React.useContext(TodoContext)
 
-    // const handleTodo = (type: string, value: any) => {
-    //     setTodo(cTodo[type],)
-    // }
-
-    // const setDone = () => {
-
-    // }
-
     const updateDone = () => {
         dispatch({
             type: TodoActions.UpdateDone,
@@ -29,15 +21,7 @@ export default function TodoCard({todo} : {todo: Todo}){
         })        
     }
 
-    return(
-        // <Pressable style={({ pressed }) => [
-        //     {
-        //         backgroundColor: pressed
-        //             ? '#0277BD'
-        //             : '#01579B'
-        //     },
-        //     styles.pressable
-        // ]}>
+    return(       
         <TouchableHighlight 
             onPress={() => null} 
             style={styles.button} 
@@ -57,7 +41,6 @@ export default function TodoCard({todo} : {todo: Todo}){
                     />
             </View>
         </TouchableHighlight >
-        // </Pressable>
     );
 }
 const styles = StyleSheet.create({
