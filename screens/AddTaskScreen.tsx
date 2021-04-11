@@ -5,13 +5,13 @@ import { getGradientColor } from '../components/Themed';
 import { TextExtraBold } from '../components/StyledText';
 import { View, StyleSheet, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Icon, Input } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import { useColor } from '../components/Themed';
 import { RadioButton } from 'react-native-paper';
 import TaskButton from '../components/TaskButton';
 import DatePicker from 'react-native-datepicker';
 import { getCategoryColor } from '../components/TaskComponents/TaskColor';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import useTaskContext from '../hooks/useTasksContext';
 import { ITask } from '../components/TaskComponents/type';
 

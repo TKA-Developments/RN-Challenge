@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import { getGradientColor } from '../components/Themed';
-import { TextRegular, TextBold, TextExtraBold } from '../components/StyledText';
+import { TextExtraBold } from '../components/StyledText';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import SearchBar from '../components/SearchBar';
@@ -10,15 +10,15 @@ import { Icon } from 'react-native-elements';
 import { useColor } from '../components/Themed';
 import TimeCategory from '../components/TaskComponents/TimeCategory';
 import { ScrollView } from 'react-native-gesture-handler';
-import { ITimeCategory } from '../components/TaskComponents/type';
 import useTaskContext from '../hooks/useTasksContext';
 import OverlayFilter from '../components/OverlayComponents/Overlay';
 import Loading from '../components/Loading';
 
 const MainScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Main'>) => {
-  const { timeBasedTasks, loading } = useTaskContext();
+  const { timeBasedTasks, loading, setIsEditing } = useTaskContext();
 
   const onPlusPress = () => {
+    setIsEditing(false);
     navigation.navigate('AddTask');
   };
 
