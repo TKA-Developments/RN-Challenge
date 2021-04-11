@@ -145,12 +145,12 @@ Run on Android device/emulator
 
 <span><img src="/captures/capture(5).png" width="250" title="dark"></span>
 
-4. There are three task categories that tou can select, general, school and hobby
+4. There are three task categories that tou can select: general, school and hobby
 
-5. In the main screen task is also categorized by time, today, in 7 days ahead, in the future or in
+5. In the main screen task is also categorized by time: today, in 7 days ahead, in the future or in
    the past
    
-6. You can search task by filling the search bar on the main screen
+6. You can search task by filling the search bar on the main screen, note that search is case sensitive
 
 7. You can select some filtering options by pressing filter button on the main screen
 
@@ -158,7 +158,7 @@ Run on Android device/emulator
 
 8. You can press a task to set it done or undone
 
-9. You can long press a task to edit a task
+9. You can long press a task to edit
 
 <span><img src="/captures/capture(4).png" width="250" title="dark"></span>
 
@@ -167,3 +167,4 @@ Run on Android device/emulator
 - Author: Muhammad Fauzan Al-Ghifari
 - mfauzanalg@gmail.com
 - Thank you for using this app
+- Thank you for giving me a chance to do this challenge :)
