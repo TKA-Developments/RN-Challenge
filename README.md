@@ -133,15 +133,34 @@ Run on Android device/emulator
 ### Feature
 
 1. Homescreen display light and dark mode
+
+<span>
+  <img src="/captures/capture(3).png" width="250" title="dark">
+  <img src="/captures/capture(2).png" width="250" alt="light">
+</span>
+
 2. You can add a task by pressing plus button on the buttom right corner
+
 3. Fill the title, choose the category, select the date and press check button
+
+<span><img src="/captures/capture(5).png" width="250" title="dark"></span>
+
 4. There are three task categories that tou can select, general, school and hobby
+
 5. In the main screen task is also categorized by time, today, in 7 days ahead, in the future or in
    the past
+   
 6. You can search task by filling the search bar on the main screen
+
 7. You can select some filtering options by pressing filter button on the main screen
+
+<span><img src="/captures/capture(1).png" width="250" title="dark"></span>
+
 8. You can press a task to set it done or undone
+
 9. You can long press a task to edit a task
+
+<span><img src="/captures/capture(4).png" width="250" title="dark"></span>
 
 ### Notes
 
