@@ -5,13 +5,15 @@ import { TodoListActions, todoReducer } from './todoReducer';
 export const initState: TodoLists = {
     filter: "",
     indexCount: 15,
+    toggle: 1,
+    grid: false,
     lists:[
     {
         id: 1,
         title: 'Todo 1',
         description: 'Desc of Todo 1',
         date: new Date(),
-        done: true,
+        done: false,
     },
     {
         id: 2,

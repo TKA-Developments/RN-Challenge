@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Text, View, TouchableOpacity } from '../Themed';
-import { StyleSheet, TouchableHighlight } from 'react-native';
+import { Dimensions, StyleSheet, TouchableHighlight } from 'react-native';
 import CheckBox from 'expo-checkbox';
 import { Todo } from '../../types';
 import { TodoContext } from '../../context/todoContexts';
 import { TodoActions } from '../../context/todoReducer';
 
-export default function TodoCard({todo} : {todo: Todo}){
+export default function TodoCard({todo}:{todo: Todo}){
+    //const [todo, setTodo] = React.useState(item)
     const [isDone, setDone] = React.useState(todo.done)
     const [cbColor, setcbColor] = React.useState('#40C4FF')
-    const { state, dispatch } = React.useContext(TodoContext)
+    const {state, dispatch} = React.useContext(TodoContext)
 
     const updateDone = () => {
         dispatch({
@@ -44,12 +45,11 @@ export default function TodoCard({todo} : {todo: Todo}){
     );
 }
 const styles = StyleSheet.create({
-    button: {  
-        flex: 1,      
+    button: {
+        minWidth: Dimensions.get('window').width / 2 - 12.5,
         borderRadius: 8,
         padding: 10,
-        alignItems: 'center',
-        marginBottom: 5,    
+        marginBottom: 5,           
         height: 80,
         backgroundColor: '#01579B',       
     },

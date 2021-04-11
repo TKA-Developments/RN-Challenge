@@ -1,3 +1,4 @@
+import { Alert } from "react-native";
 import { TodoLists } from "../types";
 
 export enum TodoActions {
@@ -26,7 +27,9 @@ type TodoPayload = {
         done?: boolean,
     }
     [TodoActions.Filter] : {
-        keyword: string,
+        keyword?: string,
+        toggle?: number,
+        grid?: boolean,
     }
     [TodoActions.UpdateDone] : {
         id: number,
@@ -55,10 +58,12 @@ export const todoReducer = (
     
     switch (action.type){
         case TodoActions.Add:            
-            var count = state.indexCount++            
+            var count = state.indexCount + 1            
             return {
                 filter: state.filter,
                 indexCount: count,
+                toggle: state.toggle,
+                grid: state.grid,
                 lists: [
                 ...state.lists,
                 {
@@ -74,6 +79,8 @@ export const todoReducer = (
             return {
                 filter: state.filter,
                 indexCount: state.indexCount,
+                toggle: state.toggle,
+                grid: state.grid,
                 lists: [
                 ...state.lists.filter(todo => todo.id !== action.payload.id ),
                 ]
@@ -86,14 +93,17 @@ export const todoReducer = (
             state.lists[index].done = action.payload.done
             return state
         case TodoActions.Filter:
-            return {
-                filter: action.payload.keyword,
+            return{
+                filter: action.payload.keyword != undefined ? action.payload.keyword : state.filter,
+                toggle: action.payload.toggle != undefined ? action.payload.toggle : state.toggle,
+                grid: action.payload.grid != undefined ? action.payload.grid : state.grid,
                 indexCount: state.indexCount,
-                lists: [...state.lists]
-            }
+                lists: [...state.lists],
+            }            
         case TodoActions.UpdateDone:
             var index = state.lists.findIndex((i) => i.id == action.payload.id)
-            state.lists[index].done = !state.lists[index].done    
+            state.lists[index].done = !state.lists[index].done
+            return state         
         default:
             return state
     }

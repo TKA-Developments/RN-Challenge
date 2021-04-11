@@ -6,7 +6,8 @@ import {
   View as DefaultView, 
   TextInput as DefaultTextInput,
   TouchableOpacity as DefaultTouchableOpacity,
-  Pressable, PressableProps, Animated
+  Pressable, PressableProps, Animated,
+  TouchableWithoutFeedback, Alert
   } from 'react-native';
 
 import Colors from '../constants/Colors';
@@ -50,10 +51,12 @@ type OtherIcBtnProps = {
   iconColor?: string;
   iconSize?: number;
 }
-// type ListFilterProps = {
-//   data?: any;
-//   textFilter?: string;
-// };
+
+type ToggleProps = {
+  checked: boolean,
+  checkedColor?: string,
+  uncheckedColor?: string,
+}
 
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
@@ -62,14 +65,7 @@ export type TouchableOpacityProps = ThemeProps & DefaultTouchableOpacity['props'
 export type CustomButtonProps = ThemeProps & PressableProps & CustomButtonAdditionalProps;
 export type IconButtonProps = TouchableOpacityProps & IcButtonProps;
 export type OtherIcButtonProps = IconButtonProps & OtherIcBtnProps;
-// export type FlatListProps = ThemeProps & ListFilterProps & DefaultFlatList['props'];
-
-// export function FlatList(props: FlatListProps){
-//   const { style, lightColor, darkColor, ...otherProps } = props;
-//   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
-
-//   return <DefaultFlatList style={[{ backgroundColor }, style]} {...otherProps} />;
-// }
+export type ToggleButtonProps = ThemeProps & TouchableWithoutFeedback['props'] & ToggleProps;
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
@@ -111,6 +107,19 @@ export function CustomButton(props: CustomButtonProps){
               style = { props?.style } >
                 
     </Pressable>
+  )
+}
+
+export function ToggleButton(props: ToggleButtonProps){
+  const { style, children, onPress, lightColor, darkColor, checked, checkedColor, uncheckedColor, ...allProps } = props
+  
+  return (
+    <TouchableWithoutFeedback onPress={(e)=>{onPress? onPress(e) : null}} 
+                              {...allProps} >
+      <View style={[{ backgroundColor: checked ? checkedColor : uncheckedColor }, style]}>
+        {children}
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
