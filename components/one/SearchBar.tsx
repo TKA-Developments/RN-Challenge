@@ -35,10 +35,6 @@ export default function SearchBar(){
     );
 }
 
-function handleChange({ input }: { input: string }){
-
-}
-
 const styles = StyleSheet.create({
     container: {
         borderRadius: 3,

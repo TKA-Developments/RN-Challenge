@@ -1,10 +1,12 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Entypo, AntDesign } from '@expo/vector-icons';
 import * as React from 'react';
+import { StyleSheet } from 'react-native';
 import { 
   Text as DefaultText, 
   View as DefaultView, 
   TextInput as DefaultTextInput,
   TouchableOpacity as DefaultTouchableOpacity,
+  Pressable, PressableProps, Animated
   } from 'react-native';
 
 import Colors from '../constants/Colors';
@@ -31,6 +33,23 @@ type ThemeProps = {
   darkColor?: string;
 };
 
+type CustomButtonAdditionalProps = {
+  pressedColor?: string;
+}
+
+type IcButtonProps = {
+  iconRadius?: number,
+  iconHeight?: number,
+  iconWidth?: number,
+  iconBackColor?: string,
+  iconPadding?: number,
+  iconMargin?: number,
+}
+
+type OtherIcBtnProps = {
+  iconColor?: string;
+  iconSize?: number;
+}
 // type ListFilterProps = {
 //   data?: any;
 //   textFilter?: string;
@@ -40,6 +59,9 @@ export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
 export type TextInputProps = ThemeProps & DefaultTextInput['props'];
 export type TouchableOpacityProps = ThemeProps & DefaultTouchableOpacity['props'];
+export type CustomButtonProps = ThemeProps & PressableProps & CustomButtonAdditionalProps;
+export type IconButtonProps = TouchableOpacityProps & IcButtonProps;
+export type OtherIcButtonProps = IconButtonProps & OtherIcBtnProps;
 // export type FlatListProps = ThemeProps & ListFilterProps & DefaultFlatList['props'];
 
 // export function FlatList(props: FlatListProps){
@@ -70,22 +92,72 @@ export function TextInput(props: TextInputProps){
   return <DefaultTextInput style={[ { color }, style ]} {...otherProps} />;
 }
 
-export function FloatingActionButton(props: TouchableOpacityProps){
+export function TouchableOpacity(props: TouchableOpacityProps){
   return (
-  <DefaultTouchableOpacity onPress = { props.onPress } style = { props.style } >
-    <View
-      style={{
-        flex:1,
-        width: 55,
-        borderRadius: 55,
-        alignItems:'center',
-        backgroundColor: '#40C4FF',
-      }}
-    >
-        <Ionicons 
-          name='add-sharp'
-          size={30}
+  <DefaultTouchableOpacity 
+    activeOpacity = {0.5}
+    onPress = { props.onPress }
+    style = { props.style }>
+      {props.children}
+          </DefaultTouchableOpacity>)
+}
+
+export function CustomButton(props: CustomButtonProps){
+  const fadeIn = React.useRef( new Animated.Value(1))
+
+  return (
+    <Pressable onPress = {props?.onPress}
+               
+              style = { props?.style } >
+                
+    </Pressable>
+  )
+}
+
+export function IconButton(props: IconButtonProps ){
+  return (
+    <TouchableOpacity onPress={props.onPress} style={props.style} >
+      <View
+        style={{
+          flex: 1,
+          padding: props.iconPadding,
+          margin: props.iconMargin,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: props.iconWidth,
+          height: props.iconHeight,
+          borderRadius: props.iconRadius,
+          backgroundColor: props.iconBackColor,
+        }}
+      >
+        {props.children}
+      </View>
+    </TouchableOpacity >)
+}
+
+export function AddToListButton(props: OtherIcButtonProps){
+  const {iconColor, iconSize, ...allProps} = props;
+  return (
+    <IconButton 
+      {...allProps} >
+      <Entypo 
+            name='add-to-list'      
+            color={iconColor}
+            size={iconSize}
+      />
+    </IconButton >)
+}
+
+export function SaveButton(props: OtherIcButtonProps){
+  const { iconColor, iconSize, ...allProps } = props;
+  return (
+    <IconButton
+      {...allProps} >
+        <AntDesign 
+            name='check'
+            color={iconColor}
+            size={iconSize}
         />
-    </View>
-    </DefaultTouchableOpacity >)
+      </IconButton>
+  )
 }

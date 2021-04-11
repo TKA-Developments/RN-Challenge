@@ -1,6 +1,7 @@
 export type RootStackParamList = {
-  Root: undefined;
   NotFound: undefined;
+  TabOne: undefined;
+  AddTodo: undefined;
 };
 
 export type BottomTabParamList = {
@@ -10,6 +11,7 @@ export type BottomTabParamList = {
 
 export type TabOneParamList = {
   TabOneScreen: undefined;
+  AddTodoScreen: undefined;
 };
 
 export type TabTwoParamList = {
@@ -20,31 +22,12 @@ export type Todo = {
   id: number,
   title: string,
   description: string,
-  date: Date,
+  date?: Date,
   done?: boolean,
 };
 
 export type TodoLists = {
   filter: string,
-  lists: Todo[]
+  indexCount: number,
+  lists: Todo[],
 };
-
-export type AddTodoAction = {
-  type: string,
-  todoData: Todo,
-}
-
-export type UpdateTodoAction = {
-  type: string,
-  todoData: Todo,
-}
-
-export type RemoveTodoAction = {
-  type: string,
-  id: number,
-}
-
-// export type TodoListActions = 
-//  | AddTodoAction 
-//  | UpdateTodoAction 
-//  | RemoveTodoAction

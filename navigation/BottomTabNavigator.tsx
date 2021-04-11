@@ -5,6 +5,7 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import AddTodoScreen from '../screens/AddTodoScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
@@ -53,7 +54,13 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="TabOneScreen"
         component={TabOneScreen}
+                
         options={{ headerTitle: 'Today\'s Plan' }}
+      />
+      <TabOneStack.Screen
+        name="AddTodoScreen"
+        component={AddTodoScreen}
+        options={{ headerTitle: 'Add new Plan' }}
       />
     </TabOneStack.Navigator>
   );

@@ -4,13 +4,14 @@ import { TodoListActions, todoReducer } from './todoReducer';
 
 export const initState: TodoLists = {
     filter: "",
+    indexCount: 15,
     lists:[
     {
         id: 1,
         title: 'Todo 1',
         description: 'Desc of Todo 1',
         date: new Date(),
-        done: false,
+        done: true,
     },
     {
         id: 2,
@@ -110,7 +111,7 @@ export const initState: TodoLists = {
         date: new Date(),
         done: false,
     },
-]}
+    ]}
 
 export const TodoContext = React.createContext<{
     state: TodoLists;

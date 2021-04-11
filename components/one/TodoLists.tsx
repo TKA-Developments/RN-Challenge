@@ -4,17 +4,14 @@ import { Text, View } from '../Themed';
 import { FlatList, StyleSheet, } from 'react-native';
 import TodoCard from './TodoCard';
 import { TodoContext, TodoProvider } from '../../context/todoContexts';
-import { TodoActions } from '../../context/todoReducer';
+import { isEmpty, TodoActions } from '../../context/todoReducer';
+
+
 
 export default function TodoList(){
 
-    const { state, dispatch } = React.useContext(TodoContext)
+    const { state, dispatch } = React.useContext(TodoContext)    
     
-    function isEmpty (value: string) {
-        if (value.length<1) return true
-        if (value.replace(/ /g, "").length<1) return true
-        return false
-    }
         // dispatch({
         //     type: TodoActions.Add,
         //     payload:{
@@ -34,13 +31,13 @@ export default function TodoList(){
 
         const data = !isEmpty(state.filter) ?
                     state.lists. filter(x=>
-                        ( x.title.toLowerCase().includes(state.filter.toLowerCase()) ) ||
-                        ( x.description.toLowerCase().includes(state.filter.toLowerCase()) )
+                        ( x.title?.toLowerCase().includes(state.filter.toLowerCase()) ) ||
+                        ( x.description?.toLowerCase().includes(state.filter.toLowerCase()) )
                     ) : state.lists
         return(
-            <TodoProvider >
+            
                 <View style={styles.container}>
-                    
+                
                     <FlatList
                         data={data}
                         contentContainerStyle={styles.flatList}
@@ -53,7 +50,7 @@ export default function TodoList(){
                         overScrollMode = "never"                
                     />
                 </View>
-            </TodoProvider>
+            
         )
     
 }
