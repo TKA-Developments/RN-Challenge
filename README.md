@@ -62,5 +62,29 @@ Your app should be able to complete these tasks:
 - Do some kind of sharing
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
-## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+
+## Features
+
+- Add, edit, update, or delete a Todo
+- Search for Todos
+- Change card color
+- View by list or grid
+
+### Home
+![Home](/images/home.jpg)
+
+### Add or Edit a Todo
+![Add a Todo](/images/add.jpg) ![Mark a Todo](/images/mark.jpg) ![Remove an item](/images/remove.jpg)
+
+Here you can do:
+- Add a Todo by tapping on the top-right button.
+- Edit a Todo by tapping on the card.
+- Specify the title and the description for the Todo and you can choose the color for the card.
+- Mark a Todo as done/undone is easy, just tick or untick the check box on the right of the card. - Remove an item by long tapping on the card and click on the trash button. If you want to cancel it, just press the red cross button.
+
+### Search for Todos
+![Find some Todos](/images/find.jpg) ![Grid view](/images/grid.jpg) ![Done](/images/done.jpg) ![Undone](images/undone.jpg)
+
+You can find some todos by specifying the keyword in the search bar, and if you want to sort the items by done or undone just tap on the "Done" or "Not done yet" button on top of the list.
+Changing the view is easy, there's a 4th button on top of the list, click on it to see the change :)
+
