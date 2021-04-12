@@ -3,12 +3,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
 	Animated,
 	StyleSheet,
-	ScrollView,
 	TouchableOpacity,
 	TextInput,
 	Keyboard,
 } from 'react-native';
-import axios from 'axios';
 
 import { Text, View } from '../components/Themed';
 import TodoItem from '../components/TodoItem';
@@ -49,10 +47,14 @@ export default function TabOneScreen() {
 		}
 	};
 
+	const deleteLastItem = async () => {
+		await AsyncStorage.setItem('todoItems', JSON.stringify([]));
+	};
+
 	const retrieveTodoItems = async () => {
 		try {
 			const value = await AsyncStorage.getItem('todoItems');
-			if (value !== null) {
+			if (value !== null && value.length >= 1) {
 				setTodoItems(JSON.parse(value));
 			}
 		} catch (err) {
@@ -77,6 +79,7 @@ export default function TabOneScreen() {
 
 	const onDelete = (id: number): void => {
 		setTodoItems(todoItems.filter((item) => item.id !== id));
+		if (todoItems.length === 1) deleteLastItem();
 	};
 
 	const setTitle = (id: number, newTitle: string): void => {
@@ -109,7 +112,7 @@ export default function TabOneScreen() {
 	useEffect(() => {
 		setViewedTodoItems(todoItems);
 		fadeIn();
-		storeTodoItems();
+		storeTodoItems(todoItems);
 	}, [todoItems]);
 
 	useEffect(() => {
