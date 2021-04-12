@@ -1,8 +1,7 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import EditTodo from '../components/EditTodo';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -25,16 +24,20 @@ export default function BottomTabNavigator() {
 				component={TabOneNavigator}
 				options={{
 					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="ios-code" color={color} />
+						<Feather name="list" size={24} color={color} />
 					),
 				}}
 			/>
 			<BottomTab.Screen
-				name="TabTwo"
+				name="Weather"
 				component={TabTwoNavigator}
 				options={{
 					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="ios-code" color={color} />
+						<MaterialCommunityIcons
+							name="weather-cloudy"
+							size={24}
+							color={color}
+						/>
 					),
 				}}
 			/>

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
 	Animated,
 	StyleSheet,
@@ -7,6 +8,7 @@ import {
 	TextInput,
 	Keyboard,
 } from 'react-native';
+import axios from 'axios';
 
 import { Text, View } from '../components/Themed';
 import TodoItem from '../components/TodoItem';
@@ -14,58 +16,17 @@ import ToggleContainer from '../components/ToggleContainer';
 
 export default function TabOneScreen() {
 	const [newItem, setNewItem] = useState('');
-	const [todoItems, setTodoItems] = useState([
-		{ id: 1, title: 'Read book', done: false },
-		{ id: 2, title: 'Watch TV', done: false },
-		{ id: 3, title: 'Do HW', done: true },
-	]);
-	let nextId =
-		Math.max.apply(
-			Math,
-			todoItems.map((item) => item.id)
-		) + 1;
-
+	const [todoItems, setTodoItems] = useState<
+		{
+			id: number;
+			title: string;
+			done: boolean;
+		}[]
+	>([]);
 	const [viewedTodoItems, setViewedTodoItems] = useState(todoItems);
 
-	// Event Handlers, writing and deleting todo items
-	const onSubmit = (): void => {
-		setTodoItems([
-			...todoItems,
-			{
-				id: nextId,
-				title: newItem,
-				done: false,
-			},
-		]);
-		setNewItem('');
-		fadeIn;
-		Keyboard.dismiss();
-	};
-
-	const onDelete = (id: number): void => {
-		setTodoItems(todoItems.filter((item) => item.id !== id));
-	};
-
-	const setTitle = (id: number, newTitle: string): void => {
-		let copy = todoItems;
-		let index = copy.findIndex((item) => item.id === id);
-		copy[index].title = newTitle;
-		setTodoItems(copy);
-	};
-
-	// Toggle Views
-	const viewAll = () => {
-		setViewedTodoItems(todoItems);
-		fadeIn();
-	};
-	const viewNotCompleted = () => {
-		setViewedTodoItems(todoItems.filter((item) => item.done === false));
-		fadeIn();
-	};
-	const viewCompleted = () => {
-		setViewedTodoItems(todoItems.filter((item) => item.done === true));
-		fadeIn();
-	};
+	let nextId =
+		Math.max.apply(Math, [0, ...todoItems?.map((item) => item.id)]) + 1;
 
 	// Animation variables
 	const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
@@ -79,11 +40,86 @@ export default function TabOneScreen() {
 		}).start();
 	};
 
-	useEffect(fadeIn, []);
+	const storeTodoItems = async () => {
+		try {
+			if (todoItems.length === 0) return;
+			await AsyncStorage.setItem('todoItems', JSON.stringify(todoItems));
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const retrieveTodoItems = async () => {
+		try {
+			const value = await AsyncStorage.getItem('todoItems');
+			if (value !== null) {
+				setTodoItems(JSON.parse(value));
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	// Event Handlers, writing and deleting todo items
+	const onSubmit = async () => {
+		setTodoItems([
+			...todoItems,
+			{
+				id: nextId,
+				title: newItem,
+				done: false,
+			},
+		]);
+		setNewItem('');
+		fadeIn();
+		Keyboard.dismiss();
+	};
+
+	const onDelete = (id: number): void => {
+		setTodoItems(todoItems.filter((item) => item.id !== id));
+	};
+
+	const setTitle = (id: number, newTitle: string): void => {
+		let copy = todoItems;
+		let index = copy.findIndex((item) => item.id === id);
+		copy[index].title = newTitle;
+		setTodoItems(copy);
+		storeTodoItems();
+	};
+
+	const toggleDone = (id: number): void => {
+		let copy = todoItems;
+		let index = copy.findIndex((item) => item.id === id);
+		copy[index].done = !copy[index].done;
+		setTodoItems(copy);
+		storeTodoItems();
+	};
+
+	// Toggle Views
+	const viewAll = () => {
+		setViewedTodoItems(todoItems);
+	};
+	const viewNotCompleted = () => {
+		setViewedTodoItems(todoItems.filter((item) => item.done === false));
+	};
+	const viewCompleted = () => {
+		setViewedTodoItems(todoItems.filter((item) => item.done === true));
+	};
+
 	useEffect(() => {
 		setViewedTodoItems(todoItems);
 		fadeIn();
+		storeTodoItems();
 	}, [todoItems]);
+
+	useEffect(() => {
+		fadeIn();
+	}, [viewedTodoItems]);
+
+	useEffect(() => {
+		fadeIn();
+		retrieveTodoItems();
+	}, []);
 
 	return (
 		<View style={styles.container}>
@@ -107,18 +143,24 @@ export default function TabOneScreen() {
 				</TouchableOpacity>
 			</View>
 			<Animated.ScrollView style={[styles.scroll, { opacity: fadeAnim }]}>
-				{viewedTodoItems.map(({ id, title, done }) => (
+				<Text
+					style={{
+						padding: '5%',
+						paddingBottom: '0%',
+						color: '#6e7f80',
+					}}
+				>
+					{viewedTodoItems.length !== 0
+						? 'Tap to edit text, tap again to save changes'
+						: 'Add something new!'}
+				</Text>
+				{viewedTodoItems?.map(({ id, title, done }) => (
 					<TodoItem
 						id={id}
 						title={title}
 						done={done}
 						onDelete={onDelete}
-						onPress={() => {
-							const index = todoItems.findIndex(
-								(item) => item.id === id
-							);
-							todoItems[index].done = !todoItems[index].done;
-						}}
+						onPress={toggleDone}
 						setTitle={setTitle}
 						key={id}
 					/>
@@ -172,6 +214,7 @@ const styles = StyleSheet.create({
 	},
 	scroll: {
 		height: '60%',
+		// alignContent: 'center',
 	},
 	separator: {
 		marginVertical: 30,

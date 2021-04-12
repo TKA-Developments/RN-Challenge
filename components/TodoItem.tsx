@@ -13,7 +13,7 @@ export default function TodoItem(props: {
 	id: number;
 	title: string;
 	done: boolean;
-	onPress: () => void;
+	onPress: (id: number) => void;
 	onDelete: (id: number) => void;
 	setTitle: (id: number, newTitle: string) => void;
 }) {
@@ -49,7 +49,7 @@ export default function TodoItem(props: {
 					style={styles.checkBox}
 					onPress={() => {
 						setDone(!done);
-						props.onPress();
+						props.onPress(props.id);
 					}}
 				>
 					{done ? (
