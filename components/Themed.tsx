@@ -116,7 +116,7 @@ export function ToggleButton(props: ToggleButtonProps){
   return (
     <TouchableWithoutFeedback onPress={(e)=>{onPress? onPress(e) : null}} 
                               {...allProps} >
-      <View style={[{ backgroundColor: checked ? checkedColor : uncheckedColor }, style]}>
+      <View style={[{ backgroundColor: checked ? checkedColor : (uncheckedColor == undefined ? checkedColor : uncheckedColor)}, style]}>
         {children}
       </View>
     </TouchableWithoutFeedback>

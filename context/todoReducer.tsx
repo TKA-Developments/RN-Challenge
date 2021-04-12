@@ -15,6 +15,7 @@ type TodoPayload = {
         title: string,
         description: string,
         date?: Date,
+        theme?: any,
     }
     [TodoActions.Remove] : {
         id: number,
@@ -25,6 +26,7 @@ type TodoPayload = {
         description: string,
         date?: Date,
         done?: boolean,
+        theme?: any,
     }
     [TodoActions.Filter] : {
         keyword?: string,
@@ -72,6 +74,7 @@ export const todoReducer = (
                     description: action.payload.description,
                     date: new Date(),
                     done: false,
+                    theme: action.payload.theme,
                 }
             ]
             }
@@ -89,8 +92,9 @@ export const todoReducer = (
             var index = state.lists.findIndex((i) => i.id == action.payload.id)
             state.lists[index].title = action.payload.title
             state.lists[index].description = action.payload.description
-            state.lists[index].date = action.payload.date
-            state.lists[index].done = action.payload.done
+            state.lists[index].date = action.payload.date == undefined ? state.lists[index].date : action.payload.date
+            state.lists[index].done = action.payload.done == undefined ? state.lists[index].done : action.payload.done
+            state.lists[index].theme = action.payload.theme == undefined ? state.lists[index].theme : action.payload.theme
             return {
                 filter: state.filter,
                 indexCount: state.indexCount,

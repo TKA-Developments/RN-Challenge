@@ -1,18 +1,17 @@
 import React, {useContext, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { IconButton, Text, View } from '../Themed';
-import { FlatList, StyleSheet, Alert, Dimensions } from 'react-native';
+import { FlatList, StyleSheet,} from 'react-native';
 import TodoCard from './TodoCard';
-import { TodoContext, TodoProvider } from '../../context/todoContexts';
+import { TodoContext,} from '../../context/todoContexts';
 import { isEmpty, TodoActions } from '../../context/todoReducer';
 import { ToggleButton } from '../Themed'
-import { Todo, TodoLists, ToggleButtonValue } from '../../types'
+import { ToggleButtonValue } from '../../types'
 import SearchBar from './SearchBar';
 
 
 export function SortTodoButtonsGroup(){
     const { state, dispatch } = useContext(TodoContext)
-    //const [grid, toggleGrid] = useState(false)
     const [tAll, setAll] = useState<ToggleButtonValue>({
         All: state.toggle == 1,
         Done: state.toggle == 2,
