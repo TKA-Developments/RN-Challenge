@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React, { Component } from 'react';
 import { Animated, TouchableHighlight, ColorSchemeName, Text } from 'react-native';
 import { AddToListButton, View } from '../components/Themed';
-import AddTodoScreen from '../screens/AddTodoScreen';
+import TodoDetailScreen from '../screens/TodoDetailScreen';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
@@ -42,15 +42,15 @@ function RootNavigator() {
           title: 'Today\'s Plan',
           headerRight: () => (
             <AddToListButton 
-              onPress={()=>navigation.navigate('AddTodo')}
+              onPress={() => navigation.navigate('TodoDetail')}
               iconPadding={15}
               iconSize={24}/>
           ),
         })}
       />
       <Stack.Screen
-        name='AddTodo'
-        component={AddTodoScreen}
+        name='TodoDetail'
+        component={TodoDetailScreen}
         options={{          
           title: ''
         }}

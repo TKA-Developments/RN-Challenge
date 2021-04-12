@@ -74,7 +74,7 @@ export function SortTodoButtonsGroup(){
             borderRadius: 10,
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#F5F5F5',
+            backgroundColor: '#EEEEEE',
         },
         icStyle:{
             padding: 10,
@@ -151,16 +151,17 @@ export default function TodoList(){
 
     const { state, dispatch } = useContext(TodoContext)    
     
-        const sortdata = 
-            state.toggle == 1 ? state.lists :            
-            state.toggle == 2 ? state.lists.filter(x=>x.done) :
-            state.lists.filter(x=>!x.done)
-
-        const data = !isEmpty(state.filter) ?
-                    state.lists.filter(x=>
-                        ( x.title?.toLowerCase().includes(state.filter.toLowerCase()) ) ||
-                        ( x.description?.toLowerCase().includes(state.filter.toLowerCase()) )
-                    ) : sortdata
+    const data = 
+        !isEmpty(state.filter) ?
+            state.lists.filter( x => 
+                (state.toggle == 1 ? true : state.toggle == 2 ? x.done : !x.done) &&
+                (   
+                    (x.title?.toLowerCase().includes(state.filter.toLowerCase())) ||
+                    (x.description?.toLowerCase().includes(state.filter.toLowerCase())) 
+                )
+            )
+        :
+        state.lists.filter( x=> state.toggle == 1 ? true : state.toggle == 2 ? x.done : !x.done )    
     const colCount = state.grid ? 2 : 1
         return(            
                 <View style={styles.container}>                

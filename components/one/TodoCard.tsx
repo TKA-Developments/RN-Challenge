@@ -1,17 +1,26 @@
-import * as React from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import { Text, View, TouchableOpacity } from '../Themed';
+import React, {useContext, useState} from 'react';
+import { useNavigation, } from '@react-navigation/native';
+
+import { Text, View } from '../Themed';
 import { Dimensions, StyleSheet, TouchableHighlight } from 'react-native';
 import CheckBox from 'expo-checkbox';
-import { Todo } from '../../types';
+import { RootStackParamList, Todo } from '../../types';
 import { TodoContext } from '../../context/todoContexts';
 import { TodoActions } from '../../context/todoReducer';
+import TodoDetailScreen from '../../screens/TodoDetailScreen';
 
 export default function TodoCard({todo}:{todo: Todo}){
-    //const [todo, setTodo] = React.useState(item)
-    const [isDone, setDone] = React.useState(todo.done)
-    const [cbColor, setcbColor] = React.useState('#40C4FF')
-    const {state, dispatch} = React.useContext(TodoContext)
+
+    const [isDone, setDone] = useState(todo.done)
+    const checkboxColor1 = '#40C4FF'
+    const checkboxColor2 = '#01579B'
+    const [cbColor, setcbColor] = useState(checkboxColor1)
+    const {state, dispatch} = useContext(TodoContext)
+    const navigation = useNavigation()
+
+    const editTodo = () => {
+        navigation.navigate('TodoDetail', {todo})
+    }
 
     const updateDone = () => {
         dispatch({
@@ -24,15 +33,15 @@ export default function TodoCard({todo}:{todo: Todo}){
 
     return(       
         <TouchableHighlight 
-            onPress={() => null} 
+            onPress={() => editTodo()} 
             style={styles.button} 
-            onPressIn={() => setcbColor('#01579B')}
-            onPressOut={() => setcbColor('#40C4FF')}
+            onPressIn={() => setcbColor(checkboxColor2)}
+            onPressOut={() => setcbColor(checkboxColor1)}
             underlayColor='#03A9F4'>
             <View style={styles.buttonContainer}>
                 <View style = {styles.container}>
-                    <Text style={styles.titleStyle}>{todo.title}</Text>
-                    <Text style={styles.descStyle}>{todo.description}</Text>
+                    <Text style={styles.titleStyle} numberOfLines={1}>{todo.title}</Text>
+                    <Text style={styles.descStyle} numberOfLines={1}>{todo.description}</Text>
                 </View>
                 <CheckBox 
                     style={styles.checkbox}

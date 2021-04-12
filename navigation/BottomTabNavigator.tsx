@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import AddTodoScreen from '../screens/AddTodoScreen';
+import TodoDetailScreen from '../screens/TodoDetailScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
@@ -59,7 +59,7 @@ function TabOneNavigator() {
       />
       <TabOneStack.Screen
         name="AddTodoScreen"
-        component={AddTodoScreen}
+        component={TodoDetailScreen}
         options={{ headerTitle: 'Add new Plan' }}
       />
     </TabOneStack.Navigator>

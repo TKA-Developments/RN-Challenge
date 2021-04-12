@@ -1,7 +1,7 @@
 export type RootStackParamList = {
   NotFound: undefined;
   TabOne: undefined;
-  AddTodo: undefined;
+  TodoDetail: undefined;
 };
 
 export type BottomTabParamList = {
