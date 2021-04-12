@@ -128,7 +128,6 @@ export function IconButton(props: IconButtonProps ){
     <TouchableOpacity onPress={props.onPress} style={props.style} >
       <View
         style={{
-          flex: 1,
           padding: props.iconPadding,
           margin: props.iconMargin,
           alignItems: 'center',

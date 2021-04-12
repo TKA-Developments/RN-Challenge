@@ -6,20 +6,26 @@ import { isEmpty, TodoActions } from '../context/todoReducer';
 import { useNavigation, } from '@react-navigation/native';
 import { Todo } from '../types';
 
-export default function TodoDetailScreen({todo}: { todo?:Todo }){
+export default function TodoDetailScreen({route, navigation}: {route?: any, navigation?:any}){
 
-    var initTitle = todo == undefined ? '' : todo.title
-    var initDesc = todo == undefined ? '' : todo.description
+    const {id, titl, descr} = route.params == undefined ?
+     {id: undefined, titl: undefined, descr: undefined} 
+     : 
+     route.params
+    var initTitle = titl == undefined ? '' : titl
+    var initDesc = descr == undefined ? '' : descr
+    //var id = route.params == undefined ? undefined : route.params.id
+    //Alert.alert(`${initTitle}`)
     const [ title, _setTitle ] = useState(initTitle)
     const [ desc, _setDesc] = useState(initDesc)
 
-    const navigation = useNavigation()
+    //const navigation = useNavigation()
 
     const { state, dispatch } = useContext(TodoContext)
 
     const saveTodo = () => {
         
-        todo == undefined ?
+        id == undefined ?
         dispatch({
             type: TodoActions.Add,
             payload: {
@@ -31,7 +37,7 @@ export default function TodoDetailScreen({todo}: { todo?:Todo }){
         dispatch({
             type: TodoActions.Update,
             payload: {
-                id: todo.id,
+                id: id,
                 title: title,
                 description: desc,
             }

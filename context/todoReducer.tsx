@@ -91,7 +91,15 @@ export const todoReducer = (
             state.lists[index].description = action.payload.description
             state.lists[index].date = action.payload.date
             state.lists[index].done = action.payload.done
-            return state
+            return {
+                filter: state.filter,
+                indexCount: state.indexCount,
+                toggle: state.toggle,
+                grid: state.grid,
+                lists: [
+                    ...state.lists
+                ]
+            }
         case TodoActions.Filter:
             return{
                 filter: action.payload.keyword != undefined ? action.payload.keyword : state.filter,

@@ -1,13 +1,14 @@
 import React, {useContext, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { IconButton, Text, View } from '../Themed';
-import { FlatList, StyleSheet, Alert } from 'react-native';
+import { FlatList, StyleSheet, Alert, Dimensions } from 'react-native';
 import TodoCard from './TodoCard';
 import { TodoContext, TodoProvider } from '../../context/todoContexts';
 import { isEmpty, TodoActions } from '../../context/todoReducer';
 import { ToggleButton } from '../Themed'
 import { Todo, TodoLists, ToggleButtonValue } from '../../types'
 import SearchBar from './SearchBar';
+
 
 export function SortTodoButtonsGroup(){
     const { state, dispatch } = useContext(TodoContext)
@@ -161,10 +162,11 @@ export default function TodoList(){
                 )
             )
         :
-        state.lists.filter( x=> state.toggle == 1 ? true : state.toggle == 2 ? x.done : !x.done )    
-    const colCount = state.grid ? 2 : 1
+        state.lists.filter( x=> state.toggle == 1 ? true : state.toggle == 2 ? x.done : !x.done ) 
+    
+        const colCount = state.grid ? 2 : 1
         return(            
-                <View style={styles.container}>                
+                <View style={styles.container}>          
                     <FlatList
                         data={data}
                         ListHeaderComponent={ListHeader}
@@ -174,13 +176,13 @@ export default function TodoList(){
                         keyExtractor={(_, index) => index.toString() }
                         renderItem={({ item }) => (
                             <TodoCard
-                                todo={item}/>
+                                item={item}/>
                         )}
                         showsVerticalScrollIndicator = {false}
-                        overScrollMode = "never" 
+                        overScrollMode = "never"
                         horizontal={false}
-                        key={colCount}
-                        numColumns = {colCount}             
+                        numColumns={colCount}
+                        key={colCount}          
                     />
                 </View>
             
