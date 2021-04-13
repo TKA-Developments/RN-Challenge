@@ -63,4 +63,8 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+- To add a new task, the user should click on the ADD button provided on the top right of the Home page. Then, a text input box will show up and the user can enter the new task name from there and click on enter. 
+- To edit a task, the user should click on the EDIT button on the right side of a task. A text input box will show up and the user can enter the new name for the task from there.
+- To delete a task, the user should click on the DELETE button on the right side of a task.
+- To mark a task as complete, the user should click on the button to the left of the task name.
+- The Items page displays all the tasks the user have input, and users can choose to view only the complete tasks, the incomplete tasks, or all the tasks by clicking the options on the top right of the page.
