@@ -63,4 +63,8 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+1. Dapat menambahkan Task-Todo di kolom form tersedia dan klik 'Add' button untuk menambahkan task.
+2. Klik delete pada Task untuk menghapus.
+3. Edit Task dengan klik text Task dan dapat mengubahnya.
+4. Klik button "Done" jika Task sudah selesai.
+5. Menu Completed untuk melihat Task yang sudah selesai.
