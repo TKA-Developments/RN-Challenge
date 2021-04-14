@@ -1,15 +1,30 @@
 import * as React from 'react';
+import { FlatList } from 'react-native';
 import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
 export default function TabTwoScreen() {
+  const [completedTask] = React.useState([
+    {text: 'Task 4', key: '4'},
+    {text: 'Task 5', key: '5'},
+    {text: 'Task 6', key: '6'}
+  ]);
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabTwoScreen.tsx" />
+      <View style={styles.content}>
+        <FlatList 
+        data={completedTask}
+        renderItem={({item}) => (
+          <View style={styles.task}> 
+            <Text>{item.text}</Text>
+          </View>
+         
+        )}
+        />
+      </View>
+     
     </View>
   );
 }
@@ -17,16 +32,19 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  content: {
+    padding: 30,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  task: {
+    padding: 16,
+    marginTop: 16,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    borderRadius: 10
   },
+  button: {
+    marginTop: 20
+  }
 });
