@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: "white",
         height: 50,
-        elevation: 5
+        elevation: 1
     },
     InputStyle: {
         flex: 1, 

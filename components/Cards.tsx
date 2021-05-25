@@ -13,10 +13,10 @@ const Cards = () => {
 const styles = StyleSheet.create({
     CardsStyle: {
         backgroundColor: "white",
-        elevation: 5,
+        elevation: 1,
         borderRadius: 15,
-        height: "90%",
-        top: 20
+        height: "92%",
+        top: 10
     }
 })
 
