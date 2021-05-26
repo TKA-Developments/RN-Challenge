@@ -1,24 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 
 const Floating = () => {
     return (
-        <View style={ styles.FloatingStyle }>
-
-        </View>
+            <View style={ styles.FloatingStyle }>
+                <Feather name="plus" style={ styles.LogoStyle } />
+            </View>
     )
 }
 
 const styles = StyleSheet.create({
+    LogoStyle: {
+        fontSize: 30
+    },
     FloatingStyle: {
-        width: 60,
-        height: 60,
-        borderRadius: 50,
-        backgroundColor: "pink",
-        position: "absolute",
-        bottom: 20,
-        right: 20,
-        elevation: 5
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: "100%"
     }
 })
 

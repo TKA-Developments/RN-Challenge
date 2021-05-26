@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
         elevation: 1,
         borderRadius: 15,
         height: "92%",
+        // height: "80%",
         top: 10
     }
 })

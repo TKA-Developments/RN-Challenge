@@ -6,11 +6,9 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 
 import Navigator from './navigators/navigator';
-import Floating from './components/Floating';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
 
   if (!isLoadingComplete) {
     return null;
@@ -18,7 +16,6 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <Navigator />
-        <Floating />
         <StatusBar />
       </SafeAreaProvider>
     );
