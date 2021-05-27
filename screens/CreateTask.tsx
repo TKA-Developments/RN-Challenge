@@ -1,19 +1,65 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { PageParamList } from '../types';
+import firebase from '../firebase';
 
 import Input from '../components/Input';
+import ButtonComponent from '../components/Button';
 
-function CreateTask() {
-    return (
-        <View style={ styles.CreateTaskScreen }>
-            <View style={ styles.TitleStyle }>
-                <Input placeholder="Title" />
+interface state {
+    title: string;
+    description: string;
+}
+
+type Navigation = StackScreenProps<PageParamList, "CreateTask">
+
+class CreateTask extends Component<Navigation, state>{
+     constructor(props: any) {
+        super(props);
+
+        this.state = { 
+            title: "",
+            description: ""
+        }
+    }
+
+    getTitle(text: string) {
+        this.setState({ title: text });
+    }
+
+    getDescription(text: string) {
+        this.setState({ description: text });
+    }
+
+    submit() {
+        if(this.state.title && this.state.description) {
+            firebase.database().ref("/task").push({ 
+                title: this.state.title,
+                description: this.state.description,
+                isFinished: false
+            })
+            this.props.navigation.navigate('Home');
+        } else {
+            alert("fill all columns!!!");
+        }
+    }
+
+    render() {
+        return (
+            <View style={ styles.CreateTaskScreen }>
+                <View style={ styles.TitleStyle }>
+                    <Input placeholder="Title" effect={this.getTitle.bind(this)} />
+                </View>
+                <View style={ styles.DescriptionStyle }>
+                    <Input placeholder="Description" effect={this.getDescription.bind(this)} />
+                </View>
+                <View>
+                    <ButtonComponent onClick={ this.submit.bind(this) } />
+                </View>
             </View>
-            <View style={ styles.DescriptionStyle }>
-                <Input placeholder="Description" />
-            </View>
-        </View>
-    );
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -41,3 +87,4 @@ const styles = StyleSheet.create({
 });
 
 export default CreateTask;
+

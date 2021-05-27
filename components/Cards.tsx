@@ -1,11 +1,18 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
+import Card from './Card';
 
-const Cards = () => {
+interface Props {
+    data: [];
+}
+
+const Cards:React.FC<Props> = (props) => {
     return (
         <View style={ styles.CardsStyle }>
-            
+            { props.data.map(task => { 
+                return <Card data={ task } />
+            }) }
         </View>
     );
 }

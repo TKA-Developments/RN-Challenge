@@ -3,14 +3,16 @@ import { View, TextInput, StyleSheet } from 'react-native';
 
 interface props {
     placeholder: string;
+    effect: (text: string) => void;
 }
 
-const Input:React.FC<props> = ({placeholder}) => {
+const Input:React.FC<props> = (props) => {
     return (
         <View>
             <TextInput 
                 style={ styles.InputStyle }
-                placeholder={ placeholder }
+                placeholder={ props.placeholder }
+                onChangeText={ (text) => { props.effect(text) } }
             />
         </View>
     );

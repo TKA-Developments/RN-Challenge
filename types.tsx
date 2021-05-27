@@ -15,3 +15,4 @@ export type HomeParamList = {
 export type CreateTaskParamList = {
   CreateTaskScreen: undefined;
 }
+
