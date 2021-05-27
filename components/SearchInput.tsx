@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     },
     InputStyle: {
         flex: 1, 
-        marginRight: 15
+        marginRight: 10
     },
     LogoStyle: {
         marginHorizontal: 10,
