@@ -32,11 +32,11 @@ class CreateTask extends Component<Navigation, state>{
         this.setState({ description: text });
     }
 
-    submit() {
-        if(this.state.title && this.state.description) {
+    createData() {
+        if(this.state.title) {
             firebase.database().ref("/task").push({ 
                 title: this.state.title,
-                description: this.state.description,
+                description: this.state.description ? this.state.description : "",
                 isFinished: false
             })
             this.props.navigation.navigate('Home');
@@ -55,7 +55,7 @@ class CreateTask extends Component<Navigation, state>{
                     <Input placeholder="Description" effect={this.getDescription.bind(this)} />
                 </View>
                 <View>
-                    <ButtonComponent onClick={ this.submit.bind(this) } />
+                    <ButtonComponent onClick={ this.createData.bind(this) } />
                 </View>
             </View>
         );

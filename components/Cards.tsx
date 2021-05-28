@@ -1,18 +1,29 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 
 import Card from './Card';
 
 interface Props {
-    data: [];
+    data: Data[];
+    update: (item: any, key: string) => void;
+}
+
+interface Data {
+    title: string;
+    description: string;
+    isFinished: boolean;
 }
 
 const Cards:React.FC<Props> = (props) => {
     return (
         <View style={ styles.CardsStyle }>
-            { props.data.map(task => { 
-                return <Card data={ task } />
-            }) }
+            <ScrollView style={ styles.ScrollStyle }>
+                { Object.keys(props.data).map((key: any) => { 
+                    return (
+                        <Card data={ props.data[key] } Uniquekey={ key } update={ props.update }/>
+                    )
+                }) }
+            </ScrollView>
         </View>
     );
 }
@@ -23,8 +34,11 @@ const styles = StyleSheet.create({
         elevation: 1,
         borderRadius: 15,
         height: "92%",
-        // height: "80%",
-        top: 10
+        top: 10,
+        paddingVertical: 10
+    },
+    ScrollStyle: {
+        paddingHorizontal: 10
     }
 })
 

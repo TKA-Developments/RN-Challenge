@@ -24,21 +24,43 @@ class Home extends Component<Navigation, state> {
     }
 
     componentDidMount() {
-        this.getData();
+        this.readData();
     }
 
-    getData() {
+    componentDidUpdate() {
+        this.readData();
+    }
+
+    readData() {
         let data = firebase.database().ref('/task');
         data.once('value').then(snapshot => { 
             this.setState({ task: snapshot.val() });
         })
     }
 
+    updateData(data: any, key: string) {
+        firebase.database().ref('/task/' + key).set({
+            title: data.title,
+            description: data.description,
+            isFinished: data.isFinished
+        })
+        // if(data.isFinished) {
+            
+        // } else {
+        //     firebase.database().ref('/task/' + key).set({
+        //         title: data.title,
+        //         description: data.description,
+        //         isFinished: true
+        //     })
+        // }
+        
+    }
+
     render() {
         return (
             <View style={ styles.HomeScreen }>
                 <SearchInput />
-                <Cards data={this.state.task} />
+                <Cards data={this.state.task} update={ this.updateData }/>
                 <TouchableOpacity style={ styles.FloatingStyle } onPress={() => this.props.navigation.navigate('CreateTask')}>
                     <Floating />
                 </TouchableOpacity>
