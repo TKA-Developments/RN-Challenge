@@ -1,37 +1,59 @@
-import React from 'react';
-import { Animated, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Feather, AntDesign } from '@expo/vector-icons';
 
 interface Props {
     data: {
+        key: string
         title: string,
         description: string,
         isFinished: boolean
     };
-    Uniquekey: string;
-    update: (item: any, key: string) => void;
+    update: (item: any) => void;
+    delete: (key: string) => void;
+    deleteButton: boolean;
+    updateCloseButton: (status: boolean, key: number) => void;
+    index: number;
 }
 
 const Card:React.FC<Props> = (props) => {
+    const [isLongPress, setLongPress] = useState(typeof props.deleteButton !== 'undefined' ? props.deleteButton : false);
+    const [isCheck, setCheck] = useState(props.data.isFinished);
+
+    useEffect(() => { 
+        setTimeout(() =>{
+            setLongPress(props.deleteButton)
+        }, !props.deleteButton ? 1000 : 0);
+    }, [props.deleteButton]);
+    
     return (
-        <Animated.View style={ [styles.cardStyle, props.data.isFinished ? styles.Finished : styles.notFinished] }>
+        <View style={ [styles.cardStyle, props.data.isFinished ? styles.Finished : styles.notFinished] }>
             <TouchableOpacity style={ styles.checkContainerStyle } onPress={() => {
                 props.data.isFinished = props.data.isFinished ? false: true;
-                props.update(props.data, props.Uniquekey)
+                props.update(props.data);
+                setCheck(props.data.isFinished)
             }}>
                 { props.data.isFinished ? <Feather name="check-square" style={ styles.checkStyle } /> : <Feather name="square" style={ styles.checkStyle } /> }
             </TouchableOpacity>
             <TouchableOpacity 
                 style={ styles.dataStyle } 
-                onLongPress={() => {console.log("tes2")}}
-                delayLongPress={4000}
+                onLongPress={() => {
+                    setLongPress(true);
+                    props.updateCloseButton(true, props.index);
+                }}
             >
-                <View key={ props.Uniquekey }>
-                    <Text style={ (props.data.isFinished) ? styles.isFinishedText : styles.notFinishedText }>{ props.data.title }</Text>
-                    <Text style={ (props.data.isFinished) ? styles.isFinishedText : styles.notFinishedText }>{ props.data.description }</Text>
+                <View>
+                    <Text style={ (isCheck) ? styles.isFinishedText : styles.notFinishedText }>{ props.data.title }</Text>
+                    <Text style={ (isCheck) ? styles.isFinishedText : styles.notFinishedText }>{ props.data.description }</Text>
                 </View>
             </TouchableOpacity>
-        </Animated.View>
+            {isLongPress ? 
+                <TouchableOpacity style={ styles.closeContainerStyle } onPress={() => {props.delete(props.data.key)}}>
+                    <AntDesign name="closecircle" style={styles.closeStyle}/>
+                    <Text>{isLongPress}</Text>
+                </TouchableOpacity> 
+                : <Text></Text>}
+        </View>
     );
 }
 
@@ -40,6 +62,7 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 15,
         marginVertical: 5,
+        marginHorizontal: 10,
         flexDirection: "row"
     },
     Finished: {
@@ -67,6 +90,18 @@ const styles = StyleSheet.create({
     },
     notFinishedText: {
         textDecorationLine: "none"
+    },
+    closeStyle: {
+        fontSize: 20,
+        position: "relative",
+        backgroundColor: "white",
+        borderRadius: 50
+    }, 
+    closeContainerStyle: {
+        padding: 30,
+        position: "absolute",
+        top: -35,
+        right: -35,
     }
 })
 

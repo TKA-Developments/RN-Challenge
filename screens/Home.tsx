@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableWithoutFeedback, TouchableOpacity, StyleSheet } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PageParamList } from '../types';
 import firebase from '../firebase';
@@ -9,7 +9,8 @@ import Cards from '../components/Cards';
 import Floating from '../components/Floating';
 
 interface state {
-    task: []
+    task: any[],
+    deleteButton: boolean[]
 }
 
 type Navigation = StackScreenProps<PageParamList, "Home">
@@ -19,52 +20,104 @@ class Home extends Component<Navigation, state> {
         super(props);
 
         this.state = {
-            task: []
+            task: [],
+            deleteButton: []
         }
+
+        this.updateCloseButton = this.updateCloseButton.bind(this);
     }
 
     componentDidMount() {
-        this.readData();
+        this.readData(this.state.task);
     }
 
-    componentDidUpdate() {
-        this.readData();
+    // componentDidUpdate() {
+    //     this.readData(this.state.task);
+    // }
+
+    // componentWillUnmount() {
+    //     this.readData(this.state.task);
+    // }
+
+    resetDeleteButton = () => {
+        let deleteButton: any = [];
+        for(let i = 0; i < Object.keys(this.state.task).length; i++) {
+            deleteButton.push(false);
+        }
+        this.setState({deleteButton: deleteButton});
     }
 
-    readData() {
+    updateCloseButton(status: boolean, key: number) {
+        let array: boolean[] = this.state.deleteButton;
+        array[key] = status;
+        this.setState({deleteButton: array});
+    }
+
+    readData(currentData: any[]) {
         let data = firebase.database().ref('/task');
-        data.once('value').then(snapshot => { 
-            this.setState({ task: snapshot.val() });
+        data.on('value', snapshot => { 
+            if(JSON.stringify(snapshot.val()) !== "null") {
+                let obj = snapshot.val();
+                let arr: any[] = [];
+
+                for(var i in obj) {
+                    arr.push({
+                        key: i,
+                        title: obj[i].title,
+                        description: obj[i].description,
+                        isFinished: obj[i].isFinished
+                    })
+                }
+
+                let set: boolean = false;
+
+                if(([...currentData].length !== [...arr].length)) {
+                    this.setState({ task: [...arr] });
+                    return true;
+                } else {
+                    for(let i = 0; i < [...currentData].length; i++) {
+                        for(let item = 0; item < Object.keys(currentData[i]).length; item++) {
+                            if(currentData[i][item] !== [...arr][i][item]) {
+                                set = true;
+                                break;
+                            }
+                        }
+                        if(set) {
+                            break;
+                        }
+                    }
+                }
+
+                if(set) {
+                    this.setState({ task: [...arr] });
+                }
+            } else {
+                this.setState({task: []})
+            }
         })
     }
 
-    updateData(data: any, key: string) {
-        firebase.database().ref('/task/' + key).set({
+    updateData(data: any) {
+        firebase.database().ref('/task/' + data.key).set({
             title: data.title,
             description: data.description,
             isFinished: data.isFinished
-        })
-        // if(data.isFinished) {
-            
-        // } else {
-        //     firebase.database().ref('/task/' + key).set({
-        //         title: data.title,
-        //         description: data.description,
-        //         isFinished: true
-        //     })
-        // }
-        
+        });
+    }
+
+    deleteData(key: string) {
+        firebase.database().ref('/task/' + key).remove();
     }
 
     render() {
         return (
-            <View style={ styles.HomeScreen }>
+            <View style={ styles.HomeScreen } onStartShouldSetResponderCapture={() => { this.resetDeleteButton(); return false }}>
                 <SearchInput />
-                <Cards data={this.state.task} update={ this.updateData }/>
+                <Cards data={this.state.task} update={ this.updateData } delete={ this.deleteData } deleteButton={this.state.deleteButton} updateCloseButton={this.updateCloseButton}/>
                 <TouchableOpacity style={ styles.FloatingStyle } onPress={() => this.props.navigation.navigate('CreateTask')}>
                     <Floating />
                 </TouchableOpacity>
-            </View>
+            </View> 
         );
     }
 }
