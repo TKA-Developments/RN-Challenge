@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableWithoutFeedback, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PageParamList } from '../types';
 import firebase from '../firebase';
@@ -109,10 +109,14 @@ class Home extends Component<Navigation, state> {
         firebase.database().ref('/task/' + key).remove();
     }
 
+    getSearchInput(data: string) {
+        console.log(data)
+    }
+
     render() {
         return (
             <View style={ styles.HomeScreen } onStartShouldSetResponderCapture={() => { this.resetDeleteButton(); return false }}>
-                <SearchInput />
+                <SearchInput effect={this.getSearchInput} />
                 <Cards data={this.state.task} update={ this.updateData } delete={ this.deleteData } deleteButton={this.state.deleteButton} updateCloseButton={this.updateCloseButton}/>
                 <TouchableOpacity style={ styles.FloatingStyle } onPress={() => this.props.navigation.navigate('CreateTask')}>
                     <Floating />

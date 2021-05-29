@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Feather, AntDesign } from '@expo/vector-icons';
+import { StackNavigationProp } from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
+import { PageParamList } from '../types';
 
 interface Props {
     data: {
@@ -16,7 +19,10 @@ interface Props {
     index: number;
 }
 
-const Card:React.FC<Props> = (props) => {
+type mainScreenProp = StackNavigationProp<PageParamList, "Home">;
+
+function Card(props: Props) {
+    const navigation = useNavigation<mainScreenProp>();
     const [isLongPress, setLongPress] = useState(typeof props.deleteButton !== 'undefined' ? props.deleteButton : false);
     const [isCheck, setCheck] = useState(props.data.isFinished);
 
@@ -40,6 +46,11 @@ const Card:React.FC<Props> = (props) => {
                 onLongPress={() => {
                     setLongPress(true);
                     props.updateCloseButton(true, props.index);
+                }}
+                onPress={() => { 
+                    navigation.navigate('UpdateTask', {
+                        data: props.data
+                    });
                 }}
             >
                 <View>

@@ -4,12 +4,16 @@ import { Feather } from '@expo/vector-icons';
 
 import Input from './Input';
 
-function SearchInput() {
+interface props {
+    effect: (data: string) => void;
+}
+
+const SearchInput: React.FC<props> = (props) => {
     return (
         <View style={ styles.SearchInputStyle }>
             <Feather name="search" style={ styles.LogoStyle } />
             <View style={ styles.InputStyle }> 
-                <Input placeholder="search"/>
+                <Input placeholder="search" effect={props.effect}/>
             </View>
         </View>
     );
