@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PageParamList } from '../types';
 import firebase from '../firebase';
@@ -10,7 +10,9 @@ import Floating from '../components/Floating';
 
 interface state {
     task: any[],
-    deleteButton: boolean[]
+    deleteButton: boolean[],
+    completeFilter: boolean, 
+    incompleteFilter: boolean
 }
 
 type Navigation = StackScreenProps<PageParamList, "Home">
@@ -21,7 +23,9 @@ class Home extends Component<Navigation, state> {
 
         this.state = {
             task: [],
-            deleteButton: []
+            deleteButton: [],
+            completeFilter: false,
+            incompleteFilter: false
         }
 
         this.updateCloseButton = this.updateCloseButton.bind(this);
@@ -30,14 +34,6 @@ class Home extends Component<Navigation, state> {
     componentDidMount() {
         this.readData(this.state.task);
     }
-
-    // componentDidUpdate() {
-    //     this.readData(this.state.task);
-    // }
-
-    // componentWillUnmount() {
-    //     this.readData(this.state.task);
-    // }
 
     resetDeleteButton = () => {
         let deleteButton: any = [];
@@ -97,6 +93,28 @@ class Home extends Component<Navigation, state> {
         })
     }
 
+    readDataFilter() {
+        let data = firebase.database().ref('/task');
+        data.orderByChild("isFinished").equalTo(!this.state.completeFilter || this.state.incompleteFilter).once('value', snapshot => { 
+            if(JSON.stringify(snapshot.val()) !== "null") {
+                let obj = snapshot.val();
+                let arr: any[] = [];
+
+                for(var i in obj) {
+                    arr.push({
+                        key: i,
+                        title: obj[i].title,
+                        description: obj[i].description,
+                        isFinished: obj[i].isFinished
+                    })
+                }
+                this.setState({task: arr})
+            } else {
+                this.setState({task: []})
+            }
+        })
+    }
+
     updateData(data: any) {
         firebase.database().ref('/task/' + data.key).set({
             title: data.title,
@@ -117,6 +135,34 @@ class Home extends Component<Navigation, state> {
         return (
             <View style={ styles.HomeScreen } onStartShouldSetResponderCapture={() => { this.resetDeleteButton(); return false }}>
                 <SearchInput effect={this.getSearchInput} />
+                <View style={ styles.FilterContainerStyle }>
+                    <TouchableOpacity 
+                        style={ [styles.FilterStyle, this.state.completeFilter ? styles.green : styles.blank] }
+                        onPress={() => {
+                            this.setState({ completeFilter: !this.state.completeFilter, incompleteFilter: false });
+                            if(!this.state.completeFilter) {
+                                this.readDataFilter();
+                            } else {
+                                this.readData(this.state.task)
+                            }
+                        }}
+                    >
+                        <Text>complete</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        style={ [styles.FilterStyle, this.state.incompleteFilter ? styles.green : styles.blank] }
+                        onPress={() => {
+                            this.setState({ incompleteFilter: !this.state.incompleteFilter, completeFilter: false });
+                            if(!this.state.incompleteFilter) {
+                                this.readDataFilter();
+                            } else {
+                                this.readData(this.state.task)
+                            }
+                        }}
+                    >
+                        <Text>incomplete</Text>
+                    </TouchableOpacity>
+                </View>
                 <Cards data={this.state.task} update={ this.updateData } delete={ this.deleteData } deleteButton={this.state.deleteButton} updateCloseButton={this.updateCloseButton}/>
                 <TouchableOpacity style={ styles.FloatingStyle } onPress={() => this.props.navigation.navigate('CreateTask')}>
                     <Floating />
@@ -139,6 +185,25 @@ const styles = StyleSheet.create({
         bottom: 20,
         right: 20,
         elevation: 5
+    },
+    FilterContainerStyle: {
+        flexDirection: "row"
+    },
+    FilterStyle: {
+        flex: 1,
+        marginTop: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 15,
+        elevation: 1,
+        marginHorizontal: 5,
+        textTransform: 'capitalize'
+    },
+    green: {
+        backgroundColor: "lime"
+    },
+    blank: {
+        backgroundColor: "white",
     }
 });
 
