@@ -3,13 +3,14 @@ import { View, Button, StyleSheet } from 'react-native';
 
 interface props {
     onClick: () => void;
+    title: string;
 }
 
 const ButtonComponent:React.FC<props> = (props) => {
     return (
         <View>
             <Button 
-                title="test"
+                title={ props.title }
                 onPress={() => { props.onClick() }}
             />
         </View>

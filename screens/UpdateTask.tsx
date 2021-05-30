@@ -72,7 +72,7 @@ class UpdateTask extends Component<Navigation, state>{
                     <Input placeholder="Description" effect={this.getDescription.bind(this)} value={this.state.description}/>
                 </View>
                 <View>
-                    <ButtonComponent onClick={ this.updateData.bind(this) } />
+                    <ButtonComponent onClick={ this.updateData.bind(this) } title="Update"/>
                 </View>
             </View>
         );

@@ -55,7 +55,7 @@ class CreateTask extends Component<Navigation, state>{
                     <Input placeholder="Description" effect={this.getDescription.bind(this)} />
                 </View>
                 <View>
-                    <ButtonComponent onClick={ this.createData.bind(this) } />
+                    <ButtonComponent onClick={ this.createData.bind(this) } title="Create" />
                 </View>
             </View>
         );
