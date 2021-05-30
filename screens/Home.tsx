@@ -29,6 +29,7 @@ class Home extends Component<Navigation, state> {
         }
 
         this.updateCloseButton = this.updateCloseButton.bind(this);
+        this.getSearchInput = this.getSearchInput.bind(this);
     }
 
     componentDidMount() {
@@ -115,6 +116,28 @@ class Home extends Component<Navigation, state> {
         })
     }
 
+    readDataSearch(text: string) {
+        let data = firebase.database().ref('/task');
+        data.orderByChild("title").startAt(text).endAt(text + "\uf8ff").once('value', snapshot => { 
+            if(JSON.stringify(snapshot.val()) !== "null") {
+                let obj = snapshot.val();
+                let arr: any[] = [];
+
+                for(var i in obj) {
+                    arr.push({
+                        key: i,
+                        title: obj[i].title,
+                        description: obj[i].description,
+                        isFinished: obj[i].isFinished
+                    })
+                }
+                this.setState({task: arr})
+            } else {
+                this.setState({task: []})
+            }
+        })
+    }
+
     updateData(data: any) {
         firebase.database().ref('/task/' + data.key).set({
             title: data.title,
@@ -128,7 +151,7 @@ class Home extends Component<Navigation, state> {
     }
 
     getSearchInput(data: string) {
-        console.log(data)
+        this.readDataSearch(data);
     }
 
     render() {
