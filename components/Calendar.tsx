@@ -37,7 +37,6 @@ class Calendar extends React.Component {
 
     componentDidMount(){
         const date = new Date()
-       
         let daysInMonth = getDaysInMonth(date.getMonth(), date.getFullYear())
         this.setState({days: daysInMonth})
         this.setState({selectedMonth: date.getMonth()})

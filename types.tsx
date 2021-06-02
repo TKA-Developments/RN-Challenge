@@ -25,3 +25,7 @@ export type TabTwoParamList = {
 export type TabTestParamList = {
   TestScreen: undefined;
 };
+
+export type Props = {
+  onPress(): void
+}
