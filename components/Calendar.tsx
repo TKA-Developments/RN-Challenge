@@ -43,7 +43,6 @@ class Calendar extends React.Component {
     }
 
     render() {
-    console.log(this.state.selectedMonth)
     const MonthItem = ({ item, onPress, style }) => (
         <TouchableOpacity style={style}>
             <Text onPress={onPress}>{item.month}</Text>
@@ -60,7 +59,7 @@ class Calendar extends React.Component {
             <View>
              <View style={styles.monthPicker}>
                <FlatList
-                     horizontal='true'
+                     horizontal={true}
                      data={this.state.months}
                      renderItem={({item}) => (
                          <MonthItem
@@ -73,7 +72,7 @@ class Calendar extends React.Component {
              </View>
              <View style={styles.dayPicker}>
              <FlatList
-                     horizontal='true'
+                     horizontal={true}
                      data={this.state.days}
                      renderItem={({item}) => (
                          <DayItem

@@ -5,17 +5,42 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import TabLoginScreen from '../screens/TabLoginScreen';
 import TabOneScreen from '../screens/TabOneScreen';
+import TabRegisterScreen from '../screens/TabRegisterScreen';
 import TabTaskScreen from '../screens/TabTaskScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import TestScreen from '../screens/TestScreen';
-import { BottomTabParamList, TabTaskParamList } from '../types';
+import { BottomTabParamList, TabTaskParamList, MainTabParamList } from '../types';
+import firebase from 'firebase'
+import Navigation from '.';
+import AuthTabNavigator from './AuthTabNavigator';
+
+
+const MainTab = createStackNavigator<MainTabParamList>();
+
+export default function MainTabNavigator() {
+  const colorScheme = useColorScheme();
+  return (
+    <MainTab.Navigator
+      screenOptions={{headerShown: false}}
+    >
+       <MainTab.Screen
+        name="TabDashboard"
+        component={BottomTabNavigator}
+      />
+      <MainTab.Screen
+        name="TabAuth"
+        component={AuthTabNavigator}
+      />
+    </MainTab.Navigator>
+  );
+}
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-
   return (
     
     <BottomTab.Navigator
@@ -28,7 +53,6 @@ export default function BottomTabNavigator() {
             tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
           }}
         />
-
     </BottomTab.Navigator>
   );
 }
@@ -55,6 +79,7 @@ function TabTaskNavigator() {
     </TabTaskStack.Navigator>
   )
 }
+
 
 // const TabOneStack = createStackNavigator<TabOneParamList>();
 

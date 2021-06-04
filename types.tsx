@@ -1,6 +1,7 @@
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
+  Auth: undefined;
 };
 
 export type BottomTabParamList = {
@@ -8,6 +9,7 @@ export type BottomTabParamList = {
   TabTwo: undefined;
   TabTest: undefined;
   TabTask: undefined;
+  TabAuth: undefined;
 };
 
 export type TabTaskParamList = {
@@ -22,8 +24,24 @@ export type TabTwoParamList = {
   TabTwoScreen: undefined;
 };
 
-export type TabTestParamList = {
-  TestScreen: undefined;
+export type MainTabParamList = {
+  TabTwoScreen: undefined;
+};
+
+
+export type TabLoginParamList = {
+  TabLoginScreen: undefined;
+}
+
+export type TabRegisterParamList = {
+  TabLoginScreen: undefined;
+}
+
+export type TabAuthParamList = {
+  TabRegisterScreen: undefined;
+  TabLoginScreen: undefined;
+  TabRegister: undefined;
+  TabLogin: undefined;
 };
 
 export type Props = {

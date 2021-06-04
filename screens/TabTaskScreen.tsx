@@ -1,82 +1,18 @@
+import firebase from 'firebase'
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Button, Image,TouchableOpacity } from 'react-native'
+import { StyleSheet, Button, Image,TouchableOpacity, Modal, TextInput } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import Calendar from '../components/Calendar'
 import TaskItem from '../components/TaskItem'
 import { Text, View } from '../components/Themed'
+import Navigation from '../navigation'
 import { Props } from '../types'
 
-// const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 
-//                     'December']
 
-// class TabTaskScreen extends React.Component {
-//     constructor(props){
-//         super(props)
-//         this.state = {}
-//         this.AddTaskHandler = this.AddTaskHandler.bind(this)
-//     }
-
-//     AddTaskHandler(){
-//         console.log('Test')
-//     }
-
-//     render(){
-//         const FloatingButton = ({style, onPress }) => (
-//             <TouchableOpacity style={style} onPress={onPress}>
-//                 <Image source={require('../assets/images/add.svg')} style={{width: 30, height: 30, }}/>
-//             </TouchableOpacity>
-//         )  
-//         return(
-//             <View style={styles.container}>  
-//             <ScrollView>
-//                 <View style={styles.containerContent}>
-//                     <View style={styles.greetContainer} onPress={this.AddTaskHandler}>
-//                         <Text style={styles.greetText}>Good Morning, {name}</Text>
-//                     </View>
-//                     <View style={styles.calendar}>    
-//                         <Calendar/> 
-//                     </View>
-//                     <Text style={styles.menuTitle}>Your Schedule's</Text>
-//                     <View style={styles.taskContainer}>
-//                         <View>
-//                             <TaskItem 
-//                                 TaskTitle="Go to Pasar" 
-//                                 TaskTime="07.30 - 09.30"
-//                                 TaskLocation="Jl.Pasar Ikan Jakarta" 
-//                             />         
-//                         </View>
-//                         <View style={styles.taskItemContainer}>
-//                             <TaskItem 
-//                                 TaskTitle="Go to Pasar" 
-//                                 TaskTime="07.30 - 09.30"
-//                                 TaskLocation="Jl.Pasar Ikan Jakarta" 
-//                             />
-//                         </View>
-//                         <View>
-//                             <TaskItem 
-//                                 TaskTitle="Go to Pasar" 
-//                                 TaskTime="07.30 - 09.30"
-//                                 TaskLocation="Jl.Pasar Ikan Jakarta" 
-//                             />
-//                         </View>
-//                         <View>
-//                             <TaskItem 
-//                                 TaskTitle="Go to Pasar" 
-//                                 TaskTime="07.30 - 09.30"
-//                                 TaskLocation="Jl.Pasar Ikan Jakarta" 
-//                             />
-//                         </View>
-//                     </View>
-//                 </View>
-//                 </ScrollView>   
-//                 <FloatingButton style={styles.floatingButton} onPress={() => console.log('Test')}/> 
-//             </View>
-//         )
-//     }
-// }
 
 export default function TabTaskScreen<Props>(){
     const date = new Date()
+    const[isAddTaskMode, setIsAddTaskMode] = useState(false)
     const[currentMonth, setCurrentMonth] = useState(date.getMonth())
     const[currentDay, setCurrentDay] = useState(date.getDate())
     const[taskList, setTaskList] = useState([
@@ -86,8 +22,49 @@ export default function TabTaskScreen<Props>(){
         {key: 4, title: 'Play with my girlfriend', time: '20.30-24.00', location: 'Jl.Jepang'},
     ])
     const[count,setCount] = useState(0)
+    const[nameTask, setNameTask] = useState('')
+    const[timeTask, setTimeTask] = useState('')
+    const[locationTask, setLocationTask] = useState('')
+    const[isLogin, setIsLogin] = useState(false)
 
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyCHBQERYLwWXV7c0WNunTB0YTo1El05bfI",
+        authDomain: "to-do-app-65492.firebaseapp.com",
+        projectId: "to-do-app-65492",
+        storageBucket: "to-do-app-65492.appspot.com",
+        messagingSenderId: "1097336026558",
+        appId: "1:1097336026558:web:bca4589b04ebf920fa35ef",
+        measurementId: "G-SE0HYTMSNB"
+      };
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig)
+     }else {
+        firebase.app(); // if already initialized, use that one
+     }
+
+    // useEffect(() => {
+    //     firebase.auth().onAuthStateChanged((user) => {
+    //         if (user) {
+    //           // User is signed in, see docs for a list of available properties
+    //           // https://firebase.google.com/docs/reference/js/firebase.User
+    //           var uid = user.uid;
+    //           console.log(uid)
+    //           // ...
+    //         } else { 
+    //           console.log('loggedout')     
+    //           setIsLogin(false)         
+    //         }
+    //     });
+    //     if (isLogin) {
+        
+    //     }else{
+    //         console.log('loggedout')
+    //     }
+    // })
+    
+
+    const ref = firebase.firestore().collection('users-task')
 
     let name = "Joko"
     const FloatingButton = ({style, onPress}) => (
@@ -97,11 +74,71 @@ export default function TabTaskScreen<Props>(){
     )   
     const AddTaskHandler = () => {
         const key = taskList[taskList.length - 1].key
-        const newTask = [...taskList, {key: key+1, title: 'New Task Added', time: '09.00-12.00', location: 'Gg. Masjid'}]
-        setTaskList(newTask)
+        // const newTask = [...taskList, {key: key+1, title: 'New Task Added', time: '09.00-12.00', location: 'Gg. Masjid'}]
+        // setTaskList(newTask)
+        setIsAddTaskMode(true)
     }
+
+
+    const SubmitAddTaskHandler = () => {
+        const key = taskList[taskList.length - 1].key+1
+        const newTask = [...taskList, {key: key, title: nameTask, time: timeTask, location: locationTask}]
+        ref.doc('mFjwa9wvS15aqe7u1wjJ').update({
+            tasks: newTask
+        }).then((docRef) => {
+            console.log("Success to update")
+        }).catch((error) => {
+            console.log("error update")
+        })
+        setTaskList(newTask)
+        setIsAddTaskMode(false)
+    }
+
+    const Logout = ({navigation}) => {
+        firebase.auth().signOut().then(() => {
+            // Sign-out successful.
+            console.log('Sign out success')
+            navigation.navigate('TabAuth')
+
+          }).catch((error) => {
+            // An error happened.
+            console.log('Sign out error')
+          });
+    }
+
     return (
-            <View style={styles.container}>  
+            <View style={styles.container}>
+            <Modal
+             animationType="slide"
+             transparent={true}
+             visible={isAddTaskMode}
+             style={styles.addTaskModal}
+             onRequestClose={() => {
+                 setIsAddTaskMode(false)
+             }}
+             >
+                <View style={styles.addTaskModal}>
+                    <Text>Ini Modal Tambah Task</Text>
+                    <TextInput
+                        onChangeText={nameTask => setNameTask(nameTask)}
+                        defaultValue={nameTask}
+                        placeholder='Task Name...'
+                    />
+                    <TextInput
+                        onChangeText={timeTask => setTimeTask(timeTask)}
+                        defaultValue={timeTask}
+                        placeholder='Task Time...'
+                    />
+                    <TextInput
+                        onChangeText={locationTask => setLocationTask(locationTask)}
+                        defaultValue={locationTask}
+                        placeholder='Task Location...'
+                    />
+                    <TouchableOpacity onPress={SubmitAddTaskHandler}>
+                        <Text>Create Task</Text>
+                    </TouchableOpacity>
+                </View>   
+            </Modal>  
             <ScrollView>
                 <View style={styles.containerContent}>
                     <View style={styles.greetContainer}>
@@ -123,35 +160,10 @@ export default function TabTaskScreen<Props>(){
                                 />
                             )}
                         />
-                        {/* <View>
-                            <TaskItem 
-                                TaskTitle="Go to Pasar" 
-                                TaskTime="07.30 - 09.30"
-                                TaskLocation="Jl.Pasar Ikan Jakarta" 
-                            />         
-                        </View>
-                        <View style={styles.taskItemContainer}>
-                            <TaskItem 
-                                TaskTitle="Go to Pasar" 
-                                TaskTime="07.30 - 09.30"
-                                TaskLocation="Jl.Pasar Ikan Jakarta" 
-                            />
-                        </View>
-                        <View>
-                            <TaskItem 
-                                TaskTitle="Go to Pasar" 
-                                TaskTime="07.30 - 09.30"
-                                TaskLocation="Jl.Pasar Ikan Jakarta" 
-                            />
-                        </View>
-                        <View>
-                            <TaskItem 
-                                TaskTitle="Go to Pasar" 
-                                TaskTime="07.30 - 09.30"
-                                TaskLocation="Jl.Pasar Ikan Jakarta" 
-                            />
-                        </View> */}
                     </View>
+                    <TouchableOpacity onPress={Logout}>
+                        <Text>Logout</Text>
+                    </TouchableOpacity>
                 </View>
                 </ScrollView>   
                 <FloatingButton style={styles.floatingButton} onPress={AddTaskHandler}/> 
@@ -193,7 +205,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         right: 30,
         bottom: 25,
-    }
+    },
+        addTaskModal: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 6,
+    },
+   
 })
 
 // export default TabTaskScreen
