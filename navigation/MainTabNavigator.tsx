@@ -11,28 +11,44 @@ import TabRegisterScreen from '../screens/TabRegisterScreen';
 import TabTaskScreen from '../screens/TabTaskScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import TestScreen from '../screens/TestScreen';
-import { BottomTabParamList, TabTaskParamList, MainTabParamList } from '../types';
+import { BottomTabParamList, TabTaskParamList, MainTabParamList, TabAuthParamList, TabLoginParamList, TabRegisterParamList } from '../types';
 import firebase from 'firebase'
 import Navigation from '.';
-import AuthTabNavigator from './AuthTabNavigator';
-
+import { AuthProvider, AuthContext } from '../context/Auth';
 
 const MainTab = createStackNavigator<MainTabParamList>();
 
 export default function MainTabNavigator() {
   const colorScheme = useColorScheme();
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false)
+  const authContext = React.useContext(AuthContext)
+  // React.useEffect(() => {
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       // User is signed in, see docs for a list of available properties
+  //       // https://firebase.google.com/docs/reference/js/firebase.User
+  //       var uid = user.uid;
+  //       console.log(uid)
+  //       setIsLoggedIn(true)
+  //       // ...
+  //     } else {
+  //       // User is signed out
+  //       // ...
+  //       console.log('is not loggedin')
+  //     }
+  //   });
+    
+  // })
+  console.log(authContext.authData?.uid)
   return (
     <MainTab.Navigator
       screenOptions={{headerShown: false}}
     >
-       <MainTab.Screen
-        name="TabDashboard"
-        component={BottomTabNavigator}
-      />
-      <MainTab.Screen
-        name="TabAuth"
-        component={AuthTabNavigator}
-      />
+      {authContext.authData?.uid == undefined ? (
+        <MainTab.Screen name="TabAuth" component={AuthTabNavigator}/>
+      ) : (
+        <MainTab.Screen name="TabTask" component={TabTaskNavigator}/>
+      )}
     </MainTab.Navigator>
   );
 }
@@ -80,7 +96,54 @@ function TabTaskNavigator() {
   )
 }
 
+const TabAuthStack = createStackNavigator<TabAuthParamList>()
 
+function AuthTabNavigator() {
+  return (
+    <TabAuthStack.Navigator
+        screenOptions={{headerShown: false}}
+    >
+      <TabAuthStack.Screen 
+        name="TabLogin"
+        component={TabLoginNavigator}
+      />
+      <TabAuthStack.Screen 
+        name="TabRegister"
+        component={TabRegisterNavigator}
+      />
+    </TabAuthStack.Navigator>
+  )
+} 
+
+const TabLoginStack = createStackNavigator<TabLoginParamList>()
+
+function TabLoginNavigator() {
+    return (
+        <TabLoginStack.Navigator
+        screenOptions={{headerShown: false}}
+        >
+          <TabLoginStack.Screen 
+            name="TabLogin"
+            component={TabLoginScreen}
+          />
+        </TabLoginStack.Navigator>
+    )
+}
+
+const TabRegisterStack = createStackNavigator<TabRegisterParamList>()
+
+function TabRegisterNavigator() {
+  return (
+    <TabRegisterStack.Navigator
+    screenOptions={{headerShown: false}}
+    >
+      <TabRegisterStack.Screen
+        name="TabRegister"
+        component={TabRegisterScreen}
+      />
+    </TabRegisterStack.Navigator>
+  )
+}
 // const TabOneStack = createStackNavigator<TabOneParamList>();
 
 // function TabOneNavigator() {

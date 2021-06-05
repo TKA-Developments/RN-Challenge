@@ -1,16 +1,17 @@
 import firebase from 'firebase'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { StyleSheet, Button, Image,TouchableOpacity, Modal, TextInput } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import Calendar from '../components/Calendar'
 import TaskItem from '../components/TaskItem'
 import { Text, View } from '../components/Themed'
+import { AuthContext } from '../context/Auth'
 import Navigation from '../navigation'
 import { Props } from '../types'
 
 
 
-export default function TabTaskScreen<Props>(){
+export default function TabTaskScreen<Props>({navigation}){
     const date = new Date()
     const[isAddTaskMode, setIsAddTaskMode] = useState(false)
     const[currentMonth, setCurrentMonth] = useState(date.getMonth())
@@ -26,7 +27,7 @@ export default function TabTaskScreen<Props>(){
     const[timeTask, setTimeTask] = useState('')
     const[locationTask, setLocationTask] = useState('')
     const[isLogin, setIsLogin] = useState(false)
-
+    const authContext = useContext(AuthContext)
 
     const firebaseConfig = {
         apiKey: "AIzaSyCHBQERYLwWXV7c0WNunTB0YTo1El05bfI",
@@ -66,7 +67,7 @@ export default function TabTaskScreen<Props>(){
 
     const ref = firebase.firestore().collection('users-task')
 
-    let name = "Joko"
+    let name = authContext.authData?.displayName
     const FloatingButton = ({style, onPress}) => (
         <TouchableOpacity style={style} onPress={onPress}>
             <Image source={require('../assets/images/add.svg')} style={{width: 30, height: 30, }}/>
@@ -94,17 +95,17 @@ export default function TabTaskScreen<Props>(){
         setIsAddTaskMode(false)
     }
 
-    const Logout = ({navigation}) => {
-        firebase.auth().signOut().then(() => {
-            // Sign-out successful.
-            console.log('Sign out success')
-            navigation.navigate('TabAuth')
+    // const Logout = () => {
+    //     firebase.auth().signOut().then(() => {
+    //         // Sign-out successful.
+    //         console.log('Sign out success')
+    //         navigation.navigate('TabAuth')
 
-          }).catch((error) => {
-            // An error happened.
-            console.log('Sign out error')
-          });
-    }
+    //       }).catch((error) => {
+    //         // An error happened.
+    //         console.log('Sign out error')
+    //       });
+    // }
 
     return (
             <View style={styles.container}>
@@ -161,7 +162,7 @@ export default function TabTaskScreen<Props>(){
                             )}
                         />
                     </View>
-                    <TouchableOpacity onPress={Logout}>
+                    <TouchableOpacity onPress={authContext.signOut}>
                         <Text>Logout</Text>
                     </TouchableOpacity>
                 </View>

@@ -1,3 +1,5 @@
+import firebase from 'firebase'
+
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
@@ -46,4 +48,17 @@ export type TabAuthParamList = {
 
 export type Props = {
   onPress(): void
+}
+
+export type AuthContextData = {
+  authData?: AuthData;
+  signIn(email:string,password:string): Promise<void>;
+  register(email:string,password:string, name:string): Promise<void>;
+  signOut(): Promise<void>;
+}
+
+export type AuthData = {
+  uid: string | undefined
+  email: string | null | undefined
+  displayName: string | null | undefined
 }
