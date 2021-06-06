@@ -63,12 +63,10 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-1. Run the app.
+1. Run the app -- for best experience use web browser.
 2. Register with your email (I use firebase authentication on this feature).
 3. Login with your registered email.
 4. You can add, edit, and remove task (I use firestore to store the data).
-
-I want to share about how i build this app. For me, this is quite challenging because this is my first time use react, react-native, typescript, firebase firestore to build app and i haven't worked on frontend in long time maybe 6-7 months cause i focused on backend tech like php and go. As you can see maybe this app is kinda messed up because i build this app while learning about the tech stack (react, react-native, typescript, firebase) with the given time i haven't able to make this app clean.
 
 ### Things that need to improve
 1. I hit firestore api every task being updated, i think this is bad because app will too often call the firestore api. For the next improvement, i think i will make task being updated just when user logout or every day.
@@ -76,8 +74,11 @@ I want to share about how i build this app. For me, this is quite challenging be
 3. User experience and User Interface.
 4. Clean the code. I make this app with brute-force technique due to lack of time given and my knowledge about the stack.
 5. I use localfile for image source, in Expo the image will not shown. So, i use url image that i store on gcs (google cloud storage). But, the image is blinking it's like the image is always rendering. I still dont have solution for this problem.
-6. Validation for every input.
-7. Use async storage.
+6. Styling in Expo is different from web browser. I will learn more to fix this.
+7. Validation for every input.
+8. Use async storage.
+
+I want to share about how i build this app. For me, this is quite challenging because this is my first time use react, react-native, typescript, firebase firestore to build app and i haven't worked on frontend in long time maybe 6-7 months cause i focused on backend tech like php and go. As you can see maybe this app is kinda messed up because i build this app while learning about the tech stack (react, react-native, typescript, firebase) with the given time i haven't able to make this app clean. I feel i learned a lot from working on this project.
 
 
 
