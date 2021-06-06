@@ -26,16 +26,17 @@ export type TabTwoParamList = {
 };
 
 export type MainTabParamList = {
-  TabTwoScreen: undefined;
+  TabTask: undefined;
+  TabAuth: undefined;
 };
 
 
 export type TabLoginParamList = {
-  TabLoginScreen: undefined;
+  TabLogin: undefined;
 }
 
 export type TabRegisterParamList = {
-  TabLoginScreen: undefined;
+  TabRegister: undefined;
 }
 
 export type TabAuthParamList = {

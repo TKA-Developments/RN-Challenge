@@ -39,13 +39,13 @@ class Calendar extends React.Component<{}, {months: Array<{key:number, month:str
         const date = new Date()
         let daysInMonth = getDaysInMonth(date.getMonth(), date.getFullYear())
         this.setState({days: daysInMonth})
-        this.setState({selectedMonth: date.getMonth()})
+        
     }
 
     render() {
-    const MonthItem = ({ item, onPress, style }:{item:any, onPress: () => void, style:any}) => (
+    const MonthItem = ({ item, style }:{item:any, style:any}) => (
         <TouchableOpacity style={style}>
-            <Text onPress={onPress}>{item.month}</Text>
+            <Text>{item.month}</Text>
         </TouchableOpacity>
     )
 
@@ -65,7 +65,6 @@ class Calendar extends React.Component<{}, {months: Array<{key:number, month:str
                          <MonthItem
                              item={item}
                              style={styles.monthPickerItem}
-                             onPress={() => this.setState({selectedMonth: item.key})}
                          />
                      )}
                  />
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
         borderRadius: 9,
         paddingVertical: 16,
         paddingHorizontal: 23,
-        backgroundColor: '#7767E4',
+        backgroundColor: '#CE1EC7',
         marginHorizontal: 7
     },
     dayPickerText: {

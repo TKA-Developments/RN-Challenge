@@ -22,7 +22,7 @@ export default function MainTabNavigator() {
   const colorScheme = useColorScheme();
   const [isLoggedIn, setIsLoggedIn] = React.useState(false)
   const authContext = React.useContext(AuthContext)
-  
+
   console.log(authContext.authData?.uid)
   return (
     <MainTab.Navigator
