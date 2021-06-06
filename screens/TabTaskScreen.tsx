@@ -1,90 +1,63 @@
 import firebase from 'firebase'
 import React, { useEffect, useState, useContext } from 'react'
-import { StyleSheet, Button, Image,TouchableOpacity, Modal, TextInput } from 'react-native'
-import { FlatList, ScrollView } from 'react-native-gesture-handler'
+import { StyleSheet, Image, TouchableOpacity, Modal, TextInput, FlatList, ScrollView } from 'react-native'
+import {  } from 'react-native-gesture-handler'
 import Calendar from '../components/Calendar'
 import TaskItem from '../components/TaskItem'
 import { Text, View } from '../components/Themed'
 import { AuthContext } from '../context/Auth'
-import Navigation from '../navigation'
-import { Props } from '../types'
+import { PropsParam, ButtonParam} from '../types'
 
 
 
-export default function TabTaskScreen<Props>({navigation}){
+
+export default function TabTaskScreen<Props>({}){
     const date = new Date()
     const[isAddTaskMode, setIsAddTaskMode] = useState(false)
-    const[currentMonth, setCurrentMonth] = useState(date.getMonth())
-    const[currentDay, setCurrentDay] = useState(date.getDate())
-    const[taskList, setTaskList] = useState([
-        {key: 1, title: 'Go To Pasar', time: '09.30-10.00', location: 'Jl.Kaliurang'},
-        {key: 2, title: 'Go To Stasiun', time: '10.30-14.00', location: 'Jl.Peninggaran'},
-        {key: 3, title: 'Do the homework', time: '15.30-17.00', location: 'Jl.Pogung Lor'},
-        {key: 4, title: 'Play with my girlfriend', time: '20.30-24.00', location: 'Jl.Jepang'},
-    ])
-    const[count,setCount] = useState(0)
+    const[taskList, setTaskList] = useState<any[]>([])
     const[nameTask, setNameTask] = useState('')
     const[timeTask, setTimeTask] = useState('')
     const[locationTask, setLocationTask] = useState('')
-    const[isLogin, setIsLogin] = useState(false)
     const authContext = useContext(AuthContext)
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCHBQERYLwWXV7c0WNunTB0YTo1El05bfI",
-        authDomain: "to-do-app-65492.firebaseapp.com",
-        projectId: "to-do-app-65492",
-        storageBucket: "to-do-app-65492.appspot.com",
-        messagingSenderId: "1097336026558",
-        appId: "1:1097336026558:web:bca4589b04ebf920fa35ef",
-        measurementId: "G-SE0HYTMSNB"
-      };
-      if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig)
-     }else {
-        firebase.app(); // if already initialized, use that one
-     }
-
-    // useEffect(() => {
-    //     firebase.auth().onAuthStateChanged((user) => {
-    //         if (user) {
-    //           // User is signed in, see docs for a list of available properties
-    //           // https://firebase.google.com/docs/reference/js/firebase.User
-    //           var uid = user.uid;
-    //           console.log(uid)
-    //           // ...
-    //         } else { 
-    //           console.log('loggedout')     
-    //           setIsLogin(false)         
-    //         }
-    //     });
-    //     if (isLogin) {
-        
-    //     }else{
-    //         console.log('loggedout')
-    //     }
-    // })
+    const db = firebase.firestore();
     
+    const fetchTask = () => {
+        return db.collection('users').doc(authContext.authData?.uid).get()
+    }
+    const setTaskFirebase = (newTask:Array<object>) => {
+        return db.collection('users').doc(authContext.authData?.uid).set(newTask)
+    }
+    useEffect(() => {
+        fetchTask().then((doc) => {
+            const data: firebase.firestore.DocumentData | undefined = doc.data()
+            if (doc.exists && data) {
+                setTaskList(data.tasks)
+            }else {
+                console.log("No such document!");
+            }
+        }).catch((error) => {
+            console.log("Error : " + error)
+        })
+    })
 
-    const ref = firebase.firestore().collection('users-task')
+
 
     let name = authContext.authData?.displayName
-    const FloatingButton = ({style, onPress}) => (
+    const FloatingButton : React.FC<ButtonParam> = ({style, onPress}) => (
         <TouchableOpacity style={style} onPress={onPress}>
-            <Image source={require('../assets/images/add.svg')} style={{width: 30, height: 30, }}/>
+            <Image source={{uri: 'https://storage.googleapis.com/image_bucket_todo/add.svg'}} style={{width: 30, height: 30, }}/>
         </TouchableOpacity>
     )   
     const AddTaskHandler = () => {
-        const key = taskList[taskList.length - 1].key
-        // const newTask = [...taskList, {key: key+1, title: 'New Task Added', time: '09.00-12.00', location: 'Gg. Masjid'}]
-        // setTaskList(newTask)
         setIsAddTaskMode(true)
     }
-
-
+   
+ 
     const SubmitAddTaskHandler = () => {
-        const key = taskList[taskList.length - 1].key+1
+        const key:number = taskList[taskList.length - 1].key+1
         const newTask = [...taskList, {key: key, title: nameTask, time: timeTask, location: locationTask}]
-        ref.doc('mFjwa9wvS15aqe7u1wjJ').update({
+        db.collection('users').doc(authContext.authData?.uid).update({
             tasks: newTask
         }).then((docRef) => {
             console.log("Success to update")
@@ -94,18 +67,6 @@ export default function TabTaskScreen<Props>({navigation}){
         setTaskList(newTask)
         setIsAddTaskMode(false)
     }
-
-    // const Logout = () => {
-    //     firebase.auth().signOut().then(() => {
-    //         // Sign-out successful.
-    //         console.log('Sign out success')
-    //         navigation.navigate('TabAuth')
-
-    //       }).catch((error) => {
-    //         // An error happened.
-    //         console.log('Sign out error')
-    //       });
-    // }
 
     return (
             <View style={styles.container}>
@@ -166,8 +127,8 @@ export default function TabTaskScreen<Props>({navigation}){
                         <Text>Logout</Text>
                     </TouchableOpacity>
                 </View>
-                </ScrollView>   
-                <FloatingButton style={styles.floatingButton} onPress={AddTaskHandler}/> 
+                </ScrollView>                  
+                    <FloatingButton style={styles.floatingButton} onPress={AddTaskHandler}/>            
             </View>
     )
 }
@@ -205,14 +166,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         right: 30,
-        bottom: 25,
+        bottom: 40,
     },
         addTaskModal: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 6,
-    },
+    }
    
 })
 

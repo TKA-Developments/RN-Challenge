@@ -3,8 +3,14 @@ import { StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { View, Text } from './Themed'
 
-class TaskItem extends React.Component {
-    constructor(props){
+
+type MyProps = {
+    TaskTitle: string;
+    TaskTime: string;
+    TaskLocation:string;
+}
+class TaskItem extends React.Component<MyProps> {
+    constructor(props:any){
         super(props)
         this.state={}
     }

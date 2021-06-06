@@ -1,5 +1,4 @@
-import firebase from 'firebase'
-
+import { ViewStyle } from 'react-native'
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
@@ -46,8 +45,8 @@ export type TabAuthParamList = {
   TabLogin: undefined;
 };
 
-export type Props = {
-  onPress(): void
+export type PropsParam = {
+  onPress?:  void;
 }
 
 export type AuthContextData = {
@@ -62,3 +61,10 @@ export type AuthData = {
   email: string | null | undefined
   displayName: string | null | undefined
 }
+export type ButtonParam = {
+  onPress? :() => void
+  style? :ViewStyle
+}
+// export type TaskList = {
+//   tasks: firebase.firestore.DocumentData
+// }

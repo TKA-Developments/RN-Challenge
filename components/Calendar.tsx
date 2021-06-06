@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Button,StyleSheet } from 'react-native';
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
+import { Button,StyleSheet, FlatList, TouchableOpacity, StyleProp } from 'react-native';
+import { } from 'react-native-gesture-handler'
 import { Text, View } from '../components/Themed'
 
 function getDaysInMonth(month : number ,year : number){
@@ -13,8 +13,8 @@ function getDaysInMonth(month : number ,year : number){
     return days;
  }
 
-class Calendar extends React.Component {
-    constructor(props){
+class Calendar extends React.Component<{}, {months: Array<{key:number, month:string}>, days: number[]}> {
+    constructor(props:any){
         super(props)
         this.state = {
             months: [
@@ -43,13 +43,13 @@ class Calendar extends React.Component {
     }
 
     render() {
-    const MonthItem = ({ item, onPress, style }) => (
+    const MonthItem = ({ item, onPress, style }:{item:any, onPress: () => void, style:any}) => (
         <TouchableOpacity style={style}>
             <Text onPress={onPress}>{item.month}</Text>
         </TouchableOpacity>
     )
 
-    const DayItem = ({item}) => (
+    const DayItem = ({item}:{item:any}) => (
         <TouchableOpacity style={styles.dayPickerItem}>
             <Text style={styles.dayPickerText}>{item}</Text>
         </TouchableOpacity>

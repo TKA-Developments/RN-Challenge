@@ -1,72 +1,86 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { TouchableOpacity, TextInput } from 'react-native'
+import { TouchableOpacity, TextInput, StyleSheet, Image } from 'react-native'
 import { View,Text } from '../components/Themed'
 import Navigation from '../navigation'
-import { Props } from '../types'
+import { PropsParam } from '../types'
 import firebase from 'firebase'
 import { AuthContext } from '../context/Auth'
 
 
-export default function TabLoginScreen<Props>({navigation}){
+export default function TabLoginScreen<PropsParam>({navigation}:{navigation:any}){
     const [email,setEmail] = useState('')
     const [password, setPassword] = useState('')
     const authContext = useContext(AuthContext)
-    // const firebaseConfig = {
-    //     apiKey: "AIzaSyCHBQERYLwWXV7c0WNunTB0YTo1El05bfI",
-    //     authDomain: "to-do-app-65492.firebaseapp.com",
-    //     projectId: "to-do-app-65492",
-    //     storageBucket: "to-do-app-65492.appspot.com",
-    //     messagingSenderId: "1097336026558",
-    //     appId: "1:1097336026558:web:bca4589b04ebf920fa35ef",
-    //     measurementId: "G-SE0HYTMSNB"
-    //   };
-    //   if (!firebase.apps.length) {
-    //     firebase.initializeApp(firebaseConfig)
-    //  }else {
-    //     firebase.app(); // if already initialized, use that one
-    //  }
-     
-    // const Login = () => {
-    //     setEmail('')
-    //     setPassword('')
-    //     firebase.auth().signInWithEmailAndPassword(email, password)
-    //     .then((userCredential) => {
-    //         // Signed in
-    //         var user = userCredential.user;
-    //         console.log(user + '--' + email + '--' + password)
-            
-    //         navigation.navigate('TabDashboard')
-    //         // ...
-    //     })
-    //     .catch((error) => {
-    //         var errorCode = error.code;
-    //         var errorMessage = error.message;
-    //         console.log(errorMessage)
-    //     });
-    // }
+    
     return (
-        <View>
-            <View>
-                <Text>Login Page</Text>
+        <View style={styles.container}>
+            <View style={{marginBottom: 10}}>
+                <Image source={require('../assets/images/login-logo.svg')} style={{width: 220, height: 220, }}/>
             </View>
-            <View>
+            <View style={styles.loginForm}>
             <TextInput
                 onChangeText={email => setEmail(email)}
                 defaultValue={email}
                 placeholder='Email...'
+                style={styles.emailInput}
             />
             <TextInput
                 onChangeText={password => setPassword(password)}
                 defaultValue={password}
                 placeholder='Password...'
+                style={styles.passwordInput}
+                secureTextEntry={true}
             />
             </View>
-            <TouchableOpacity onPress={() => authContext.signIn(email,password)}>
-                <Text>Login</Text>
+            <TouchableOpacity onPress={() => authContext.signIn(email,password)} style={styles.loginBtn}>
+                <Text style={{fontSize: 15, color: 'white', fontWeight: 'bold'}}>Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('TabRegister')}>
-                <Text>Register</Text>
-            </TouchableOpacity>
+            <View style={styles.register}>
+                <Text>Don't have an account? </Text>
+                <Text style={styles.registerLink} onPress={() => navigation.navigate('TabRegister')}>Register</Text>
+            </View>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex:1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    loginForm: {
+        marginTop: 2
+    },
+    emailInput: {
+        borderColor: 'black',
+        borderWidth: 1,
+        borderRadius: 15,
+        height: 25,
+        width: 250,
+        padding: 20,
+    },
+    passwordInput: {
+        borderColor: 'black',
+        borderWidth: 1,
+        borderRadius: 15,
+        height: 25,
+        width: 250,
+        padding: 20,
+        marginTop: 4
+    },
+    loginBtn: {
+        backgroundColor: '#FF78E9',
+        textAlign: 'center',
+        borderRadius: 15,
+        padding: 11,
+        marginTop: 6,
+        width: 250
+    },
+    register: {
+        flexDirection: 'row'
+    },
+    registerLink: {
+        color: 'blue'
+    } 
+})

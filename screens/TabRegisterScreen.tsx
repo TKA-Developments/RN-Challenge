@@ -1,83 +1,107 @@
 import React, { useState, useContext } from 'react'
-import { TouchableOpacity, TextInput } from 'react-native'
+import { TouchableOpacity, TextInput, StyleSheet, Image } from 'react-native'
 import { View,Text } from '../components/Themed'
 import Navigation from '../navigation'
-import { Props } from '../types'
+import { PropsParam } from '../types'
 import firebase from 'firebase'
 import { AuthContext } from '../context/Auth'
 
 
-export default function TabRegisterScreen<Props>({navigation}){
+export default function TabRegisterScreen<PropsParam>({navigation}: {navigation:any}){
     const [email,setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')
     const authContext = useContext(AuthContext)
-
-    // var firebaseConfig = {
-    //     apiKey: "AIzaSyCHBQERYLwWXV7c0WNunTB0YTo1El05bfI",
-    //     authDomain: "to-do-app-65492.firebaseapp.com",
-    //     projectId: "to-do-app-65492",
-    //     storageBucket: "to-do-app-65492.appspot.com",
-    //     messagingSenderId: "1097336026558",
-    //     appId: "1:1097336026558:web:bca4589b04ebf920fa35ef",
-    //     measurementId: "G-SE0HYTMSNB"
-    //   };
-    //   if (!firebase.apps.length) {
-    //     firebase.initializeApp(firebaseConfig)
-    //  }else {
-    //     firebase.app(); // if already initialized, use that one
-    //  }
-     
-
-    // const CreateAccount = () => {
-    //     firebase.auth().createUserWithEmailAndPassword(email, password)
-    //     .then((userCredential) => {
-    //         // Signed in 
-    //         var user = userCredential.user;
-    //         navigation.navigate('TabLogin')
-    //         // ...
-    //     })
-    //     .catch((error) => {
-    //         var errorCode = error.code;
-    //         var errorMessage = error.message;
-    //         console.log(errorMessage)
-    //         // ..
-    //     });
-    // }
 
     const CreateAccount = () => {
         authContext.register(email,password, name)
         navigation.navigate('TabLogin')
     }
     return (
-        <View>
-            <View>
-            <Text>Ini Register Page</Text>
+        <View style={styles.container}>
+            <View style={{marginBottom: 10}}>
+                <Image source={require('../assets/images/register-logo.svg')} style={{width: 220, height: 220, }}/>
             </View>
-            <View>
+            <View style={styles.registerForm}>
             <TextInput
                 onChangeText={name => setName(name)}
                 defaultValue={name}
                 placeholder='Name...'
+                style={styles.nameInput}
             />
             <TextInput
                 onChangeText={email => setEmail(email)}
                 defaultValue={email}
                 placeholder='Email...'
+                style={styles.emailInput}
             />
             <TextInput
                 onChangeText={password => setPassword(password)}
                 defaultValue={password}
                 placeholder='Password...'
+                secureTextEntry={true}
+                style={styles.passwordInput}
             />
             </View>
-            <TouchableOpacity onPress={CreateAccount}>
-                <Text>Create Account</Text>
+            <TouchableOpacity onPress={CreateAccount} style={styles.registerBtn}>
+                <Text style={{fontSize: 15, color: 'white', fontWeight: 'bold'}}>Create Account</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('TabRegister')}>
-                <Text>Register</Text>
-            </TouchableOpacity>
+            <View style={styles.login}>
+                <Text>Already have an account? </Text>
+                <Text style={styles.loginLink} onPress={() => navigation.navigate('TabLogin')}>Login</Text>
+            </View>
         </View>
         
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex:1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    registerForm: {
+        marginTop: 2
+    },
+    nameInput: {
+        borderColor: 'black',
+        borderWidth: 1,
+        borderRadius: 15,
+        height: 25,
+        width: 250,
+        padding: 20,
+    },
+    emailInput: {
+        borderColor: 'black',
+        borderWidth: 1,
+        borderRadius: 15,
+        height: 25,
+        width: 250,
+        padding: 20,
+        marginTop: 4
+    },
+    passwordInput: {
+        borderColor: 'black',
+        borderWidth: 1,
+        borderRadius: 15,
+        height: 25,
+        width: 250,
+        padding: 20,
+        marginTop: 4
+    },
+    registerBtn: {
+        backgroundColor: '#FF78E9',
+        textAlign: 'center',
+        borderRadius: 15,
+        padding: 11,
+        marginTop: 6,
+        width: 250
+    },
+    login: {
+        flexDirection: 'row'
+    },
+    loginLink: {
+        color: 'blue'
+    } 
+})

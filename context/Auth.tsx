@@ -23,7 +23,9 @@ export const AuthProvider: React.FC = ({children}) => {
       }
       
     const db = firebase.firestore()
-
+    // const dbInit = () => {
+    //     return db
+    // }
     const signIn = async (email:string, password:string) => {
         firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
@@ -81,7 +83,7 @@ export const AuthProvider: React.FC = ({children}) => {
         firebase.auth().signOut().then(() => {
             // Sign-out successful.
             console.log('Sign out success')
-            setAuthData({uid: undefined})
+            setAuthData(undefined)
           }).catch((error) => {
             // An error happened.
             console.log('Sign out error')
