@@ -77,6 +77,7 @@ Your app should be able to complete these tasks:
 6. Styling in Expo is different from web browser. I will learn more to fix this.
 7. Validation for every input.
 8. Use async storage.
+9. Make search feature
 
 I want to share about how i build this app. For me, this is quite challenging because this is my first time use react, react-native, typescript, firebase firestore to build app and i haven't worked on frontend in long time maybe 6-7 months cause i focused on backend tech like php and go. As you can see maybe this app is kinda messed up because i build this app while learning about the tech stack (react, react-native, typescript, firebase) with the given time i haven't able to make this app clean. I feel i learned a lot from working on this project.
 
