@@ -68,6 +68,8 @@ Your app should be able to complete these tasks:
 3. Login with your registered email.
 4. You can add, edit, and remove task (I use firestore to store the data).
 
+notes = process status show in console (success/error).
+
 ### Things that need to improve
 1. I hit firestore api every task being updated, i think this is bad because app will too often call the firestore api. For the next improvement, i think i will make task being updated just when user logout or every day.
 2. I make feature that can group the task by date. So user can make future to-do-list. for now, there is only interface but the feature doesn't work.
