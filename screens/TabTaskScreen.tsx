@@ -44,17 +44,6 @@ export default function TabTaskScreen<Props>({}){
         return db.collection('users').doc(authContext.authData?.uid).set(newTask)
     }
     useEffect(() => {
-        // fetchTask().then((doc) => {
-        //     const data: firebase.firestore.DocumentData | undefined = doc.data()
-        //     if (doc.exists && data && data.tasks !== undefined) {
-        //         setTaskList(data.tasks)
-        //         console.log('head')
-        //     }else {
-        //         console.log("No such documentss!");
-        //     }
-        // }).catch((error) => {
-        //     console.log("Error : " + error)
-        // })
         const fetchTask = async () =>{
             try {
                 const db = firebase.firestore();
@@ -65,7 +54,6 @@ export default function TabTaskScreen<Props>({}){
                 if (docs.exists && data) {
                     if (data.tasks !== undefined) {
                         setTaskList(data.tasks)
-                        console.log('head')
                     }
                 }
                
@@ -74,13 +62,14 @@ export default function TabTaskScreen<Props>({}){
                 console.log("Error : " + error)
             }
         }
+        fetchTask()
     })
 
 
     let name = authContext.authData?.displayName
     const FloatingButton : React.FC<ButtonParam> = ({style, onPress}) => (
         <TouchableOpacity style={style} onPress={onPress}>
-            <Image source={{uri: 'https://storage.googleapis.com/image_bucket_todo/add.svg'}} style={{width: 30, height: 30, }}/>
+            <Image source={require('../assets/images/add.svg')} style={{width: 30, height: 30, }}/>
         </TouchableOpacity>
     )   
     const AddTaskHandler = () => {
@@ -159,11 +148,20 @@ export default function TabTaskScreen<Props>({}){
     }
     
     const RemoveTaskHandler = (key:number) => {
-        setTaskList((prevTaskList) => {
-            return prevTaskList.filter((task) => task.key != key)
-        })
+        console.log(taskList)
+        const index = taskList.findIndex(val => val.key == key)
+        console.log(index)
+        var array = [...taskList]; // make a separate copy of the array
+        if (index !== -1) {
+          array.splice(index, 1);
+          console.log(array)
+          setTaskList(array)
+          console.log(taskList)
+        }
+
+       
         db.collection('users').doc(authContext.authData?.uid).update({
-            tasks: taskList
+            tasks: array
         }).then((docRef) => {
             console.log("Success to update")
         }).catch((error) => {
@@ -434,7 +432,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 7,
     }, 
     signOut: {
-        backgroundColor: 'CE1EC7',
+        backgroundColor: '#CE1EC7',
         alignItems: 'center'
     },
     signOutText: {

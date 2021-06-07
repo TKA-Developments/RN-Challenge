@@ -7,7 +7,6 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './MainTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
-import AuthTabNavigator from './AuthTabNavigatorr';
 import MainTabNavigator from './MainTabNavigator';
 import {AuthProvider} from '../context/Auth';
 
