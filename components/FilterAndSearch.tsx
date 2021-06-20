@@ -4,8 +4,9 @@ import SegmentedControlTab from 'react-native-segmented-control-tab';
 
 // export type onAddTodo = (text: string) => any;
 interface TodoInsertProps {
-    onSetShowCompleted: (status: boolean) => void,
-    onSetShowAll: (status: boolean) => void
+    // onSetShowCompleted: (status: boolean) => void,
+    // onSetShowAll: (status: boolean) => void
+    onSetFilterCode: (code: number) => void
 }
 
 export default function TodoInsert(props: TodoInsertProps) {
@@ -19,22 +20,22 @@ export default function TodoInsert(props: TodoInsertProps) {
     const handleIndexChange = (index: number) => {
         console.log(index.toString());
         setSelectedIndex(index);
-        // props.onSetFilterCode(index);
-        switch(index){
-            case 0:
-                props.onSetShowAll(true);
-                break;
-            case 1:
-                props.onSetShowAll(false);
-                props.onSetShowCompleted(false);
-                break;
-            case 3:
-                props.onSetShowAll(false);
-                props.onSetShowCompleted(true);
-                break;
-            default:
-                props.onSetShowAll(true);
-        }
+        props.onSetFilterCode(index);
+        // switch(index){
+        //     case 0:
+        //         props.onSetShowAll(true);
+        //         break;
+        //     case 1:
+        //         props.onSetShowAll(false);
+        //         props.onSetShowCompleted(false);
+        //         break;
+        //     case 3:
+        //         props.onSetShowAll(false);
+        //         props.onSetShowCompleted(true);
+        //         break;
+        //     default:
+        //         props.onSetShowAll(true);
+        // }
     };
 
     // const addTodoHandler = () => {

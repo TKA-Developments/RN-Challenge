@@ -10,8 +10,8 @@ import TodoList from '../components/TodoList';
 export default function TabOneScreen() {
   const [todos, setTodos] = useState([] as any);
   const [filterCode, setFilterCode] = useState(0);
-  const [showOnlyCompleted, setShowOnlyCompleted] = useState(false);
-  const [showAll, setShowAll] = useState(true);
+  // const [showOnlyCompleted, setShowOnlyCompleted] = useState(false);
+  // const [showAll, setShowAll] = useState(true);
 
   const addTodo = (text: string) => {
       let currDate = new Date();
@@ -44,24 +44,38 @@ export default function TabOneScreen() {
     console.log(todos);
   };
 
-  const onSetShowCompleted = (status: boolean) => {
-    setShowOnlyCompleted(status);
-  };
+  // const onSetShowCompleted = (status: boolean) => {
+  //   setShowOnlyCompleted(status);
+  // };
 
-  const onSetShowAll = (status: boolean) => {
-    setShowAll(status);
+  // const onSetShowAll = (status: boolean) => {
+  //   setShowAll(status);
+  // };
+
+  const onSetFilterCode = (code: number) =>{
+    setFilterCode(code);
   };
 
   const getFilteredList = () => {
-    if (showAll){
-      return todos;
-    } else {
-      if(showOnlyCompleted){
-        return todos.filter((todo: any) => todo.completedStatus === true);
-      } else {
+    switch(filterCode){
+      case 0:
+        return todos;
+      case 1:
         return todos.filter((todo: any) => todo.completedStatus === false);
-      }
+      case 2:
+        return todos.filter((todo: any) => todo.completedStatus === true);
+      default:
+        return todos;
     }
+    // if (showAll){
+    //   return todos;
+    // } else {
+    //   if(showOnlyCompleted){
+    //     return todos.filter((todo: any) => todo.completedStatus === true);
+    //   } else {
+    //     return todos.filter((todo: any) => todo.completedStatus === false);
+    //   }
+    // }
   };
 
   const emptyOrNot = () =>{
@@ -87,7 +101,10 @@ export default function TabOneScreen() {
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
       {/* <TodoInsert onAddTodo={addTodo}/> */}
-      <FilterAndSearch onSetShowCompleted={onSetShowCompleted} onSetShowAll={onSetShowAll}/>
+      <FilterAndSearch 
+        // onSetShowCompleted={onSetShowCompleted} 
+        // onSetShowAll={onSetShowAll}/>
+        onSetFilterCode={onSetFilterCode}/>
       <View style={styles.card}>
         {emptyOrNot()}
       </View>
