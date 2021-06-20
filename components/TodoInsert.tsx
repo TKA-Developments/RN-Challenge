@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet, TextInput, View, Alert} from 'react-native';
+import {Button, StyleSheet, TextInput, View, Alert, TouchableOpacity, Text} from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 // export type onAddTodo = (text: string) => any;
 interface TodoInsertProps {
@@ -29,9 +30,11 @@ export default function TodoInsert(props: TodoInsertProps) {
               autoCorrect={false}
           />
           <View style={styles.button}>
-              <Button 
-                  onPress={addTodoHandler}
-                  title={'ADD'} />
+            <TouchableOpacity onPress={addTodoHandler}>
+              <Text style={styles.buttons}>
+                <Icon name="pluscircleo" size={25} color="#2f95dc" />
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
     );
@@ -45,14 +48,17 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    padding: 10,
+    padding: 5,
     borderBottomColor: '#bbb',
     borderBottomWidth: 1,
-    fontSize: 18,
+    fontSize: 14,
     marginLeft: 25,
   },
   button: {
     marginRight: 25,
     marginLeft: 10
+  },
+  buttons: {
+    flexDirection: 'row',
   },
 });

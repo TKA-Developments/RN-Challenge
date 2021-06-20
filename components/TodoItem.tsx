@@ -47,7 +47,7 @@ export default function TodoListItem(props: TodoItemProps) {
   const checkedOrNot = () => {
     if(props.completed)
        return <View style={styles.completeCircle}>
-            <Icon name="checkcircleo" size={30} color="#3143e8" /> 
+            <Icon name="checkcircle" size={20} color="#2f95dc" /> 
           </View>;
     else{
       return <View style={styles.circle}>
@@ -64,9 +64,9 @@ export default function TodoListItem(props: TodoItemProps) {
 
       {strikedTextOrNot()}
 
-      <TouchableOpacity style={styles.buttonContainer}>
-        <Text style={styles.buttons} onPress={toggleModal}>
-          <Icon name="edit" size={30} color="#ffd300" />
+      <TouchableOpacity style={styles.buttonContainer} onPress={toggleModal}>
+        <Text style={styles.buttons}>
+          <Icon name="edit" size={20} color="#ccc" />
         </Text>
       </TouchableOpacity>
 
@@ -77,6 +77,14 @@ export default function TodoListItem(props: TodoItemProps) {
             return null;
           }}>
         <View style={styles.card}>
+          <View style={styles.buttonContainerModal}>
+            <Text style={[styles.textModal, { color: 'black', fontWeight: 'bold' }]} >
+              Edit a task
+            </Text>
+          </View>
+
+          <View style={[styles.separator, { width: '100%', backgroundColor: '#bbb' }]} />
+
           <View style={styles.inputContainer}>
             <TextInput
                 style={styles.input}
@@ -87,9 +95,9 @@ export default function TodoListItem(props: TodoItemProps) {
                 autoCorrect={false}
             />
             <View style={styles.buttons}>
-              <TouchableOpacity style={styles.buttonContainer}>
-                <Text style={styles.buttons} onPress={props.onRemove(props.id)}>
-                  <Icon name="delete" size={30} color="#e33057" />
+              <TouchableOpacity style={styles.buttonContainer} onPress={props.onRemove(props.id)}>
+                <Text style={styles.buttons}>
+                  <Icon name="delete" size={20} color="#e33057" />
                 </Text>
               </TouchableOpacity>
             </View>
@@ -101,7 +109,7 @@ export default function TodoListItem(props: TodoItemProps) {
             style={styles.buttonContainerModal}
             onPressIn={props.onEdit(props.id, editedTodoItem)} 
             onPressOut={toggleModal}>
-            <Text style={styles.textModal} >
+            <Text style={styles.textModal}>
               Save changes
             </Text>
           </TouchableOpacity>
@@ -124,21 +132,20 @@ const styles = StyleSheet.create({
   text: {
     flex: 5,
     fontWeight: '500',
-    fontSize: 18,
+    fontSize: 14,
     marginVertical: 20,
     width: 100,
   },
   textModal:{
     flexDirection: 'row',
-    fontWeight: '500',
-    fontSize: 18,
-    color:'blue'
+    fontSize: 14,
+    color:'#2f95dc'
   },
   circle: {
-    width: 30,
-    height: 30,
+    width: 20,
+    height: 20,
     borderRadius: 15,
-    borderColor: 'blue',
+    borderColor: '#2f95dc',
     borderWidth: 2,
     marginRight: 15,
     marginLeft: 0,
@@ -179,18 +186,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 35
   },
   input: {
     flex: 1,
     padding: 10,
     borderBottomColor: '#bbb',
     borderBottomWidth: 1,
-    fontSize: 18,
+    fontSize: 14,
   },
   separator: {
     height: 1,
     width: '95%',
-    backgroundColor: '#ccc',
+    backgroundColor: '#eee',
   },
 });

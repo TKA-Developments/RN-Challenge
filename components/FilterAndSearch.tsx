@@ -2,10 +2,8 @@ import React, {useState} from 'react';
 import {Button, StyleSheet, TextInput, View, Alert, TouchableOpacity, Text} from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 
-// export type onAddTodo = (text: string) => any;
+
 interface TodoInsertProps {
-    // onSetShowCompleted: (status: boolean) => void,
-    // onSetShowAll: (status: boolean) => void
     onSetFilterCode: (code: number) => void
 }
 
@@ -18,30 +16,9 @@ export default function TodoInsert(props: TodoInsertProps) {
     };
 
     const handleIndexChange = (index: number) => {
-        console.log(index.toString());
         setSelectedIndex(index);
         props.onSetFilterCode(index);
-        // switch(index){
-        //     case 0:
-        //         props.onSetShowAll(true);
-        //         break;
-        //     case 1:
-        //         props.onSetShowAll(false);
-        //         props.onSetShowCompleted(false);
-        //         break;
-        //     case 3:
-        //         props.onSetShowAll(false);
-        //         props.onSetShowCompleted(true);
-        //         break;
-        //     default:
-        //         props.onSetShowAll(true);
-        // }
     };
-
-    // const addTodoHandler = () => {
-    //     props.onAddTodo(newTodoItem);
-    //     setNewTodoItem('');
-    // };
 
     return (
         <View style={styles.container}>
@@ -49,6 +26,10 @@ export default function TodoInsert(props: TodoInsertProps) {
                 values={["All", "To do", "Completed"]}
                 selectedIndex={selectedIndex}
                 onTabPress={handleIndexChange}
+                borderRadius={10}
+                tabStyle={{borderColor: '#2f95dc'}}
+                tabTextStyle={{color: '#2f95dc'}}
+                activeTabStyle={{backgroundColor: '#2f95dc'}}
             />
             <TextInput
                 style={styles.input}

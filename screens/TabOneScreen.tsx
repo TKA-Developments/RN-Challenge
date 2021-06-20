@@ -44,14 +44,6 @@ export default function TabOneScreen() {
     console.log(todos);
   };
 
-  // const onSetShowCompleted = (status: boolean) => {
-  //   setShowOnlyCompleted(status);
-  // };
-
-  // const onSetShowAll = (status: boolean) => {
-  //   setShowAll(status);
-  // };
-
   const onSetFilterCode = (code: number) =>{
     setFilterCode(code);
   };
@@ -67,29 +59,35 @@ export default function TabOneScreen() {
       default:
         return todos;
     }
-    // if (showAll){
-    //   return todos;
-    // } else {
-    //   if(showOnlyCompleted){
-    //     return todos.filter((todo: any) => todo.completedStatus === true);
-    //   } else {
-    //     return todos.filter((todo: any) => todo.completedStatus === false);
-    //   }
-    // }
   };
 
   const emptyOrNot = () =>{
     if (todos && todos.length > 0){
       let fitleredList = getFilteredList();
-      return <TodoList 
+      if (fitleredList && fitleredList.length > 0){
+        return <TodoList 
           data={fitleredList} 
           onToggle={onToggle} 
           onRemove={onRemove} 
           onEdit={onEdit}/>;
+      } else {
+        if(filterCode === 1){
+          var message = "There isn't any task to do.";
+        } else if (filterCode === 2){
+          var message = "There isn't any completed task."
+        } else {
+          var message = "There isn't any task for today."
+        }
+        return <View style={styles.containerEmptyMessage}>
+          <Text style={styles.emptyMessageText}>
+            {message}
+          </Text>
+        </View>;
+      }
     } else {
       return <View style={styles.containerEmptyMessage}>
           <Text style={styles.emptyMessageText}>
-            There's no task to do.
+            There isn't any task for today.
           </Text>
         </View>;
     }
@@ -97,13 +95,7 @@ export default function TabOneScreen() {
 
   return (
     <SafeAreaView  style={styles.container}>
-      {/* <Text style={styles.title}>What to do today?</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
-      {/* <TodoInsert onAddTodo={addTodo}/> */}
       <FilterAndSearch 
-        // onSetShowCompleted={onSetShowCompleted} 
-        // onSetShowAll={onSetShowAll}/>
         onSetFilterCode={onSetFilterCode}/>
       <View style={styles.card}>
         {emptyOrNot()}
@@ -128,6 +120,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginLeft: 10,
     marginRight: 10,
+    paddingBottom: 110
   },
   input: {
     padding: 20,
@@ -146,7 +139,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 25,
     marginHorizontal: 20,
-    backgroundColor: '#ddd'
+    backgroundColor: '#eee'
   },
   emptyMessageText: {
     fontSize: 17,
