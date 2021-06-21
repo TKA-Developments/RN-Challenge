@@ -23,3 +23,8 @@ export type TodoContextParamList = {
   onToggle: any,
   onEdit: any
 };
+
+export type UserContextParamList = {
+  data: any,
+  onSetName: any
+};

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, TextInput, ScrollView, SafeAreaView  } from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
 import TodoFilter from '../components/TodoFilter';
 import { Text, View } from '../components/Themed';
 import TodoInsert from '../components/TodoInsert';

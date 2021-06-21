@@ -22,7 +22,7 @@ export default function TodoInsert(props: TodoInsertProps) {
         <View style={styles.inputContainer}>
           <TextInput
               style={styles.input}
-              placeholder="What to do today?"
+              placeholder="Create a new task.."
               placeholderTextColor={'#999'}
               onChangeText={todoInputHandler}
               value={newTodoItem}
