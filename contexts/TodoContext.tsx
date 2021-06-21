@@ -35,41 +35,22 @@ function todoReducer(state: any, action: any){
 };
 
 export function TodoProvider(props: ProviderProps ){
-    // const [todos, setTodos] = useState([] as any);
     const [todos, dispatch] = useReducer(todoReducer, [] as any);
 
     const addTodo = (text: string) => {
-        // let currDate = new Date();
-        // setTodos([
-        //     ...todos,
-        //     {id: Math.random().toString(), taskName: text, completedStatus: false, createdAt: currDate},
-        // ]);
         dispatch({ type: 'add', text: text});
         console.log(todos);
     };
   
     const onRemove = (id: string) => (e: any) => {
-    //   setTodos(todos.filter((todo: any) => todo.id !== id));
         dispatch({ type: 'remove', id: id});
     };
   
     const onToggle = (id: string) => (e: any) => {
-    //   setTodos(
-    //     todos.map( (todo: any) =>
-    //       todo.id === id ? {...todo, completedStatus: !todo.completedStatus} : todo,
-    //     ),
-    //   );
         dispatch({ type: 'toggle', id: id });
     };
   
     const onEdit = (id: string, newName: string) => (e: any) => {
-    //   console.log("masukkk");
-    //   setTodos(
-    //     todos.map( (todo: any) =>
-    //       todo.id === id ? {...todo, taskName: newName} : todo,
-    //     ),
-    //   );
-    //   console.log(todos);
         dispatch({ type: 'edit', id: id, newName: newName});
     };
 
