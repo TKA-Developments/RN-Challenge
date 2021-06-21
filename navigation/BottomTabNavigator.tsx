@@ -49,7 +49,7 @@ const TabOneStack = createStackNavigator<TabOneParamList>();
 
 function TabOneNavigator() {
   return (
-    <TabOneStack.Navigator>
+    <TabOneStack.Navigator>  
       <TabOneStack.Screen
         name="TabOneScreen"
         component={TabOneScreen}

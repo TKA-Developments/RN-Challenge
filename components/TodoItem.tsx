@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Button, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Modal from 'react-native-modal';
+import TodoContext from '../contexts/TodoContext';
 
 interface TodoItemProps{
   id: string,
   name: string,
   completed: boolean,
-  onToggle: (id: string) => (e: any) => void,
-  onRemove: (id: string) => (e: any) => void,
-  onEdit: (id: string, newName: string) => (e: any) => void
+  // onToggle: (id: string) => (e: any) => void,
+  // onRemove: (id: string) => (e: any) => void,
+  // onEdit: (id: string, newName: string) => (e: any) => void
 }
 
 export default function TodoListItem(props: TodoItemProps) {
-  console.log(props.completed);
-  console.log(props.onEdit);
+  // console.log(props.completed);
+  // console.log(props.onEdit);
+  
   const [isModalVisible, setModalVisible] = useState(false);
   const [editedTodoItem, setEditedTodoItem] = useState(props.name);
+  const {onToggle, onRemove, onEdit} = useContext(TodoContext);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -58,7 +61,7 @@ export default function TodoListItem(props: TodoItemProps) {
   return (
     <View style={styles.container}>
 
-      <TouchableOpacity onPressOut={props.onToggle(props.id)}>
+      <TouchableOpacity onPressOut={onToggle(props.id)}>
         {checkedOrNot()}
       </TouchableOpacity>
 
@@ -95,7 +98,7 @@ export default function TodoListItem(props: TodoItemProps) {
                 autoCorrect={false}
             />
             <View style={styles.buttons}>
-              <TouchableOpacity style={styles.buttonContainer} onPress={props.onRemove(props.id)}>
+              <TouchableOpacity style={styles.buttonContainer} onPress={onRemove(props.id)}>
                 <Text style={styles.buttons}>
                   <Icon name="delete" size={20} color="#e33057" />
                 </Text>
@@ -107,7 +110,7 @@ export default function TodoListItem(props: TodoItemProps) {
 
           <TouchableOpacity 
             style={styles.buttonContainerModal}
-            onPressIn={props.onEdit(props.id, editedTodoItem)} 
+            onPressIn={onEdit(props.id, editedTodoItem)} 
             onPressOut={toggleModal}>
             <Text style={styles.textModal}>
               Save changes

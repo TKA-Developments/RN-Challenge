@@ -4,9 +4,9 @@ import TodoItem from './TodoItem';
 
 interface TodoListProps{
     data: any,
-    onToggle: (id: string) => (e: any) => void,
-    onRemove: (id: string) => (e: any) => void,
-    onEdit: (id: string, newName: string) => (e: any) => void
+    // onToggle: (id: string) => (e: any) => void,
+    // onRemove: (id: string) => (e: any) => void,
+    // onEdit: (id: string, newName: string) => (e: any) => void
 }
 
 export default function TodoList(props: TodoListProps) {
@@ -26,10 +26,10 @@ export default function TodoList(props: TodoListProps) {
                 return <TodoItem 
                     id={item.id} 
                     name={item.taskName} 
-                    completed={item.completedStatus} 
-                    onToggle={props.onToggle} 
-                    onRemove={props.onRemove}
-                    onEdit={props.onEdit}/>;
+                    completed={item.completedStatus} />
+                    // onToggle={props.onToggle} 
+                    // onRemove={props.onRemove}
+                    // onEdit={props.onEdit}/>;
             }} />
     );
 };

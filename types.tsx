@@ -15,3 +15,11 @@ export type TabOneParamList = {
 export type TabTwoParamList = {
   TabTwoScreen: undefined;
 };
+
+export type TodoContextParamList = {
+  data: any,
+  addTodo: any,
+  onRemove: any,
+  onToggle: any,
+  onEdit: any
+};
