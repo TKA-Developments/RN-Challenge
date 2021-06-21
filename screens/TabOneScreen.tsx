@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee'
   },
   emptyMessageText: {
-    fontSize: 17,
+    fontSize: 14,
     lineHeight: 24,
     textAlign: 'center',
     color: '#bbb'
