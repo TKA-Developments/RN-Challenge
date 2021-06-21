@@ -8,15 +8,9 @@ interface TodoItemProps{
   id: string,
   name: string,
   completed: boolean,
-  // onToggle: (id: string) => (e: any) => void,
-  // onRemove: (id: string) => (e: any) => void,
-  // onEdit: (id: string, newName: string) => (e: any) => void
 }
 
-export default function TodoListItem(props: TodoItemProps) {
-  // console.log(props.completed);
-  // console.log(props.onEdit);
-  
+export default function TodoListItem(props: TodoItemProps) {  
   const [isModalVisible, setModalVisible] = useState(false);
   const [editedTodoItem, setEditedTodoItem] = useState(props.name);
   const {onToggle, onRemove, onEdit} = useContext(TodoContext);
@@ -28,12 +22,6 @@ export default function TodoListItem(props: TodoItemProps) {
   const todoInputHandler = (newTodo: React.SetStateAction<string>) => {
     setEditedTodoItem(newTodo);
   };
-  
-  // const editTodoItem = (id: string) => {
-  //   console.log(editedTodoItem);
-  //   props.onEdit(id, editedTodoItem);
-  //   toggleModal();
-  // };
   
   const strikedTextOrNot = () => {
     if(props.completed)

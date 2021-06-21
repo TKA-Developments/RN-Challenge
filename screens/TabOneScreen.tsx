@@ -10,42 +10,10 @@ import TodoSearch from '../components/TodoSearch';
 import TodoContext from '../contexts/TodoContext';
 
 export default function TabOneScreen() {
-  // const [todos, setTodos] = useState([] as any);
   const [filterCode, setFilterCode] = useState(0);
   const [keywords, setKeywords] = useState('');
   
   const { data, addTodo, onRemove, onToggle, onEdit } = useContext(TodoContext)
-
-  // const addTodo = (text: string) => {
-  //     let currDate = new Date();
-  //     setTodos([
-  //         ...todos,
-  //         {id: Math.random().toString(), taskName: text, completedStatus: false, createdAt: currDate},
-  //     ]);
-  //     console.log(todos);
-  // };
-
-  // const onRemove = (id: string) => (e: any) => {
-  //   setTodos(todos.filter((todo: any) => todo.id !== id));
-  // };
-
-  // const onToggle = (id: string) => (e: any) => {
-  //   setTodos(
-  //     todos.map( (todo: any) =>
-  //       todo.id === id ? {...todo, completedStatus: !todo.completedStatus} : todo,
-  //     ),
-  //   );
-  // };
-
-  // const onEdit = (id: string, newName: string) => (e: any) => {
-  //   console.log("masukkk");
-  //   setTodos(
-  //     todos.map( (todo: any) =>
-  //       todo.id === id ? {...todo, taskName: newName} : todo,
-  //     ),
-  //   );
-  //   console.log(todos);
-  // };
 
   const onSetFilterCode = (code: number) =>{
     setFilterCode(code);
@@ -88,8 +56,7 @@ export default function TabOneScreen() {
         }
       } 
       if (filteredList && filteredList.length > 0){
-        return <TodoList 
-          data={filteredList} />;
+        return <TodoList data={filteredList} />;
       } else {
         if(filterCode === 1){
           return showEmptyMessage("There isn't any task to do.");
