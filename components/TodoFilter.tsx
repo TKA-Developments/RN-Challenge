@@ -3,11 +3,11 @@ import {Button, StyleSheet, TextInput, View, Alert, TouchableOpacity, Text} from
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 
 
-interface TodoInsertProps {
+interface TodoFilterProps {
     onSetFilterCode: (code: number) => void
 }
 
-export default function TodoInsert(props: TodoInsertProps) {
+export default function TodoFilter(props: TodoFilterProps) {
     const [newTodoItem, setNewTodoItem] = useState('');
     const [selectedIndex, setSelectedIndex] = useState(0);
 

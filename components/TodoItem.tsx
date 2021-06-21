@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
   textModal:{
     flexDirection: 'row',
-    fontSize: 14,
+    fontSize: 16,
     color:'#2f95dc'
   },
   circle: {

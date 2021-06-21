@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, TextInput, ScrollView, SafeAreaView  } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
-import FilterAndSearch from '../components/FilterAndSearch';
+import TodoFilter from '../components/TodoFilter';
 import { Text, View } from '../components/Themed';
 import TodoInsert from '../components/TodoInsert';
 import TodoList from '../components/TodoList';
@@ -95,9 +95,9 @@ export default function TabOneScreen() {
 
   return (
     <SafeAreaView  style={styles.container}>
-      <FilterAndSearch 
-        onSetFilterCode={onSetFilterCode}/>
       <View style={styles.card}>
+        <TodoFilter 
+          onSetFilterCode={onSetFilterCode}/>
         {emptyOrNot()}
       </View>
       <View style={styles.bottom}>
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginLeft: 10,
     marginRight: 10,
+    paddingTop: 5,
     paddingBottom: 110
   },
   input: {
