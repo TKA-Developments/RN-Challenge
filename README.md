@@ -66,7 +66,7 @@ Your app should be able to complete these tasks:
 - To add a new to-do task:
     1. Enter the task name into the gray box at the bottom of the screen (exactly on the top of bottom tab navigator)
     2. Press the blue plus (+) button to add the new task
-- To mark a task as a completed task:
+- To mark a to-do task as a completed task:
     1. Press the empty circle on the left side of the task name
     2. The empty circle will be changed as a checked circle if the task successfully marked as completed
 - To show to-do task only:
