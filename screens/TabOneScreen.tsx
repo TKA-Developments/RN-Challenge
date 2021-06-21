@@ -6,10 +6,12 @@ import TodoFilter from '../components/TodoFilter';
 import { Text, View } from '../components/Themed';
 import TodoInsert from '../components/TodoInsert';
 import TodoList from '../components/TodoList';
+import TodoSearch from '../components/TodoSearch';
 
 export default function TabOneScreen() {
   const [todos, setTodos] = useState([] as any);
   const [filterCode, setFilterCode] = useState(0);
+  const [keywords, setKeywords] = useState('');
   // const [showOnlyCompleted, setShowOnlyCompleted] = useState(false);
   // const [showAll, setShowAll] = useState(true);
 
@@ -48,6 +50,10 @@ export default function TabOneScreen() {
     setFilterCode(code);
   };
 
+  const onSetKeywords = (taskName: string) => {
+    setKeywords(taskName);
+  }
+
   const getFilteredList = () => {
     switch(filterCode){
       case 0:
@@ -61,40 +67,49 @@ export default function TabOneScreen() {
     }
   };
 
+  const showEmptyMessage = (message: string) => {
+    return <View style={styles.containerEmptyMessage}>
+          <Text style={styles.emptyMessageText}>
+            {message}
+          </Text>
+        </View>;
+  };
+
   const emptyOrNot = () =>{
+    console.log(keywords);
     if (todos && todos.length > 0){
-      let fitleredList = getFilteredList();
-      if (fitleredList && fitleredList.length > 0){
+      let filteredList = getFilteredList();
+      if(keywords || keywords !== ''){
+        filteredList = filteredList.filter((todo: any) => todo.taskName.toLowerCase().match(keywords.toLowerCase()));
+        if(filteredList.length <= 0){
+          console.log("kosong");
+          return showEmptyMessage("There isn't any task name that match with \"" + keywords + "\" in here.");
+        }
+      } 
+      if (filteredList && filteredList.length > 0){
         return <TodoList 
-          data={fitleredList} 
+          data={filteredList} 
           onToggle={onToggle} 
           onRemove={onRemove} 
           onEdit={onEdit}/>;
       } else {
         if(filterCode === 1){
-          var message = "There isn't any task to do.";
+          return showEmptyMessage("There isn't any task to do.");
         } else if (filterCode === 2){
-          var message = "There isn't any completed task."
+          return showEmptyMessage("There isn't any completed task.");
         } else {
-          var message = "There isn't any task for today."
+          return showEmptyMessage("There isn't any task for today.");
         }
-        return <View style={styles.containerEmptyMessage}>
-          <Text style={styles.emptyMessageText}>
-            {message}
-          </Text>
-        </View>;
       }
     } else {
-      return <View style={styles.containerEmptyMessage}>
-          <Text style={styles.emptyMessageText}>
-            There isn't any task for today.
-          </Text>
-        </View>;
+      return showEmptyMessage("There isn't any task for today.");
     }
   };
 
   return (
     <SafeAreaView  style={styles.container}>
+      <TodoSearch 
+        onSetKeywords={onSetKeywords}/>
       <View style={styles.card}>
         <TodoFilter 
           onSetFilterCode={onSetFilterCode}/>
@@ -154,5 +169,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderTopLeftRadius: 15, 
     borderTopRightRadius: 15, 
+    paddingHorizontal: 10
   }
 });

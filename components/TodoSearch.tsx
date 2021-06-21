@@ -2,36 +2,36 @@ import React, {useState} from 'react';
 import {Button, StyleSheet, TextInput, View, Alert, TouchableOpacity, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-interface TodoInsertProps {
-  onAddTodo: (text: string) => void
+interface TodoSearchProps {
+    onSetKeywords: (taskName: string) => void
 }
 
-export default function TodoInsert(props: TodoInsertProps) {
-    const [newTodoItem, setNewTodoItem] = useState('');
+export default function TodoSearch(props: TodoSearchProps) {
+    const [taskNameToSearch, setTaskNameToSearch] = useState('');
 
-    const todoInputHandler = (newTodo: React.SetStateAction<string>) => {
-        setNewTodoItem(newTodo);
+    const todoInputHandler = (taskName: React.SetStateAction<string>) => {
+        setTaskNameToSearch(taskName);
     };
     
-    const addTodoHandler = () => {
-        props.onAddTodo(newTodoItem);
-        setNewTodoItem('');
+    const searchHandler = () => {
+        props.onSetKeywords(taskNameToSearch);
+        // setTaskNameToSearch('');
     };
 
     return (
         <View style={styles.inputContainer}>
           <TextInput
               style={styles.input}
-              placeholder="What to do today?"
+              placeholder="Enter a task name to search for.."
               placeholderTextColor={'#999'}
               onChangeText={todoInputHandler}
-              value={newTodoItem}
+              value={taskNameToSearch}
               autoCorrect={false}
           />
           <View style={styles.button}>
-            <TouchableOpacity onPress={addTodoHandler}>
+            <TouchableOpacity onPress={searchHandler}>
               <Text style={styles.buttons}>
-                <Icon name="pluscircleo" size={25} color="#2f95dc" />
+                <Icon name="search1" size={25} color="#2f95dc" />
               </Text>
             </TouchableOpacity>
           </View>
