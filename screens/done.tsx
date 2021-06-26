@@ -32,6 +32,7 @@ const App : FC = (props) =>{
                     </View>
                 )}
             </View>
+
             <Button title="Back" onPress={() => props.navigation.goBack()}/> 
         </View> 
     )
@@ -48,6 +49,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: 'bold',
-        paddingTop : 40
+        paddingTop : 10
       }
 })

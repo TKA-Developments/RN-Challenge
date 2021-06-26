@@ -5,7 +5,6 @@ import firebase from "firebase";
 import Input from "../components/input";
 import { PostRender } from "../components/Index";
 import { FlatList } from "react-native-gesture-handler";
-import { withDecay } from "react-native-reanimated";
 
 const App : FC = (props) =>{
     const [msg, setMsg] = useState<string | null>(null);
@@ -33,7 +32,9 @@ const App : FC = (props) =>{
     }
 
     const signOut = async () => {
-        firebase.auth().signOut();
+        await firebase.auth().signOut().then(() => {
+            Alert.alert('Are u sure to log out?');
+        });
     }
 
     const fetchCurrentUser = async () =>{
