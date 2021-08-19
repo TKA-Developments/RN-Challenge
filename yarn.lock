@@ -1308,7 +1308,7 @@
   dependencies:
     "cross-spawn" "^6.0.5"
 
-"@expo/vector-icons@^12.0.0":
+"@expo/vector-icons@*", "@expo/vector-icons@^12.0.0":
   "integrity" "sha512-KlQ1MC2ff/CBYV/Nsu+O7wa712I0plb5N5PdMhYxLbVGW2KkULEbAoFp04nab3R4eej/Tq10G+yjTu04q16n3g=="
   "resolved" "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-12.0.3.tgz"
   "version" "12.0.3"
@@ -1578,7 +1578,7 @@
   "resolved" "https://registry.npmjs.org/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.5.1.tgz"
   "version" "0.5.1"
 
-"@grpc/grpc-js@^1.3.2":
+"@grpc/grpc-js@^1.3.2", "@grpc/grpc-js@^1.3.7":
   "integrity" "sha512-CKQVuwuSPh40tgOkR7c0ZisxYRiN05PcKPW72mQL5y++qd7CwBRoaJZvU5xfXnCJDFBmS3qZGQ71Frx6Ofo2XA=="
   "resolved" "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.3.7.tgz"
   "version" "1.3.7"
@@ -2426,6 +2426,13 @@
   "version" "7.11.0"
   dependencies:
     "@babel/types" "^7.3.0"
+
+"@types/expo__vector-icons@^10.0.0":
+  "integrity" "sha512-Mwz3/1Gx5fZZ4KC9p4KVwsIsNLkTOCIbQCtUgOsID152c2CnBz7sHLjOqmRfUpolEShjCQDwJoH47/Q0Eyecjg=="
+  "resolved" "https://registry.npmjs.org/@types/expo__vector-icons/-/expo__vector-icons-10.0.0.tgz"
+  "version" "10.0.0"
+  dependencies:
+    "@expo/vector-icons" "*"
 
 "@types/graceful-fs@^4.1.2":
   "integrity" "sha512-anKkLmZZ+xm4p8JWBf4hElkM4XR+EZeA2M9BAkkTldmcyDY4mbdIJnRghDJH3Ov5ooY7/UAoENtmdMSkaAd7Cw=="
@@ -7549,6 +7556,8 @@
     "react-timer-mixin" "^0.13.4"
 
 "react-native@*", "react-native@>=0.42.0", "react-native@>=0.57", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz":
+  "integrity" "sha512-wYOQJnPj9CHg1db2/xXebxfzJpdwxeQpsqi9HLz5Y6Zv8xY/J7p6O4eeDyenw1FARWbeAPWwzl2y+OYE4CUrPA=="
+  "resolved" "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz"
   "version" "0.63.2"
   dependencies:
     "@babel/runtime" "^7.0.0"

@@ -1,120 +1,197 @@
-import * as React from 'react';
-import { StyleSheet,TouchableOpacity ,ScrollView} from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View ,  } from '../components/Themed';
-import { Activity } from '../components/Activity';
-import { ScreenContainer } from 'react-native-screens';
-
+import * as React from "react";
+import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { Text, View } from "../components/Themed";
+import firebase from "firebase";
 export default function ScheduleDetails() {
-  const getDateLive = () => {
-    const date = new Date().toUTCString().split(' ')
-    let dateNow = ''
-    for (let i = 0; i < 4; i++){
-      dateNow += date[i] + ' '
+  const [list, setList]: any = React.useState([]);
+
+  let array = list && Object.keys(list);
+  React.useEffect(() => {
+    let ambildata = firebase.database().ref("/activity");
+    if (ambildata) {
+      ambildata.once("value").then((snapshot) => {
+        setList(snapshot.val());
+      });
     }
-    return dateNow
-  }
+    // list[item].activity
+  }, [list]);
+
+  const getDateLive = () => {
+    const date = new Date().toUTCString().split(" ");
+    let dateNow = "";
+    for (let i = 0; i < 4; i++) {
+      dateNow += date[i] + " ";
+    }
+    return dateNow;
+  };
+
+  const manyDone = (array: any) => {
+    let i = 0;
+    if (array.length > 0) {
+      array.map((item: string) => {
+        if (list[item].isDone) {
+          i++;
+        }
+      });
+    }
+    return i;
+  };
+
+  const wiseWord = (number: any) => {
+    const words = [
+      "You can do it!!! ʕ•́ᴥ•̀ʔっ",
+      "Great start!!!,keep fighting (ง︡'-'︠)ง",
+      "Great Jobs!!! (ɔ◔‿◔)ɔ ♥",
+      "Great , it's okay to have self rewards",
+      "Nothing can Stop you, push your limit ⚔️",
+      "What a productive day!!!",
+    ];
+    let wise = "";
+    switch (true) {
+      case number > 0 && number < 4:
+        wise += words[1];
+        break;
+      case number > 3 && number < 7:
+        wise += words[2];
+        break;
+      case number > 6 && number < 10:
+        wise += words[3];
+        break;
+      case number > 9 && number < 13:
+        wise += words[4];
+        break;
+      case number > 12 && number < 16:
+        wise += words[5];
+        break;
+      default:
+        wise += words[0];
+        break;
+    }
+    return wise;
+  };
+
+  const deleteAll = () => {
+    firebase
+      .database()
+      .ref("/activity")
+      .remove()
+      .then(() => {
+        alert("Dimulai dari 0 ya");
+        setList([]);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
   return (
     <View style={styles.container}>
-      <ScrollView>      
-      <View style={styles.titleWrapper}>
+      <ScrollView>
+        <View style={styles.titleWrapper}>
           <Text style={styles.textDate}>{getDateLive()}</Text>
-          <Text style={styles.textSpirit} >Great Work!!! Keep Up Your productivity</Text>  
+          <Text style={styles.textSpirit}>
+            {array ? wiseWord(manyDone(array)) : wiseWord(0)}
+          </Text>
         </View>
         <View style={styles.sectionDetail}>
           <View style={styles.containerDetail}>
-           <View style={styles.textWrapper}>
-            <Text style={styles.textAngka} >10</Text>
+            <View style={styles.textWrapper}>
+              <Text style={styles.textAngka}>
+                {array ? array.length - manyDone(array) : 0}
+              </Text>
+            </View>
+            <Text style={styles.textDetails}>On Going Activity</Text>
           </View>
-          <Text style={styles.textDetails}>On Going Activity</Text>
-        </View>
-         <View style={styles.containerDetail}>
-           <View style={styles.textWrapper}>
-            <Text style={styles.textAngka} >10</Text>
+          <View style={styles.containerDetail}>
+            <View style={styles.textWrapper}>
+              <Text style={styles.textAngka}>
+                {array ? manyDone(array) : 0}
+              </Text>
+            </View>
+            <Text style={styles.textDetails}>You Have Done</Text>
           </View>
-          <Text style={styles.textDetails}>You Have Done</Text>
-       </View>
         </View>
-     <TouchableOpacity style={styles.resetBtnContainer}>
+        <TouchableOpacity
+          style={styles.resetBtnContainer}
+          onPress={() => deleteAll()}
+        >
           <Text style={styles.resetBtn}>Reset Activity, and Start New Day</Text>
-      </TouchableOpacity>
-     </ScrollView>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
   },
   sectionDetail: {
     flex: 1,
-    paddingTop:50,
-    width:'100%',
-    flexDirection: 'row',
-    justifyContent:'space-around',
+    paddingTop: 50,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   containerDetail: {
-    alignItems:'center'
+    alignItems: "center",
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   textAngka: {
-    textAlign:'center',
+    textAlign: "center",
     fontSize: 50,
-    fontWeight:'bold'
+    fontWeight: "bold",
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
   titleWrapper: {
     marginTop: 20,
-    alignItems:'center'
+    alignItems: "center",
   },
   textDate: {
     fontSize: 20,
-    fontWeight:'bold'
+    fontWeight: "bold",
   },
   textDetails: {
-    marginTop: 5,  
+    marginTop: 5,
     fontSize: 18,
-    fontWeight:'bold'
+    fontWeight: "bold",
   },
   textWrapper: {
     width: 100,
     height: 100,
     borderRadius: 50,
     borderWidth: 3,
-    justifyContent:'center'
+    justifyContent: "center",
   },
   textSpirit: {
-    fontWeight:'bold',
-    textAlign:'center',
-    width: '95%',
+    fontWeight: "bold",
+    textAlign: "center",
+    width: "95%",
     marginTop: 10,
-    marginBottom:10,
-    fontSize:22
+    marginBottom: 10,
+    fontSize: 22,
   },
   resetBtn: {
-    paddingTop:8,
-    textAlign:'center',
+    paddingTop: 8,
+    textAlign: "center",
     borderWidth: 1,
-    color: '#fff',
-    fontWeight:'bold',
+    color: "#fff",
+    fontWeight: "bold",
     height: 40,
-    width: '60%',
+    width: "60%",
     borderRadius: 20,
-    backgroundColor:'red'
+    backgroundColor: "red",
   },
   resetBtnContainer: {
-justifyContent:'flex-end',
-    alignItems: 'center',
-    height:200,
-    backgroundColor:'#fff'
-  }
+    justifyContent: "flex-end",
+    alignItems: "center",
+    height: 200,
+    backgroundColor: "#fff",
+  },
 });

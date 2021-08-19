@@ -1,12 +1,16 @@
-import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/ScheduleDetails';
-import ContohScreen from '../screens/Schedule';
-import { BottomTabParamList, TabOneParamList, ScheduleParamList } from '../types';
+import { Entypo, AntDesign } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
+import ScheduleDetails from "../screens/ScheduleDetails";
+import Schedule from "../screens/Schedule";
+import {
+  BottomTabParamList,
+  ProductivityParamList,
+  ScheduleParamList,
+} from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -16,31 +20,28 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Schedule"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+    >
       <BottomTab.Screen
         name="Schedule"
         component={ScheduleNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="key" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="profile" size={24} color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Productivity"
+        component={ProductivityNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Entypo name="progress-one" size={24} color={color} />
+          ),
         }}
       />
-      
-      
     </BottomTab.Navigator>
   );
-}
-
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
@@ -49,31 +50,33 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
 const ScheduleStack = createStackNavigator<ScheduleParamList>();
 
 function ScheduleNavigator() {
-  return <ScheduleStack.Navigator>
-    <ScheduleStack.Screen name='Schedule' component={ContohScreen} options={{
-      title:"Home",
-      headerStyle: {
-        backgroundColor: '#fff',
-        elevation: 0,     
-      }
-    }}/>
-  </ScheduleStack.Navigator>
-}
-
-
-
-
-const TabOneStack = createStackNavigator<TabOneParamList>();
-
-function TabOneNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: "Today's Task" }}
+    <ScheduleStack.Navigator>
+      <ScheduleStack.Screen
+        name="Schedule"
+        component={Schedule}
+        options={{
+          title: "Schedule",
+          headerStyle: {
+            backgroundColor: "#fff",
+            elevation: 0,
+          },
+        }}
       />
-    </TabOneStack.Navigator>
+    </ScheduleStack.Navigator>
   );
 }
 
+const ProductivityStack = createStackNavigator<ProductivityParamList>();
+
+function ProductivityNavigator() {
+  return (
+    <ProductivityStack.Navigator>
+      <ProductivityStack.Screen
+        name="Productivity"
+        component={ScheduleDetails}
+        options={{ headerTitle: "Productivity" }}
+      />
+    </ProductivityStack.Navigator>
+  );
+}
