@@ -7515,6 +7515,14 @@
   "resolved" "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz"
   "version" "17.0.1"
 
+"react-native-flash-message@^0.1.23":
+  "integrity" "sha512-T++KNGpIofXRqj3fT+/zJH/su1VgIjGcwiJerSvRsvEXwai1LdUl+O0tX7dz+Lgxi7yzswXKWcUQmY0dZrbG3g=="
+  "resolved" "https://registry.npmjs.org/react-native-flash-message/-/react-native-flash-message-0.1.23.tgz"
+  "version" "0.1.23"
+  dependencies:
+    "prop-types" "^15.7.2"
+    "react-native-iphone-x-helper" "^1.3.0"
+
 "react-native-gesture-handler@>= 1.0.0", "react-native-gesture-handler@~1.8.0":
   "integrity" "sha512-E2FZa0qZ5Bi0Z8Jg4n9DaFomHvedSjwbO2DPmUUHYRy1lH2yxXUpSrqJd6yymu+Efzmjg2+JZzsjFYA2Iq8VEQ=="
   "resolved" "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.8.0.tgz"

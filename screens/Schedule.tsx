@@ -14,9 +14,8 @@ import firebase from "firebase";
 import Utils from "../constants/Utils";
 import Filter from "../components/Filter";
 
-export default function Schedule({ navigation }: any) {
+export default function Schedule() {
   const [list, setList]: any = React.useState([]);
-
   const [updateActivity, setUpdateActivity] = React.useState("");
   const [activity, setActivity] = React.useState("");
   const [filter, setFilter]: any = React.useState({

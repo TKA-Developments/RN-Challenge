@@ -59,8 +59,7 @@ function ScheduleNavigator() {
         options={{
           title: "Schedule",
           headerStyle: {
-            backgroundColor: "#fff",
-            elevation: 0,
+            backgroundColor: "#F2F7FF",
           },
         }}
       />
@@ -76,7 +75,12 @@ function ProductivityNavigator() {
       <ProductivityStack.Screen
         name="Productivity"
         component={ScheduleDetails}
-        options={{ headerTitle: "Productivity" }}
+        options={{
+          headerTitle: "Productivity",
+          headerStyle: {
+            backgroundColor: "#F2F7FF",
+          },
+        }}
       />
     </ProductivityStack.Navigator>
   );

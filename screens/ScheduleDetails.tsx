@@ -2,6 +2,7 @@ import * as React from "react";
 import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { Text, View } from "../components/Themed";
 import firebase from "firebase";
+import { showMessage } from "react-native-flash-message";
 export default function ScheduleDetails() {
   const [list, setList]: any = React.useState([]);
   const [refresh, setRefresh] = React.useState(true);
@@ -79,7 +80,13 @@ export default function ScheduleDetails() {
       .ref("/activity")
       .remove()
       .then(() => {
-        alert("It' A New Day, Let's Rocking");
+        showMessage({
+          message: "🔔 Let's Start A New Day",
+          description: "Your Schedule Has Been Restart",
+          type: "success",
+          animationDuration: 300,
+          duration: 2000,
+        });
         setList([]);
       })
       .catch((err) => {
@@ -224,7 +231,7 @@ const styles = StyleSheet.create({
   },
   containerButton: {
     height: 100,
-    marginTop: 200,
+    marginTop: 100,
     justifyContent: "space-between",
   },
 });

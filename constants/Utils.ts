@@ -1,5 +1,6 @@
 import firebase from "firebase";
-import { useState, useEffect } from "react";
+
+import { showMessage } from "react-native-flash-message";
 const Utils = {
   UpdateItems: (id: any, list: any, updateActivity: any) => {
     let item: any = list[id];
@@ -11,7 +12,13 @@ const Utils = {
         isDone: false,
       })
       .then(() => {
-        alert("Activity Berhasil Diubah");
+        showMessage({
+          message: "🔔 Success",
+          description: "Your Task Has Been Updated",
+          type: "success",
+          animationDuration: 300,
+          duration: 2000,
+        });
       })
       .catch((err) => {
         alert(err);
@@ -27,7 +34,13 @@ const Utils = {
         isDone: true,
       })
       .then(() => {
-        alert("Great Job, Tugas Kamu Selesai");
+        showMessage({
+          message: "🔔 Great Job!",
+          description: "Nice Work, Keep It Up!!!",
+          type: "success",
+          animationDuration: 300,
+          duration: 2000,
+        });
       })
       .catch((err) => {
         alert(err);
@@ -40,7 +53,13 @@ const Utils = {
       .ref(`/activity/` + id)
       .remove()
       .then(() => {
-        alert("Activity Dihapus");
+        showMessage({
+          message: "🔔 Deleted",
+          description: "Your Task Has Been Deleted",
+          type: "danger",
+          animationDuration: 300,
+          duration: 2000,
+        });
       })
       .catch((err) => {
         alert(err);

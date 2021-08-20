@@ -7,27 +7,42 @@ import {
   TouchableOpacity,
 } from "react-native";
 import firebase from "../constants/firebase";
+import { showMessage } from "react-native-flash-message";
 export function Inputs(props: any) {
   const addActivity = () => {
-    firebase
-      .database()
-      .ref("/activity")
-      .push({
-        activity: props.state.activity,
-        isDone: false,
-      })
-      .then(() => {
-        alert("Sukses add data");
-        let ambildata = firebase.database().ref("/activity");
-        ambildata.once("value").then((snapshot) => {
-          props.setList(snapshot.val());
-        });
-
-        props.state.setActivity("");
-      })
-      .catch((err) => {
-        alert(err);
+    if (props.state.activity.length === 0) {
+      showMessage({
+        message: "🔔 Error",
+        description: "Please Fill The Input",
+        type: "danger",
       });
+    } else {
+      firebase
+        .database()
+        .ref("/activity")
+        .push({
+          activity: props.state.activity,
+          isDone: false,
+        })
+        .then(() => {
+          showMessage({
+            message: "🔔 Success",
+            description: "Your Task Has Been Added",
+            type: "success",
+            animationDuration: 300,
+            duration: 2000,
+          });
+          let ambildata = firebase.database().ref("/activity");
+          ambildata.once("value").then((snapshot) => {
+            props.setList(snapshot.val());
+          });
+
+          props.state.setActivity("");
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
   };
 
   // let ambilData2 = firebase.database().ref('/contoh')
