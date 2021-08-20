@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -7,19 +7,23 @@ import {
   TouchableOpacity,
 } from "react-native";
 import firebase from "../constants/firebase";
-export function Inputs() {
-  const [activity, setActivity] = useState("");
+export function Inputs(props: any) {
   const addActivity = () => {
     firebase
       .database()
       .ref("/activity")
       .push({
-        activity: activity,
+        activity: props.state.activity,
         isDone: false,
       })
       .then(() => {
         alert("Sukses add data");
-        setActivity("");
+        let ambildata = firebase.database().ref("/activity");
+        ambildata.once("value").then((snapshot) => {
+          props.setList(snapshot.val());
+        });
+
+        props.state.setActivity("");
       })
       .catch((err) => {
         alert(err);
@@ -38,8 +42,8 @@ export function Inputs() {
     <View style={styles.container}>
       <TextInput
         placeholder="What you want todo"
-        onChangeText={(text) => setActivity(text)}
-        value={activity}
+        onChangeText={(text) => props.state.setActivity(text)}
+        value={props.state.activity}
         style={styles.input}
       />
       <TouchableOpacity style={styles.button} onPress={() => addActivity()}>

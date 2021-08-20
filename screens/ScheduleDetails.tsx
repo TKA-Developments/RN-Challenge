@@ -4,18 +4,21 @@ import { Text, View } from "../components/Themed";
 import firebase from "firebase";
 export default function ScheduleDetails() {
   const [list, setList]: any = React.useState([]);
-
-  let array = list && Object.keys(list);
+  const [refresh, setRefresh] = React.useState(true);
   React.useEffect(() => {
     let ambildata = firebase.database().ref("/activity");
     if (ambildata) {
-      ambildata.once("value").then((snapshot) => {
-        setList(snapshot.val());
-      });
+      ambildata
+        .once("value")
+        .then((snapshot) => {
+          setList(snapshot.val());
+        })
+        .catch((err) => {
+          alert(err);
+        });
     }
-    // list[item].activity
-  }, [list]);
-
+  });
+  let array = list && Object.keys(list);
   const getDateLive = () => {
     const date = new Date().toUTCString().split(" ");
     let dateNow = "";
@@ -76,7 +79,7 @@ export default function ScheduleDetails() {
       .ref("/activity")
       .remove()
       .then(() => {
-        alert("Dimulai dari 0 ya");
+        alert("It' A New Day, Let's Rocking");
         setList([]);
       })
       .catch((err) => {
@@ -110,12 +113,22 @@ export default function ScheduleDetails() {
             <Text style={styles.textDetails}>You Have Done</Text>
           </View>
         </View>
-        <TouchableOpacity
-          style={styles.resetBtnContainer}
-          onPress={() => deleteAll()}
-        >
-          <Text style={styles.resetBtn}>Reset Activity, and Start New Day</Text>
-        </TouchableOpacity>
+        <View style={styles.containerButton}>
+          <TouchableOpacity
+            style={styles.resetBtnContainer}
+            onPress={() => deleteAll()}
+          >
+            <Text style={styles.resetBtn}>
+              Reset Activity, and Start New Day
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.resetBtnContainer2}
+            onPress={() => setRefresh(!refresh)}
+          >
+            <Text style={styles.refreshBtn}>Refresh</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );
@@ -188,10 +201,30 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "red",
   },
+  refreshBtn: {
+    paddingTop: 8,
+    textAlign: "center",
+    borderWidth: 1,
+    color: "#fff",
+    fontWeight: "bold",
+    height: 40,
+    width: "40%",
+    borderRadius: 20,
+    backgroundColor: "#96b09d",
+  },
   resetBtnContainer: {
     justifyContent: "flex-end",
     alignItems: "center",
-    height: 200,
     backgroundColor: "#fff",
+  },
+  resetBtnContainer2: {
+    justifyContent: "flex-end",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  containerButton: {
+    height: 100,
+    marginTop: 200,
+    justifyContent: "space-between",
   },
 });
