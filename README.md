@@ -75,18 +75,18 @@ Your app should be able to complete these tasks:
 
 ## How to run the demo
 
-# To run apps , if you have emulator linking to your machine :
+### To run apps , if you have emulator linking to your machine :
 
 `npm run android`
 
-# if you have emulator but it dont link with your vscode :
+### if you have emulator but it dont link with your vscode :
 
 1. run your expo first:
    `npm start` or `expo start`
 2. and run your emulator from seperate cmd / terminal
 3. then, type `a` in expo terminal or just simply click `run in android/emulator` in metro web page.
 
-# if you dont have emulator :
+### if you dont have emulator :
 
 1.  run your expo first:
     `npm start` or `expo start`
