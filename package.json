@@ -6,8 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll",
-    "emulator": "C:\\Users\\USER\\AppData\\Local\\Android\\Sdk\\emulator\\emulator -avd Pixel_XL_API_30"
+    "test": "jest --watchAll"
   },
   "jest": {
     "preset": "jest-expo"
