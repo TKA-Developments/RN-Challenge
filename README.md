@@ -9,6 +9,7 @@ This is a set of open ended challenges for you to show us your skills. Clone thi
 ### 1. Learn
 - Feel free to learn from any resources. [React Native Website](https://reactnative.dev), [YouTube](https://www.youtube.com/results?search_query=react+native+tutorial), etc. 
 - We have a udemy account you can borrow (reach out to team@wellmart.id). This one is really good. Please reach out!
+- Understand how GitHub works. It's a standard tool in the industry. [GitHub Tutorial](https://guides.github.com/activities/hello-world/)
 
 ### 2. Build
 - You have 1 week to complete the challenge. We can see the commits timeline
