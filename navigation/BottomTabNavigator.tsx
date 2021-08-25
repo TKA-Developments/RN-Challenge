@@ -1,13 +1,17 @@
-import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
-
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { Entypo, AntDesign } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
+import firebase from "firebase";
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
+import ScheduleDetails from "../screens/ScheduleDetails";
+import Schedule from "../screens/Schedule";
+import {
+  BottomTabParamList,
+  ProductivityParamList,
+  ScheduleParamList,
+} from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -16,58 +20,68 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName="Schedule"
+      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+    >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Schedule"
+        component={ScheduleNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="profile" size={24} color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name="Productivity"
+        component={ProductivityNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Entypo name="progress-one" size={24} color={color} />
+          ),
         }}
       />
     </BottomTab.Navigator>
   );
 }
 
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-}
-
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
 
-function TabOneNavigator() {
+const ScheduleStack = createStackNavigator<ScheduleParamList>();
+
+function ScheduleNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+    <ScheduleStack.Navigator>
+      <ScheduleStack.Screen
+        name="Schedule"
+        component={Schedule}
+        options={{
+          title: "Schedule",
+          headerStyle: {
+            backgroundColor: "#F2F7FF",
+          },
+        }}
       />
-    </TabOneStack.Navigator>
+    </ScheduleStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const ProductivityStack = createStackNavigator<ProductivityParamList>();
 
-function TabTwoNavigator() {
+function ProductivityNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+    <ProductivityStack.Navigator>
+      <ProductivityStack.Screen
+        name="Productivity"
+        component={ScheduleDetails}
+        options={{
+          headerTitle: "Productivity",
+          headerStyle: {
+            backgroundColor: "#F2F7FF",
+          },
+        }}
       />
-    </TabTwoStack.Navigator>
+    </ProductivityStack.Navigator>
   );
 }
