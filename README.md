@@ -1,5 +1,5 @@
 # RN-Challenge
-WellMart is a team of fun, fast, and friendly builders. Everyone from interns to the CEO have some level of technical skill. Everyone is judged based on their creation and outcome. Not their background. Not their appearances.
+MoneyHub is a team of fun, fast, and friendly builders. Everyone from interns to the CEO have some level of technical skill. Everyone is judged based on their creation and outcome. Not their background. Not their appearances.
 
 We welcome all kinds of builders, creators, and designers. This challenge is specifically for developers. We don't care much about your resume. If you think you can build awesome products and learn fast. This challenge is for you.
 
@@ -7,6 +7,7 @@ This is a set of open ended challenges for you to show us your skills. Clone thi
 
 ## Instructions
 ### 1. Learn
+- Download the [MoneyHub App](https://moneyhub.id/). Try to understand how the features are implemented. If you join the team, you'll be the one making these features!
 - Feel free to learn from any resources. [React Native Website](https://reactnative.dev), [YouTube](https://www.youtube.com/results?search_query=react+native+tutorial), etc. 
 - We have a udemy account you can borrow (reach out to team@wellmart.id). This one is really good. Please reach out!
 - Understand how GitHub works. It's a standard tool in the industry. [GitHub Tutorial](https://guides.github.com/activities/hello-world/)
@@ -30,14 +31,14 @@ This is a set of open ended challenges for you to show us your skills. Clone thi
 - Commit your changes
 - Fork the challenge repository
 - Issue a Pull Request
-- Notify us. Please send an email to team@wellmart.id
+- Notify us. Please send an email to team@moneyhub.id [team@moneyhub.id](mailto:team@moneyhub.id)
 
 ### Suggestions
 - Make it easy for us to try your app. Add instructions on how to run your demo. There's a section below you can fill in
 - Don't be afraid if you're still a newbie. We will judge what you built adjusted with your experience. If you're just starting out, but can learn fast. We want you :)
 - Make something fun. We love to party too! :D
 - You can use Expo or Vanilla React Native. Our codebase is Vanilla (Ejected from Expo) though. Here's to learn more about [Expo workflows](https://docs.expo.io/introduction/managed-vs-bare/)
-- Get used to coding in TypeScript
+- Get used to coding in TypeScript. But JavaScript is okay
 - Be prepared to explain your decisions and your thought process in the next interview. We're curious about how you think! :)
 
 ## Challenge
