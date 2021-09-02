@@ -1,15 +1,42 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
+import { RenderItemTV } from '../components/RenderItem';
+import { Access } from '../config/Access'
 
 export default function TabTwoScreen() {
+  const [isLoading, setLoading] = React.useState(true)
+  const [data, setData] = React.useState([])
+
+  const getData = async () => {
+    try {
+      const response = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${encodeURIComponent(Access.token)}`)
+      const json = await response.json()
+      setData(json.results)
+    } 
+    catch (error) {
+      console.error(error)
+    } 
+    finally {
+      setLoading(false)
+    }
+  };
+  React.useEffect(() => {
+    getData()
+  }, [])
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabTwoScreen.tsx" />
+      {isLoading ? 
+        <ActivityIndicator /> 
+      : 
+        <FlatList style={{width: '100%'}}
+          data={data}
+          renderItem={RenderItemTV}
+          keyExtractor={item => item.id.toString()}
+        />
+      }
     </View>
   );
 }
