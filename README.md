@@ -8,7 +8,7 @@ This is a set of open ended challenges for you to show us your skills. Clone thi
 ## Instructions
 ### 1. Learn
 - Download the [MoneyHub App](http://onelink.to/x9xxwg). Try to understand how the features are implemented. If you join the team, you'll be the one making these features!
-- Feel free to learn from any resources. [React Native Website](https://reactnative.dev), [YouTube](https://www.youtube.com/results?search_query=react+native+tutorial), etc. 
+- Feel free to learn from any resources. [React Native Website](https://reactnative.dev), [YouTube](https://www.youtube.com/results?search_query=react+native+tutorial), etc.
 - We have a udemy account you can borrow (reach out to team@wellmart.id). This one is really good. Please reach out!
 - Understand how GitHub works. It's a standard tool in the industry. [GitHub Tutorial](https://guides.github.com/activities/hello-world/)
 
@@ -25,11 +25,11 @@ This is a set of open ended challenges for you to show us your skills. Clone thi
 
 ### Submissions
 - Setup your dev environment by following this ([React Native Getting started Guide](https://reactnative.dev/docs/getting-started))
+- Fork the challenge repository
 - Clone the challenge repository
 - Create a dedicated branch
 - Write your code
 - Commit your changes
-- Fork the challenge repository
 - Issue a Pull Request
 - Notify us. Please send an email to team@moneyhub.id [team@moneyhub.id](mailto:team@moneyhub.id)
 
