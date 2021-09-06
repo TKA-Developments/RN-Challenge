@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
+import TaskList from '../components/TaskList';
 
 export default function TabOneScreen() {
   return (
@@ -9,6 +10,11 @@ export default function TabOneScreen() {
       <Text style={styles.title}>
         Here we go, your task is ready!
       </Text>
+      <View style={styles.tasks}>
+        <TaskList task='Task 1'/>
+        <TaskList task='Task 2'/>
+        <TaskList task='Task 3'/>
+      </View>
     </View>
   );
 }
@@ -25,12 +31,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     marginTop: 30,
-    marginBottom: 15,
   },
   separator: {
     marginVertical: 30,
     height: 1,
     width: '80%',
+  },
+  tasks: {
+    marginTop: 30,
+    marginHorizontal: 20,
   },
 });
 
