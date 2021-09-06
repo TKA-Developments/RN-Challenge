@@ -67,6 +67,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  input: {
+    width: 250,
+    marginVertical: -20,
+    marginHorizontal: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: '#ffffff',
+    borderRadius: 60,
+    borderColor: '#c0c0c0',
+    borderWidth: 1,
+  },
   addTask: {
     //
   },
