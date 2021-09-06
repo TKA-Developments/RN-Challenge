@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
 import { Text, View } from '../components/Themed';
 import TaskList from '../components/TaskList';
@@ -15,6 +16,23 @@ export default function TabOneScreen() {
         <TaskList task='Task 2'/>
         <TaskList task='Task 3'/>
       </View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.writeTask}
+      >
+        <TextInput
+          style={styles.input}
+          placeholder='Write a task'
+        />
+        <TouchableOpacity >
+          <View style={styles.addTask}>
+            <AntDesign
+              name='plus'
+              style={styles.addTaskIcon}
+            />
+          </View>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     </View>
   );
 }
@@ -40,6 +58,20 @@ const styles = StyleSheet.create({
   tasks: {
     marginTop: 30,
     marginHorizontal: 20,
+  },
+  writeTask: {
+    position: 'absolute',
+    bottom: 60,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  addTask: {
+    //
+  },
+  addTaskIcon: {
+    //
   },
 });
 
