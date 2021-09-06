@@ -22,14 +22,14 @@ export default function BottomTabNavigator() {
         name="On going"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="close" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="exclamationcircleo" color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Completed"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="check" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="checkcircleo" color={color} />,
         }}
       />
     </BottomTab.Navigator>
