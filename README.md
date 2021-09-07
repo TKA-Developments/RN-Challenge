@@ -65,4 +65,11 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+This is a very simple application, just run the application and input some tasks and press the + button, then the task will enter, when you click on the task the task will disappear. that means when you are done with the task you just click on it and the task will disappear.
+
+actually this is my first time learning react native, it's very fun, there are so many features that i want to add to this app, i can add an alert feature and a little animation and improve the CRUD system but i'm running out of time, because when i learn react native there are so many errors and problems, I even had to reinstall my laptop because of my carelessness in learning React Native.
+
+I want to apologize if my application is far from your expectations, but if I am given the opportunity I will learn more about React Native, I hope that with the guidance you provide, I can develop my skills and dreams
+
+notes:
+I deleted the App.tsx file and I replaced it with App.js
