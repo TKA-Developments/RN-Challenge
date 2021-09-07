@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   addTaskIcon: {
-    //
+    fontSize: 20,
   },
 });
 
