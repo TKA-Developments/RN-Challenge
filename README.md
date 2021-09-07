@@ -67,7 +67,7 @@ Your app should be able to complete these tasks:
 ## How to run the demo
 ### Setup environment
 
-#### Desktop (Unix-like OS)
+#### Desktop
 - Make sure you have node installed. For unix-like OS (Linux/Mac OS), you can use `command -v node`. If there's no output, please install the node first by download the package from [node website](https://nodejs.org/en/download/) or using your OS package manager (apt, brew, etc).
 - Make sure you have expo installed. For unix-like OS (Linux/Mac OS), you can use `command -v expo`. If there's no output, you can install expo by using this command:
 ```sh
@@ -104,7 +104,7 @@ npm start
 - Install expo app from Google Play Store or App Store with the icon similar to this: <br>
 ![expo-app-icon](https://yt3.ggpht.com/ytc/AKedOLQg2eJzTu1S9g3hvnJUiocR4Rz8_0URgK2_pGHEjA=s88-c-k-c0x00ffffff-no-rj)
 - For android:
-  - Open the app (The app is `Expo go` or something along those lines)
+  - Open the app (the app is `Expo go` or something along those lines)
   - Select `Scan QR Code`
   - Scan the QR code
 - For iOS:
