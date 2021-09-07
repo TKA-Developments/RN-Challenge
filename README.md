@@ -31,7 +31,7 @@ This is a set of open ended challenges for you to show us your skills. Clone thi
 - Write your code
 - Commit your changes
 - Issue a Pull Request
-- Notify us. Please send an email to team@moneyhub.id [team@moneyhub.id](mailto:team@moneyhub.id)
+- Notify us. Please send an email to [team@moneyhub.id](mailto:team@moneyhub.id)
 
 ### Suggestions
 - Make it easy for us to try your app. Add instructions on how to run your demo. There's a section below you can fill in
