@@ -1,20 +1,56 @@
-import * as React from 'react';
-import { StyleSheet, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Keyboard
+} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 import { Text, View } from '../components/Themed';
 import TaskList from '../components/TaskList';
 
 export default function TabOneScreen() {
+  const [task, setTask] = useState();
+  const [taskItems, setTaskItems] = useState([]);
+
+  const handleAddTask = () => {
+    // Note: not sure if dismiss the keyboard after adding a task a good thing
+    // Keyboard.dismiss();
+    setTaskItems([...taskItems, task]);
+    setTask(null);
+  };
+
+  const completeTask = (index) => {
+    let itemsCopy = [...taskItems];
+    itemsCopy.splice(index, 1);
+    setTaskItems(itemsCopy);
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        Here we go, your task is ready!
-      </Text>
+      { taskItems.length === 0 ?
+        <Text style={styles.title}>
+          Nothing to do, relax!
+        </Text> :
+        <Text style={styles.title}>
+          Here we go, your task is ready!
+        </Text>
+      }
       <View style={styles.tasks}>
-        <TaskList task='Task 1'/>
-        <TaskList task='Task 2'/>
-        <TaskList task='Task 3'/>
+        {
+          taskItems.map((item, index) => {
+            return (
+              <TouchableOpacity
+                key={index}
+                onPress={() => completeTask(index)}
+              >
+                  <TaskList task={item} />
+              </TouchableOpacity>
+            )
+          })
+        }
       </View>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -23,8 +59,10 @@ export default function TabOneScreen() {
         <TextInput
           style={styles.input}
           placeholder='Write a task'
+          value={task}
+          onChangeText={(newTask) => setTask(newTask)}
         />
-        <TouchableOpacity >
+        <TouchableOpacity onPress={() => handleAddTask()} >
           <View style={styles.addTask}>
             <AntDesign
               name='plus'
