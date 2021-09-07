@@ -55,7 +55,7 @@ Your app should be able to complete these tasks:
 - Display all to-dos in a list or a grid
 - Filter between completed and incomplete items
 
-### Bonus:
+### Bonus
 - Enable search for the to-do items
 - Include animations
 - Persist data using Contexts and/or Async Storage
@@ -65,4 +65,51 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+### Setup environment
+
+#### Desktop (Unix-like OS)
+- Make sure you have node installed. For unix-like OS (Linux/Mac OS), you can use `command -v node`. If there's no output, please install the node first by download the package from [node website](https://nodejs.org/en/download/) or using your OS package manager (apt, brew, etc).
+- Make sure you have expo installed. For unix-like OS (Linux/Mac OS), you can use `command -v expo`. If there's no output, you can install expo by using this command:
+```sh
+npm install -g expo-cli
+```
+> If there's an error please take a look at [npm documentation](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally).
+- Clone this repo by using your favorite git GUI client or this command:
+```sh
+git clone https://github.com/bruhtus/RN-Challenge/tree/bruhtus
+```
+- After that change directory to the new git repo directory by using this command (assuming you didn't change the directory name or put another argument after the url when using `git clone` command):
+```sh
+cd RN-Challenge
+```
+- Please make sure you are in the right directory by using `pwd` command and the output is along this line:
+```sh
+# like the name implied, optional-directory is optional
+# so if you clone the git repo in your home directory, then you can omitted
+# the optional-directory
+/home/<username>/<optional-directory>/RN-Challenge
+```
+- After everything clear, install node modules by using this command:
+```sh
+npm install
+```
+- And then start the app by using this command:
+```sh
+npm start
+```
+> If those command didn't open the browser automatically, you can use the localhost address like `localhost:19002` to access the log interface (There's also a barcode that we will use later). <br>
+> Please check the output of the `npm start` for the localhost address.
+
+#### Phone
+- Install expo app from Google Play Store or App Store with the icon similar to this: <br>
+![expo-app-icon](https://yt3.ggpht.com/ytc/AKedOLQg2eJzTu1S9g3hvnJUiocR4Rz8_0URgK2_pGHEjA=s88-c-k-c0x00ffffff-no-rj)
+- For android:
+  - Open the app (The app is `Expo go` or something along those lines)
+  - Select `Scan QR Code`
+  - Scan the QR code
+- For iOS:
+  - Open camera app.
+  - Point out the camera to the QR code.
+  - Select the notification `Expo QR Code` or something similar.
+- Wait until the `Building JavaScript bundle` finished.
+- Finally, use the demo (the instructions in the next section).
