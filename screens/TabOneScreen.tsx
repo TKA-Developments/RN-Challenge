@@ -79,7 +79,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   addTask: {
-    //
+    width: 60,
+    height: 60,
+    backgroundColor: '#ffffff',
+    borderRadius: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#c0c0c0',
+    borderWidth: 1,
   },
   addTaskIcon: {
     //
