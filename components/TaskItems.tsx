@@ -53,6 +53,7 @@ const TabTitle = ({itemsLength, tabScreen}) => {
 export default function TaskItems({containerStyle, tabScreenSelect}) {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
+  const [completed, setCompleted] = useState([]);
 
   const handleAddTask = () => {
     // Note: not sure if dismiss the keyboard after adding a task a good thing
@@ -63,10 +64,11 @@ export default function TaskItems({containerStyle, tabScreenSelect}) {
 
   const completeTask = (index) => {
     let itemsCopy = [...taskItems];
-    itemsCopy.splice(index, 1);
+    setCompleted([...completed, itemsCopy.splice(index, 1)]);
     setTaskItems(itemsCopy);
   };
 
+  console.log(completed)
   return (
     <View style={containerStyle}>
       <TabTitle
