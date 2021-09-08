@@ -42,7 +42,7 @@ const TabTitle = ({itemsLength, tabScreen}) => {
   );
 };
 
-export default function TaskItems({containerStyle}) {
+export default function TaskItems({containerStyle, tabScreenSelect}) {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
 
@@ -62,7 +62,7 @@ export default function TaskItems({containerStyle}) {
   return (
     <View style={containerStyle}>
       <TabTitle
-        tabScreen='TabOne'
+        tabScreen={tabScreenSelect}
         itemsLength={taskItems.length}
       />
       <View style={styles.tasks}>
