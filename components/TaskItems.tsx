@@ -87,25 +87,28 @@ export default function TaskItems({containerStyle, tabScreenSelect}) {
           })
         }
       </View>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.writeTask}
-      >
-        <TextInput
-          style={styles.input}
-          placeholder='Write a task'
-          value={task}
-          onChangeText={(newTask) => setTask(newTask)}
-        />
-        <TouchableOpacity onPress={() => handleAddTask()} >
-          <View style={styles.addTask}>
-            <AntDesign
-              name='plus'
-              style={styles.addTaskIcon}
-            />
-          </View>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
+      { tabScreenSelect === 'TabOne' ?
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.writeTask}
+        >
+          <TextInput
+            style={styles.input}
+            placeholder='Write a task'
+            value={task}
+            onChangeText={(newTask) => setTask(newTask)}
+          />
+          <TouchableOpacity onPress={() => handleAddTask()} >
+            <View style={styles.addTask}>
+              <AntDesign
+                name='plus'
+                style={styles.addTaskIcon}
+              />
+            </View>
+          </TouchableOpacity>
+        </KeyboardAvoidingView> :
+        null
+      }
     </View>
   );
 };
