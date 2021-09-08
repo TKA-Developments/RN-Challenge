@@ -5,7 +5,6 @@ import { Text, View } from '../components/Themed';
 import TaskItems from '../components/TaskItems';
 
 export default function TabOneScreen() {
-
   return (
     <View style={styles.container}>
       <TaskItems

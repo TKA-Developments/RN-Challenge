@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
-import TaskItems from '../components/TaskItems.tsx'
+import TaskItems from '../components/TaskItems';
 
 export default function TabTwoScreen() {
   return (
