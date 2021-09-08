@@ -36,6 +36,14 @@ const TabTitle = ({itemsLength, tabScreen}) => {
         <Text style={styles.title}>
           Here we go, your task is ready!
         </Text> :
+        tabScreen === 'TabTwo' && itemsLength === 0 ?
+        <Text style={styles.title}>
+          Nothing completed, what are you doing?!!
+        </Text> :
+        tabScreen === 'TabTwo' && itemsLength !== 0 ?
+        <Text style={styles.title}>
+          Here's your completed tasks, good job!
+        </Text> :
         null
       }
     </View>
