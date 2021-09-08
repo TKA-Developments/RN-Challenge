@@ -97,7 +97,7 @@ npm install
 ```sh
 npm start
 ```
-> If those command didn't open the browser automatically, you can use the localhost address like `localhost:19002` to access the log interface (There's also a barcode that we will use later). <br>
+> If those command didn't open the browser automatically, you can use the localhost address like `localhost:19002` in your web browser to access the log interface (there's also a barcode that we will use later). <br>
 > Please check the output of the `npm start` for the localhost address.
 
 #### Phone
