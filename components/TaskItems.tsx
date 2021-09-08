@@ -28,13 +28,15 @@ const TaskList = ({task}) => {
 const TabTitle = ({itemsLength, tabScreen}) => {
   return (
     <View style={styles.title}>
-      { {itemsLength} === 0 ?
+      { tabScreen === 'TabOne' && itemsLength === 0 ?
         <Text style={styles.title}>
           Nothing to do, relax!
         </Text> :
+        tabScreen === 'TabOne' && itemsLength !== 0 ?
         <Text style={styles.title}>
           Here we go, your task is ready!
-        </Text>
+        </Text> :
+        null
       }
     </View>
   );
