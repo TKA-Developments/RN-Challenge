@@ -68,17 +68,17 @@ Your app should be able to complete these tasks:
 ### Setup environment
 
 #### Desktop
-- Make sure you have node installed. For unix-like OS (Linux/Mac OS), you can use `command -v node`. If there's no output, please install the node first by download the package from [node website](https://nodejs.org/en/download/) or using your OS package manager (apt, brew, etc).
-- Make sure you have expo installed. For unix-like OS (Linux/Mac OS), you can use `command -v expo`. If there's no output, you can install expo by using this command:
+- Make sure you have node installed. For unix-like OS (Linux/Mac OS), you can use `command -v node` from your terminal emulator. If there's no output, please install the node first by download the package from [node website](https://nodejs.org/en/download/) or using your OS package manager (apt, brew, etc).
+- Make sure you have expo installed. For unix-like OS (Linux/Mac OS), you can use `command -v expo` from your terminal emulator. If there's no output, you can install expo by using this command in your terminal emulator:
 ```sh
 npm install -g expo-cli
 ```
 > If there's an error please take a look at [npm documentation](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally).
-- Clone this repo by using your favorite git GUI client or this command:
+- Clone this repo by using your favorite git GUI client or this command in your terminal emulator:
 ```sh
 git clone https://github.com/bruhtus/RN-Challenge/tree/bruhtus
 ```
-- After that change directory to the new git repo directory by using this command (assuming you didn't change the directory name or put another argument after the url when using `git clone` command):
+- After that change directory to the new git repo directory by using this command (assuming you didn't change the directory name or put another argument after the url when using `git clone` command) in your terminal emulator:
 ```sh
 cd RN-Challenge
 ```
@@ -89,11 +89,11 @@ cd RN-Challenge
 # the optional-directory
 /home/<username>/<optional-directory>/RN-Challenge
 ```
-- After everything clear, install node modules by using this command:
+- After everything clear, install node modules by using this command in your terminal emulator:
 ```sh
 npm install
 ```
-- And then start the app by using this command:
+- And then start the app by using this command in your terminal emulator:
 ```sh
 npm start
 ```
