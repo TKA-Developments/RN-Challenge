@@ -10,11 +10,15 @@ import {
 import { AntDesign } from '@expo/vector-icons';
 import { Text, View } from '../components/Themed';
 
-const TaskList = ({task, deleteTask, index}) => {
+const TaskList = ({index, task, completeTask, deleteTask}) => {
   return (
     <View style={styles.item}>
       <View style={styles.itemLeft}>
-        <TouchableOpacity style={styles.square}>
+        <TouchableOpacity
+          key={index}
+          style={styles.completeButton}
+          onPress={() => completeTask(index)}
+        >
         </TouchableOpacity>
         <FlatList style={styles.itemText}
           horizontal
@@ -77,12 +81,7 @@ export default function TaskItems({containerStyle, tabScreenSelect}) {
     setTask(null);
   };
 
-  const completeTask = (index) => {
-    let itemsCopy = [...taskItems];
-    setCompleted([...completed, itemsCopy.splice(index, 1)[0]]);
-    setTaskItems(itemsCopy);
-  };
-
+  console.log(completed);
   return (
     <View style={containerStyle}>
       <TabTitle
@@ -99,6 +98,11 @@ export default function TaskItems({containerStyle, tabScreenSelect}) {
                 deleteTask={(index) => {
                   let itemsCopy = [...taskItems];
                   itemsCopy.splice(index, 1);
+                  setTaskItems(itemsCopy);
+                }}
+                completeTask={(index) => {
+                  let itemsCopy = [...taskItems];
+                  setCompleted([...completed, itemsCopy.splice(index, 1)[0]]);
                   setTaskItems(itemsCopy);
                 }}
               />
@@ -192,7 +196,7 @@ const styles = StyleSheet.create({
   itemText: {
     maxWidth: '80%',
   },
-  square: {
+  completeButton: {
     width: 24,
     height: 24,
     backgroundColor: '#55bcf6',
