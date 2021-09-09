@@ -10,7 +10,7 @@ import {
 import { AntDesign } from '@expo/vector-icons';
 import { Text, View } from '../components/Themed';
 
-const TaskList = ({task}) => {
+const TaskList = ({task, deleteTask, index}) => {
   return (
     <View style={styles.item}>
       <View style={styles.itemLeft}>
@@ -25,8 +25,17 @@ const TaskList = ({task}) => {
           }}
         />
       </View>
-      <View style={styles.circular}>
-      </View>
+      <TouchableOpacity
+        key={index}
+        onPress={() => deleteTask(index)}
+      >
+          <View style={styles.deleteButton}>
+            <AntDesign
+              name='close'
+              style={styles.addTaskIcon}
+            />
+          </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -74,7 +83,6 @@ export default function TaskItems({containerStyle, tabScreenSelect}) {
     setTaskItems(itemsCopy);
   };
 
-  console.log(completed)
   return (
     <View style={containerStyle}>
       <TabTitle
@@ -85,12 +93,15 @@ export default function TaskItems({containerStyle, tabScreenSelect}) {
         {
           taskItems.map((item, index) => {
             return (
-              <TouchableOpacity
-                key={index}
-                onPress={() => completeTask(index)}
-              >
-                  <TaskList task={item} />
-              </TouchableOpacity>
+              <TaskList
+                index={index}
+                task={item}
+                deleteTask={(index) => {
+                  let itemsCopy = [...taskItems];
+                  itemsCopy.splice(index, 1);
+                  setTaskItems(itemsCopy);
+                }}
+              />
             )
           })
         }
@@ -188,11 +199,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginRight: 15,
   },
-  circular: {
-    width: 12,
+  deleteButton: {
+    width: 17,
     height: 12,
-    borderColor: '#55bcf6',
-    borderWidth: 2,
-    borderRadius: 5,
   },
 });
