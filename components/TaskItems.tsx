@@ -64,7 +64,7 @@ export default function TaskItems({containerStyle, tabScreenSelect}) {
 
   const completeTask = (index) => {
     let itemsCopy = [...taskItems];
-    setCompleted([...completed, itemsCopy.splice(index, 1)]);
+    setCompleted([...completed, itemsCopy.splice(index, 1)[0]]);
     setTaskItems(itemsCopy);
   };
 
