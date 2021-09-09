@@ -26,7 +26,7 @@ export default App = () => {
             {/* To Do List */}
             <View style={styles.todoWrapper}>
                 <Text style={styles.title}>To-Do List</Text>
-
+                <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
                 <View style={styles.items}>
                     {/* Todo Items */}
                     {
@@ -63,7 +63,7 @@ export default App = () => {
 const styles = StyleSheet.create({
     container : {
         flex: 1,
-        backgroundColor: '#E8EAED',
+        backgroundColor: 'rgb(231,245,255)',
     }, 
     todoWrapper : {
         paddingTop: 80,
@@ -72,7 +72,13 @@ const styles = StyleSheet.create({
     title : {
         fontSize: 24,
         fontWeight: 'bold',
+        color: 'rgb(0,65,129)'
     }, 
+    separator: {
+        marginVertical: 30,
+        height: 1,
+        width: '80%',
+      },
     items : {
         marginTop: 30,
     },
@@ -91,20 +97,21 @@ const styles = StyleSheet.create({
         width: 250,
         backgroundColor: '#fff',
         borderRadius: 60,
-        borderColor: '#C0C0C0',
+        borderColor: 'rgb(0,65,129)',
         borderWidth: 1
     },
     addWrapper: {
         width: 60,
         height: 60,
-        backgroundColor: '#fff',
         borderRadius: 60,
         justifyContent: 'center',
         alignItems: 'center',
-        borderColor: '#C0C0C0',
-        borderWidth: 1
+        backgroundColor: 'rgb(0,65,129)',
+        // borderColor: '#C0C0C0',
+        // borderWidth: 1
     },
     addText : {
-
+        fontWeight: 'bold',        
+        color: '#fff',
     },
 })

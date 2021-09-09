@@ -34,7 +34,7 @@ const styles=StyleSheet.create({
     square: {
         width: 24,
         height: 24,
-        backgroundColor: '#222',
+        backgroundColor: 'rgb(255,73,104)',
         opacity: 0.4,
         borderRadius: 5,
         marginRight: 15,
@@ -42,7 +42,7 @@ const styles=StyleSheet.create({
     circle : {
         width: 12,
         height: 12,
-        borderColor: '#999',
+        borderColor: 'rgb(255,73,104)',
         borderWidth: 2,
         borderRadius: 5
     }
