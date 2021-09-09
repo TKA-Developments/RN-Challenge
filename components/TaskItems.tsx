@@ -4,7 +4,8 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
-  Keyboard
+  Keyboard,
+  FlatList
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Text, View } from '../components/Themed';
@@ -15,9 +16,14 @@ const TaskList = ({task}) => {
       <View style={styles.itemLeft}>
         <TouchableOpacity style={styles.square}>
         </TouchableOpacity>
-        <Text style={styles.itemText}>
-          {task}
-        </Text>
+        <FlatList style={styles.itemText}
+          horizontal
+          data={task}
+          keyExtractor={(task) => task}
+          renderItem={({item}) => {
+            return <Text>{item}</Text>
+          }}
+        />
       </View>
       <View style={styles.circular}>
       </View>
