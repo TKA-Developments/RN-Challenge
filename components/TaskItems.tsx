@@ -42,14 +42,20 @@ export default function TaskItems({containerStyle, tabScreenSelect}) {
   const [data, setData] = useState([]);
 
   const handleAddTask = (value) => {
-    setData((prevTodo) => {
+    setData((prevTask) => {
       return [
         {
           value: value,
           key: Math.random().toString(),
         },
-        ...prevTodo,
+        ...prevTask,
       ];
+    });
+  };
+
+  const handleDeleteTask = (key) => {
+    setData((prevTask) => {
+      return prevTask.filter((task) => task.key != key);
     });
   };
 
@@ -59,7 +65,10 @@ export default function TaskItems({containerStyle, tabScreenSelect}) {
         data={data}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => (
-          <TaskList item={item} />
+          <TaskList
+            item={item}
+            handleDeleteTask={handleDeleteTask}
+          />
         )}
       />
       <AddInput
@@ -77,23 +86,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     marginTop: 30,
-  },
-  tasks: {
-    marginTop: 30,
-    marginHorizontal: 20,
-  },
-  itemText: {
-    maxWidth: '80%',
-  },
-  completeButton: {
-    width: 24,
-    height: 24,
-    backgroundColor: '#55bcf6',
-    borderRadius: 5,
-    marginRight: 15,
-  },
-  deleteButton: {
-    width: 17,
-    height: 12,
   },
 });
