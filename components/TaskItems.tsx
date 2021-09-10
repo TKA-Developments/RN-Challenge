@@ -8,42 +8,10 @@ import {
   FlatList
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+
 import { Text, View } from '../components/Themed';
 import AddInput from '../components/AddInput';
-
-const TaskList = ({index, task, completeTask, deleteTask}) => {
-  return (
-    <View style={styles.item}>
-      <View style={styles.itemLeft}>
-        <TouchableOpacity
-          key={index}
-          style={styles.completeButton}
-          onPress={() => completeTask(index)}
-        >
-        </TouchableOpacity>
-        <FlatList style={styles.itemText}
-          horizontal
-          data={task}
-          keyExtractor={(task) => task}
-          renderItem={({item}) => {
-            return <Text>{item}</Text>
-          }}
-        />
-      </View>
-      <TouchableOpacity
-        key={index}
-        onPress={() => deleteTask(index)}
-      >
-          <View style={styles.deleteButton}>
-            <AntDesign
-              name='close'
-              style={{ fontSize: 20 }}
-            />
-          </View>
-      </TouchableOpacity>
-    </View>
-  );
-};
+import TaskList from '../components/TaskList';
 
 const TabTitle = ({itemsLength, tabScreen}) => {
   return (
@@ -71,48 +39,32 @@ const TabTitle = ({itemsLength, tabScreen}) => {
 };
 
 export default function TaskItems({containerStyle, tabScreenSelect}) {
-  const [task, setTask] = useState();
-  const [taskItems, setTaskItems] = useState([]);
-  const [completed, setCompleted] = useState([]);
+  const [data, setData] = useState([]);
 
-  const handleAddTask = () => {
-    // Note: not sure if dismiss the keyboard after adding a task a good thing
-    // Keyboard.dismiss();
-    setTaskItems([...taskItems, task]);
-    setTask(null);
+  const handleAddTask = (value) => {
+    setData((prevTodo) => {
+      return [
+        {
+          value: value,
+          key: Math.random().toString(),
+        },
+        ...prevTodo,
+      ];
+    });
   };
 
-  console.log(completed);
   return (
     <View style={containerStyle}>
-      <TabTitle
-        tabScreen={tabScreenSelect}
-        itemsLength={taskItems.length}
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.key}
+        renderItem={({ item }) => (
+          <TaskList item={item} />
+        )}
       />
-      <View style={styles.tasks}>
-        {
-          taskItems.map((item, index) => {
-            return (
-              <TaskList
-                index={index}
-                task={item}
-                deleteTask={(index) => {
-                  let itemsCopy = [...taskItems];
-                  itemsCopy.splice(index, 1);
-                  setTaskItems(itemsCopy);
-                }}
-                completeTask={(index) => {
-                  let itemsCopy = [...taskItems];
-                  setCompleted([...completed, itemsCopy.splice(index, 1)[0]]);
-                  setTaskItems(itemsCopy);
-                }}
-              />
-            )
-          })
-        }
-      </View>
       <AddInput
         containerStyle={containerStyle}
+        handleAddTask={handleAddTask}
       />
     </View>
   );
@@ -129,19 +81,6 @@ const styles = StyleSheet.create({
   tasks: {
     marginTop: 30,
     marginHorizontal: 20,
-  },
-  item: {
-    backgroundColor: '#ffffff',
-    margin: 15,
-    borderRadius: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  itemLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
   },
   itemText: {
     maxWidth: '80%',

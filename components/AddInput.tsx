@@ -9,7 +9,7 @@ import {
 import { AntDesign } from '@expo/vector-icons';
 import { Text, View } from '../components/Themed';
 
-export default function AddInput({containerStyle}) {
+export default function AddInput({containerStyle, handleAddTask}) {
   const [input, setInput] = useState('');
 
   return (
@@ -24,7 +24,12 @@ export default function AddInput({containerStyle}) {
           value={input}
           onChangeText={(newInput) => setInput(newInput)}
         />
-        <TouchableOpacity onPress={() => {alert('button clicked')}} >
+        <TouchableOpacity
+          onPress={() => {
+            setInput(handleAddTask(input))
+            setInput(null)
+          }}
+        >
           <View style={styles.addTask}>
             <AntDesign
               name='plus'
