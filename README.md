@@ -113,3 +113,8 @@ npm start
   - Select the notification `Expo QR Code` or something similar.
 - Wait until the `Building JavaScript bundle` finished.
 - Finally, use the demo (the instructions in the next section).
+
+## References
+- [Udemy course: Complete React Native and Redux](https://www.udemy.com/course/the-complete-react-native-and-redux-cours/).
+- [Made With Matt youtube tutorial](https://www.youtube.com/playlist?list=PLYBvEAka-q1hJuwRPYQPlEBBRm7_qGw_2).
+- [Building a To-Do List with React-Native and Styled-Components](https://dev.to/reenydavidson/building-a-to-do-list-with-react-native-and-styled-components-2148).
