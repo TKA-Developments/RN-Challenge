@@ -9,7 +9,6 @@ export default function TabTwoScreen() {
     <View style={styles.container}>
       <TaskItems
         containerStyle={styles.container}
-        tabScreenSelect='TabTwo'
       />
     </View>
   );

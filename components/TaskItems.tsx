@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet,
-  TextInput,
-  KeyboardAvoidingView,
   TouchableOpacity,
-  Keyboard,
   FlatList
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
@@ -14,7 +10,7 @@ import AddInput from '../components/AddInput';
 import TaskList from '../components/TaskList';
 import Empty from '../components/Empty';
 
-export default function TaskItems({containerStyle, tabScreenSelect}) {
+export default function TaskItems({containerStyle}) {
   const [data, setData] = useState([]);
   const [completed, setCompleted] = useState(false);
 

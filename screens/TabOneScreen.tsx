@@ -9,7 +9,6 @@ export default function TabOneScreen() {
     <View style={styles.container}>
       <TaskItems
         containerStyle={styles.container}
-        tabScreenSelect='TabOne'
       />
     </View>
   );
