@@ -12,8 +12,8 @@ import { AntDesign } from '@expo/vector-icons';
 import { Text, View } from '../components/Themed';
 import AddInput from '../components/AddInput';
 import TaskList from '../components/TaskList';
+import Empty from '../components/Empty';
 
-// TODO: make a header
 export default function TaskItems({containerStyle, tabScreenSelect}) {
   const [data, setData] = useState([]);
   const [completed, setCompleted] = useState(false);
@@ -51,6 +51,11 @@ export default function TaskItems({containerStyle, tabScreenSelect}) {
       <FlatList
         data={data}
         keyExtractor={(item) => item.key}
+        ListEmptyComponent={() => (
+          <Empty
+            title='Nothing to do, relax!'
+          />
+        )}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => toggleCompleteTask(item)}
@@ -70,13 +75,3 @@ export default function TaskItems({containerStyle, tabScreenSelect}) {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    backgroundColor: '#e8eaed',
-    fontSize: 20,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    marginTop: 30,
-  },
-});
