@@ -3,7 +3,6 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 
 import { Text, View } from '../components/Themed';
 import AddInput from '../components/AddInput';
