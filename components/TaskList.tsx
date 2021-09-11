@@ -4,13 +4,32 @@ import { AntDesign } from '@expo/vector-icons';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from '../components/Themed';
 
-export default function TaskList({ item, handleDeleteTask }) {
+export default function TaskList({ item, completed, handleDeleteTask }) {
   return (
     <View style={styles.listContainer}>
       <View style={styles.taskContainer}>
-        <Text>
-          {item.value}
-        </Text>
+        { completed == false ?
+          <View style={styles.completeButton}>
+            <AntDesign
+              name='right'
+              style={{ fontSize: 25, color: '#171717' }}
+            />
+          </View> :
+          <View style={styles.completeButton}>
+            <AntDesign
+              name='check'
+              style={{ fontSize: 25, color: '#006f00' }}
+            />
+          </View>
+        }
+        { completed == false ?
+          <Text>
+            {item.value}
+          </Text> :
+          <Text style={{ textDecorationLine: 'line-through' }}>
+            {item.value}
+          </Text>
+        }
       </View>
       <TouchableOpacity
         onPress={() => handleDeleteTask(item.key)}
@@ -18,7 +37,7 @@ export default function TaskList({ item, handleDeleteTask }) {
           <View style={styles.deleteButton}>
             <AntDesign
               name='delete'
-              style={{ fontSize: 20 }}
+              style={{ fontSize: 25, color: '#9b1300' }}
             />
           </View>
       </TouchableOpacity>
@@ -43,16 +62,14 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   deleteButton: {
-    width: 17,
-    height: 12,
-    marginRight: 15,
+    width: 25,
+    height: 25,
+    marginRight: 20,
     justifyContent: 'center',
   },
   completeButton: {
-    width: 24,
-    height: 24,
-    backgroundColor: '#55bcf6',
-    borderRadius: 5,
+    width: 25,
+    height: 25,
     marginRight: 15,
   },
 });

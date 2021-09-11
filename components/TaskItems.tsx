@@ -13,42 +13,20 @@ import { Text, View } from '../components/Themed';
 import AddInput from '../components/AddInput';
 import TaskList from '../components/TaskList';
 
-const TabTitle = ({itemsLength, tabScreen}) => {
-  return (
-    <View style={styles.title}>
-      { tabScreen === 'TabOne' && itemsLength === 0 ?
-        <Text style={styles.title}>
-          Nothing to do, relax!
-        </Text> :
-        tabScreen === 'TabOne' && itemsLength !== 0 ?
-        <Text style={styles.title}>
-          Here we go, your task is ready!
-        </Text> :
-        tabScreen === 'TabTwo' && itemsLength === 0 ?
-        <Text style={styles.title}>
-          Nothing completed, what are you doing?!!
-        </Text> :
-        tabScreen === 'TabTwo' && itemsLength !== 0 ?
-        <Text style={styles.title}>
-          Here's your completed tasks, good job!
-        </Text> :
-        null
-      }
-    </View>
-  );
-};
-
+// TODO: make a header
 export default function TaskItems({containerStyle, tabScreenSelect}) {
   const [data, setData] = useState([]);
+  const [completed, setCompleted] = useState(false);
 
   const handleAddTask = (value) => {
     setData((prevTask) => {
       return [
+        ...prevTask,
         {
           value: value,
           key: Math.random().toString(),
+          completed: false,
         },
-        ...prevTask,
       ];
     });
   };
@@ -59,16 +37,30 @@ export default function TaskItems({containerStyle, tabScreenSelect}) {
     });
   };
 
+  // console.log(completed)
+
+  // TODO: need to figure out how to setCompleted back to false
+  const toggleCompleteTask = (item) => {
+    item.completed == completed ?
+      item.completed = setCompleted(true) :
+      item.completed = setCompleted(false)
+  };
+
   return (
     <View style={containerStyle}>
       <FlatList
         data={data}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => (
-          <TaskList
-            item={item}
-            handleDeleteTask={handleDeleteTask}
-          />
+          <TouchableOpacity
+            onPress={() => toggleCompleteTask(item)}
+          >
+            <TaskList
+              item={item}
+              completed={item.completed}
+              handleDeleteTask={handleDeleteTask}
+            />
+          </TouchableOpacity>
         )}
       />
       <AddInput
