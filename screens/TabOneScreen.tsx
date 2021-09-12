@@ -11,7 +11,7 @@ export default function TabOneScreen() {
       </Text>
       <Text style={styles.instructionText}>
         Below is the instructions how to use the app:{"\n"}
-        1. First, there are two tab in this tab. The tab on the left
+        1. First, there are two tabs in this app. The tab on the left
           (which has `home` icon) is this welcome screen and the tab on
           the right is a task screen which hold all your task.{"\n\n"}
         2. If you want to add task, view your task list, and any activities
