@@ -65,4 +65,21 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+1. Download or clone this repository,
+2. Open this folder with VS Code,
+3. On the terminal, use npm install,
+4. And then npm start,
+5. To open the app, you can use android/ios simulator if you have one, but I used expo app and scanned the QR code.
+This to-do application is so simple:
+1. Adding a task: type down what do you want to do in the text input below, and then tap the + button to add it
+2. Removing a task : When you're done with your task, simply tap the item that you want to delete.
+
+## Dev notes
+Things that I definitely want to learn and improve to this app:
+1. Edit a task
+2. Mark a task whether it is completed or not
+3. Implement a navigation so I can add more screens like task details
+4. Definitely want to learn firebase, because i tried using it here but it just doesn't work and I don't know why
+5. Learn backend in general
+6. AND make my app less boring
+
