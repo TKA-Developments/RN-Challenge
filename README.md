@@ -148,3 +148,4 @@ npm start
 - [Building a To-Do List with React-Native and Styled-Components](https://dev.to/reenydavidson/building-a-to-do-list-with-react-native-and-styled-components-2148).
 - [Stackoverflow comment about completed task](https://stackoverflow.com/q/66427843).
 - [Geekforgeeks: how to add key-value pairs dynamically](https://www.geeksforgeeks.org/how-to-create-dictionary-and-add-key-value-pairs-dynamically/).
+- [Stackoverflow answer about addding text in new line](https://stackoverflow.com/a/32480141).
