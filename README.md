@@ -114,6 +114,34 @@ npm start
 - Wait until the `Building JavaScript bundle` finished.
 - Finally, use the demo (the instructions in the next section).
 
+### Demo instructions
+1. First, there are two tab in this tab. The tab on the left (which has `home` icon) is welcome screen and the tab on the right is a task screen which hold all your task.
+2. If you want to add task, view your task list, and any activities that require interaction with your task, you can navigate to the second tab or the tab on the right.
+3. In the task tab, there's an input area which has `Write a task` on it. You can use those input area to insert a text about your task. After you are done typing, you can press the `+` button on the right side.
+4. To complete the task, you can press the middle of the task item. There's a `check mark` indicator if the task completed (the task text also crossed out).
+5. You can delete task by pressing the `trash can` icon on the right side.
+
+#### Demo interface
+<details>
+<summary><strong>Welcome screen (click to expand)</strong></summary>
+
+![welcome-screen](assets/images/app-interface/welcome-screen.png)
+
+</details>
+
+<details>
+<summary><strong>Task screen (click to expand)</strong></summary>
+
+<h4>Empty task interface</h4>
+
+![empty-task-interface](assets/images/app-interface/empty-task-interface.png)
+
+<h4>Completed and not completed interface</h4>
+
+![completed-and-not-completed-interface](assets/images/app-interface/completed-and-not-completed-interface.png)
+
+</details>
+
 ## References
 - [Udemy course: Complete React Native and Redux](https://www.udemy.com/course/the-complete-react-native-and-redux-cours/).
 - [Made With Matt youtube tutorial](https://www.youtube.com/playlist?list=PLYBvEAka-q1hJuwRPYQPlEBBRm7_qGw_2).
