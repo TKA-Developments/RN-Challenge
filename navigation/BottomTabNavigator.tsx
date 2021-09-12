@@ -19,17 +19,17 @@ export default function BottomTabNavigator() {
       initialRouteName="TabOne"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="On going"
+        name="Home"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="exclamationcircleo" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="Completed"
+        name="Task"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="checkcircleo" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="bars" color={color} />,
         }}
       />
     </BottomTab.Navigator>
