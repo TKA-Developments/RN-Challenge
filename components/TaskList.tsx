@@ -48,8 +48,7 @@ export default function TaskList({ item, completed, handleDeleteTask }) {
 const styles = StyleSheet.create({
   listContainer: {
     backgroundColor: '#ffffff',
-    margin: 15,
-    marginBottom: 15,
+    margin: 10,
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -57,6 +56,7 @@ const styles = StyleSheet.create({
   },
   taskContainer: {
     padding: 15,
+    borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
