@@ -142,6 +142,11 @@ npm start
 
 </details>
 
+## Known issues
+Below is the issues that I have found and still have no idea how to fix:
+- Can't undo the `completed` task (toggle).
+- Can't add more task if it reach the end of the screen (probably styling issue).
+
 ## References
 - [Udemy course: Complete React Native and Redux](https://www.udemy.com/course/the-complete-react-native-and-redux-cours/).
 - [Made With Matt youtube tutorial](https://www.youtube.com/playlist?list=PLYBvEAka-q1hJuwRPYQPlEBBRm7_qGw_2).
