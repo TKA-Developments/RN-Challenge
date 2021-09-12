@@ -46,7 +46,7 @@ export default function AddInput({containerStyle, handleAddTask}) {
 const styles = StyleSheet.create({
   writeTask: {
     position: 'absolute',
-    bottom: 60,
+    bottom: 5,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
   },
   input: {
     width: 250,
-    marginVertical: -20,
     marginHorizontal: 15,
     paddingVertical: 10,
     paddingHorizontal: 15,
