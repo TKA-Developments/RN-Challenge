@@ -48,12 +48,12 @@ Create a React Native app where Joko can keep track of the things he need to do 
 
 ## Requirements
 Your app should be able to complete these tasks:
-- Add a new to-do item
-- Mark a to-do item as done
-- Delete a to-do item
-- Edit a to-do item
-- Display all to-dos in a list or a grid
-- Filter between completed and incomplete items
+- [x] Add a new to-do item
+- [x] Mark a to-do item as done
+- [x] Delete a to-do item
+- [ ] Edit a to-do item
+- [ ] Display all to-dos in a list or a grid
+- [ ] Filter between completed and incomplete items
 
 ### Bonus
 - Enable search for the to-do items
