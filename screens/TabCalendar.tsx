@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet } from 'react-native';
 import tailwind from 'tailwind-rn';
@@ -23,6 +24,10 @@ export default function TabCalendarScreen({navigation,route}: RootTabScreenProps
     setActive(now)
     console.log("a")
   }, [])
+
+  useEffect(() => {
+    setUpdate((e:number)=>e+1)
+  }, [useIsFocused()])
 
   const datelistrender = ({item}:any)=>{
     let date = new Date(item)

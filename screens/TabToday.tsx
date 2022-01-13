@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import {  StyleSheet } from 'react-native';
 import tailwind from 'tailwind-rn';
@@ -15,11 +16,24 @@ export default function TabToday({ navigation }: RootTabScreenProps<'TabToday'>)
   useEffect(() => {
     async function updatepercentage(){
       let data = await getTasks()
+      let tgl = new Date()
+      let tglawal = new Date(tgl.getFullYear(),tgl.getMonth(),tgl.getDate())
+      let tglakhir = new Date(tgl.getFullYear(),tgl.getMonth(),tgl.getDate()+1)
+      data = data.filter((item:any)=>{
+          if(item.time>=tglawal && item.time<=tglakhir){
+              return(item)
+          }
+          return null
+      })
       let finish = data.filter((item:any)=>item.finish)
       setPercentage(Math.ceil(finish.length/data.length*100))
     }
     updatepercentage()
   }, [update])
+
+  useEffect(() => {
+    setUpdate((e:number)=>e+1)
+  }, [useIsFocused()])
 
   return (
     <>

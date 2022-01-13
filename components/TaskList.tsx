@@ -7,7 +7,7 @@ import toogleTaskStatus from "../functions/toogleTaskStatus";
 import TaskDetailModal from "./TaskDetailModal";
 import { View, Text } from "./Themed";
 
-export default function TaskList({update, updateTrigger, date=Date.now()}:any){
+export default function TaskList({update, updateTrigger, date}:any){
 
     const [modal, setModal] = useState(false)
     const [aktif, setAktif] = useState(null)
@@ -24,7 +24,7 @@ export default function TaskList({update, updateTrigger, date=Date.now()}:any){
     useEffect(() => {
         async function getdata(){
             let newdata = await getTasks()
-            let tgl = new Date(date)
+            let tgl = date?new Date(date):new Date()
             let tglawal = new Date(tgl.getFullYear(),tgl.getMonth(),tgl.getDate())
             let tglakhir = new Date(tgl.getFullYear(),tgl.getMonth(),tgl.getDate()+1)
             setData(newdata.filter((item:any)=>{

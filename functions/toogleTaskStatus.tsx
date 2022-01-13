@@ -6,7 +6,7 @@ export default async function toogleTaskStatus(data:any){
         finish:!data.finish
     }
     try{
-        editTasks(data,newdata)
+        await editTasks(data,newdata)
         return true
     }catch{
         return false
