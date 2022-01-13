@@ -19,6 +19,7 @@ import TabCalendarScreen from '../screens/TabCalendar';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import TabAccount from '../screens/TabAccount';
+import getTasks from '../functions/getTasks';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -54,6 +55,11 @@ function RootNavigator() {
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
+  async function getdata(){
+      let data = await getTasks()
+      console.log(data)
+  }
+
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
@@ -76,7 +82,10 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="sun-o" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate('Modal')}
+              onPress={() => {
+                getdata()
+                // navigation.navigate('Modal')
+              }}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
                 transform : [{scale: pressed? 0.5 : 1}]
