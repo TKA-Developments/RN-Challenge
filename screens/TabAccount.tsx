@@ -1,17 +1,32 @@
+import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import tailwind from 'tailwind-rn';
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import { auth } from '../firebase';
 import { RootTabScreenProps } from '../types';
+import AccountLogedInPage from './AccountLogedInPage';
+import AccountNotLoginPage from './AccountNotLogInPage';
 
 export default function TabAccount({navigation}: RootTabScreenProps<'TabAccount'>) {
 
+
+  const [isAuth, setIsAuth] = useState(false)
+  useEffect(() => {
+    const subscribe = auth.onAuthStateChanged(user=>{
+      if(user){
+        setIsAuth(true)
+      }else{
+        setIsAuth(false)
+      }
+    })
+    return subscribe
+  }, [])
+
+  if(isAuth){
+    return (
+      <AccountLogedInPage />
+    )
+  }
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Calendar</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabAccount.tsx" />
-    </View>
+    <AccountNotLoginPage />
   );
 }
 

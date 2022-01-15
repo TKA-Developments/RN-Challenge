@@ -19,6 +19,12 @@ export type RootStackParamList = {
   NotFound: undefined;
 };
 
+export type LoginStackParamList = {
+  Auth: undefined;
+  Login: undefined;
+  Register: undefined;
+}
+
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
   RootStackParamList,
   Screen
@@ -29,6 +35,11 @@ export type RootTabParamList = {
   TabCalendar: undefined;
   TabAccount: undefined;
 };
+
+export type LoginStackScreenProps<Screen extends keyof LoginStackParamList> = NativeStackScreenProps<
+  LoginStackParamList,
+  Screen
+>;
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, Screen>,

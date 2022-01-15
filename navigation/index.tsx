@@ -113,6 +113,7 @@ function BottomTabNavigator() {
         component={TabAccount}
         options={{
           title: 'Account',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
