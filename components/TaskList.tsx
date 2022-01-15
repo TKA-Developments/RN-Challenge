@@ -1,6 +1,6 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { useState, useEffect } from "react";
-import { FlatList, Pressable, TouchableOpacity } from "react-native";
+import { FlatList, Pressable, TextInput, TouchableOpacity } from "react-native";
 import tailwind from "tailwind-rn";
 import getTasks from "../functions/getTasks";
 import toogleTaskStatus from "../functions/toogleTaskStatus";
@@ -11,7 +11,7 @@ export default function TaskList({update, updateTrigger, date}:any){
 
     const [modal, setModal] = useState(false)
     const [aktif, setAktif] = useState(null)
-
+    const [search, setSearch] = useState("")
     const [data, setData] = useState<any[]>([])
 
     const [firstFinish, setFirstFinish] = useState(0)
@@ -19,6 +19,16 @@ export default function TaskList({update, updateTrigger, date}:any){
     const changestatus = async (item: any)=>{
         await toogleTaskStatus(item)
         updateTrigger()
+    }
+
+    const filterfunc = (item:any)=>{
+        if(search===""){
+            return item
+        }
+        if(String(item.title).toLowerCase().includes(search.toLowerCase())){
+            return item
+        }
+        return null
     }
 
     useEffect(() => {
@@ -35,10 +45,11 @@ export default function TaskList({update, updateTrigger, date}:any){
             }))
         }
         getdata()
+        setSearch("")
     }, [update,modal,date])
 
     useEffect(() => {
-        let k =data.sort((a, b) => {
+        let k =data.filter(filterfunc).sort((a, b) => {
             if(b.finish && a.finish){
                 return a.time-b.time
             }
@@ -52,7 +63,7 @@ export default function TaskList({update, updateTrigger, date}:any){
         })
         let j = k.indexOf(k.find((item)=>item.finish))
         setFirstFinish(j)
-    }, [data])
+    }, [data,search])
 
     const itemrender = ({item,index}:any)=>{
         let time = new Date(item.time)
@@ -82,27 +93,39 @@ export default function TaskList({update, updateTrigger, date}:any){
 
     return(
         <>
+            <View style={tailwind("relative")}>
+                <TextInput
+                    value={search}
+                    onChangeText={(e:any)=>setSearch(e)}
+                    placeholder="Search..."
+                    style={tailwind("border rounded-full mb-1 py-1 pr-3 pl-8")}
+                />
+                <View style={tailwind("absolute top-0 left-0 h-full items-center justify-center bg-transparent px-3 pb-1")}>
+                    <FontAwesome name="search" />
+                </View>
+            </View>
             {
-                data.find(item=>!item.finish)&&
+                data.filter(filterfunc).find(item=>!item.finish)&&
                 <Text>On Going Tasks</Text>
             }
             <TaskDetailModal visible={modal} detaildata={aktif} closeFunc={()=>setModal(false)} />
             {
-                data.length>0?
+                data.filter(filterfunc).length>0?
                 <FlatList
                     style={tailwind("flex-1 pb-4")}
-                    data={data.sort((a, b) => {
-                            if(b.finish && a.finish){
-                                return a.time-b.time
-                            }
-                            if(b.finish && !a.finish){
-                                return -1
-                            }
-                            if(!b.finish && a.finish){
-                                return 1
-                            }
+                    data={data.filter(filterfunc)
+                    .sort((a, b) => {
+                        if(b.finish && a.finish){
                             return a.time-b.time
-                        })}
+                        }
+                        if(b.finish && !a.finish){
+                            return -1
+                        }
+                        if(!b.finish && a.finish){
+                            return 1
+                        }
+                        return a.time-b.time
+                    })}
                     renderItem={itemrender}
                     keyExtractor={(item,index)=>String(index)}
                 />
