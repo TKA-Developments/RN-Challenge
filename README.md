@@ -89,3 +89,4 @@ Your app should be able to complete these tasks:
 1. The sync is not perfect, i think it will be a problem if we login in more one devices.
 2. The UI is not really good.
 3. Clean the code, i think my code is not really good
+4. I did not style for the dark mode
