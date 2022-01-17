@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import { StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Text, View } from './components/Themed';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
@@ -11,13 +12,29 @@ export default function App() {
   const colorScheme = useColorScheme();
 
   if (!isLoadingComplete) {
-    return null;
-  } else {
     return (
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
+        <View style={Styles.container}>
+          <Text>
+            Splash
+          </Text>
+        </View>
       </SafeAreaProvider>
+    );
+  } else {
+    return (
+        <SafeAreaProvider>
+          <Navigation colorScheme={colorScheme} />
+          <StatusBar />
+        </SafeAreaProvider>
     );
   }
 }
+
+const Styles = StyleSheet.create({
+  container:{
+    flex:1,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+})
