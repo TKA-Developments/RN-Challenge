@@ -5,6 +5,7 @@ import tailwind from 'tailwind-rn';
 import AddTaskModal from '../components/AddTaskModal';
 import TaskList from '../components/TaskList';
 import { Text, View } from '../components/Themed';
+import { auth } from '../firebase';
 import getTasks from '../functions/getTasks';
 import { RootTabScreenProps } from '../types';
 
@@ -40,7 +41,7 @@ export default function TabToday({ navigation }: RootTabScreenProps<'TabToday'>)
       <AddTaskModal updateTrigger={()=>setUpdate((e:number)=>e+1)} />
       <View style={styles.container}>
         <View style={tailwind("p-5")}>
-          <Text style={tailwind("text-3xl")}>Halo, Nadhim</Text>
+          <Text style={tailwind("text-3xl")}>Hello, {auth.currentUser?.displayName?auth.currentUser?.displayName:"User"}</Text>
           <View>
             <Text>Progress</Text>
             <View style={tailwind("w-full h-4 rounded-full relative mt-1 overflow-hidden")}>
