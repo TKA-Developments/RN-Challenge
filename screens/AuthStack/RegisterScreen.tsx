@@ -5,7 +5,8 @@ import { Pressable, TextInput, } from "react-native";
 import tailwind from "tailwind-rn";
 import { Text, View } from "../../components/Themed";
 import EmailValidator from "../../constants/EmailValidator";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
+import getTasks from "../../functions/getTasks";
 import { LoginStackScreenProps } from "../../types";
 
 export default function RegisterScreen({navigation}:LoginStackScreenProps<'Register'>){
@@ -16,6 +17,7 @@ export default function RegisterScreen({navigation}:LoginStackScreenProps<'Regis
     const [confPass, setConfPass] = useState("")
     const [confPassVisb, setConfPassVisb] = useState(false)
     const [isError, setIsError] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const submit = ()=>{
         let valid = true
@@ -27,13 +29,26 @@ export default function RegisterScreen({navigation}:LoginStackScreenProps<'Regis
             valid = false
         }
         setIsError(!valid)
-        if(valid){
+        if(valid && !loading){
+            setLoading(true)
             auth.createUserWithEmailAndPassword(email.trim(),password.trim())
-            .then(res=>{
-                console.log(res)
+            .then(async (res:any)=>{
+                // console.log(res.user.uid)
+                await db.collection("users").doc(res.user.uid).set({
+                    lastsync: Date.now()
+                })
+                let localtasks = await getTasks()
+                localtasks.forEach((item:any)=>{
+                    db.collection("users").doc(res.user.uid)
+                    .collection("tasks").doc(item.id).set(item)
+                })
+                console.log("sukses", res)
             })
             .catch(e=>{
                 Alert.alert("ERROR",e.toString())
+            })
+            .finally(()=>{
+                setLoading(false)
             })
         }
     }
@@ -76,7 +91,7 @@ export default function RegisterScreen({navigation}:LoginStackScreenProps<'Regis
                     </View>
                 }
                 <Pressable onPress={()=>submit()} style={tailwind(`px-8 py-2 ${isError&&(password.trim().length<3 || password.trim()!==confPass.trim())?"mt-3":"mt-5"} rounded-md bg-green-200 mb-8`)}>
-                    <Text style={tailwind("text-center text-lg")}>Register</Text>
+                    <Text style={tailwind("text-center text-lg")}>{loading?"Registering...":"Register"}</Text>
                 </Pressable>
                 <View style={tailwind("flex-row justify-center")}>
                     <Text>have an Account? </Text>

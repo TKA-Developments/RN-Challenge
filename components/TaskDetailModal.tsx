@@ -15,6 +15,7 @@ export default function TaskDetailModal({visible,closeFunc,detaildata}:any){
     const [editMode, setEditMode] = useState(false)
     const [editData, setEditData] = useState<any>(null)
     const [datePicker, setDatePicker] = useState<any>("")
+    const [loading, setLoading] = useState(false)
     const month=Months()
 
     useEffect(() => {
@@ -38,14 +39,22 @@ export default function TaskDetailModal({visible,closeFunc,detaildata}:any){
     }
 
     const deleteTask = async()=>{
-        await deleteTasks(active)
-        closeFunc()
+        if(!loading){
+            setLoading(true)
+            await deleteTasks(active)
+            setLoading(false)
+            closeFunc()
+        }
     }
 
     const updateTask = async ()=>{
-        await editTasks(active,editData)
-        setActive(editData)
-        setEditMode(false)
+        if(!loading){
+            setLoading(true)
+            await editTasks(active,editData)
+            setLoading(false)
+            setActive(editData)
+            setEditMode(false)
+        }
     }
 
     return(
@@ -173,7 +182,7 @@ export default function TaskDetailModal({visible,closeFunc,detaildata}:any){
                                 <TouchableOpacity onPress={()=>{setDeleteMode(false);setEditMode(false)}} style={tailwind("bg-red-400 h-10 w-10 flex items-center justify-center rounded-full")}>
                                     <FontAwesome size={22} color={"white"} name="times" />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={tailwind("bg-blue-400 h-10 w-10 flex items-center justify-center rounded-full")}>
+                                <TouchableOpacity style={tailwind(`bg-blue-400 h-10 w-10 flex items-center justify-center rounded-full ${loading?"opacity-40":""}`)}>
                                     <FontAwesome onPress={()=>deleteoredit()} size={22} color={"white"} name="check" />
                                 </TouchableOpacity>
                             </View>
@@ -185,9 +194,6 @@ export default function TaskDetailModal({visible,closeFunc,detaildata}:any){
                                 <TouchableOpacity onPress={()=>setDeleteMode(true)} style={tailwind("bg-red-400 h-10 w-10 flex items-center justify-center rounded-full")}>
                                     <FontAwesome size={22} color={"white"} name="trash" />
                                 </TouchableOpacity>
-                                {/* <TouchableOpacity style={tailwind("bg-green-400 h-10 w-10 flex items-center justify-center rounded-full")}>
-                                    <FontAwesome size={22} color={"white"} name="check" />
-                                </TouchableOpacity> */}
                             </View>
                         }
                     </View>

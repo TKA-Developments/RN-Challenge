@@ -13,6 +13,7 @@ export default function AddTaskModal({defaultdate,updateTrigger}:any){
     const [visible, setVisible] = useState(false)
     const [datePicker, setDatePicker] = useState<any>("")
     const month = Months()
+    const [loading, setLoading] = useState(false)
     const [data, setData] = useState({
         id: RandomString(5)+Date.now(),
         title: "",
@@ -33,9 +34,14 @@ export default function AddTaskModal({defaultdate,updateTrigger}:any){
         })
         updateTrigger()
     }, [visible])
+
     const addData = async ()=>{
-        await addTasks(data)
-        setVisible(false)
+        if(!loading){
+            setLoading(true)
+            await addTasks(data)
+            setLoading(false)
+            setVisible(false)
+        }
     }
 
     const closeFunc = ()=>{
@@ -145,7 +151,7 @@ export default function AddTaskModal({defaultdate,updateTrigger}:any){
                                     <TouchableOpacity onPress={()=>{closeFunc()}} style={tailwind("bg-red-400 h-10 w-10 flex items-center justify-center rounded-full")}>
                                         <FontAwesome size={22} color={"white"} name="times" />
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={()=>addData()} style={tailwind("bg-blue-400 h-10 w-10 flex items-center justify-center rounded-full")}>
+                                    <TouchableOpacity onPress={()=>addData()} style={tailwind(`bg-blue-400 h-10 w-10 flex items-center justify-center rounded-full ${loading?"opacity-40":""}`)}>
                                         <FontAwesome size={22} color={"white"} name="check" />
                                     </TouchableOpacity>
                                 </View>

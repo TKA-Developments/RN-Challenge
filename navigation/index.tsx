@@ -20,6 +20,7 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../typ
 import LinkingConfiguration from './LinkingConfiguration';
 import TabAccount from '../screens/TabAccount';
 import getTasks from '../functions/getTasks';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -82,7 +83,9 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="sun-o" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => {
+              onPress={async () => {
+                let data = await AsyncStorage.getItem("syncTasks")
+                console.log(data)
                 getdata()
                 // navigation.navigate('Modal')
               }}

@@ -4,7 +4,9 @@ import { Alert } from "react-native";
 import { Pressable, TextInput } from "react-native";
 import tailwind from "tailwind-rn";
 import { Text, View } from "../../components/Themed";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
+import addTasks from "../../functions/addTasks";
+import getTasks from "../../functions/getTasks";
 import { LoginStackScreenProps } from "../../types";
 
 export default function LoginScreen({navigation}:LoginStackScreenProps<'Login'>){
@@ -13,15 +15,28 @@ export default function LoginScreen({navigation}:LoginStackScreenProps<'Login'>)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [passVisb, setPassVisb] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const submit = async ()=>{
-        if(email.trim()!==""&&password.trim()!==""){
+        if(email.trim()!==""&&password.trim()!==""&&!loading){
+            setLoading(true)
             auth.signInWithEmailAndPassword(email,password)
-            .then(res=>{
-                console.log(res)
+            .then(async (res:any)=>{
+                let local = await getTasks()
+                let data = await db.collection("users").doc(res.user.uid)
+                .collection("tasks").get()
+                data.forEach((item:any)=>{
+                    if(!local.includes(item)){
+                        addTasks(item)
+                    }
+                })
+                console.log(res.user.uid)
             })
             .catch(err=>{
                 Alert.alert("Error",err.toString())
+            })
+            .finally(()=>{
+                setLoading(false)
             })
         }
     }
@@ -38,7 +53,7 @@ export default function LoginScreen({navigation}:LoginStackScreenProps<'Login'>)
                     </Pressable>
                 </View>
                 <Pressable onPress={()=>{submit()}} style={tailwind("px-8 py-2 mt-5 rounded-md bg-green-200 mb-8")}>
-                    <Text style={tailwind("text-center text-lg")}>Login</Text>
+                    <Text style={tailwind("text-center text-lg")}>{loading?"Logging in...":"Login"}</Text>
                 </Pressable>
                 <View style={tailwind("flex-row justify-center")}>
                     <Text>Don't have Account? </Text>

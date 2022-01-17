@@ -13,12 +13,15 @@ export default function AccountLogedInPage(){
     return(
         <View style={tailwind("flex-1 justify-center items-center")}>
             <Text>
-                Loged In
+                Loged In as
                 {
                     auth.currentUser?.displayName?
                     auth.currentUser?.displayName
                     :" Anonymous"
                 }
+            </Text>
+            <Text>
+                Last sync at
             </Text>
             <Pressable onPress={()=>press()} style={tailwind("py-2 px-8 bg-green-300 mt-8 rounded-full")}>
                 <Text style={tailwind("text-2xl")}>
