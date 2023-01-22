@@ -8,6 +8,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { Image } from 'react-native';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -22,14 +23,16 @@ export default function BottomTabNavigator() {
         name="TabOne"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: () => <IconOne/>,
+          title: 'today task',
         }}
       />
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: () => <IconTwo/>,
+          title: 'add task'
         }}
       />
     </BottomTab.Navigator>
@@ -52,7 +55,10 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="TabOneScreen"
         component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        options={{ headerTitle: 'daylist' ,
+                   title: 'daylist',
+                   headerLeft: () => <ActionBarIcon/>
+        }}
       />
     </TabOneStack.Navigator>
   );
@@ -66,8 +72,35 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="TabTwoScreen"
         component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+        options={{ headerTitle: 'daylist' ,
+                   title: 'daylist',
+                   headerLeft: () => <ActionBarIcon/>,
+        }}
       />
     </TabTwoStack.Navigator>
+  );
+}
+
+function ActionBarIcon() {
+  return (
+    <Image
+    source={require('../assets/images/favicon.png')}
+    style={{ width: 40, height: 40, borderRadius: 40/2, marginLeft : 15 }} />
+  );
+}
+
+function IconOne() {
+  return (
+    <Image
+    source={require('../assets/images/icon1.png')}
+    style={{ width: 40, height: 40, borderRadius: 40/2 }} />
+  );
+}
+
+function IconTwo() {
+  return (
+    <Image
+    source={require('../assets/images/icon2.png')}
+    style={{ width: 40, height: 40, borderRadius: 40/2 }} />
   );
 }
