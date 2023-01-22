@@ -66,5 +66,5 @@ Your app should be able to complete these tasks:
 
 ## How to run the demo
 1. Run "npm install" to install the library
-2. Run "yarn add @react-native-firebase/app"
-3. Run "yarn add @react-native-firebase/database"
+2. Run "npm install firebase"
+3. Run "npm install native-base react-native-svg@12.1.1 react-native-safe-area-context@3.3.2"
