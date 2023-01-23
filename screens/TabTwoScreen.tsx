@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { NativeBaseProvider, Input, Button } from "native-base";
@@ -27,7 +27,7 @@ export default function TabTwoScreen() {
       <View style={styles.container}>
         <Text style={styles.title}>Add Task</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <Input variant="rounded" placeholder="Add your new task here!" value={value} onChangeText={(e)=>{setTask(e), setValue(e)}}/>
+        <Input variant="rounded" style={styles.input} placeholder="Add your new task here!" value={value} onChangeText={(e)=>{setTask(e), setValue(e)}}/>
         <Button size="sm" variant="subtle" style={styles.button} onPress={()=>{submit(), setValue('')}}>
             submit
         </Button>
@@ -53,5 +53,9 @@ const styles = StyleSheet.create({
   },
   button:{
     marginTop: 20,
+  },
+  input:{
+    textAlign: 'center',
+    maxWidth: 300
   }
 });

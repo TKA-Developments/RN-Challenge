@@ -87,7 +87,6 @@ export default function TabOneScreen() {
     <NativeBaseProvider>
       <View style={styles.container}>
         <Text style={styles.title}>Today Task</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
           {data.map((e)=>
             <View key={e.key} style={styles.card}>
@@ -104,8 +103,7 @@ export default function TabOneScreen() {
             </View>
           )}
         </ScrollView>
-        <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 20}}>Task Done</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+        <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 20, marginBottom:10}}>Task Done</Text>
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
           {dataDone.map((e)=>
             <View key={e.key} style={styles.cardDone}>
@@ -136,6 +134,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    marginBottom: 10
   },
   separator: {
     marginVertical: 30,
@@ -147,23 +146,19 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     color: '#7d1038',
-    flex: 1,
     textAlign: 'center',
-    marginLeft: 150
   },
   item1:{
     margin: 15,
     fontSize: 15,
     fontWeight: 'bold',
     color: '#002394',
-    flex: 1,
     textAlign: 'center',
-    marginLeft: 150
   },
   card:{
     margin: 10,
     padding: 10,
-    width: 1000,
+    width: 300,
     borderRadius: 10,
     elevation: 10,
     shadowColor: '#c22620',
@@ -181,7 +176,7 @@ const styles = StyleSheet.create({
   cardDone:{
     margin: 10,
     padding: 10,
-    width: 1000,
+    width: 300,
     borderRadius: 10,
     elevation: 10,
     shadowColor: '#b8dcff',
