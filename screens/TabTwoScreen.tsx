@@ -10,11 +10,13 @@ import { child, push, ref, set } from 'firebase/database';
 export default function TabTwoScreen() {
 
   const [task, setTask] = useState('');
+  const [value, setValue] = useState('');
   const key = push(child(ref(db),'task')).key;
 
   const submit = () => {
     set(ref(db,'task/'+key),{
-      task: task
+      task: task,
+      key: key
     }).then(() => {
       alert('data submitted successfully!')
     })
@@ -25,8 +27,8 @@ export default function TabTwoScreen() {
       <View style={styles.container}>
         <Text style={styles.title}>Add Task</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <Input variant="rounded" placeholder="Add your new task here!" onChangeText={(e)=>{setTask(e)}}/>
-        <Button size="sm" variant="subtle" style={styles.button} onPress={submit}>
+        <Input variant="rounded" placeholder="Add your new task here!" value={value} onChangeText={(e)=>{setTask(e), setValue(e)}}/>
+        <Button size="sm" variant="subtle" style={styles.button} onPress={()=>{submit(), setValue('')}}>
             submit
         </Button>
       </View>
