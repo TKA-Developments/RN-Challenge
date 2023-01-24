@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { db } from '../configfirebase';
 import { child, ref, remove, set } from 'firebase/database';
 
-export default function editScreen({ navigation, route }: any) {
+export default function editDoneScreen({ navigation, route }: any) {
     const dbref = ref(db);
     const [visibility, setVisibility] = useState(false);
     const [task, setTask] = useState('');
@@ -14,8 +14,8 @@ export default function editScreen({ navigation, route }: any) {
     const key = route.params.key;
 
     const submit = () => {
-        remove(child(dbref, 'task/'+key))
-        set(ref(db,'task/'+key),{
+        remove(child(dbref, 'taskdone/'+key))
+        set(ref(db,'taskdone/'+key),{
           task: task,
           key: key
         }).then(() => {

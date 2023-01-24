@@ -7,7 +7,7 @@ import { StyleSheet, ScrollView, Image } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { db } from '../configfirebase';
 
-export default function TabOneScreen() {
+export default function TabOneScreen({navigation}: {navigation:any}) {
   const dbref = ref(db);
   const [data, setData] = useState<any[]>([]);
   var array: any[] = [];
@@ -133,7 +133,7 @@ export default function TabOneScreen() {
           {data.map((e)=>
             <View key={e.key} style={styles.card}>
               <Text style={styles.item}>{e.task}</Text>
-              <Button size="sm" variant="subtle" bg="blue.100" style={{width: 30, height: 30, marginRight: 10}}>
+              <Button size="sm" variant="subtle" bg="blue.100" style={{width: 30, height: 30, marginRight: 10}} onPress={()=>{navigation.navigate('editScreen',{key: e.key})}}>
                 <Image source={require('../assets/images/edit.png')} style={{width: 20, height: 20}}></Image>
               </Button>
               <Button size="sm" variant="subtle" colorScheme="secondary" style={{width: 30, height: 30, marginRight: 10}} onPress={()=>{removeData(e.key)}}>
@@ -150,7 +150,7 @@ export default function TabOneScreen() {
           {dataDone.map((e)=>
             <View key={e.key} style={styles.cardDone}>
               <Text style={styles.item1}>{e.task}</Text>
-              <Button size="sm" variant="subtle" bg="blue.100" style={{width: 30, height: 30, marginRight: 10}}>
+              <Button size="sm" variant="subtle" bg="blue.100" style={{width: 30, height: 30, marginRight: 10}} onPress={()=>{navigation.navigate('editDoneScreen',{key: e.key})}}>
                 <Image source={require('../assets/images/edit.png')} style={{width: 20, height: 20}}></Image>
               </Button>
               <Button size="sm" variant="subtle" colorScheme="secondary" style={{width: 30, height: 30, marginRight: 10}} onPress={()=>{removeDataDone(e.key)}}>
