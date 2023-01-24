@@ -1,5 +1,5 @@
 import { child, get, ref, remove, set } from 'firebase/database';
-import { Button, NativeBaseProvider } from 'native-base';
+import { Alert, Button, CloseIcon, HStack, IconButton, NativeBaseProvider, Stack, VStack } from 'native-base';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, Image } from 'react-native';
@@ -13,46 +13,67 @@ export default function TabOneScreen() {
   var array: any[] = [];
   const [dataDone, setDataDone] = useState<any[]>([]);
   var arrayDone: any[] = [];
+  const [visibility, setVisibility] = useState(false);
+  const [error, setError] = useState(false);
+  const [done, setDone] = useState(true);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   function removeData(key: any) {
     remove(child(dbref, 'task/'+key)).then(()=>{
-      fetchData()
-      fetchDataDone()
-      alert('data removed successfully!')
+      fetchData();
+      setError(true);
+      setDone(true);
+      setVisibility(true);
+      setTimeout(function() {
+        setVisibility(false)
+      }, 3000);
     })
   }
 
   function moveData(key: any, task: any) {
-    remove(child(dbref, 'task/'+key)).then(()=>{
-      alert('data moved successfully!');
-    })
+    remove(child(dbref, 'task/'+key))
     set(ref(db,'taskdone/'+key),{
       task: task,
       key: key
     }).then(()=>{
-      fetchData()
-      fetchDataDone()
+      fetchData();
+      setError(false);
+      setDone(true);
+      setVisibility(true);
+      setTimeout(function() {
+        setVisibility(false)
+      }, 3000);
     })
   }
 
   function removeDataDone(key: any) {
     remove(child(dbref, 'taskdone/'+key)).then(()=>{
-      fetchData()
-      fetchDataDone()
-      alert('data removed successfully!')
+      fetchData();
+      setError(true);
+      setDone(true);
+      setVisibility(true);
+      setTimeout(function() {
+        setVisibility(false)
+      }, 3000);
     })
   }
 
   function moveDataDone(key: any, task: any) {
-    remove(child(dbref, 'taskdone/'+key)).then(()=>{
-      alert('data moved successfully!');
-    })
+    remove(child(dbref, 'taskdone/'+key))
     set(ref(db,'task/'+key),{
       task: task,
       key: key
     }).then(()=>{
-      fetchData()
-      fetchDataDone()
+      fetchData();
+      setError(true);
+      setDone(false);
+      setVisibility(true);
+      setTimeout(function() {
+        setVisibility(false)
+      }, 3000);
     })
   }
 
@@ -65,9 +86,7 @@ export default function TabOneScreen() {
         })
       }
     })
-  }
 
-  function fetchDataDone() {
     get(child(dbref, 'taskdone/')).then((snapshot) => {
       if(snapshot.exists()){
         snapshot.forEach(childsnapshot => {
@@ -78,14 +97,37 @@ export default function TabOneScreen() {
     })
   }
 
-  useEffect(() => {
-    fetchData();
-    fetchDataDone();
-  }, []);
-  
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
+        <Stack space={3} w="100%" maxW="400" style={{ marginBottom: visibility?10:-70, opacity: visibility?100:0}}>
+          <Alert w="100%" status={error?'error':'success'} style={{width: 300, marginLeft: 50}}>
+            <VStack space={2} flexShrink={1} w="100%">
+              <HStack flexShrink={1} space={2} justifyContent="space-between">
+                <HStack space={2} flexShrink={1}>
+                  <Alert.Icon mt="1" />
+                  {error?
+                    done?
+                  <Text>
+                    task has been deleted!
+                  </Text>:
+                  <Text>
+                    task is mark as undone!
+                  </Text>:
+                  <Text>
+                    task is mark as done!
+                  </Text>
+                  }
+                </HStack>
+                <IconButton variant="unstyled" _focus={{
+                  borderWidth: 0
+                }} icon={<CloseIcon size="3" />} _icon={{
+                  color: "coolGray.600"
+                }} onPress={()=>{setVisibility(false)}}/>
+              </HStack>
+            </VStack>
+          </Alert>
+        </Stack>
         <Text style={styles.title}>Today Task</Text>
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
           {data.map((e)=>
