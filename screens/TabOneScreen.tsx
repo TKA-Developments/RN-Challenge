@@ -1,5 +1,5 @@
-import { child, get, onValue, ref, remove, set } from 'firebase/database';
-import { Alert, Button, CloseIcon, HStack, IconButton, NativeBaseProvider, Stack, VStack } from 'native-base';
+import { child, onValue, ref, remove, set } from 'firebase/database';
+import { Alert, Button, CloseIcon, HStack, IconButton, Input, NativeBaseProvider, Stack, VStack } from 'native-base';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, Image } from 'react-native';
@@ -37,6 +37,7 @@ export default function TabOneScreen({navigation}: {navigation:any}) {
     remove(child(dbref, 'task/'+key))
     set(ref(db,'taskdone/'+key),{
       task: task,
+      search: task.toLowerCase(),
       key: key
     }).then(()=>{
       fetchData();
@@ -65,6 +66,7 @@ export default function TabOneScreen({navigation}: {navigation:any}) {
     remove(child(dbref, 'taskdone/'+key))
     set(ref(db,'task/'+key),{
       task: task,
+      search: task.toLowerCase(),
       key: key
     }).then(()=>{
       fetchData();
@@ -85,6 +87,8 @@ export default function TabOneScreen({navigation}: {navigation:any}) {
           array = [...array,childsnapshot.val()];
           setData(array);
         })
+      }else{
+        setData([]);
       }
     })
 
@@ -95,6 +99,8 @@ export default function TabOneScreen({navigation}: {navigation:any}) {
           arrayDone = [...arrayDone,childsnapshot.val()];
           setDataDone(arrayDone);
         })
+      }else{
+        setDataDone([]);
       }
     })
   }
@@ -184,6 +190,13 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
+  },
+  button:{
+    marginTop: 20,
+  },
+  input:{
+    textAlign: 'center',
+    maxWidth: 300
   },
   item:{
     margin: 15,

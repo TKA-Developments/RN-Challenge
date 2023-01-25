@@ -16,11 +16,6 @@ export default {
               TabTwoScreen: 'add',
             },
           },
-          editScreen: {
-            screens: {
-              editScreen: 'edit',
-            },
-          },
         },
       },
       NotFound: '*',

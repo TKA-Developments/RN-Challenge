@@ -7,8 +7,9 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { BottomTabParamList, TabOneParamList, TabThreeParamList, TabTwoParamList } from '../types';
 import { Image } from 'react-native';
+import TabThreeScreen from '../screens/TabThreeScreen';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -33,6 +34,14 @@ export default function BottomTabNavigator() {
         options={{
           tabBarIcon: () => <IconTwo/>,
           title: 'add task'
+        }}
+      />
+      <BottomTab.Screen
+        name="TabThree"
+        component={TabThreeNavigator}
+        options={{
+          tabBarIcon: () => <IconThree/>,
+          title: 'search task'
         }}
       />
     </BottomTab.Navigator>
@@ -81,6 +90,23 @@ function TabTwoNavigator() {
   );
 }
 
+const TabThreeStack = createStackNavigator<TabThreeParamList>();
+
+function TabThreeNavigator() {
+  return (
+    <TabThreeStack.Navigator>
+      <TabThreeStack.Screen
+        name="TabThreeScreen"
+        component={TabThreeScreen}
+        options={{ headerTitle: 'daylist' ,
+                   title: 'daylist',
+                   headerLeft: () => <ActionBarIcon/>,
+        }}
+      />
+    </TabThreeStack.Navigator>
+  );
+}
+
 function ActionBarIcon() {
   return (
     <Image
@@ -101,6 +127,14 @@ function IconTwo() {
   return (
     <Image
     source={require('../assets/images/icon2.png')}
+    style={{ width: 40, height: 40, borderRadius: 40/2 }} />
+  );
+}
+
+function IconThree() {
+  return (
+    <Image
+    source={require('../assets/images/icon3.jpg')}
     style={{ width: 40, height: 40, borderRadius: 40/2 }} />
   );
 }

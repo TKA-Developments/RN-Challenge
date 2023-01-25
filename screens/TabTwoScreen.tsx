@@ -17,6 +17,7 @@ export default function TabTwoScreen() {
   const submit = () => {
     set(ref(db,'task/'+key),{
       task: task,
+      search: task.toLowerCase(),
       key: key
     }).then(() => {
       setVisibility(true)
