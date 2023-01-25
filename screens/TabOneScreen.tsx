@@ -191,6 +191,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#7d1038',
     textAlign: 'center',
+    flex: 1,
+    maxWidth: 125
   },
   item1:{
     margin: 15,
@@ -198,6 +200,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#002394',
     textAlign: 'center',
+    flex: 1,
+    maxWidth: 125
   },
   card:{
     margin: 10,
