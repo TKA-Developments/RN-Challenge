@@ -12,12 +12,16 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo-google-fonts/poppins": "^0.2.2",
     "@expo/vector-icons": "^12.0.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "5.11.2",
     "@react-navigation/native": "~5.8.10",
     "@react-navigation/stack": "~5.12.8",
+    "@rneui/base": "github:react-native-elements/react-native-elements#base",
+    "@rneui/themed": "github:react-native-elements/react-native-elements#themed",
     "expo": "~40.0.0",
+    "expo-app-loading": "^2.1.1",
     "expo-asset": "~8.2.1",
     "expo-constants": "~9.3.0",
     "expo-font": "~8.4.0",
@@ -31,6 +35,7 @@
     "react-native-gesture-handler": "~1.8.0",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.0",
+    "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
