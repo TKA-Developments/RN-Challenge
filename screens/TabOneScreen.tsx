@@ -1,4 +1,4 @@
-import { child, get, ref, remove, set } from 'firebase/database';
+import { child, get, onValue, ref, remove, set } from 'firebase/database';
 import { Alert, Button, CloseIcon, HStack, IconButton, NativeBaseProvider, Stack, VStack } from 'native-base';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -10,16 +10,16 @@ import { db } from '../configfirebase';
 export default function TabOneScreen({navigation}: {navigation:any}) {
   const dbref = ref(db);
   const [data, setData] = useState<any[]>([]);
-  var array: any[] = [];
   const [dataDone, setDataDone] = useState<any[]>([]);
-  var arrayDone: any[] = [];
   const [visibility, setVisibility] = useState(false);
   const [error, setError] = useState(false);
   const [done, setDone] = useState(true);
-
+  
   useEffect(() => {
-    fetchData();
-  }, []);
+
+    fetchData()
+
+  }, [navigation]);
 
   function removeData(key: any) {
     remove(child(dbref, 'task/'+key)).then(()=>{
@@ -78,8 +78,9 @@ export default function TabOneScreen({navigation}: {navigation:any}) {
   }
 
   function fetchData() {
-    get(child(dbref, 'task/')).then((snapshot) => {
+    onValue(child(dbref, 'task/'),(snapshot) => {
       if(snapshot.exists()){
+        var array: any[] = [];
         snapshot.forEach(childsnapshot => {
           array = [...array,childsnapshot.val()];
           setData(array);
@@ -87,8 +88,9 @@ export default function TabOneScreen({navigation}: {navigation:any}) {
       }
     })
 
-    get(child(dbref, 'taskdone/')).then((snapshot) => {
+    onValue(child(dbref, 'taskdone/'),(snapshot) => {
       if(snapshot.exists()){
+        var arrayDone: any[] = [];
         snapshot.forEach(childsnapshot => {
           arrayDone = [...arrayDone,childsnapshot.val()];
           setDataDone(arrayDone);

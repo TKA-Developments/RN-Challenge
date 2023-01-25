@@ -4,18 +4,16 @@ import { Image } from 'react-native';
 import { Alert, NativeBaseProvider, Input, Button, Stack, VStack, HStack, IconButton, CloseIcon } from "native-base";
 import { useState } from 'react';
 import { db } from '../configfirebase';
-import { child, ref, remove, set } from 'firebase/database';
+import { ref, set, update } from 'firebase/database';
 
 export default function editScreen({ navigation, route }: any) {
-    const dbref = ref(db);
     const [visibility, setVisibility] = useState(false);
     const [task, setTask] = useState('');
     const [value, setValue] = useState('');
     const key = route.params.key;
 
     const submit = () => {
-        remove(child(dbref, 'task/'+key))
-        set(ref(db,'task/'+key),{
+        update(ref(db,'task/'+key),{
           task: task,
           key: key
         }).then(() => {
@@ -31,9 +29,6 @@ export default function editScreen({ navigation, route }: any) {
         <>
             <NativeBaseProvider>
                 <View style={styles.container}>
-                    <Image
-                        source={require('../assets/images/favicon.png')}
-                        style={{ width: 40, height: 40, borderRadius: 40/2}} />
                     <Stack space={3} w="100%" maxW="400" style={{marginBottom: visibility?100:0, opacity: visibility?100:0}}>
                     <Alert w="100%" status="success" style={{width: 300, marginLeft: 50}}>
                         <VStack space={2} flexShrink={1} w="100%">
@@ -45,14 +40,17 @@ export default function editScreen({ navigation, route }: any) {
                             </Text>
                             </HStack>
                             <IconButton variant="unstyled" _focus={{
-                            borderWidth: 0
+                                borderWidth: 0
                             }} icon={<CloseIcon size="3" />} _icon={{
-                            color: "coolGray.600"
+                                color: "coolGray.600"
                             }} onPress={()=>{setVisibility(false)}}/>
                         </HStack>
                         </VStack>
                     </Alert>
                     </Stack>
+                    <Image
+                        source={require('../assets/images/favicon.png')}
+                        style={{ width: 40, height: 40, borderRadius: 40/2}} />
                     <Text style={styles.title}>Edit Task</Text>
                     <View style={styles.separator} />
                     <Input variant="rounded" style={styles.input} placeholder="Edit your task here!" value={value} onChangeText={(e)=>{setTask(e), setValue(e)}}/>

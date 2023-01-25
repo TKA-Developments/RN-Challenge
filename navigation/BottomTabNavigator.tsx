@@ -57,7 +57,7 @@ function TabOneNavigator() {
         component={TabOneScreen}
         options={{ headerTitle: 'daylist' ,
                    title: 'daylist',
-                   headerLeft: () => <ActionBarIcon/>
+                   headerLeft: () => <ActionBarIcon/>,
         }}
       />
     </TabOneStack.Navigator>
