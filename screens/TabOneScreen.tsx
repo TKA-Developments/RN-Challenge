@@ -14,12 +14,25 @@ export default function TabOneScreen({navigation}: {navigation:any}) {
   const [visibility, setVisibility] = useState(false);
   const [error, setError] = useState(false);
   const [done, setDone] = useState(true);
+  const [quotes, setQuotes] = useState('Food tastes best when you don’t have to work for it.');
+  const [character, setCharacter] = useState('Hachiman Hikigaya');
+  var i = Math.random()*9+1;
   
   useEffect(() => {
-
+    
     fetchData()
 
   }, [navigation]);
+
+  useEffect(() => {
+      fetch("https://animechan.vercel.app/api/random")
+      .then((response) => response.json())
+      .then((quote) => {
+        console.log(quote)
+        setQuotes(quote.quote);
+        setCharacter(quote.character);
+      });
+  },[])
 
   function removeData(key: any) {
     remove(child(dbref, 'task/'+key)).then(()=>{
@@ -170,6 +183,11 @@ export default function TabOneScreen({navigation}: {navigation:any}) {
             </View>
           )}
         </ScrollView>
+        <Text style={styles.quote}>
+          {quotes}
+          -
+          {character}
+        </Text>
       </View>
     </NativeBaseProvider>
   );
@@ -185,6 +203,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10
+  },
+  quote: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    marginTop: 20
   },
   separator: {
     marginVertical: 30,

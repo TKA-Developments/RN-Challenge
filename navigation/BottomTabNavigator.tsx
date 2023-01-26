@@ -8,13 +8,28 @@ import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabThreeParamList, TabTwoParamList } from '../types';
-import { Image } from 'react-native';
+import { Image, Text } from 'react-native';
 import TabThreeScreen from '../screens/TabThreeScreen';
+import { useEffect, useState } from 'react';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  
+  useEffect(() => {
+    // if(fetch("https://animechan.vercel.app/api/quotes")!=null){
+    //   fetch("https://animechan.vercel.app/api/quotes")
+    //   .then((response) => response.json())
+    //   .then((quote) => {
+    //           arrayquotes = [...arrayquotes,quote.quote];
+    //           arraycharacter = [...arraycharacter,quote.character];
+    //           setQuotes(arrayquotes);
+    //           setCharacter(arraycharacter);
+    //         });
+    // }
+  },[])
+  
 
   return (
     <BottomTab.Navigator
@@ -43,7 +58,7 @@ export default function BottomTabNavigator() {
           tabBarIcon: () => <IconThree/>,
           title: 'search task'
         }}
-      />
+        />
     </BottomTab.Navigator>
   );
 }
@@ -114,6 +129,7 @@ function ActionBarIcon() {
     style={{ width: 40, height: 40, borderRadius: 40/2, marginLeft : 15 }} />
   );
 }
+
 
 function IconOne() {
   return (
