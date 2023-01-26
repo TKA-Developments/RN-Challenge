@@ -29,7 +29,11 @@ export default function TabOneScreen({navigation}: {navigation:any}) {
       .then((response) => response.json())
       .then((quote) => {
         console.log(quote)
-        setQuotes(quote.quote);
+        if(quote.quote.length>50){
+          setQuotes(quote.quote.substring(0,100));
+        }else{
+          setQuotes(quote.quote);
+        }
         setCharacter(quote.character);
       });
   },[])
@@ -209,7 +213,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
     maxHeight: 15,
-    height: 15,
     maxWidth: 250
   },
   separator: {
