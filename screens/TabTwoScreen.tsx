@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image, Animated, Easing } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { Alert, NativeBaseProvider, Input, Button, Stack, VStack, HStack, IconButton, CloseIcon } from "native-base";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { db } from '../configfirebase';
 import { child, push, ref, set } from 'firebase/database';
 
@@ -13,6 +13,35 @@ export default function TabTwoScreen() {
   const [value, setValue] = useState('');
   const [visibility, setVisibility] = useState(false);
   const key = push(child(ref(db),'task')).key;
+  const pos = new Animated.Value(1)
+
+  const rotate = pos.interpolate({
+    inputRange: [0,1],
+    outputRange: ['15deg','-15deg'],
+  });
+
+  const spin1 = () => {
+    Animated.timing(pos,{
+      toValue: 0,
+      duration: 1500,
+      easing: Easing.linear,
+      useNativeDriver: true
+    }).start(()=>spin2())
+  }
+
+  const spin2 = () => {
+    Animated.timing(pos,{
+      toValue: 1,
+      duration: 1500,
+      easing: Easing.linear,
+      useNativeDriver: true
+    }).start(()=>spin1())
+  }
+
+  useEffect(() => {
+    spin1()
+  }, [])
+  
 
   const submit = () => {
     set(ref(db,'task/'+key),{
@@ -55,6 +84,9 @@ export default function TabTwoScreen() {
         <Button size="sm" variant="subtle" style={styles.button} onPress={()=>{submit(), setValue('')}}>
             submit
         </Button>
+        <Animated.View style={{transform:[{rotate}]}}>
+          <Image source={require('../assets/images/gudetama.png')} style={{width: 200, height: 200}}/>
+        </Animated.View>
       </View>
     </NativeBaseProvider>
   );

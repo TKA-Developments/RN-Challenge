@@ -16,20 +16,6 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-  
-  useEffect(() => {
-    // if(fetch("https://animechan.vercel.app/api/quotes")!=null){
-    //   fetch("https://animechan.vercel.app/api/quotes")
-    //   .then((response) => response.json())
-    //   .then((quote) => {
-    //           arrayquotes = [...arrayquotes,quote.quote];
-    //           arraycharacter = [...arraycharacter,quote.character];
-    //           setQuotes(arrayquotes);
-    //           setCharacter(arraycharacter);
-    //         });
-    // }
-  },[])
-  
 
   return (
     <BottomTab.Navigator

@@ -207,7 +207,10 @@ const styles = StyleSheet.create({
   quote: {
     fontSize: 10,
     fontWeight: 'bold',
-    marginTop: 20
+    marginTop: 20,
+    maxHeight: 15,
+    height: 15,
+    maxWidth: 250
   },
   separator: {
     marginVertical: 30,
