@@ -1,37 +1,52 @@
 import RNDateTimePicker from "@react-native-community/datetimepicker";
-import { Divider, Input } from "@rneui/themed";
-import React, { forwardRef, useEffect, useRef } from "react";
-import { Dimensions, StyleSheet, Animated, Easing } from "react-native";
+import Icon from "react-native-vector-icons/Feather";
+import { Button, Divider, Input } from "@rneui/themed";
+import React, { forwardRef, useImperativeHandle, useState } from "react";
+import {
+  Dimensions,
+  StyleSheet,
+  Animated,
+  Easing,
+  Pressable,
+  Text,
+  View,
+} from "react-native";
 // import DatePicker from "react-native-date-picker";
 import { blueColor } from "../constants/Colors";
+import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 
 type Props = {
   open: boolean;
+  closeFunction: any;
+  createFunction: any;
 };
 
-const { width, height } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
 
 const BottomDrawer = forwardRef((props: Props, ref: any) => {
-  // const [heightTranslate, setheightTranslate] = React.useState(new Animated.Value(height))
   let drawerPosY = new Animated.Value(height);
-  // const drawerPan = useRef(new Animated.Value(height)).current;
+  const [dateInfo, setdateInfo] = useState({
+    value: new Date(),
+    mode: "date",
+    show: false,
+  } as any);
+  const [createData, setcreateData] = useState({
+    detail: "",
+    date: new Date(),
+    time: new Date(Date.now()),
+  });
 
   function swipe(direction: "up" | "down") {
     Animated.timing(drawerPosY, {
-      toValue: direction === "up" ? 0 : height,
+      toValue: direction === "down" ? height : 0,
       useNativeDriver: false,
       easing: Easing.ease,
       duration: 500,
     }).start();
   }
-
-  useEffect(() => {
-    if (props.open) {
-      swipe("up");
-    } else {
-      swipe("down");
-    }
-  }, [props.open]);
+  useImperativeHandle(ref, () => ({
+    swipe,
+  }));
 
   return (
     <Animated.View
@@ -45,9 +60,119 @@ const BottomDrawer = forwardRef((props: Props, ref: any) => {
         inputContainerStyle={{ borderBottomColor: "transparent" }}
         underlineColorAndroid="rgba(0,0,0,0)"
         placeholder="What do you need to do"
-        placeholderTextColor="#518CFF"
+        placeholderTextColor="#8bb2ff"
+        onChangeText={val => {
+          const tempData = { ...createData };
+          tempData.detail = val;
+          setcreateData(tempData);
+        }}
       />
-      <RNDateTimePicker mode="time" value={new Date()} />
+      <Divider color="white" />
+      <View style={{ padding: 20 }}>
+        <Text style={styles.datetimeHeader}>Date</Text>
+        <Pressable
+          onPress={() => {
+            // setdatePicker(true);
+            setdateInfo({ value: createData.date, mode: "date", show: true });
+          }}
+          style={styles.datetime}
+        >
+          <Icon name="calendar" size={20} color="white" />
+          <Text style={styles.datetimeInput}>
+            {createData.date.toLocaleDateString()}
+          </Text>
+        </Pressable>
+      </View>
+      <Divider color="white" />
+
+      <View style={{ padding: 20 }}>
+        <Text style={styles.datetimeHeader}>Time</Text>
+        <Pressable
+          onPress={() => {
+            // setdatePicker(true);
+            setdateInfo({ value: createData.time, mode: "time", show: true });
+          }}
+          style={styles.datetime}
+        >
+          <Icon name="clock" size={20} color="white" />
+          <Text style={styles.datetimeInput}>
+            {createData.time.toLocaleTimeString()}
+          </Text>
+        </Pressable>
+      </View>
+      <Divider color="white" />
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          paddingHorizontal: 20,
+          marginTop: 40,
+        }}
+      >
+        <Button
+          title={"Cancel"}
+          size={"md"}
+          type="clear"
+          titleStyle={{
+            color: "white",
+            fontFamily: "Poppins-SemiBold",
+            fontSize: 20,
+          }}
+          containerStyle={{ borderRadius: 15, marginRight: 10 }}
+          onPress={() => {
+            // setcreateData({
+            //   detail: "",
+            //   date: new Date(),
+            //   time: new Date(Date.now()),
+            // });
+            swipe("down");
+          }}
+        />
+        <Button
+          title={"Save"}
+          size={"md"}
+          type="solid"
+          titleStyle={{
+            color: "black",
+            fontFamily: "Poppins-SemiBold",
+            fontSize: 20,
+          }}
+          containerStyle={{ borderRadius: 15 }}
+          buttonStyle={{
+            borderRadius: 15,
+            backgroundColor: "white",
+            minWidth: 90,
+          }}
+          onPress={async () => {
+            await props.createFunction(createData);
+            // setcreateData({
+            //   detail: "",
+            //   date: new Date(),
+            //   time: new Date(Date.now()),
+            // });
+            swipe("down");
+          }}
+        />
+      </View>
+      {dateInfo.show && (
+        <RNDateTimePicker
+          mode={dateInfo.mode}
+          value={dateInfo.value}
+          onChange={(e, val) => {
+            if (val) {
+              const tempData = { ...createData };
+              if (dateInfo.mode === "date") {
+                tempData.date = val;
+              } else {
+                tempData.time = val;
+              }
+              setdateInfo({ value: val, mode: dateInfo.mode, show: false });
+              setcreateData(tempData);
+            }
+          }}
+        />
+      )}
+
       {/* <DatePicker date={new Date()} /> */}
     </Animated.View>
   );
@@ -71,16 +196,36 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.13,
     shadowRadius: 100.62,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 50,
   },
   textInput: {
-    fontSize: 24,
+    fontSize: 30,
     color: "white",
-    // borderColor: "transparent",
+    fontFamily: "Poppins",
     borderBottomWidth: 0,
-    // minHeight: 40,
+
     textDecorationLine: "none",
+    textAlign: "center",
+    paddingHorizontal: 10,
+  },
+  datetime: {
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+    marginBottom: 15,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  datetimeHeader: {
+    color: "white",
+    fontSize: 20,
+    fontFamily: "Poppins-Medium",
+  },
+  datetimeInput: {
+    color: "white",
+    fontSize: 20,
+    fontFamily: "Poppins",
+    textAlign: "right",
+    marginLeft: "auto",
   },
 });
 

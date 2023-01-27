@@ -26,8 +26,7 @@ const TodoCard = (props: Props) => {
         }
         containerStyle={{ ...styles.checkboxContainer, ...styles.clear }}
         wrapperStyle={{ ...styles.checkboxWrapper, ...styles.clear }}
-        // size={30}
-        center
+        onPress={props.doFunction}
       />
 
       <View style={{ flex: 1 }}>
@@ -39,6 +38,7 @@ const TodoCard = (props: Props) => {
         <Button
           containerStyle={{ ...styles.buttonContainer, ...styles.clear }}
           buttonStyle={{ ...styles.button, ...styles.clear }}
+          onPress={props.deletefunction}
         >
           <MaterialCommunityIcons
             name="delete-outline"
@@ -110,7 +110,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttonView: { width: 30, height: 30, marginLeft: "auto" },
-  caption: { fontFamily: "Poppins-Medium", fontSize: 10, color: "#9c9b9b" },
+  caption: {
+    fontFamily: "Poppins-Medium",
+    fontSize: 10,
+    color: "#9c9b9b",
+    textTransform: "capitalize",
+  },
 });
 
 export default TodoCard;
