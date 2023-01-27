@@ -1,3 +1,4 @@
+import { useHeaderHeight } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import { StyleSheet, FlatList, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { Text, View } from '../components/Themed';
@@ -6,6 +7,8 @@ import TodoItem from '../components/todo-item';
 let id = '5'
 
 export default function TabOneScreen() {
+
+  const height = useHeaderHeight()
 
   const [titleList, setTitleList] = useState('');
 
@@ -42,7 +45,9 @@ export default function TabOneScreen() {
   return (
     <KeyboardAvoidingView 
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'height' : 'height'}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={height+47}
+      enabled
     >
       <TextInput
         style={styles.title}
@@ -52,6 +57,7 @@ export default function TabOneScreen() {
       />
 
       <FlatList
+        removeClippedSubviews={false}
         data={todos}
         renderItem={({ item, index }) => (
           <TodoItem 
@@ -78,4 +84,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 8,
   },
-});
+});7

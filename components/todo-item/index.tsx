@@ -39,7 +39,7 @@ const TodoItem = ({ todo, onSubmit }: TodoItemProps) => {
         <View 
             style={{
                 flexDirection: 'row',
-                alignItems: 'center',
+                alignItems: 'flex-start',
                 marginVertical: 4,
             }}
         >
