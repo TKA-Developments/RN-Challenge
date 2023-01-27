@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     height: 40,
     backgroundColor: "transparent",
+    marginBottom: 20,
   },
 });
 

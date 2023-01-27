@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 // import { Button } from "@rneui/themed";
-import { Card, Button, CheckBox, Icon } from "@rneui/themed";
+import { Card, Button, CheckBox, Icon, ListItem } from "@rneui/themed";
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { limitDetailLength } from "../lib/function";
@@ -15,7 +15,7 @@ type Props = {
 
 const TodoCard = (props: Props) => {
   return (
-    <Card containerStyle={styles.container} wrapperStyle={styles.wrapper}>
+    <View style={styles.container}>
       <CheckBox
         checked={props.done}
         checkedIcon={
@@ -29,10 +29,12 @@ const TodoCard = (props: Props) => {
         // size={30}
         center
       />
-      <View style={{ flex: 1, flexGrow: 1, width: "100%" }}>
+
+      <View style={{ flex: 1 }}>
         <Text style={styles.text}>{limitDetailLength(props.detail, 70)}</Text>
         <Text style={styles.caption}>{props.time}</Text>
       </View>
+
       <View style={styles.buttonView}>
         <Button
           containerStyle={{ ...styles.buttonContainer, ...styles.clear }}
@@ -46,7 +48,7 @@ const TodoCard = (props: Props) => {
           />
         </Button>
       </View>
-    </Card>
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -55,14 +57,19 @@ const styles = StyleSheet.create({
     minHeight: 65,
     // borderColor: "#FBFDFF",
     elevation: 4,
+    padding: 15,
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "#FBFDFF",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
+    shadowOpacity: 0.13,
+    shadowRadius: 10.62,
     marginHorizontal: 5,
+    marginBottom: 10,
   },
   wrapper: {
     alignItems: "center",
@@ -96,9 +103,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   checkboxWrapper: { width: 30, height: 30 },
-  text: { fontFamily: "Poppins", flex: 1, flexWrap: "wrap", marginEnd: 10 },
+  text: {
+    fontFamily: "Poppins",
+    flexWrap: "wrap",
+    marginEnd: 10,
+    flex: 1,
+  },
   buttonView: { width: 30, height: 30, marginLeft: "auto" },
-  caption: { fontFamily: "Poppins-Medium", fontSize: 10 },
+  caption: { fontFamily: "Poppins-Medium", fontSize: 10, color: "#9c9b9b" },
 });
 
 export default TodoCard;
