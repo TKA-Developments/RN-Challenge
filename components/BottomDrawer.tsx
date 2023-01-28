@@ -36,13 +36,17 @@ const BottomDrawer = forwardRef((props: Props, ref: any) => {
     time: new Date(Date.now()),
   });
 
-  function swipe(direction: "up" | "down") {
+  function swipe(direction: "up" | "down", callback?: any) {
+    // console.log("as");
+
     Animated.timing(drawerPosY, {
       toValue: direction === "down" ? height : 0,
       useNativeDriver: false,
       easing: Easing.ease,
       duration: 500,
-    }).start();
+    }).start(() => {
+      if (callback) callback();
+    });
   }
   useImperativeHandle(ref, () => ({
     swipe,
@@ -116,9 +120,9 @@ const BottomDrawer = forwardRef((props: Props, ref: any) => {
           titleStyle={{
             color: "white",
             fontFamily: "Poppins-SemiBold",
-            fontSize: 20,
+            fontSize: 16,
           }}
-          containerStyle={{ borderRadius: 15, marginRight: 10 }}
+          containerStyle={{ borderRadius: 15, marginRight: 10, minWidth: 90 }}
           onPress={() => {
             // setcreateData({
             //   detail: "",
@@ -135,7 +139,7 @@ const BottomDrawer = forwardRef((props: Props, ref: any) => {
           titleStyle={{
             color: "black",
             fontFamily: "Poppins-SemiBold",
-            fontSize: 20,
+            fontSize: 16,
           }}
           containerStyle={{ borderRadius: 15 }}
           buttonStyle={{
@@ -144,13 +148,13 @@ const BottomDrawer = forwardRef((props: Props, ref: any) => {
             minWidth: 90,
           }}
           onPress={async () => {
-            await props.createFunction(createData);
-            // setcreateData({
-            //   detail: "",
-            //   date: new Date(),
-            //   time: new Date(Date.now()),
+            // props.createFunction(createData).then(() => {
+            //   swipe("down");
             // });
-            swipe("down");
+            swipe("down", async () => {
+              await props.createFunction(createData);
+            });
+            // await props.createFunction(createData, swipe("down"));
           }}
         />
       </View>

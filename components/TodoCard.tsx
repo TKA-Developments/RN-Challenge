@@ -1,21 +1,35 @@
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 // import { Button } from "@rneui/themed";
 import { Card, Button, CheckBox, Icon, ListItem } from "@rneui/themed";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { limitDetailLength } from "../lib/function";
 
 type Props = {
-  detail: string;
+  val: any;
   done: boolean;
   deletefunction: any;
   doFunction: any;
   time: string;
+  // navigation: any;
 };
 
 const TodoCard = (props: Props) => {
+  // console.log(props.val);
+
+  const navigation = useNavigation();
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => {
+        // props.navigation.
+        navigation.navigate(
+          "Edit Todo" as never,
+          { itemValue: props.val } as never
+        );
+      }}
+    >
       <CheckBox
         checked={props.done}
         checkedIcon={
@@ -26,11 +40,17 @@ const TodoCard = (props: Props) => {
         }
         containerStyle={{ ...styles.checkboxContainer, ...styles.clear }}
         wrapperStyle={{ ...styles.checkboxWrapper, ...styles.clear }}
-        onPress={props.doFunction}
+        onPress={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          props.doFunction();
+        }}
       />
 
       <View style={{ flex: 1 }}>
-        <Text style={styles.text}>{limitDetailLength(props.detail, 70)}</Text>
+        <Text style={styles.text}>
+          {limitDetailLength(props.val.detail, 70)}
+        </Text>
         <Text style={styles.caption}>{props.time}</Text>
       </View>
 
@@ -38,7 +58,11 @@ const TodoCard = (props: Props) => {
         <Button
           containerStyle={{ ...styles.buttonContainer, ...styles.clear }}
           buttonStyle={{ ...styles.button, ...styles.clear }}
-          onPress={props.deletefunction}
+          onPress={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            props.deletefunction();
+          }}
         >
           <MaterialCommunityIcons
             name="delete-outline"
@@ -48,7 +72,7 @@ const TodoCard = (props: Props) => {
           />
         </Button>
       </View>
-    </View>
+    </Pressable>
   );
 };
 const styles = StyleSheet.create({

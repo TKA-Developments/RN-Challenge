@@ -1,14 +1,28 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import Todo from "../screens/Todo";
+import EditTodo from "../screens/EditTodo";
 import * as React from "react";
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Todays" component={TabOneScreen} />
-      <Stack.Screen name="TabTwoScreen" component={TabTwoScreen} />
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Todo"
+        component={Todo}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Edit Todo"
+        component={EditTodo}
+        options={{
+          headerStyle: { backgroundColor: "#FBFDFF" },
+          headerTitleStyle: {
+            fontFamily: "Poppins-SemiBold",
+            textAlignVertical: "bottom",
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }

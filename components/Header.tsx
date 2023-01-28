@@ -7,7 +7,7 @@ import { getDateReadable } from "../lib/function";
 import { Switch } from "@rneui/themed";
 
 type Props = {
-  data: Array<any>;
+  dataFiltered: Array<any>;
   setdataFiltered: any;
 };
 
@@ -17,24 +17,26 @@ const Header = (props: Props) => {
     date: new Date(),
   });
   const [activateDateFilter, setactivateDateFilter] = useState(false);
+  const [tempDataFiltered, settempDataFiltered] = useState([
+    ...props.dataFiltered,
+  ]);
 
-  const filterByDate = (date: Date) => {
-    const tempData = [...props.data];
-    return tempData.filter(val => {
-      const tempDate = new Date(val.date);
-      return (
-        tempDate.getDate() === date.getDate() &&
-        tempDate.getMonth() === date.getMonth() &&
-        tempDate.getFullYear() === date.getFullYear()
-      );
-    });
+  const filterByDate = (date: Date, item: any) => {
+    const tempDate = new Date(item.date);
+    return (
+      tempDate.getDate() === date.getDate() &&
+      tempDate.getMonth() === date.getMonth() &&
+      tempDate.getFullYear() === date.getFullYear()
+    );
   };
 
   React.useEffect(() => {
     if (activateDateFilter) {
-      props.setdataFiltered(filterByDate(datePicker.date));
+      props.setdataFiltered(
+        props.dataFiltered.filter(val => filterByDate(datePicker.date, val))
+      );
     } else {
-      props.setdataFiltered([...props.data]);
+      props.setdataFiltered([...tempDataFiltered]);
     }
   }, [datePicker.date, activateDateFilter]);
 

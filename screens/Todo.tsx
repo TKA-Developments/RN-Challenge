@@ -12,18 +12,22 @@ import Toolbar from "../components/Toolbar";
 import { blueColor } from "../constants/Colors";
 import { convertDatetimeToString } from "../lib/function";
 import uuid from "react-native-uuid";
+import { useNavigation } from "@react-navigation/native";
 
-export default function TabOneScreen() {
+function Todo({ route }: { route: any }) {
   const bottomDrawerRef = React.useRef();
+  const params = route?.params;
+  // console.log(route);
+
   const [openDrawer, setopenDrawer] = React.useState(false);
   const [data, setdata] = React.useState([]);
   const [dataFiltered, setdataFiltered] = React.useState([...data]);
-
   const [modalInfo, setmodalInfo] = React.useState({
     show: false,
     mode: "update",
     id: "0",
   } as any);
+
   const { getItem, removeItem, setItem } = useAsyncStorage("@todolist_storage");
   const readItemFromStorage = async () => {
     try {
@@ -38,9 +42,13 @@ export default function TabOneScreen() {
   };
   // console.log(dataFiltered);
 
-  const writeItemFromStorage = async (newValue: any) => {
+  const writeItemFromStorage = async (newValue: any, callback?: any) => {
     try {
-      await setItem(JSON.stringify(newValue));
+      if (callback) {
+        await setItem(JSON.stringify(newValue), callback);
+      } else {
+        await setItem(JSON.stringify(newValue));
+      }
       readItemFromStorage();
     } catch (error) {
       console.log(error);
@@ -56,9 +64,9 @@ export default function TabOneScreen() {
   };
 
   React.useEffect(() => {
-    removeItemFromStorage();
+    // removeItemFromStorage();
     readItemFromStorage();
-  }, []);
+  }, [params?.token]);
 
   React.useEffect(() => {
     setdataFiltered([...data]);
@@ -66,9 +74,9 @@ export default function TabOneScreen() {
 
   return (
     <View style={styles.container}>
-      <Header setdataFiltered={setdataFiltered} data={data} />
+      <Header setdataFiltered={setdataFiltered} dataFiltered={dataFiltered} />
       <Toolbar data={data} setdataFiltered={setdataFiltered} />
-      {data.length === 0 ? (
+      {dataFiltered.length === 0 ? (
         <Text
           style={{
             fontFamily: "Poppins-Medium",
@@ -85,10 +93,11 @@ export default function TabOneScreen() {
           {dataFiltered &&
             dataFiltered?.map((val: any, idx) => (
               <TodoCard
-                detail={val.detail}
+                val={val}
                 deletefunction={() => {
                   setmodalInfo({ show: true, mode: "delete", id: val.id });
                 }}
+                // navigation={navigation}
                 doFunction={() => {
                   setmodalInfo({ show: true, mode: "update", id: val.id });
                 }}
@@ -108,8 +117,6 @@ export default function TabOneScreen() {
         style={styles.createButton}
         activeOpacity={0.9}
         onPress={() => {
-          // (bottomDrawerRef.current as any).swipe("up");
-          // setopenDrawer(true);
           (bottomDrawerRef.current as any).swipe("up");
         }}
       >
@@ -121,11 +128,11 @@ export default function TabOneScreen() {
         closeFunction={() => {
           setopenDrawer(false);
         }}
-        createFunction={(createData: any) => {
+        createFunction={async (createData: any, callback?: any) => {
           const tempData = [...(data as any)];
           tempData.push({ ...createData, done: false, id: uuid.v1() });
 
-          writeItemFromStorage(tempData);
+          await writeItemFromStorage(tempData, callback);
         }}
       />
       <ToDoModal
@@ -152,6 +159,7 @@ export default function TabOneScreen() {
   );
 }
 
+export default Todo;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

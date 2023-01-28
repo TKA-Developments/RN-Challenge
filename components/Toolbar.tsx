@@ -15,35 +15,27 @@ type Props = {
 const Toolbar = (props: Props) => {
   const [input, setinput] = useState("");
   const [filtered, setfiltered] = useState("all");
-  const filterByInput = (inputVal: string) => {
-    const tempData = [...props.data];
-    return tempData.filter(val =>
-      val.detail.toLowerCase().includes(inputVal.toLowerCase())
-    );
+  const filterByInput = (inputVal: string, item: any) => {
+    return item.detail.toLowerCase().includes(inputVal.toLowerCase());
   };
-  // console.log(
-  //   props.data.filter(val =>
-  //     val.detail.toLowerCase().includes(input.toLowerCase())
-  //   )
-  // );
 
-  const filterByCategory = (category: string) => {
-    const tempData = [...props.data];
+  const filterByCategory = (category: string, item: any) => {
     if (category === "done") {
-      return tempData.filter(val => val.done === true);
+      return item.done === true;
     }
     if (category === "undone") {
-      return tempData.filter(val => val.done === false);
+      return item.done === false;
     }
-    return tempData;
+    return true;
   };
-  useEffect(() => {
-    props.setdataFiltered(filterByInput(input));
-  }, [input]);
 
   useEffect(() => {
-    props.setdataFiltered(filterByCategory(filtered));
-  }, [filtered]);
+    props.setdataFiltered(
+      props.data.filter(
+        val => filterByCategory(filtered, val) && filterByInput(input, val)
+      )
+    );
+  }, [filtered, input]);
 
   return (
     <View>

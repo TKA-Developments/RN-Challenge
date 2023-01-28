@@ -8,9 +8,9 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/images/todologo.png",
+
+      "backgroundColor": "#2572FE"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
