@@ -37,7 +37,8 @@ const Stack = createStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={ListScreen} />
+      {/* <Stack.Screen name="Home" component={ListScreen} /> */}
+      <Stack.Screen name="Home" component={TodosScreen} />
       <Stack.Screen name="List" component={TodosScreen} />
       <Stack.Screen name="AddList" component={AddListScreen} />
       <Stack.Screen

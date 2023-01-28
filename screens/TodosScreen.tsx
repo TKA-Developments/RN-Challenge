@@ -1,4 +1,5 @@
-import { useHeaderHeight } from "@react-navigation/stack";
+// import firebase from "firebase/compat";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -7,34 +8,29 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { Text, View } from "../components/Themed";
 import TodoItem from "../components/todo-item";
 
-let id = "5";
-
 export default function TodosScreen() {
-  const height = useHeaderHeight();
-
   const [titleList, setTitleList] = useState("");
-
+  const [addData, setAddData] = useState("");
   const [todos, setTodos] = useState([
     {
-      id: "1",
+      id: "0",
       content: "learn math",
       isDone: false,
     },
     {
-      id: "2",
+      id: "1",
       content: "do homework",
       isDone: false,
     },
     {
-      id: "3",
+      id: "2",
       content: "dinner with emma",
       isDone: false,
     },
     {
-      id: "4",
+      id: "3",
       content: "pay bills",
       isDone: false,
     },
@@ -43,18 +39,43 @@ export default function TodosScreen() {
   const addTodo = (atIndex: number) => {
     const newTodos = [...todos];
     newTodos.splice(atIndex, 0, {
-      id: id,
+      id: newTodos.length.toString(),
       content: "",
       isDone: false,
     });
     setTodos(newTodos);
   };
 
+  const deleteTodo = (atIndex: number) => {
+    const newTodos = [...todos];
+    if (newTodos.length > 1) {
+      newTodos.splice(atIndex, 1);
+    }
+    setTodos(newTodos);
+  };
+
+  // fetch data
+  // useEffect(() => {
+  //   todoRef
+  //   .onSnapshot(
+  //     querySnapshot => {
+  //       const todos = []
+  //       querySnapshot.forEach((doc) => {
+  //         const {heading} = doc.data()
+  //         todos.push({
+  //           id:doc.id,
+  //           heading,
+  //         })
+  //       })
+  //     }
+  //   )
+  // })
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={height + 47}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      // keyboardVerticalOffset={47}
       enabled
     >
       <TextInput
@@ -68,7 +89,11 @@ export default function TodosScreen() {
         removeClippedSubviews={false}
         data={todos}
         renderItem={({ item, index }) => (
-          <TodoItem todo={item} onSubmit={() => addTodo(index + 1)} />
+          <TodoItem
+            todo={item}
+            onSubmit={() => addTodo(index + 1)}
+            deleteTodo={() => deleteTodo(index)}
+          />
         )}
         style={{ width: "100%" }}
       />
@@ -80,7 +105,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    width: "100%",
     padding: 12,
+    height: "100%",
+    justifyContent: "flex-end",
   },
   title: {
     width: "100%",

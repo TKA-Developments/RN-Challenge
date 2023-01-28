@@ -4,6 +4,9 @@ import React from "react";
 interface InputDataAddListParameters {
   label: string;
   placeholder: string;
+  onChangeText: any;
+  value: string;
+  state: any;
 }
 
 const InputDataAddList = ({
@@ -30,15 +33,15 @@ export default InputDataAddList;
 
 const styles = StyleSheet.create({
   label: {
-    fontSize: 16,
+    fontSize: 18,
     marginTop: 8,
   },
   textInput: {
+    fontSize: 18,
     borderWidth: 1,
     borderColor: "darkgrey",
     borderRadius: 5,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    padding: 12,
     marginVertical: 4,
   },
 });

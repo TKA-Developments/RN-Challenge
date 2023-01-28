@@ -1,7 +1,7 @@
 import { View, TextInput } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import Checkbox from "../checkbox";
-import { Header } from "@react-navigation/stack";
+import styles from "./styles";
 
 interface TodoItemProps {
   todo: {
@@ -11,16 +11,17 @@ interface TodoItemProps {
   };
 
   onSubmit: () => void;
+  deleteTodo: () => void;
 }
 
-const TodoItem = ({ todo, onSubmit }: TodoItemProps) => {
+const TodoItem = ({ todo, onSubmit, deleteTodo }: TodoItemProps) => {
   const [content, setContent] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const inputTodo: any = useRef(null);
 
   const onKeyPress = ({ nativeEvent }: any) => {
     if (nativeEvent.key === "Backspace" && content === "") {
-      console.warn("delete");
+      deleteTodo();
     }
   };
 
@@ -40,13 +41,7 @@ const TodoItem = ({ todo, onSubmit }: TodoItemProps) => {
 
   return (
     <>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "flex-start",
-          marginVertical: 4,
-        }}
-      >
+      <View style={styles.container}>
         <Checkbox
           isChecked={isChecked}
           onPressed={() => {
@@ -56,12 +51,7 @@ const TodoItem = ({ todo, onSubmit }: TodoItemProps) => {
 
         <TextInput
           multiline
-          style={{
-            flex: 1,
-            color: "black",
-            fontSize: 16,
-            marginStart: 8,
-          }}
+          style={styles.textContent}
           ref={inputTodo}
           value={content}
           onChangeText={setContent}
@@ -70,15 +60,7 @@ const TodoItem = ({ todo, onSubmit }: TodoItemProps) => {
           onKeyPress={onKeyPress}
         />
       </View>
-      <View
-        style={{
-          height: 1,
-          backgroundColor: "darkgrey",
-          marginStart: 32,
-          marginTop: 4,
-          alignSelf: "stretch",
-        }}
-      />
+      <View style={styles.separator} />
     </>
   );
 };

@@ -1,7 +1,14 @@
-import { Text, View, StyleSheet, Alert } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Alert,
+  KeyboardAvoidingView,
+} from "react-native";
 import React, { Component } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import InputDataAddList from "../components/list-add-item";
+import FIREBASE from "../firebase/config";
 
 export default class AddListScreen extends Component {
   constructor(props: any) {
@@ -13,7 +20,7 @@ export default class AddListScreen extends Component {
     };
   }
 
-  onChangeText = (state, value: any) => {
+  onChangeText = (state: any, value: any) => {
     this.setState({
       [state]: value,
     });
@@ -47,11 +54,13 @@ export default class AddListScreen extends Component {
       <View style={styles.pages}>
         <Text style={styles.title}>Create New List</Text>
 
-        <View
+        <KeyboardAvoidingView
           style={{
             flex: 1,
             justifyContent: "flex-end",
           }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          enabled
         >
           <InputDataAddList
             label="Title"
@@ -71,7 +80,7 @@ export default class AddListScreen extends Component {
           <TouchableOpacity style={styles.btnSubmit} onPress={this.onSubmit}>
             <Text style={styles.btnSubmitText}>CREATE</Text>
           </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
       </View>
     );
   }
@@ -85,20 +94,21 @@ const styles = StyleSheet.create({
   },
   title: {
     width: "100%",
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: "bold",
     marginVertical: 32,
     color: "darkslategrey",
   },
   btnSubmit: {
     backgroundColor: "darkseagreen",
-    padding: 8,
+    padding: 12,
     borderRadius: 5,
     marginTop: 32,
+    marginBottom: 16,
   },
   btnSubmitText: {
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 18,
     color: "darkslategrey",
     fontWeight: "bold",
   },
