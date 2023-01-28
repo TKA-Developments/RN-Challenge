@@ -1,9 +1,47 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Alert } from "react-native";
 import React, { Component } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import InputDataAddList from "../components/list-add-item";
 
 export default class AddListScreen extends Component {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      title: "",
+      color: "",
+    };
+  }
+
+  onChangeText = (state, value: any) => {
+    this.setState({
+      [state]: value,
+    });
+  };
+
+  onSubmit = () => {
+    if (this.state.title && this.state.color) {
+      const listRef = FIREBASE.database().ref("list");
+
+      const list = {
+        title: this.state.title,
+        color: this.state.color,
+      };
+
+      listRef
+        .push(list)
+        .then((data) => {
+          Alert.alert("Yeay", `Successfully create ${list.title}`);
+          this.props.navigation.replace("List");
+        })
+        .catch((error: any) => {
+          console.log("Error : ", error);
+        });
+    } else {
+      Alert.alert("Error", "Please input list title and color.");
+    }
+  };
+
   render() {
     return (
       <View style={styles.pages}>
@@ -15,10 +53,22 @@ export default class AddListScreen extends Component {
             justifyContent: "flex-end",
           }}
         >
-          <InputDataAddList label="Title" placeholder="Input list title" />
-          <InputDataAddList label="Color" placeholder="Choose list color" />
+          <InputDataAddList
+            label="Title"
+            placeholder="Input list title"
+            onChangeText={this.onChangeText}
+            value={this.state.title}
+            state="title"
+          />
+          <InputDataAddList
+            label="Color"
+            placeholder="Choose list color"
+            onChangeText={this.onChangeText}
+            value={this.state.color}
+            state="color"
+          />
 
-          <TouchableOpacity style={styles.btnSubmit}>
+          <TouchableOpacity style={styles.btnSubmit} onPress={this.onSubmit}>
             <Text style={styles.btnSubmitText}>CREATE</Text>
           </TouchableOpacity>
         </View>

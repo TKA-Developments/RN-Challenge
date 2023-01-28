@@ -9,11 +9,19 @@ interface InputDataAddListParameters {
 const InputDataAddList = ({
   label,
   placeholder,
+  onChangeText,
+  value,
+  state,
 }: InputDataAddListParameters) => {
   return (
     <>
       <Text style={styles.label}>{label}</Text>
-      <TextInput placeholder={placeholder} style={styles.textInput} />
+      <TextInput
+        placeholder={placeholder}
+        style={styles.textInput}
+        onChangeText={(text) => onChangeText(state, text)}
+        value={value}
+      />
     </>
   );
 };
