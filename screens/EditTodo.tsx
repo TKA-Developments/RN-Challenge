@@ -19,7 +19,7 @@ export default function EditTodo({
   navigation: any;
 }) {
   const { itemValue } = route?.params;
-  // console.log(itemValue);
+  console.log(itemValue);
 
   const [itemVal, setitemVal] = React.useState(itemValue);
   const [data, setdata] = React.useState([]);
@@ -39,7 +39,7 @@ export default function EditTodo({
   const getToDoData = async () => {
     try {
       const item = await getItem();
-      console.log(item);
+      // console.log(item);
 
       if (item) {
         setdata(JSON.parse(item));
@@ -86,7 +86,7 @@ export default function EditTodo({
         <TextInput
           multiline
           style={{ width: "100%", fontSize: 20, fontFamily: "Poppins" }}
-          value={itemVal}
+          value={itemVal.detail}
           onChangeText={val => {
             updateItemVal("detail", val);
           }}
