@@ -9,10 +9,10 @@ interface CheckboxProps {
 
 const Checkbox = (props: CheckboxProps) => {
     const {onPressed, isChecked} = props
-    const checkboxState = isChecked ? 'checkbox-marked-outline' : 'checkbox-blank-outline'
+    const checkboxState = isChecked ? 'checkbox-marked-circle-outline' : 'checkbox-blank-circle-outline'
 
     return (
-        <Pressable onPress={onPressed}>
+        <Pressable onPress={onPressed} style={{marginTop:4}}>
             <MaterialCommunityIcons name={checkboxState} size={24} color="black" />
         </Pressable>
     )
