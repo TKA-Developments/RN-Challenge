@@ -1,4 +1,5 @@
 // import firebase from "firebase/compat";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState } from "react";
 import {
@@ -7,31 +8,18 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  View,
+  TouchableOpacity,
 } from "react-native";
 import TodoItem from "../components/todo-item";
 
 export default function TodosScreen() {
+  const [filterTodos, setFilterTodos] = useState("");
   const [titleList, setTitleList] = useState("");
-  const [addData, setAddData] = useState("");
   const [todos, setTodos] = useState([
     {
       id: "0",
-      content: "learn math",
-      isDone: false,
-    },
-    {
-      id: "1",
-      content: "do homework",
-      isDone: false,
-    },
-    {
-      id: "2",
-      content: "dinner with emma",
-      isDone: false,
-    },
-    {
-      id: "3",
-      content: "pay bills",
+      content: " ",
       isDone: false,
     },
   ]);
@@ -78,12 +66,22 @@ export default function TodosScreen() {
       // keyboardVerticalOffset={47}
       enabled
     >
-      <TextInput
-        style={styles.title}
-        value={titleList}
-        onChangeText={setTitleList}
-        placeholder={"New List"}
-      />
+      <View style={styles.titleContainer}>
+        <TextInput
+          style={styles.title}
+          value={titleList}
+          onChangeText={setTitleList}
+          placeholder={"New List"}
+        />
+
+        <TouchableOpacity style={styles.iconContainer}>
+          <MaterialCommunityIcons
+            name="filter-variant"
+            size={32}
+            color="darkslategrey"
+          />
+        </TouchableOpacity>
+      </View>
 
       <FlatList
         removeClippedSubviews={false}
@@ -106,15 +104,30 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     width: "100%",
-    padding: 12,
+    padding: 16,
+    marginTop: 32,
     height: "100%",
     justifyContent: "flex-end",
   },
-  title: {
+  titleContainer: {
+    flexDirection: "row",
     width: "100%",
-    fontSize: 24,
-    fontWeight: "bold",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 4,
     marginBottom: 16,
-    marginTop: 32,
+  },
+  iconContainer: {
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    width: "85%",
+    height: 40,
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "darkslategrey",
   },
 });
