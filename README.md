@@ -77,7 +77,7 @@ Your app should be able to complete these tasks:
 
 ## How to run the demo
 
-1. [Clone]{https://github.com/ravmhmmd/RN-Challenge.git} or [download]{https://github.com/ravmhmmd/RN-Challenge/archive/refs/heads/main.zip} this repository.
+1. [Clone](https://github.com/ravmhmmd/RN-Challenge.git) or [download](https://github.com/ravmhmmd/RN-Challenge/archive/refs/heads/main.zip) this repository.
 2. Download Expo Go in your mobile device through Google Play Store (Android) or App Store (iOS).
 3. Run your terminal at change the directory to the repository dir.
 4. Install npm with command
