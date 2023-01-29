@@ -65,7 +65,7 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-1. Open the folder in your IDE, open the terminal
+1. Open the folder in your IDE (recommend using vscode), open the terminal
 2. Run "npm install" to install the default library
 3. Run "npm install firebase" to install the firebase library
 4. Run "npm install native-base react-native-svg@12.1.1 react-native-safe-area-context@3.3.2" to install the native base library
