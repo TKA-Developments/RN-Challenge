@@ -1,7 +1,8 @@
 // import firebase from "firebase/compat";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { concat } from "@apollo/client";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   FlatList,
@@ -10,11 +11,33 @@ import {
   Platform,
   View,
   TouchableOpacity,
+  Alert,
+  Text,
 } from "react-native";
 import TodoItem from "../components/todo-item";
+import styles from "./stylesTodosScreen";
 
 export default function TodosScreen() {
-  const [filterTodos, setFilterTodos] = useState("");
+  // setItemStorage = async () => {
+  //   try {
+  //     await AsyncStorage.setItem("KEYSTRING", "String need save");
+  //   } catch (erorr) {
+  //     console.log("Saving data error");
+  //   }
+  // };
+
+  // getItemStorage = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem("TASKS");
+  //     if (value !== null) {
+  //       console.log(value);
+  //     }
+  //   } catch (error) {
+  //     alert("Retrieving data error");
+  //   }
+  // };
+
+  const [type, setType] = useState("");
   const [titleList, setTitleList] = useState("");
   const [todos, setTodos] = useState([
     {
@@ -24,48 +47,71 @@ export default function TodosScreen() {
     },
   ]);
 
-  const addTodo = (atIndex: number) => {
-    const newTodos = [...todos];
-    newTodos.splice(atIndex, 0, {
-      id: newTodos.length.toString(),
-      content: "",
-      isDone: false,
-    });
-    setTodos(newTodos);
-  };
-
-  const deleteTodo = (atIndex: number) => {
-    const newTodos = [...todos];
-    if (newTodos.length > 1) {
-      newTodos.splice(atIndex, 1);
+  function generateRandomString(length: number) {
+    let result = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    setTodos(newTodos);
+    return result;
+  }
+  const addTodo = () => {
+    let now = new Date();
+    setTodos((p) => [
+      ...p,
+      {
+        id: `${generateRandomString(6)}-${now.getTime().toString()}`,
+        content: "",
+        isDone: false,
+      },
+    ]);
   };
 
-  // fetch data
-  // useEffect(() => {
-  //   todoRef
-  //   .onSnapshot(
-  //     querySnapshot => {
-  //       const todos = []
-  //       querySnapshot.forEach((doc) => {
-  //         const {heading} = doc.data()
-  //         todos.push({
-  //           id:doc.id,
-  //           heading,
-  //         })
-  //       })
-  //     }
-  //   )
-  // })
+  const deleteTodo = (id: string) => {
+    setTodos((p) => p.filter((i) => i.id !== id));
+  };
+
+  const filterRule = (i: any) => {
+    if (type === "complete") {
+      if (i?.isDone) {
+        return i;
+      }
+      return null;
+    }
+    if (type === "incomplete") {
+      if (!i.isDone) {
+        return i;
+      }
+      return null;
+    }
+    if (type === "" || type === "all") {
+      return i;
+    }
+  };
+
+  const updateContent = (newdata: any, id: string) => {
+    setTodos((p) => {
+      return p.map((i) => {
+        if (i.id === id) {
+          return newdata;
+        }
+        return i;
+      });
+    });
+  };
+
+  useEffect(() => {
+    console.log(type);
+    console.log(todos);
+    console.log(todos.filter(filterRule));
+
+    return () => {};
+  }, [todos, filterRule]);
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      // keyboardVerticalOffset={47}
-      enabled
-    >
+    <View style={styles.pages}>
       <View style={styles.titleContainer}>
         <TextInput
           style={styles.title}
@@ -73,61 +119,109 @@ export default function TodosScreen() {
           onChangeText={setTitleList}
           placeholder={"New List"}
         />
-
-        <TouchableOpacity style={styles.iconContainer}>
-          <MaterialCommunityIcons
-            name="filter-variant"
-            size={32}
-            color="darkslategrey"
-          />
-        </TouchableOpacity>
+        <View style={styles.navbar}>
+          <TouchableOpacity
+            style={[
+              styles.navbarBtn,
+              { backgroundColor: type === "all" ? "darkseagreen" : "white" },
+              { borderTopLeftRadius: 5 },
+              { borderTopRightRadius: 0 },
+              { borderBottomLeftRadius: 5 },
+              { borderBottomRightRadius: 0 },
+            ]}
+            onPress={() => {
+              setType("all");
+            }}
+          >
+            <Text
+              style={[
+                styles.navbarBtnText,
+                {
+                  color: type === "all" ? "black" : "darkslategrey",
+                },
+              ]}
+            >
+              All
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.navbarBtn,
+              {
+                backgroundColor: type === "complete" ? "darkseagreen" : "white",
+              },
+            ]}
+            onPress={() => {
+              setType("complete");
+            }}
+          >
+            <Text
+              style={[
+                styles.navbarBtnText,
+                {
+                  color: type === "complete" ? "black" : "darkslategrey",
+                },
+              ]}
+            >
+              Complete
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.navbarBtn,
+              {
+                backgroundColor:
+                  type === "incomplete" ? "darkseagreen" : "white",
+              },
+              { borderTopLeftRadius: 0 },
+              { borderTopRightRadius: 5 },
+              { borderBottomLeftRadius: 0 },
+              { borderBottomRightRadius: 5 },
+            ]}
+            onPress={() => {
+              setType("incomplete");
+            }}
+          >
+            <Text
+              style={[
+                styles.navbarBtnText,
+                {
+                  color: type === "incomplete" ? "black" : "darkslategrey",
+                },
+              ]}
+            >
+              Incomplete
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
+      <View style={styles.container}>
+        <FlatList
+          removeClippedSubviews={false}
+          data={todos.filter(filterRule)}
+          keyExtractor={(_i) => _i.id}
+          renderItem={({ item, index }) => (
+            <TodoItem
+              todo={item}
+              onSubmit={() => addTodo()}
+              deleteTodo={() => deleteTodo(item.id)}
+              updateContent={updateContent}
+            />
+          )}
+          style={{ width: "100%" }}
+        />
 
-      <FlatList
-        removeClippedSubviews={false}
-        data={todos}
-        renderItem={({ item, index }) => (
-          <TodoItem
-            todo={item}
-            onSubmit={() => addTodo(index + 1)}
-            deleteTodo={() => deleteTodo(index)}
-          />
-        )}
-        style={{ width: "100%" }}
-      />
-    </KeyboardAvoidingView>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity
+            style={styles.btnAdd}
+            onPress={() => {
+              addTodo();
+            }}
+          >
+            <MaterialIcons name="add" size={24} color="darkslategrey" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    width: "100%",
-    padding: 16,
-    marginTop: 32,
-    height: "100%",
-    justifyContent: "flex-end",
-  },
-  titleContainer: {
-    flexDirection: "row",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginVertical: 4,
-    marginBottom: 16,
-  },
-  iconContainer: {
-    width: 40,
-    height: 40,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  title: {
-    width: "85%",
-    height: 40,
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "darkslategrey",
-  },
-});

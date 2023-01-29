@@ -9,15 +9,20 @@ interface TodoItemProps {
     content: string;
     isDone: boolean;
   };
-
   onSubmit: () => void;
   deleteTodo: () => void;
+  updateContent: (newdata: any, id: string) => void;
 }
 
-const TodoItem = ({ todo, onSubmit, deleteTodo }: TodoItemProps) => {
-  const [content, setContent] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
-  const inputTodo: any = useRef(null);
+const TodoItem = ({
+  todo,
+  onSubmit,
+  deleteTodo,
+  updateContent,
+}: TodoItemProps) => {
+  const [content, setContent] = useState(todo.content);
+  const [isChecked, setIsChecked] = useState(todo.isDone);
+  const inputTodo = useRef(null);
 
   const onKeyPress = ({ nativeEvent }: any) => {
     if (nativeEvent.key === "Backspace" && content === "") {
@@ -26,18 +31,21 @@ const TodoItem = ({ todo, onSubmit, deleteTodo }: TodoItemProps) => {
   };
 
   useEffect(() => {
-    if (!todo) {
-      return;
-    }
-    setIsChecked(todo.isDone);
-    setContent(todo.content);
-  }, [todo]);
-
-  useEffect(() => {
     if (inputTodo.current) {
       inputTodo?.current?.focus();
     }
   }, [inputTodo]);
+
+  useEffect(() => {
+    updateContent(
+      {
+        ...todo,
+        content: content,
+        isDone: isChecked,
+      },
+      todo.id
+    );
+  }, [content, isChecked]);
 
   return (
     <>
@@ -54,7 +62,8 @@ const TodoItem = ({ todo, onSubmit, deleteTodo }: TodoItemProps) => {
           style={styles.textContent}
           ref={inputTodo}
           value={content}
-          onChangeText={setContent}
+          defaultValue={todo.content}
+          onChangeText={(val) => setContent(val)}
           onSubmitEditing={onSubmit}
           blurOnSubmit
           onKeyPress={onKeyPress}
