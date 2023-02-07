@@ -2,7 +2,6 @@ import { Button, Divider } from "@rneui/themed";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import EditScreenInfo from "../components/EditScreenInfo";
 import { View as RootView } from "../components/Themed";
 import { TextInput, Text, Pressable, View } from "react-native";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";

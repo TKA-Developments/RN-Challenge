@@ -2,11 +2,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Todo from "../screens/Todo";
 import EditTodo from "../screens/EditTodo";
 import * as React from "react";
+import TryScreen from "../screens/TryScreen";
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
   return (
     <Stack.Navigator>
+      {/* <Stack.Screen name="TryScreen" component={TryScreen} /> */}
       <Stack.Screen
         name="Todo"
         component={Todo}
