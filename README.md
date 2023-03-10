@@ -67,7 +67,5 @@ Your app should be able to complete these tasks:
 ## How to run the demo
 1. Open the folder in your IDE (recommend using vscode), open the terminal
 2. Run "npm install" to install the default library
-3. Run "npm install firebase" to install the firebase library
-4. Run "npm install native-base react-native-svg@12.1.1 react-native-safe-area-context@3.3.2" to install the native base library
-5. Run "npm start" to start the application
-6. Type "a" to open on android app and "w" to open on website
+3. Run "npm start" to start the application
+4. Type "a" to open on android app and "w" to open on website
