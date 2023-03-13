@@ -65,4 +65,7 @@ Your app should be able to complete these tasks:
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+1. Open the folder in your IDE (recommend using vscode), open the terminal
+2. Run "npm install" to install the default library
+3. Run "npm start" to start the application
+4. Type "a" to open on android app and "w" to open on website
