@@ -9,9 +9,9 @@ export type BottomTabParamList = {
 };
 
 export type TabOneParamList = {
-  TabOneScreen: undefined;
+  Todo: undefined;
 };
 
 export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+  "Edit Todo": undefined;
 };
