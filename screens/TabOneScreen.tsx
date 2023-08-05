@@ -38,6 +38,13 @@ export default function TabOneScreen() {
   };
 
   const [todoItems, setTodoItems] = React.useState<Array<TodoItems>>([]);
+  React.useEffect(() => {
+    db.find({}, function(_err: any, docs: any) {
+      setTodoItems(docs);
+    });
+    
+  }, [])
+  
 
   return (
     <View style={styles.container}>
@@ -47,7 +54,7 @@ export default function TabOneScreen() {
       <TodoList
         deleteItem={deleteItem}
         todoItems={todoItems}
-        setTodoItems={setTodoItems}
+        // setTodoItems={setTodoItems}
       />
     </View>
   );
