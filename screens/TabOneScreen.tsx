@@ -1,5 +1,6 @@
 import * as React from "react";
 import { AsyncStorage, Button, StyleSheet } from "react-native";
+import AddTodoItem from "../components/AddTodoItem";
 
 import { Text, View } from "../components/Themed";
 import TodoList from "../components/TodoList";
@@ -29,6 +30,15 @@ export default function TabOneScreen() {
     });
     console.log(todoItems);
   };
+  const addItem = (title: string) => {
+    db.insert({
+      title,
+      completed: false,
+    });
+    db.find({}, function (_err: any, docs: any) {
+      setTodoItems(docs);
+    });
+  };
   const deleteItem = (id: string) => {
     db.remove({ _id: id });
     db.find({}, function (_err: any, docs: any) {
@@ -36,25 +46,33 @@ export default function TabOneScreen() {
     });
     console.log(todoItems);
   };
+  const toggleItemCompletion = (id: string) => {
+    db.find({ _id: id }, function (_err: any, docs: any) {
+      db.update({ _id: id }, { $set: { completed: !docs[0].completed } });
+      db.find({}, function (_err: any, docs: any) {
+        setTodoItems(docs);
+      });
+    });
+    console.log(todoItems);
+  };
 
   const [todoItems, setTodoItems] = React.useState<Array<TodoItems>>([]);
   React.useEffect(() => {
-    db.find({}, function(_err: any, docs: any) {
+    db.find({}, function (_err: any, docs: any) {
       setTodoItems(docs);
     });
-    
-  }, [])
-  
+  }, []);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab sOneS</Text>
+      <AddTodoItem addItem={addItem} />
       <Button onPress={handleAddItem} title="Add Item" color="blue" />
       <Button onPress={handleResetAll} title="Delete All" color="red" />
       <TodoList
         deleteItem={deleteItem}
         todoItems={todoItems}
-        // setTodoItems={setTodoItems}
+        toggleItemCompletion={toggleItemCompletion}
       />
     </View>
   );
