@@ -6,7 +6,10 @@ import TodoListItem from "./TodoListItem";
 export default function TodoList({
   todoItems,
   deleteItem,
+  editItem,
   toggleItemCompletion,
+  toggleDelete,
+  toggleEdit,
 }: TodoListParamList) {
   return (
     <FlatList
@@ -19,7 +22,10 @@ export default function TodoList({
           key={item._id}
           completed={item.completed}
           onPressDelete={() => deleteItem(item._id)}
+          editItem={editItem}
           onPressToggleCompletion={() => toggleItemCompletion(item._id)}
+          toggleDelete={toggleDelete}
+          toggleEdit={toggleEdit}
         />
       )}
       keyExtractor={(item, index) => index.toString()}

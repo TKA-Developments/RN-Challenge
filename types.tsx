@@ -20,8 +20,11 @@ export type TodoListItemParamList = {
   title: string;
   id: string;
   onPressDelete: (id: string) => void;
+  editItem: (id: string, text: string) => void;
   onPressToggleCompletion: (id: string) => void;
   completed: boolean;
+  toggleDelete: boolean;
+  toggleEdit: boolean;
 };
 
 export type TodoItems = {
@@ -34,6 +37,9 @@ export type TodoListParamList = {
   todoItems: TodoItems[];
   toggleItemCompletion: (id: string) => void;
   deleteItem: (id: string) => void;
+  editItem: (id: string, text: string) => void;
+  toggleDelete: boolean;
+  toggleEdit: boolean;
 };
 
 export type AddTodoItemParamList = {

@@ -46,6 +46,12 @@ export default function TabOneScreen() {
     });
     console.log(todoItems);
   };
+  const editItem = (id: string, text: string) => {
+    db.update({ _id: id }, { $set: { title: text } });
+    db.find({}, function (_err: any, docs: any) {
+      setTodoItems(docs);
+    });
+  };
   const toggleItemCompletion = (id: string) => {
     db.find({ _id: id }, function (_err: any, docs: any) {
       db.update({ _id: id }, { $set: { completed: !docs[0].completed } });
@@ -56,6 +62,8 @@ export default function TabOneScreen() {
     console.log(todoItems);
   };
 
+  const [toggleDelete, setToggleDelete] = React.useState(false);
+  const [toggleEdit, setToggleEdit] = React.useState(false);
   const [todoItems, setTodoItems] = React.useState<Array<TodoItems>>([]);
   React.useEffect(() => {
     db.find({}, function (_err: any, docs: any) {
@@ -67,12 +75,29 @@ export default function TabOneScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Tab sOneS</Text>
       <AddTodoItem addItem={addItem} />
-      <Button onPress={handleAddItem} title="Add Item" color="blue" />
-      <Button onPress={handleResetAll} title="Delete All" color="red" />
+      <Button
+        onPress={() => {
+          setToggleEdit(!toggleEdit);
+          setToggleDelete(false);
+        }}
+        title="Toggle Edit"
+        color="blue"
+      />
+      <Button
+        onPress={() => {
+          setToggleDelete(!toggleDelete);
+          setToggleEdit(false);
+        }}
+        title="Toggle Delete"
+        color="red"
+      />
       <TodoList
         deleteItem={deleteItem}
+        editItem={editItem}
         todoItems={todoItems}
         toggleItemCompletion={toggleItemCompletion}
+        toggleDelete={toggleDelete}
+        toggleEdit={toggleEdit}
       />
     </View>
   );
