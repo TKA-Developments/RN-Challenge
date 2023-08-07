@@ -19,44 +19,61 @@ export default function TabOneScreen() {
       title,
       completed: false,
     });
-    db.find({}, function (_err: any, docs: any) {
+    db.find(getDbQuery(filterOptions), function (_err: any, docs: any) {
       setTodoItems(docs);
     });
   };
   const deleteItem = (id: string) => {
     db.remove({ _id: id });
-    db.find({}, function (_err: any, docs: any) {
+    db.find(getDbQuery(filterOptions), function (_err: any, docs: any) {
       setTodoItems(docs);
     });
   };
   const editItem = (id: string, text: string) => {
     db.update({ _id: id }, { $set: { title: text } });
-    db.find({}, function (_err: any, docs: any) {
+    db.find(getDbQuery(filterOptions), function (_err: any, docs: any) {
       setTodoItems(docs);
     });
   };
   const toggleItemCompletion = (id: string) => {
     db.find({ _id: id }, function (_err: any, docs: any) {
       db.update({ _id: id }, { $set: { completed: !docs[0].completed } });
-      db.find({}, function (_err: any, docs: any) {
+      db.find(getDbQuery(filterOptions), function (_err: any, docs: any) {
         setTodoItems(docs);
       });
     });
   };
 
+  const getDbQuery = (fo: FilterOptions) => {
+    return {
+      ...(fo.completed && !fo.incompleted && { completed: true }),
+      ...(!fo.completed && fo.incompleted && { completed: false }),
+      ...(!fo.completed && !fo.incompleted && { completed: null }),
+      ...(fo.regexString.length > 0 && {title: {$regex: new RegExp(fo.regexString)} })
+    };
+  };
+
   const [toggleDelete, setToggleDelete] = React.useState(false);
   const [toggleEdit, setToggleEdit] = React.useState(false);
   const [todoItems, setTodoItems] = React.useState<Array<TodoItems>>([]);
-  const [filterOptions, setFilterOptions] = React.useState<FilterOptions>({completed: true, uncompleted: true, regexSting: ""});
+  const [filterOptions, setFilterOptions] = React.useState<FilterOptions>({
+    completed: true,
+    incompleted: true,
+    regexString: "",
+  });
   React.useEffect(() => {
-    db.find({}, function (_err: any, docs: any) {
+    db.find(getDbQuery(filterOptions), function (_err: any, docs: any) {
       setTodoItems(docs);
     });
   }, []);
+  React.useEffect(() => {
+    db.find(getDbQuery(filterOptions), function (_err: any, docs: any) {
+      setTodoItems(docs);
+    });
+  }, [filterOptions]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab sOneS</Text>
       <AddTodoItem addItem={addItem} />
       <TodoMenu
         filterOptions={filterOptions}
@@ -83,14 +100,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
 });

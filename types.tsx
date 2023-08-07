@@ -50,8 +50,8 @@ export type AddTodoItemParamList = {
 
 export type FilterOptions= {
   completed: boolean;
-  uncompleted: boolean;
-  regexSting: string;
+  incompleted: boolean;
+  regexString: string;
 }
 
 export type TodoMenuParamList = {
