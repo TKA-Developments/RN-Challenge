@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
@@ -45,3 +47,18 @@ export type TodoListParamList = {
 export type AddTodoItemParamList = {
   addItem: (title: string) => void;
 };
+
+export type FilterOptions= {
+  completed: boolean;
+  uncompleted: boolean;
+  regexSting: string;
+}
+
+export type TodoMenuParamList = {
+  filterOptions: FilterOptions;
+  toggleDelete: boolean;
+  toggleEdit: boolean;
+  setFilterOptions: Dispatch<SetStateAction<FilterOptions>>;
+  setToggleEdit: Dispatch<SetStateAction<boolean>>;
+  setToggleDelete: Dispatch<SetStateAction<boolean>>;
+}
