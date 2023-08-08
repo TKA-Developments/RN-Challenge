@@ -1,6 +1,7 @@
 import { useIsFocused } from "@react-navigation/native";
 import * as React from "react";
 import { AsyncStorage, StyleSheet } from "react-native";
+import { SvgXml } from "react-native-svg";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
@@ -30,19 +31,20 @@ export default function ProfileScreen() {
     });
     dbUser.find({}, function (_err: any, docs: any) {
       if (docs.length) setUsername(docs[0].username);
-      else dbUser.insert({username: "anon"});
+      else dbUser.insert({ username: "anon" });
     });
   }, [isFocused]);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Name {username}</Text>
-      <Text style={styles.title}>Total {totalCount}</Text>
+      <Text style={styles.title}>Totals {totalCount}</Text>
       <Text style={styles.title}>Completed {completedCount}</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
+
       <EditScreenInfo path="/screens/ProfileScreen.tsx" />
     </View>
   );

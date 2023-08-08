@@ -1,14 +1,14 @@
-import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
+import { Ionicons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import ToDoScreen from '../screens/ToDoScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
+import ToDoScreen from "../screens/ToDoScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
+import { SvgXml } from "react-native-svg";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -18,21 +18,40 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="To do"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      tabBarOptions={{
+        showLabel: true,
+        activeTintColor: Colors[colorScheme].tint,
+      }}
+    >
       <BottomTab.Screen
         name="To do"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarLabel: "To do list",
+          tabBarIcon: ({ color }) => (
+            <SvgXml
+              xml={`<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path fill=${color} d="M222-214 80-356l42-42 100 99 179-179 42 43-221 221Zm0-320L80-676l42-42 100 99 179-179 42 43-221 221Zm298 244v-60h360v60H520Zm0-320v-60h360v60H520Z"/></svg>`}
+              width="40"
+              height="40"
+            />
+          ),
         }}
       />
       <BottomTab.Screen
         name="Profile"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => 
-          <Icon name="rocket" size={30} color={color} />
-          ,
+          tabBarLabel: "Profile",
+          tabBarIcon: ({ color }) => (
+            <SvgXml
+              xml={`<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path fill=${color} d="M222-214 80-356l42-42 100 99 179-179 42 43-221 221Zm0-320L80-676l42-42 100 99 179-179 42 43-221 221Zm298 244v-60h360v60H520Zm0-320v-60h360v60H520Z"/></svg>`}
+              width="40"
+              height="40"
+            />
+          ),
+          // tabBarIcon: ({ color }) =>
+          // (<SvgXml xml={`<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M222-214 80-356l42-42 100 99 179-179 42 43-221 221Zm0-320L80-676l42-42 100 99 179-179 42 43-221 221Zm298 244v-60h360v60H520Zm0-320v-60h360v60H520Z"/></svg>`} width="100%" height="100%" />)
+          // ,
         }}
       />
     </BottomTab.Navigator>
@@ -41,7 +60,10 @@ export default function BottomTabNavigator() {
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
+function TabBarIcon(props: {
+  name: React.ComponentProps<typeof Ionicons>["name"];
+  color: string;
+}) {
   return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
@@ -55,7 +77,7 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="ToDoScreen"
         component={ToDoScreen}
-        options={{ headerTitle: 'Simple ToDo' }}
+        options={{ headerTitle: "Simple ToDo" }}
       />
     </TabOneStack.Navigator>
   );
@@ -69,7 +91,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: 'Profile' }}
+        options={{ headerTitle: "Profile" }}
       />
     </TabTwoStack.Navigator>
   );
