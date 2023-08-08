@@ -1,6 +1,7 @@
 import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { TodoListParamList } from "../types";
+import { Text } from "./Themed";
 import TodoListItem from "./TodoListItem";
 
 export default function TodoList({
@@ -12,6 +13,8 @@ export default function TodoList({
   toggleEdit,
 }: TodoListParamList) {
   return (
+    // <View>
+
     <FlatList
       style={styles.container}
       data={todoItems}
@@ -29,7 +32,11 @@ export default function TodoList({
         />
       )}
       keyExtractor={(item, index) => index.toString()}
+      ListEmptyComponent={
+        <Text style={{color:"gray"}}>No task found</Text>
+      }
     />
+    // </View>
   );
 }
 

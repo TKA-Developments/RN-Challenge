@@ -5,9 +5,10 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import ToDoScreen from '../screens/ToDoScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -16,20 +17,22 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="To do"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="To do"
         component={TabOneNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Profile"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => 
+          <Icon name="rocket" size={30} color={color} />
+          ,
         }}
       />
     </BottomTab.Navigator>
@@ -50,9 +53,9 @@ function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        name="ToDoScreen"
+        component={ToDoScreen}
+        options={{ headerTitle: 'Simple ToDo' }}
       />
     </TabOneStack.Navigator>
   );
@@ -64,9 +67,9 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{ headerTitle: 'Profile' }}
       />
     </TabTwoStack.Navigator>
   );

@@ -6,16 +6,16 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  "To do": undefined;
+  Profile: undefined;
 };
 
 export type TabOneParamList = {
-  TabOneScreen: undefined;
+  ToDoScreen: undefined;
 };
 
 export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+  ProfileScreen: undefined;
 };
 
 export type TodoListItemParamList = {

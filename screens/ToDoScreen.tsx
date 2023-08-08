@@ -7,7 +7,7 @@ import TodoList from "../components/TodoList";
 import TodoMenu from "../components/TodoMenu";
 import { FilterOptions, TodoItems } from "../types";
 
-export default function TabOneScreen() {
+export default function ToDoScreen() {
   var Datastore = require("react-native-local-mongodb");
   var db = new Datastore({
     filename: "asyncStorageKey",
@@ -57,7 +57,7 @@ export default function TabOneScreen() {
   const [toggleEdit, setToggleEdit] = React.useState(false);
   const [todoItems, setTodoItems] = React.useState<Array<TodoItems>>([]);
   const [filterOptions, setFilterOptions] = React.useState<FilterOptions>({
-    completed: true,
+    completed: false,
     incompleted: true,
     regexString: "",
   });
