@@ -1,8 +1,7 @@
 import * as React from "react";
 import { AsyncStorage, Button, StyleSheet } from "react-native";
-import AddTodoItem from "../components/AddTodoItem";
 
-import { Text, View } from "../components/Themed";
+import { View } from "../components/Themed";
 import TodoList from "../components/TodoList";
 import TodoMenu from "../components/TodoMenu";
 import { FilterOptions, TodoItems } from "../types";
@@ -49,7 +48,9 @@ export default function ToDoScreen() {
       ...(fo.completed && !fo.incompleted && { completed: true }),
       ...(!fo.completed && fo.incompleted && { completed: false }),
       ...(!fo.completed && !fo.incompleted && { completed: null }),
-      ...(fo.regexString.length > 0 && {title: {$regex: new RegExp(fo.regexString)} })
+      ...(fo.regexString.length > 0 && {
+        title: { $regex: new RegExp(fo.regexString) },
+      }),
     };
   };
 

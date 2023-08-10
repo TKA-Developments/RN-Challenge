@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Button, TextInput } from "react-native";
+import { StyleSheet, View, TextInput } from "react-native";
 import { AddTodoItemParamList } from "../types";
 import Colors from "../constants/Colors";
 import { SvgXml } from "react-native-svg";

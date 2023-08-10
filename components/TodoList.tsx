@@ -13,8 +13,6 @@ export default function TodoList({
   toggleEdit,
 }: TodoListParamList) {
   return (
-    // <View>
-
     <FlatList
       style={styles.container}
       data={todoItems}
@@ -46,7 +44,6 @@ export default function TodoList({
         </View>
       }
     />
-    // </View>
   );
 }
 

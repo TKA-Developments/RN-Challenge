@@ -1,9 +1,8 @@
 import { ToggleFilter } from "./ToggleFilter";
 import { ToggleMenu } from "./ToggleMenu";
 import React from "react";
-import { View, StyleSheet, Button, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { SvgXml } from "react-native-svg";
 import Colors from "../constants/Colors";
 import { TodoMenuParamList } from "../types";
 import AddTodoItem from "./AddTodoItem";

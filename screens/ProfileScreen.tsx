@@ -8,7 +8,6 @@ import {
   Share,
   StyleSheet,
 } from "react-native";
-import { SvgXml } from "react-native-svg";
 
 import { Text, View } from "../components/Themed";
 
