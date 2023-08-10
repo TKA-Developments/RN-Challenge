@@ -20,7 +20,7 @@ export default function TodoMenu({
   const [toggleAdd, setToggleAdd] = React.useState(false);
   const [toggleSearch, setToggleSearch] = React.useState(false);
   return (
-    <View style={{ flexDirection: "column", marginTop: 20 }}>
+    <View style={{ flexDirection: "column", marginTop: 5, alignItems:"center", padding:10 }}>
       <View
         style={{
           flexDirection: "row",
@@ -99,7 +99,7 @@ export default function TodoMenu({
         </Text>
         {toggleAdd && <AddTodoItem addItem={addItem} />}
       </View>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View style={{ flexDirection: "row", alignItems: "center"}}>
         <Text>{"Showing "}</Text>
         <TouchableOpacity
           onPress={() => {
@@ -206,7 +206,7 @@ export default function TodoMenu({
                 { borderWidth: 1, backgroundColor: "lightslategrey" },
               ]}
             >
-              <Text>'{searchValue}'</Text>
+              <Text>'{filterOptions.regexString}'</Text>
               <SvgXml
                 xml={`
                 <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path 
@@ -242,7 +242,7 @@ export default function TodoMenu({
         )}
       </View>
       {toggleSearch && (
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", marginVertical:10}}>
           <TextInput
             style={styles.inputText}
             onChangeText={(t) => setSearchValue(t)}
@@ -255,7 +255,9 @@ export default function TodoMenu({
                 ...prevState,
                 regexString: searchValue,
               }));
+              setToggleSearch(false);
             }}
+            color="purple"
           />
         </View>
       )}
@@ -271,8 +273,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   inputText: {
-    height: 40,
-    width: "70%",
+    height: 30,
+    width: 200,
     color: Colors.dark.text,
     paddingHorizontal: 10,
     borderColor: "gray",

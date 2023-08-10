@@ -49,6 +49,7 @@ export default function TodoListItem({
               {
                 minHeight: 40,
                 paddingLeft: 6,
+                fontSize: 18,
                 width: "78%",
                 textAlignVertical: "center",
               },

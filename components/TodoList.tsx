@@ -43,8 +43,7 @@ export default function TodoList({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#000",
-    padding: 20,
-    marginVertical: 8,
+    paddingHorizontal: 20,
     width: "100%",
   },
 });
