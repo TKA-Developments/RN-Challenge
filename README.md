@@ -68,4 +68,5 @@ Your app should be able to complete these tasks:
 1. Clone repo
 2. Run `npm install`
 3. Run `npm run android`
+   
 Tested in and designed for android
