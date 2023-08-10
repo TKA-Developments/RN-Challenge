@@ -99,8 +99,7 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 10,
-    marginVertical: 8,
-    marginHorizontal: 8,
+    marginVertical: 2,
     minHeight: 60,
     flexDirection: "row",
     justifyContent: "space-between",

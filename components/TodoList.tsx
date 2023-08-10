@@ -31,9 +31,19 @@ export default function TodoList({
           toggleEdit={toggleEdit}
         />
       )}
+      contentContainerStyle={{ flexGrow: 1 }}
       keyExtractor={(item, index) => index.toString()}
       ListEmptyComponent={
-        <Text style={{color:"gray"}}>No task found</Text>
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            flexGrow: 1,
+          }}
+        >
+          <Text style={{ color: "gray" }}>No task found</Text>
+        </View>
       }
     />
     // </View>
