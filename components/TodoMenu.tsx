@@ -75,6 +75,8 @@ export default function TodoMenu({
             style={styles.inputText}
             onChangeText={(t) => setSearchValue(t)}
             value={searchValue}
+            placeholder="Enter a search keyword"
+            placeholderTextColor={"lightslategrey"}
           />
           <Button
             title="Search"
