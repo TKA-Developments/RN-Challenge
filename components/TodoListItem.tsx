@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, Button, TextInput, View } from "react-native";
 import { TodoListItemParamList } from "../types";
+import { Text } from "./Themed";
 
 export default function TodoListItem({
   title,
@@ -44,12 +45,15 @@ export default function TodoListItem({
           />
         ) : (
           <Text
-            style={{
-              minHeight: 40,
-              paddingLeft: 6,
-              width: "78%",
-              textAlignVertical: "center",
-            }}
+            style={[
+              {
+                minHeight: 40,
+                paddingLeft: 6,
+                width: "78%",
+                textAlignVertical: "center",
+              },
+              completed ? { textDecorationLine: "line-through" } : {},
+            ]}
           >
             {title}
           </Text>
@@ -67,7 +71,7 @@ export default function TodoListItem({
           <Button
             title="Delete"
             onPress={() => onPressDelete(id)}
-            color="red"
+            color="firebrick"
           />
         )}
         {!toggleDelete && toggleEdit && (
@@ -77,7 +81,7 @@ export default function TodoListItem({
               editItem(id, text);
               setIsEditing(false);
             }}
-            color={isEditing ? "blue" : "gray"}
+            color={isEditing ? "royalblue" : "gray"}
           />
         )}
       </View>
@@ -87,10 +91,10 @@ export default function TodoListItem({
 
 const styles = StyleSheet.create({
   checkedItem: {
-    backgroundColor: "#008222",
+    backgroundColor: "darkslategrey",
   },
   uncheckedItem: {
-    backgroundColor: "#f9ffff",
+    backgroundColor: "midnightblue",
   },
   item: {
     padding: 10,
