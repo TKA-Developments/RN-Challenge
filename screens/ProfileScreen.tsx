@@ -1,9 +1,15 @@
 import { useIsFocused } from "@react-navigation/native";
 import * as React from "react";
-import { AsyncStorage, StyleSheet } from "react-native";
+import {
+  Alert,
+  AsyncStorage,
+  Button,
+  Image,
+  Share,
+  StyleSheet,
+} from "react-native";
 import { SvgXml } from "react-native-svg";
 
-import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 
 export default function ProfileScreen() {
@@ -34,18 +40,50 @@ export default function ProfileScreen() {
       else dbUser.insert({ username: "anon" });
     });
   }, [isFocused]);
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `I have been using "Simple ToDo" and have completed ${completedCount} tasks! Download now at Play Store google.com`,
+      });
+    } catch (error: any) {
+      Alert.alert(error.message);
+    }
+  };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Name {username}</Text>
-      <Text style={styles.title}>Totals {totalCount}</Text>
-      <Text style={styles.title}>Completed {completedCount}</Text>
+      <Image
+        source={{
+          uri: "https://i.ibb.co/gdRLD4M/pixel-duck.png",
+          method: "POST",
+          headers: {
+            Pragma: "no-cache",
+          },
+          body: "Your Body goes here",
+        }}
+        style={{ width: 300, height: 300 }}
+      />
+      <Text style={styles.title}>Welcome, {username}</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-
-      <EditScreenInfo path="/screens/ProfileScreen.tsx" />
+      <View style={styles.statBox}>
+        <Text style={styles.statsTitle}>Task count</Text>
+        <View style={styles.statsRow}>
+          <Text style={styles.body}>To Do</Text>
+          <Text style={styles.body}>{totalCount - completedCount}</Text>
+        </View>
+        <View style={styles.statsRow}>
+          <Text style={styles.body}>Completed</Text>
+          <Text style={styles.body}>{completedCount}</Text>
+        </View>
+        <View style={[styles.statsRow, { marginTop: 5 }]}>
+          <Text style={styles.body}>Total</Text>
+          <Text style={styles.body}>{totalCount}</Text>
+        </View>
+      </View>
+      <Button title="Share Profile" onPress={onShare} color="purple" />
     </View>
   );
 }
@@ -60,9 +98,24 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
+  statsTitle: {
+    fontSize: 16,
+    paddingVertical: 10,
+  },
+  statsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  body: {
+    fontSize: 16,
+  },
   separator: {
     marginVertical: 30,
     height: 1,
     width: "80%",
+  },
+  statBox: {
+    width: "70%",
+    marginBottom: 20,
   },
 });
