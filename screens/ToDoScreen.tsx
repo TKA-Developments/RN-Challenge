@@ -74,7 +74,6 @@ export default function ToDoScreen() {
 
   return (
     <View style={styles.container}>
-      <AddTodoItem addItem={addItem} />
       <TodoMenu
         filterOptions={filterOptions}
         toggleDelete={toggleDelete}
@@ -82,6 +81,7 @@ export default function ToDoScreen() {
         setFilterOptions={setFilterOptions}
         setToggleEdit={setToggleEdit}
         setToggleDelete={setToggleDelete}
+        addItem={addItem}
       />
       <TodoList
         deleteItem={deleteItem}

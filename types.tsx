@@ -58,6 +58,7 @@ export type TodoMenuParamList = {
   filterOptions: FilterOptions;
   toggleDelete: boolean;
   toggleEdit: boolean;
+  addItem: (title: string) => void;
   setFilterOptions: Dispatch<SetStateAction<FilterOptions>>;
   setToggleEdit: Dispatch<SetStateAction<boolean>>;
   setToggleDelete: Dispatch<SetStateAction<boolean>>;
