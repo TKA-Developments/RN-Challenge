@@ -70,3 +70,8 @@ Your app should be able to complete these tasks:
 3. Run `npm run android`
    
 Tested in and designed for android
+```
+node v16.15.0
+npm 8.5.5
+expo-cli 6.3.10
+```
