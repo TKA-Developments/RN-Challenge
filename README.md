@@ -48,21 +48,30 @@ Create a React Native app where Joko can keep track of the things he need to do 
 
 ## Requirements
 Your app should be able to complete these tasks:
-- Add a new to-do item
-- Mark a to-do item as done
-- Delete a to-do item
-- Edit a to-do item
-- Display all to-dos in a list or a grid
-- Filter between completed and incomplete items
+- Add a new to-do item ✅
+- Mark a to-do item as done ✅
+- Delete a to-do item ✅
+- Edit a to-do item ✅
+- Display all to-dos in a list or a grid ✅
+- Filter between completed and incomplete items ✅
 
 ### Bonus:
-- Enable search for the to-do items
+- Enable search for the to-do items ✅
 - Include animations
-- Persist data using Contexts and/or Async Storage
+- Persist data using Contexts and/or Async Storage ✅
 - Call some public API (image, video, weather, clocks, up to you)
 - Save data to a backend server (like firebase)
-- Do some kind of sharing
+- Do some kind of sharing ✅
 - Somehow make this boring app fun! show some crazy pokemon animation or something :P
 
 ## How to run the demo
-(REPLACE THIS WITH YOUR INSTRUCTIONS)
+1. Clone repo
+2. Run `npm install`
+3. Run `npm run android`
+   
+Tested in and designed for android
+```
+node v16.15.0
+npm 8.5.5
+expo-cli 6.3.10
+```

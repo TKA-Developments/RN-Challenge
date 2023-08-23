@@ -1,17 +1,82 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  "To do": undefined;
+  Profile: undefined;
 };
 
 export type TabOneParamList = {
-  TabOneScreen: undefined;
+  ToDoScreen: undefined;
 };
 
 export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+  ProfileScreen: undefined;
+};
+
+export type TodoListItemParamList = {
+  title: string;
+  id: string;
+  onPressDelete: (id: string) => void;
+  editItem: (id: string, text: string) => void;
+  onPressToggleCompletion: (id: string) => void;
+  completed: boolean;
+  toggleDelete: boolean;
+  toggleEdit: boolean;
+};
+
+export type TodoItems = {
+  _id: string;
+  title: string;
+  completed: boolean;
+};
+
+export type TodoListParamList = {
+  todoItems: TodoItems[];
+  toggleItemCompletion: (id: string) => void;
+  deleteItem: (id: string) => void;
+  editItem: (id: string, text: string) => void;
+  toggleDelete: boolean;
+  toggleEdit: boolean;
+};
+
+export type AddTodoItemParamList = {
+  addItem: (title: string) => void;
+};
+
+export type FilterOptions = {
+  completed: boolean;
+  incompleted: boolean;
+  regexString: string;
+};
+
+export type TodoMenuParamList = {
+  filterOptions: FilterOptions;
+  toggleDelete: boolean;
+  toggleEdit: boolean;
+  addItem: (title: string) => void;
+  setFilterOptions: Dispatch<SetStateAction<FilterOptions>>;
+  setToggleEdit: Dispatch<SetStateAction<boolean>>;
+  setToggleDelete: Dispatch<SetStateAction<boolean>>;
+};
+
+export type ToggleMenuParamList = {
+  toggleAdd: boolean;
+  toggleEdit: boolean;
+  toggleDelete: boolean;
+  setToggleAdd: Dispatch<SetStateAction<boolean>>;
+  setToggleEdit: Dispatch<SetStateAction<boolean>>;
+  setToggleDelete: Dispatch<SetStateAction<boolean>>;
+};
+
+export type ToggleFilterParamList = {
+  filterOptions: FilterOptions;
+  toggleSearch: boolean;
+  setFilterOptions: Dispatch<SetStateAction<FilterOptions>>;
+  setToggleSearch: Dispatch<SetStateAction<boolean>>;
+  setSearchValue: Dispatch<SetStateAction<string>>;
 };
